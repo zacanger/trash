@@ -1,7 +1,4 @@
-/* http://meyerweb.com/eric/tools/css/reset/ 
-   v2.0 | 20110126
-   License: none (public domain)
-*/
+/* Meyer Reset */
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -46,6 +43,8 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+
+/* Globals */
 body {
 	font-family: sans-serif;
 	font-size: 13px;
@@ -65,12 +64,12 @@ a {
 		text-decoration: underline;
 	}
 
-/* Header */
 #content {
 	width: 80%;
 	margin: 30px auto 0;
 }
 
+/* Header */
 #intro {
 	font-size: 150%;
 	text-align: justify;
@@ -81,6 +80,7 @@ a {
 	text-align: right;
 }
 
+/* Properties*/
 #properties-wrapper:after {
 	content: '';
 	display: block;
@@ -94,6 +94,7 @@ a {
 		overflow: hidden;
 	}
 
+/* Footer */
 #footer {
 	width: 85%;
 	margin: 10px auto;
