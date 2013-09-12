@@ -73,7 +73,7 @@ a {
 #intro {
 	font-size: 150%;
 	text-align: justify;
-	width: 90%;
+	width: 88%;
 	margin: 0 auto;
 }
 #welcome {
@@ -81,17 +81,20 @@ a {
 }
 
 /* Properties*/
-#properties-wrapper:after {
-	content: '';
-	display: block;
+.clear {
 	clear: both;
 }
 	.property {
+		display: block;
 		float: left;
 		width: 25%;
 		text-align: center;
-		height: 200px;
+		height: 167px;
 		overflow: hidden;
+		background-size: 45%;
+		background-repeat: no-repeat;
+		background-position: center;
+		margin-bottom: 15px;
 	}
 
 /* Footer */
