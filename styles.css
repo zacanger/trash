@@ -81,7 +81,9 @@ a {
 }
 
 /* Properties*/
-.clear {
+#properties-wrapper:after {
+	content: '';
+	display: block;
 	clear: both;
 }
 	.property {
