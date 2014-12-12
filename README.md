@@ -1,6 +1,8 @@
 # Understanding jQuery's AJAX
 
-Ajax is amazing, and probably jQuery's best feature! Ajax gives us the ability to get data from an API without causing us to refresh the page.
+Today we're going to talk about Ajax, and how we can use jQuery to make Ajax requests.
+
+Ajax allows us to retreive data from a server or API without refreshing the entire page. Before Ajax that's what would happen.
 
 Essentially, ajax has the helped web to become what it is today. Can you imagine making a facebook post and having it refresh the entire website? 
 
