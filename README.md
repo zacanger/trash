@@ -1,4 +1,4 @@
-# Understanding jQuery's AJAX
+# Understanding AJAX with jQuery
 
 Today we're going to talk about Ajax, and how we can use jQuery to make Ajax requests.
 
