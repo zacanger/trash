@@ -192,8 +192,6 @@ Our data is currently the values from our input fields.
   });
 ```
 
-Now when we add our function
-
 
 
 
