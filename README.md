@@ -188,3 +188,26 @@ Our data is currently the values from our input fields.
 ```
 
 Congrats!  You've just created your first CRUDdy app!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+>>>>>>> 0f7dc80273e7a1d221b3c677e29d94571af7607f
