@@ -80,7 +80,7 @@ Being able to console.log data is cool, and a great place to start, but we need 
 What this does is take the data, iterates through it with a loop and writes it into the DOM. It's not pretty, but it gets the job done.
 
 
-- Set the array equal to the response's child named data, and call the insertData function.
+- Call the insertData function with the data we recieved.
 
 ``` javascript
   $('#getUsers').on('click', function() {
@@ -188,26 +188,3 @@ Our data is currently the values from our input fields.
 ```
 
 Congrats!  You've just created your first CRUDdy app!
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
->>>>>>> 0f7dc80273e7a1d221b3c677e29d94571af7607f
