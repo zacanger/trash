@@ -60,7 +60,7 @@ Being able to console.log data is cool, and a great place to start, but we need 
 - Create an insertData function that takes the data, parses our it's valuable information, and writes it to the DOM
 
 ``` javascript
-  var insertData = function() {
+  var insertData = function(arr) {
     for (var i = 0; i < arr.length; i++) {
       $('#userInfo' + (i + 1)).html('<div>' +
         'User Info:' +
@@ -80,13 +80,7 @@ Being able to console.log data is cool, and a great place to start, but we need 
 What this does is take the data, iterates through it with a loop and writes it into the DOM. It's not pretty, but it gets the job done.
 
 
-- Create an empty array named arr at the top of the page
-
-``` javascript
-  var arr = [];
-```
-
-- Set the array equal to the response's child named data, and call the insertData function.
+- Call the insertData function with the data we recieved.
 
 ``` javascript
   $('#getUsers').on('click', function() {
@@ -95,8 +89,7 @@ What this does is take the data, iterates through it with a loop and writes it i
       url: 'http://reqr.es/api/users?page=1',
       success: function(res) {
         console.log(res);
-        arr = res.data
-        insertData();
+        insertData(res.data);
       }
     })
   })
@@ -127,7 +120,7 @@ GET requests are the easiest of requests. POSTs are a bit more tricky, but not b
 
 .val() gives us the value of something. Once we've filled out the form, the value of the input fields are what we typed into it. 
 
-- Have the function return our ajax PUT request
+- Have the function return our ajax POST request
 
 ``` javascript
   $('#addUser').on('click', function() {
@@ -164,8 +157,10 @@ Our data is currently the values from our input fields.
 
 - Inside our success function, we need to make some html we can add into our DOM.
 
+
 ``` javascript
-  $('#addUser').on('click', function() {
+  $('#addUser').on('click', function(e) {
+    e.preventDefault();
     var userName = $('#name').val();
     var userJob = $('#job').val();
     return $.ajax({
@@ -175,16 +170,16 @@ Our data is currently the values from our input fields.
       success: function(res) {
         $('#recentUser').html(
           '<li>' +
-            'name: ' + data.name +
+            'name: ' + res.name +
           '</li>' +
           '<li>' +
-            'job: ' + data.job +
+            'job: ' + res.job +
           '</li>' +
           '<li>' +
-            'id: ' + data.id +
+            'id: ' + res.id +
           '</li>' +
           '<li>' +
-            'created at: ' + data.createdAt +
+            'created at: ' + res.createdAt +
           '</li>'
         )
       }
@@ -192,25 +187,4 @@ Our data is currently the values from our input fields.
   });
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Congrats!  You've just created your first CRUDdy app!
