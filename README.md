@@ -2,11 +2,11 @@
 
 Today we're going to talk about Ajax, and how we can use jQuery to make Ajax requests.
 
-Ajax allows us to retreive data from a server or API without refreshing the entire page. Before Ajax that's what would happen.
+Ajax allows us to retreive data from a server or API without refreshing the entire page. Before Ajax, the entire page would need to refresh in order to retreive new data.
 
-Essentially, ajax has the helped web to become what it is today. Can you imagine making a facebook post and having it refresh the entire website? 
+Ajax has the helped web to become what it is today. Can you imagine making a facebook post and having it refresh the entire website? 
 
-If you look at the index.html of this app, we have 3 things. A form that takes in data. A 'get current users' section, and a 'recently added user' section. 
+If you look at the index.html of this app, we have three things. We have a form that takes in data, a 'get current users' section, and a 'recently added user' section. 
 
 The form will take in data, and then pass it to the 'recently added user' section. If we add a new user it will replace the previous one. The get current users section will hit an api and pull their users data. 
 
