@@ -16,11 +16,11 @@
           <form name="userForm" class="form">
             <div class="form-group">
               <label>User Name</label>
-              <input type="text" class="form-control" placeholder="name" id="name">
+              <input type="text" class="js-name form-control" placeholder="name">
               <label>User Job</label>
-              <input type="text" class="form-control" placeholder="job" id="job">
+              <input type="text" class="js-job form-control" placeholder="job">
               <hr>
-              <button type="submit" class="btn btn-success btn-block" id="addUser">Submit</button>
+              <button type="submit" class="js-add-user btn btn-success btn-block">Submit</button>
               <button type="reset" class="btn btn-default btn-block">Cancel</button>
             </div>
           </form>
@@ -30,7 +30,7 @@
       <div class="col-md-12">
         <div class="well">
           Recently Added User
-          <div id="recentUser">
+          <div class="js-recent-user">
           </div>
         </div>
       </div>
@@ -39,19 +39,19 @@
     <div class="">
       <div class="col-md-6">
         <div class="well">
-          <button class="btn btn-default btn-block" id="getUsers">GET current users</button>
+          <button class="js-get-users btn btn-default btn-block">GET current users</button>
           <hr>
-          <div id="userInfo1">
+          <div class="js-user-info-1">
           </div>
-          <div id="userInfo2">
+          <div class="js-user-info-2">
           </div>
-          <div id="userInfo3">
+          <div class="js-user-info-3">
           </div>
         </div>
       </div>
     </div>
   </div>
-<script src="jquery.min.js"></script>
-<script src="app.js"></script>
+  <script src="jquery.min.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
