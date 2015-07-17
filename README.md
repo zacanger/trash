@@ -4,11 +4,11 @@ Today we're going to talk about Ajax, and how we can use jQuery to make Ajax req
 
 Ajax allows us to retreive data from a server or API without refreshing the entire page. Before Ajax, the entire page would need to refresh in order to retreive new data.
 
-Ajax has the helped web to become what it is today. Can you imagine making a facebook post and having it refresh the entire website? 
+Ajax has the helped web to become what it is today. Can you imagine making a facebook post and having it refresh the entire website?
 
-If you look at the index.html of this app, we have three things. We have a form that takes in data, a 'get current users' section, and a 'recently added user' section. 
+If you look at the index.html of this app, we have three things. We have a form that takes in data, a 'get current users' section, and a 'recently added user' section.
 
-The form will take in data, and then pass it to the 'recently added user' section. If we add a new user it will replace the previous one. The get current users section will hit an api and pull their users data. 
+The form will take in data, and then pass it to the 'recently added user' section. If we add a new user it will replace the previous one. The get current users section will hit an api and pull their users data.
 
 We will be using the [reqres](http://reqr.es) for our API, which is an open API filled with dummy data. Let's get started!
 
@@ -55,7 +55,7 @@ We are telling our request 3 things:
 
 Now when we click the button, we will end up with the response of our api in our console. Cool!
 
-Being able to console.log data is cool, and a great place to start, but we need to get that data into our DOM! 
+Being able to console.log data is cool, and a great place to start, but we need to get that data into our DOM!
 
 - Create an insertData function that takes the data, parses our it's valuable information, and writes it to the DOM
 
@@ -118,7 +118,7 @@ GET requests are the easiest of requests. POSTs are a bit more tricky, but not b
   });
 ```
 
-.val() gives us the value of something. Once we've filled out the form, the value of the input fields are what we typed into it. 
+.val() gives us the value of something. Once we've filled out the form, the value of the input fields are what we typed into it.
 
 - Have the function return our ajax POST request
 
@@ -134,9 +134,9 @@ GET requests are the easiest of requests. POSTs are a bit more tricky, but not b
   });
 ```
 
-Notice how our method now says post, and our URL is a little different. Another thing that is different is this 'data' part. Data lets us pass specific information to the API via our request. This is useful when making POST requests because we are POSTing something to the api. It's also helpful when trying to find specific user data, we can do something like pass in the users ID. 
+Notice how our method now says post, and our URL is a little different. Another thing that is different is this 'data' part. Data lets us pass specific information to the API via our request. This is useful when making POST requests because we are POSTing something to the api. It's also helpful when trying to find specific user data, we can do something like pass in the users ID.
 
-Our data is currently the values from our input fields. 
+Our data is currently the values from our input fields.
 
 - Let's add a success part to our request.
 
