@@ -187,4 +187,4 @@ Our data is currently the values from our input fields.
   });
 ```
 
-Congrats!  You've just created your first CRUDdy app! You're number one!  Yup
+Congrats!  You've just created your first CRUDdy app!
