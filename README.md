@@ -65,8 +65,8 @@ Being able to console.log data is cool, and a great place to start, but we need 
   var insertData = function (arr) {
     var tpl = '<div>' +
         'User Info: <ul>' +
-        '<li>First name: <span class=".js-first">none</span></li>' +
-        '<li>Last name: <span class=".js-last">none</span></li>' +
+        '<li>First name: <span class="js-first">none</span></li>' +
+        '<li>Last name: <span class="js-last">none</span></li>' +
         '</ul>' +
         '<hr>' +
         '</div>';
@@ -107,10 +107,18 @@ Now when we click the GET current users button we should see them populate in ou
 
 GET requests are the easiest of requests. POSTs are a bit more tricky, but not by a lot. Let's hook our form up so that we can make a post request!
 
-- Hook up the submit button so that it is ready to handle the click event
+- Hook up the form submit so that it is ready to handle the submit event without causing a page reload
+- submit events happen when
+  - you click a button (unless it has type="button")
+  - you click an input with type="submit"
+  - you press enter
 
 ``` javascript
-  $('body').on('click', '.js-add-user', function () {
+  $('body').on('submit', '.js-add-user', function (ev) {
+    // By default a form submission will cause a page to reload
+    // but it is possible to tell the event to cancel it's default action like this
+    ev.preventDefault();
+
     // do thing here
   });
 ```
@@ -176,20 +184,19 @@ Our data is currently the values from our input fields.
       url: 'http://reqr.es/api/users',
       data: { name: userName, job: userJob },
     }).then(function (res) {
-        var tpl = '<li>name: <span class=".js-name">none</span></li>' +
-          '<li>job: <span class=".js-job">none</span></li>' +
-          '<li>id: <span class=".js-id">none</span></li>' +
-          '<li>created at:  <span class=".js-created-at">none</span></li>'
-          ;
+      var tpl = '<li>name: <span class="js-name">none</span></li>' +
+        '<li>job: <span class="js-job">none</span></li>' +
+        '<li>id: <span class="js-id">none</span></li>' +
+        '<li>created at:  <span class="js-created-at">none</span></li>'
+        ;
 
-        $copy = $(tpl);
-        $copy.find('.js-name').text(res.name);
-        $copy.find('.js-job').text(res.job);
-        $copy.find('.js-id').text(res.id);
-        $copy.find('.js-created-at').text(res.createdAt);
+      $copy = $(tpl);
+      $copy.find('.js-name').text(res.name);
+      $copy.find('.js-job').text(res.job);
+      $copy.find('.js-id').text(res.id);
+      $copy.find('.js-created-at').text(res.createdAt);
 
-        $('.js-recent-user').html($copy);
-      }
+      $('.js-recent-user').html($copy);
     }, function (err) {
       console.error(err);
       window.alert('Something went wrong!');
