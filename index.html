@@ -4,23 +4,27 @@
   <meta charset="utf-8">
   <meta lang="en">
   <title>Medium... Ish</title>
-  <link rel="stylesheet" src="css/styles.css" type="css/text">
+  <link rel="stylesheet" src="css.css" type="text/css">
   <link href=
   "https://fonts.googleapis.com/css?family=Slabo+27px&subset=latin,latin-ext"
-  rel="stylesheet" type='text/css'>
-  <link rel="stylesheet" src="css/medium-editor.min.css" type="css/text">
-  <link rel="stylesheet" src="css/flat.min.css" type="css/text">
+  rel="stylesheet" type="text/css">
 </head>
 <body>
-  <div class="container">
-    <header>
-      <a href="#"><img class="resp-img" alt="SuperAwesomeBlogSite" src="img/logo.png" title=
-      "Logo"></a> <a href="#">Blog</a> <a href="#">Login</a>
-    </header>
+  <div class="wrapper">
+  <header>
+    <a href="#"><img class="logo" alt="SuperAwesomeBlogSite" src="img/logo.png" title=
+    "Logo"></a> 
+    <span><a href="#">Blog</a> <a href="#">Login</a></span>
     <hr>
-    <div class="hero"><img class="resp-img full-width" alt=
-    "This is a really large image. Too bad it's not here. It's pretty great. I took it myself."
-    src="img/hero.jpg" title="grasssss"></div>
+  </header>
+  <div class="container">
+
+  <div class="hero"><img class="resp-img full-width" alt=
+  "This is a really large image. Too bad it's not here. It's pretty great. I took it myself."
+  src="img/hero.jpg" title="grasssss"></div>
+ 
+    
+    
     <div class="article">
       <div class="article-meta">
         <a href="#">User</a> <a href="#">Blog</a>
@@ -45,16 +49,18 @@
     </div>
     <div class="comments-embedded">
       <!-- If I stick with this, we'll want to explore some options, like https://github.com/m2w/talaria  -->
-      <div class="footer">
-        <a href="#">More&gt;</a> <a href="#">Meta</a> <a href="#">Privacy</a>
-        <a href="#">T&amp;C</a> <a href="#">Help</a>
       </div>
-      <script src="js/medium-editor.min.js">
+      <div class="footer">
+        <span><a href="#">More</a> <a href="#">Meta</a> <a href="#">Privacy</a>
+        <a href="#">T&amp;C</a> <a href="#">Help</a></span>
+      </div>
+      <script src="medium-editor.js">
       </script>
       <script>
       var editor = new MediumEditor('.editable');
       </script>
-    </div>
+
+  </div>
   </div>
 </body>
 </html>
