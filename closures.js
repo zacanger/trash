@@ -89,13 +89,18 @@ alert("If I was wrong, I'd never hear the end of it, I'm sure.");
 
 console.log("Since that is how I expected it to work, do I still have to fix it?");
 
-/////
+///// ... okay.
+
 
 var counter = function() {
-  for (var i = 1; i <= 5; i++) {
-    setTimeout(function timer() {
-      console.log(i); }
-    i*1000) }; };
+  for (var i = 0; i < 5; i++) {
+    setInterval(function()(i * 1000));
+    console.log(i);
+  }
+};
+counter();
+
+///// i can't actually tell if this is getting better or worse... so i'll take a break from this one for a minute. @_@ 
 
 
 /*
