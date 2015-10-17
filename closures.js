@@ -9,12 +9,12 @@ var outer = function(){
 
 //Above you're given a function that returns another function which has a closure over the name variable.
 //Invoke outer saving the return value into another variable called 'inner'.
-
-outer(arg)
 //Once you do that, invoke inner.
 
-  //Code Here
+var inner = outer();
+inner();
 
+//
 
 var callFriend = function(){
   var friend = 'Jake';
@@ -27,45 +27,39 @@ var callFriend = function(){
 //Above you're given a callFriend function that returns another function.
 //Do what you need to do in order to call your function and get 'Calling Jake at 435-215-9248' in your console.
 
-callFriend('Jake', '435-215-9248');
+console.log(callFriend('555-555-5555')); // nope
+
+callFriend() { var number = '435-215-9284'; } // nope
+
+var number = '123-456-7890'; console.log(callFriend()); // not this one either.
+
+console.log(callFriend()('1-800-FUCK-JAKE')); // oh. wait. okay.
 
 /* Write a function called makeCounter that makes the following code work properly. */
 
 function makeCounter() {
-  var counter = 0; //local scoped makeCounter and children
+  var counter = 0; 
     return function myCounter() {
-      counter++;
-    }
-}
-  
-  var count = makeCounter();
-  count() // 1
-  count() // 2
-  count() // 3
-  count() // 4
+      counter++; }}
+
+var count = makeCounter();
+count()
+count()
+count()
+count()
 
 
 /*
   Write a function that does something simple (console, alert, etc). Write a second function that accepts the first function as it's first parameter. The second function should return a new third function which, when invoked, invokes the first, original function that was passed in, but will only ever do so once.
 */
 
-function foo() {
-  console.log('baz');
-}
-
-var arg = foo();
-
-function bar(arg) {
-  return function(bar());
-}
-
-
+function foo(bar){ var baz  = 0; while (baz <=1) { return bar(); } }
 
 /*
   Now, similar to the last problem, write a function called 'fnCounter' that accepts two parameters. The first parameter will be an anonymous function and the second parameter, 'N', will be a number. Now, in 'fnCounter', allow the anonymous funciton to be invoked 'N' number of times. After it's been invoked 'N' number of times, return 'STOP'.
 */
 
-
+fnCounter(uh, N) { var i = 0; while (i < N) { uh(); i++; } return 'STOP'; }
 
 /*
   var counter = function(){
@@ -91,30 +85,47 @@ console.log("Since that is how I expected it to work, do I still have to fix it?
 
 ///// ... okay.
 
-
-var counter = function() {
-  for (var i = 0; i < 5; i++) {
-    setInterval(function()(i * 1000));
-    console.log(i);
+var counter = function () {
+  var i = 0
+  while (i <= 5) {
+    var num = function (count) {
+      setTimeout(function () {
+        console.log(count)
+      }, count * 1000)
+    }
+    num(count)
+    count += 1
   }
-};
-counter();
-
-///// i can't actually tell if this is getting better or worse... so i'll take a break from this one for a minute. @_@ 
+}
 
 
 /*
   Make the following code work
 
-  funcArray[0]() //0
-  funcArray[1]() //1
-  funcArray[2]() //2
-  funcArray[3]() //3
-  funcArray[4]() //4
-  funcArray[5]() //5
+  fuckArray[0]() //0
+  fuckArray[1]() //1
+  fuckArray[2]() //2
+  fuckArray[3]() //3
+  fuckArray[4]() //4
+  fuckArray[5]() //5
 
   *Hint: Don't let this fool you. Break down what's really happening here.
 */
 
 console.log("I'm not a mind-reader. I hiave no idea what you're trying to accomplish, here. A function that loops through an array and returns... indices?");
+
+
+function fuckArrayz (what) {
+  var fuckedArray = []
+  var i = 0
+  while (i <= what) {
+    var fuckingArray = function (i) {
+      fuckedArray.push(function () {
+        console.log(i)
+      })}
+    fuckingArray(i); i++; }
+  console.log('did that thang')
+  return fuckedArray; }
+var fuckedArray = fuckingArray(5)
+
 
