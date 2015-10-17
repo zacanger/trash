@@ -1,3 +1,6 @@
+/* Medium Editor CSS
+https://github.com/yabwe */
+
 @-webkit-keyframes medium-editor-image-loading {
   0% {
     -webkit-transform: scale(0);
@@ -49,7 +52,7 @@
             transform: matrix(1, 0, 0, 1, 0, 0); } }
 
 
-
+/* Medium Editor Flat Theme */
 
 .medium-editor-anchor-preview {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -279,7 +282,7 @@
 
 
 
-
+/* Blog Page CSS */
 
 
 
