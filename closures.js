@@ -56,6 +56,9 @@ function fnCounter (uh, N) {
   }
   return 'STOP'
 }
+
+
+
 /*
 var counter = function(){
   for (var i=1; i<=5; i++) {
@@ -75,16 +78,17 @@ console.log('Since that is how I expected it to work, do I still have to fix it?
 // /// ... okay.
 var counter = function () {
   var i = 0
-  while (i <= 5) {
-    var num = function (count) {
+  while (i < 5) {
+    var num = function (i) {
       setTimeout(function () {
-        console.log(count)
-      }, count * 1000)
+        console.log(i)
+      },i * 1000)
     }
-    num(count)
-    count += 1
+    num(i)
+    i++
   }
 }
+
 /*
 Make the following code work
 
