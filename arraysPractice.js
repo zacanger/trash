@@ -1,52 +1,48 @@
-//Once you complete a problem, open up Chrome and check the answer in the console.
-
-
 var arr = [10,20,30];
 //Create a function named 'first' that is given 'arr' as the argument and  returns the first item in the given array.
 
-  //Code Here
-
-
-//Next problem
-
+function first(arr) {
+	return arr[0];
+}
 
 
 var arr = [40,50,60];
 //Create a function named 'last' that is given 'arr' as the argument and returns the last item in the given array.
 
-
-  //Code Here
-
-
-//Next Problem
+function last(arr) {
+	return(arr.lastIndexOf);
+}
 
 
 var family = ['Tyler', 'Jordyn', 'Ryan', 'Chelsey', 'Ireland'];
 //Create a function named 'looper' that is given family as it's only argument, loops through the given array, and alerts every item in the array.
 
-  //Code Here
-
-
-//Next problem
-
+function looper(family) {
+	for (i = 0; i <= family.length; i++) {
+		alert(family[i]);
+	}
+}
 
 
 var letters = ['A', 'B', 'C', 'D', 'E'];
 //Write a function called reversedLooper that is given letters as it's only argument and loops through the given array backwards alerting every item in the array starting at the end.
 
-  //Code Here
-
-
-//Next Problem
+function reversedLooper(letters) {
+	var revLetters = letters.reverse();
+	for (i = 0; i <= revLetters.length; i++) {
+		alert(revLetters[i]);
+	}
+}
 
 
 var nums = [1,2,3,6,22,98,45,23,22,12];
 //Write a function named evenFinder that is given nums as it's only argument and removes all values that aren't even from the given array.
 
-  //Code Here
-
-
-//Next problem
+function evenFinder(nums) {
+	if (i in nums[i] % 2 === 0) {
+		nums.splice[i];
+	}
+}
 
 
 var nums = [1,2,34,54,55,34,32,11,19,17,54,66,13];
@@ -55,12 +51,17 @@ var odds = [];
 //Write a function called divider that is given three arguments, nums, evens, and odds.
 //Have divider return an Array with the first item in the array being the evens array (all the even values from nums) and the second item in the Array being the odds array(all the odd values from nums).
 
-
-
-  //Code Here
-
-
-//Next Problem
+function divider(nums, evens, odds) {
+  for (i = 0; i <= nums.length; i++) {
+    if (nums[x] % 2 === 0) {
+      evens.push[x];
+    } else if (nums[x] % 2 !== 0) {
+      odds.push[x];
+    }
+    var bothArrays = evens.concat(odds);
+    return bothArrays;
+  }
+}
 
 
 var getRandomArbitrary = function() {
@@ -69,21 +70,22 @@ var getRandomArbitrary = function() {
 var numbers = [0,3,4,5,6,7,9,14,17,24,25,26,29,30];
 //Above you're given a function that will return a random number between 0 and 30, and an array full of numbers. Your job is to write a function named finder that will get a random number, then loop through the array to see if that random number is in the array. If it is, return true, if it's not, return false
 
-  //Code Here
-
-
-//Next problem
-
+function finder () {
+  if (numbers.indexOf(getRandomArbitrary())) {
+    return true
+  } else {
+    return false
+  }
+}
 
 
 var str = 'this is my sentence';
 //Write a function called reverse that takes a given str as it's only argument and returns that string after it's been reversed
 
-  //Code Here
-
-
-//Next Problem
-
+function reverse(str) {
+	var reversed = str.split('').reverse().join('');
+	return reversed;
+}
 
 var myGroceryList = ['chips', 'pizza', 'hotpockets', 'MtnDew', 'corndogs'];
 /*
@@ -123,12 +125,13 @@ var numbers = [5, '9', 16, 19, '25', '34', 48];
 //Write a function called addTen that is given 'numbers' as it's only argument and returns a new
 //array after adding ten to each item in numbers. *Verify your answer is correct. --> [15, 19, 26, 29, 35, 44, 58]
 
-  //Code Here
-
-
-
-//Next Problem
-
+function addTen(numbers) {
+   var newArray = [];
+   for(var i = 0; i < numbers.length; i++) {
+     newArray.push(numbers[i] + 10); 
+   }
+   return newArray;
+ }
 
 
 var num1 = Math.floor(Math.random() * (30 - 0) + 0);
