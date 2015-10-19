@@ -1,7 +1,12 @@
 //We're in a job interview. Answer the following questions (try to not look at your notes unless you have to).
   // 1) What is the purpose of the 'this keyword'?
-
-      //Answer
+// The `this` keyword is a shorthand way of directly accessing its parent's 
+// properties. For example, one could have an object describing a customer,
+// wherein one key might be for a phone number; let's call that `tel`,  and
+// its value is `867-5309` ...
+// So, if we had a function inside that object -- that is, a method -- 
+// we could access that by using `this.email`, which would give us the string
+// `867-5309`.
 
   // 2) What are the four rules that govern what the 'this keyword' is bound to and describe each?
 
@@ -16,7 +21,6 @@
       //Answer
 
 
-//Next Problem
 
 //Create an object called user which has the following properties.
   //username --> which is a string
@@ -75,10 +79,18 @@ setTimeout(getUsername, 5000);
 
 //Above you're given an object, a function, and a setTimeout invocation. After 5 seconds, what will the getUsername function return?
 
-  //Answer Here
+// undefined
 
 //In the example above, what is the 'this keyword' bound to when getUsername runs?
 
-  //Answer Here
+// its parent, so no property at all.
 
 //Fix the setTimeout invocation so that the user object will be the focal object when getUsername is ran.
+
+
+// no, this is not correct... will do later.
+setTimeout(function() {
+  console.log(this.username);
+}, 5000);
+
+
