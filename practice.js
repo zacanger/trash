@@ -54,15 +54,15 @@ user.getUsername();
 
 // Write the function definitions which will make the following function invocations function properly.
 
-var car = {
-  make: this.make,
-  model: this.model,
-  year: this.year,
-  moveCar: function () {
-    var move = 0;
-    move + 10;
-    return move;
-  }
+var Car = function (make, model, year) {
+  this.make = make;
+  this.model = model;
+  this.year = year;
+  this.moveCar = function () {
+    this.move = 0;
+    this.move += 10;
+    return this.move;
+  };
 };
 
 var Prius = new Car('Toyota', 'Prius', 2011);
@@ -80,6 +80,11 @@ var getYear = function () {
 };
 
 /* Above you're given the getYear function. Using your Prius and Mustang objects from above, use the proper syntax that will allow for you to call the getYear function with the Prius, then the Mustang objects being the focal objects. **Don't add getYear as a property on both objects**. */
+
+getYear.call(Prius);
+getYear.call(Mustang);
+
+//
 
 var user = {
   username: 'iliketurtles',
