@@ -10,6 +10,10 @@
 // `867-5309`.
 
 // 2) What are the four rules that govern what the 'this keyword' is bound to and describe each?
+// (Note: there are four RULES, and also four BINDINGS; these are different things, evidently, but
+// DevMountain uses the word RULES in place of BINDINGS, so these are just sort of the binding
+// definitions, as I understand them.
+
 // These rules could be summed up in one sentence:
 // 'What is calling the object?'
 // In more detail:
@@ -19,9 +23,9 @@
 //
 // EXPLICITly using `this` (with call, apply, bind) allows one to use `this` in a different context.
 //
-// DEFAULT (window object)
+// DEFAULT (window object), and
 //
-// NEW in creation of new objects
+// NEW in creation of new objects.
 
 // 3) What is the difference between call and apply?
 
