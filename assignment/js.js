@@ -11,9 +11,9 @@ $(document).ready(function () {
     }
     $('#newItem').val('');
     $('#newList').append(
-      "<a href='#' class='' id='item'><li class='list-group-item'>" +
+      "<a href='#' id='item'><li class='list-group-item'>" +
       task.task +
-      "<span class='arrow pull-right'><i class='glyphicon-arrow-right'></span></li></a>"
+      "<span> ≫  </span></li></a>"
     );
   };
   $('#taskForm').hide();
@@ -56,8 +56,8 @@ $(document).ready(function () {
     e.preventDefault();
     var task = this;
     task.id = 'archived';
-    var changeIcon = task.outerHTML.replace('glyphicon-arrow-right'
-      , 'glyphicon-remove');
+    var changeIcon = task.outerHTML.replace( ' ≫  '
+      , ' ⌘ ' );
     advanceTask(task);
     $('archivedList').append(changeIcon);
   });
