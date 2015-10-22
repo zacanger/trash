@@ -27,7 +27,7 @@ $(document).ready(function () {
   })
   $('#cancel').on('click', function (e) {
     e.preventDefault()
-    ;('#taskForm, #newItem').fadeToggle('fast', 'linear')
+    $('#taskForm, #newItem').fadeToggle('fast', 'linear')
   })
   var advanceTask = function (task) {
     var modified = task.innerText.trim()
