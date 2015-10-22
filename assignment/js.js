@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  var tasks = [];
+  var tasks = [localStorage.getItem('tasks')];
   var Task = function (task) {
     this.task = task;
     this.id = 'new';
@@ -56,8 +56,8 @@ $(document).ready(function () {
     e.preventDefault();
     var task = this;
     task.id = 'archived';
-    var changeIcon = task.outerHTML.replace('glyphicon-arrow-right',
-      'glyphicon-remove');
+    var changeIcon = task.outerHTML.replace('glyphicon-arrow-right'
+      , 'glyphicon-remove');
     advanceTask(task);
     $('archivedList').append(changeIcon);
   });
@@ -67,3 +67,4 @@ $(document).ready(function () {
     advanceTask(task);
   });
 });
+localStorage.setItem('tasks', 'tasks');
