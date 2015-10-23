@@ -10,7 +10,7 @@ If you look at the index.html of this app, we have three things. We have a form 
 
 The form will take in data, and then pass it to the 'recently added user' section. If we add a new user it will replace the previous one. The get current users section will hit an api and pull their users data.
 
-We will be using the [reqres](http://reqr.es) for our API, which is an open API filled with dummy data. Let's get started!
+We will be using the [reqres](http://reqres.in/) for our API, which is an open API filled with dummy data. Let's get started!
 
 ## Step 1 - Our first GET request
 
@@ -28,7 +28,7 @@ We will be using the [reqres](http://reqr.es) for our API, which is an open API 
   $('body').on('click', '.js-get-users', function () {
     return $.ajax({
       method: 'GET',
-      url: 'http://reqr.es/api/users?page=1',
+      url: 'http://reqres.in/api/users?page=1',
     }).then(handleData, handleError)
   })
 ```
@@ -50,7 +50,7 @@ We are telling our request 3 things:
 
     $.ajax({
       method: 'GET',
-      url: 'http://reqr.es/api/users?page=1',
+      url: 'http://reqres.in/api/users?page=1',
     }).then(handleSuccess);
   })
 ```
@@ -91,7 +91,7 @@ What this does is take the data, iterates through it with a loop and writes it i
   $('body').on('click', '.js-get-users', function () {
     return $.ajax({
       method: 'GET',
-      url: 'http://reqr.es/api/users?page=1',
+      url: 'http://reqres.in/api/users?page=1',
     }).then(function (res) {
       console.log(res);
       insertData(res.data);
@@ -142,7 +142,7 @@ GET requests are the easiest of requests. POSTs are a bit more tricky, but not b
     var userJob = $('.js-job').val();
     return $.ajax({
       method: 'POST',
-      url: 'http://reqr.es/api/users',
+      url: 'http://reqres.in/api/users',
       data: {name: userName, job: userJob}
     })
   });
@@ -161,7 +161,7 @@ Our data is currently the values from our input fields.
 
     $.ajax({
       method: 'POST',
-      url: 'http://reqr.es/api/users',
+      url: 'http://reqres.in/api/users',
       data: {name: userName, job: userJob},
     }).then(function (res) {
       // TODO on success
@@ -181,7 +181,7 @@ Our data is currently the values from our input fields.
     var userJob = $('.js-job').val();
     return $.ajax({
       method: 'POST',
-      url: 'http://reqr.es/api/users',
+      url: 'http://reqres.in/api/users',
       data: { name: userName, job: userJob },
     }).then(function (res) {
       var tpl = '<li>name: <span class="js-name">none</span></li>' +
@@ -205,3 +205,4 @@ Our data is currently the values from our input fields.
 ```
 
 Congrats!  You've just created your first CRUDdy app!
+
