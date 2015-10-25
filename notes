@@ -2,5 +2,9 @@ setting max-viewport is a *horrible* practice. nixed.
 normalize instead of reset; cdn instead of stuck in our own stylesheet.
 updated to jquery 2.1.4; cdn instead of in our js directory.
 replacing ids with classes, at least for starters... just a few ids in here, sprinkled around ಠ⌣ಠ
-
+page-container = container
+dashboard = dash
+profile-summary = profile
+char-count = count
+tweet-controls = controls
 
