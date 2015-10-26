@@ -1,5 +1,4 @@
-var app = angular.module('folks');
-app.controller('mainCtrl', function ($scope) {
+app.controller('FriendCtrl', function ($scope) {
 			$scope.friends = [
 
   {
