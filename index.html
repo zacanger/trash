@@ -1,68 +1,45 @@
 <!DOCTYPE html>
 <html ng-app="folks">
     <head>
-  <title>Angular Friends</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
-  <link rel="stylesheet" type="text/css" href="style.css">
-</head>
-<body ng-controller="FriendCtrl">
-
-  <h1>The <strong>facebook</strong> Friend Machine</h1>
-
-  <div class="friends">
-    <form class="form-inline searchForm" role="form">
-      <div class="form-group">
-
-        <input class="form-control" placeholder="Search Name" ng-model="nameGrep">
-        <input class="form-control" placeholder="Search Location" ng-model="placeGrep">
-
-
-        <select class="input-medium">
-          <option>Name</option>
-          <option>#Friends</option>
-          <option>City</option>
-          <option>State</option>
-          <option>Country</option>
-        </select>
-
-        <select class="input-medium">
-          <option value="+">Descending</option>
-          <option value="-">Ascending</option>
-        </select>
-
-      </div>
-    </form>
-
-    <ul>
-
-      <li ng-repeat="friend in friends | filter: {name: someFilter location {name: locationNameFilter}}">
-
-
-        <li class='friend'>
-        <img class="profile-pic" src="{{friend.pic_square}}">
-
-        <h3>{{friend.name}}</h3>
-
-        <div class="location">
-          Location: {{friend.current_location}}
+        <title>folks</title>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" rel="stylesheet">
+        <link href="style.css" rel="stylesheet" type="text/css">
+    </head>
+    <body ng-controller="friendCtrl">
+        <h3>do things with people and stuff</h3>
+        <div class="friends">
+            <form class="form-inline searchForm" role="form">
+                <div class="form-group">
+                    <input class="form-control" ng-model="nameGrep" placeholder="who d'you want to stalk?">
+                    <input class="form-control" ng-model="placeGrep" placeholder="do you know where they live?">
+            <select class="input-medium" ng-model="sorting" ng-options="option.value as option.name for option in sorting">
+                    <option>Name</option>
+                    <option>Friends</option>
+                    <option>Location</option>
+            </select>
+            <select class="input-medium" ng-model="reversed" ng-option="option.value as option.name for option in reversed">
+                    <option value="+">Descending</option>
+                    <option value="-">Ascending</option>
+            </select>
+                </div>
+            </form>
+            <ul>
+                <li ng-repeat="friend in friends | filter:names | filter: place | orderBy:sorting:reverse"></li>
+                <li class='friend'>
+                    <img class="profile-pic" src="{{ friend.pic_square }}">
+                    <h3>{{ friend.name }}</h3>
+                    <div class="location">
+                        Location: {{ friend.current_location.city + ', ' + friend.current_location.state + ', ' + friend.current_location.country }}
+                    </div>
+                    <div class="status">
+                        {{ friend.status.message }}
+                    </div>
+                    <div class="num-friends">
+                        Friends: {{ friend.friend_count }}
+                    </div>
+                </li>
+            </ul>
         </div>
-
-        <div class="status">
-         {{friend.status}} <span class="hashtag">#ihateprovo</span>
-        </div>
-
-        <div class="num-friends">
-          Friends:  {{friend.friend_count}}
-        </div>
-      </li>
-    </ul>
-  </div>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js" type="text/javascript"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" type="text/javascript"></script>
-  <script src=https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.js" type="text/javascript"></script>
-  <script src="app.js" type="text/javascript"></script>
-  <script src="FriendController.js" type="text/javascript"></script>
-</body>
+    </body>
 </html>

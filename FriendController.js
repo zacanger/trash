@@ -1,5 +1,6 @@
-app.controller('FriendCtrl', function ($scope) {
-			$scope.friends = [
+app.controller('friendCtrl', function ($scope) {
+
+  $scope.friends = [
 
   {
     "name": "Preston McNeil",
@@ -431,4 +432,35 @@ app.controller('FriendCtrl', function ($scope) {
     "friend_count": 855,
     "$$hashKey": "02U"
   }
-]});
+]
+
+Sorry, couldn't find any help with that topic
+
+$scope.sorting = [
+  {name: 'Name', value: 'name'},
+  {name: 'Friends', value: 'friend_count'},
+  {name: 'Location', value: 'current_location.city'}
+  ]
+
+
+// 	.filter('byLocation', function() {
+// 		return function(friends, location) {
+// 			var items = {
+// 				location: location,
+// 				out: []
+// 			};
+// 			angular.forEach(this.current_location, function(value, key) {
+// 				if (this.location[value.current_location] === true) {
+// 					this.out.push(value);
+// 				}
+// 			}, items);
+
+// 			return items.out;
+// 		}
+// 	});
+
+$scope.reversed = false;
+$scope.sortBy = 'name';
+
+
+});
