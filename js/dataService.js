@@ -1,5 +1,5 @@
 var app = angular.module('quoteBook');
-app.service('datService', function(){
+app.service('datService', function() {
   var quotes = [
     { text: 'Life isn\'t about getting and having, it\'s about giving and being.', author: 'Kevin Kruse'},
     { text: 'Whatever the mind of man can conceive and believe, it can achieve', author: 'Napoleon Hill'},
@@ -10,7 +10,7 @@ app.service('datService', function(){
     { text: 'What even is a jQuery?', author: 'Tyler S. McGinnis'}
   ];
 
-  this.getData = function(){
+  this.getData = function() {
     return quotes;
   }
 
@@ -18,13 +18,13 @@ app.service('datService', function(){
     quotes.push(mudkipz, iHerdULike);
   }
 
-
   this.removeData = function(mudkipz) {
-    for (i = 0; i < quotes.length; i++){
-    for (text in quotes) {
-      if (mudkipz == quotes.text) {
-          quotes.splice[i, 1]; }}}}
-
-
-
-}
+    for (i = 0; i < quotes.length; i++) {
+      for (text in quotes) {
+        if (mudkipz == quotes[text]) {
+          quotes.splice(i, 1);
+        }
+      }
+    }
+  };
+});
