@@ -188,6 +188,7 @@ The `'='` value on your `scope` object has created a two-way binding between `us
 - Make a weather service. Name it something cool and creative like `weatherService`.
 - Inside the weather service make a function called `getWeather` that also takes one parameter, `city`.
 - Make an `$http` get to this url - `'http://api.openweathermap.org/data/2.5/weather?q='`
+- - Note: You will need to make an account and include your API key for this to work. See : [http://openweathermap.org/appid#use](http://openweathermap.org/appid#use)
 - After the `q=` add on the `city` parameter.
   - If you want you can test this out in postman. See what kind of data you get back. If it's the weather of that city then... you win!
 - Use `$q` to return a promise that only resolves with the data you want. Temperature (preferably not in Kelvin) and the weather description. Use `console.log` on the data coming from the `$http` request to get to what you want. You'll need to add both on an object that you resolve your new promise with.
