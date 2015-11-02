@@ -1,10 +1,10 @@
-mini-Routing
-============
+## mini-Routing
 
-##Objectives
-The purpose of this Mini Project is to get you used to structuring your Angular app and routing. These are two of the trickiest things to wrap your head around so if something doesn't make sense as you're going through, let us know and we'll come over to help you. 
 
-###Step 1: Angular Skeleton 
+### Objectives
+The purpose of this Mini Project is to get you used to structuring your Angular app and routing. These are two of the trickiest things to wrap your head around so if something doesn't make sense as you're going through, let us know and we'll come over to help you.
+
+### Step 1: Angular Skeleton
 * Fork this repo, then clone your fork.
 * Create the basics of your Angular application. Your file structure should look like this
 ```
@@ -36,21 +36,21 @@ html, body {
 
 .view-container h1{
   margin-top: 0;
-} 
+}
 ```
 
-###Step 2: Add Routing Skeleton
+### Step 2: Add Routing Skeleton
 * Right now, you should have a very basic Angular application that has nothing more than an app.js (which created your 'miniRouting' module) and an index.html page. Check your console to make sure there are no errors. If there are, debug.
-* Now we're going to prep our HTML in order to start using UI Router. 
+* Now we're going to prep our HTML in order to start using UI Router.
 * Before we use the UI Router module to handle our routing, there are a few steps we need to take. First, we need to include UI Router as a script, after the Angular library script, in our HTML page. You can find the CDN by googling 'cdn ui router'.
-* Once you've included UI Router as a script, we need to inject UI Router into our app as a dependency. Remember how we talked about how our app.js is the hub of our application and it's the only place we use ```angular.module('appName', [])``` with the empty array? The reason that empty array exists is because it's where we inject dependencies into our application. Head over to app.js and add 'ui.router' as a dependency.
+* Once you've included UI Router as a script, we need to inject UI Router into our app as a dependency. Remember how we talked about how our app.js is the hub of our application and it's the only place we use `angular.module('appName', [])` with the empty array? The reason that empty array exists is because it's where we inject dependencies into our application. Head over to app.js and add 'ui.router' as a dependency.
 * When you're done it should look something like this
 ```javascript
 var app = angular.module('miniRouting', ['ui.router']);
 ```
 
-###Step 3: Revamp Folder Structure
-* As we discussed in the lesson, Angular can dynamically change the template or controller based on what the URL is. For example, if we're at '/users' we can tell Angular to use the 'userController' controller as well as the 'userTemplate' html sheet (or view). 
+### Step 3: Revamp Folder Structure
+* As we discussed in the lesson, Angular can dynamically change the template or controller based on what the URL is. For example, if we're at '/users' we can tell Angular to use the 'userController' controller as well as the 'userTemplate' html sheet (or view).
 * As you can imagine, your app starts to get really large as you have different routes. The Angular community has found that the best way to organize your application is by feature. For example, in our app we're going to have a home page, a products page, and a settings page. Go ahead and create those three folders so that your file structure looks like this:
 ```
   mini-routing
@@ -119,8 +119,8 @@ app.service('productService', function(){
 ```
 * Note: it's just filler data that we're going to use later.
 
-###Step 4: Revamp index.html
-* What's nice about routing is that we can have certain parts of the page be static (it never changes), while other parts of the page are dynamic (changes) based on the URL. What we're going to do is have a side menu that will always stay the same no matter what page the user is on. Then, we'll use ```<div ui-view></div>``` which will be where our router kicks in. 
+### Step 4: Revamp index.html
+* What's nice about routing is that we can have certain parts of the page be static (it never changes), while other parts of the page are dynamic (changes) based on the URL. What we're going to do is have a side menu that will always stay the same no matter what page the user is on. Then, we'll use `<div ui-view></div>` which will be where our router kicks in.
 * Head over to your index.html page and inside the body above your script tags add this template
 ```html
     <div class="menu">
@@ -144,18 +144,18 @@ app.service('productService', function(){
 
 Notice that we have a side menu and then we have our `<div ui-view></div>` that will change depending on our router (which we will specify in our next step).
 
-###Step 5: Routing
-* Now that our ````<div ui-view></div>```` is set up, let's head over to app.js and actually prepare our router.
+### Step 5: Routing
+* Now that our ``<div ui-view></div>`` is set up, let's head over to app.js and actually prepare our router.
 * You have the code below but I want you to really try to not look at it until you've completed all of these next steps. I promise it's really not too tricky, just try your best and ask for help if you get stuck.
 
 * 1) add a config property onto your app variable that takes in a anonymous function as it's only argument.
-* 2) inject ```$stateProvider``` and ```$urlRouterProvider``` into that anonymous function you just built.
+* 2) inject `$stateProvider` and `$urlRouterProvider` into that anonymous function you just built.
 * 3) Now we're going to set up our routes. Here is the criteria.
-    - use the ```state``` method of ```$stateProvider``` to create a state called ```home``` that uses ```homeTmpl.html``` as the templateUrl, ```homeCtrl``` as the controller and ('/') as the url.
-    - chain another invocation of ```state``` to create a state called ```settings``` that uses ```settingsTmpl.html``` as the templateUrl, ```settingsCtrl``` as the controller and ('/settings') as the url.
-    - chain another invocation of ```state``` to create another state called ```products``` that uses ```productTmpl.html``` as the templateUrl, ```productsCtrl``` as the controller and ('/products/:id') as the url. Notice that 'products' has a ```/:id``` at the end of it. This is because we're going to tell our app which product the user is looking at based on which link they clicked. For example, if the user clicks on `<li><a ui-sref="products({id: 'shoes'})">Shoes</a>` then in our controller ```$stateParams.id``` (id correlating with the /:id from earlier) is going to be 'shoes'. This is a little bit tricky, ask for help if you need it.
-    - use the ```otherwise``` method of ```$urlRouterProvider``` and pass it the default url ('/'), to redirect all other routes to the default.
-        
+    - use the `state` method of `$stateProvider` to create a state called `home` that uses `homeTmpl.html` as the templateUrl, `homeCtrl` as the controller and ('/') as the url.
+    - chain another invocation of `state` to create a state called `settings` that uses `settingsTmpl.html` as the templateUrl, `settingsCtrl` as the controller and ('/settings') as the url.
+    - chain another invocation of `state` to create another state called `products` that uses `productTmpl.html` as the templateUrl, `productsCtrl` as the controller and ('/products/:id') as the url. Notice that 'products' has a `/:id` at the end of it. This is because we're going to tell our app which product the user is looking at based on which link they clicked. For example, if the user clicks on `<li><a ui-sref="products({id: 'shoes'})">Shoes</a>` then in our controller `$stateParams.id` (id correlating with the /:id from earlier) is going to be 'shoes'. This is a little bit tricky, ask for help if you need it.
+    - use the `otherwise` method of `$urlRouterProvider` and pass it the default url ('/'), to redirect all other routes to the default.
+
 * Here's what app.js should look like when you're done.
 
 ```javascript
@@ -184,7 +184,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         .otherwise('/');
 });
 ```
-###Step 6: Adding to Template
+### Step 6: Adding to Template
 * In order for us to know if our routes are working, we need to edit all of our templates to show some sort of confirmation that we're on a certain page. Make the following changes:
 * settingsTmpl.html should look like this
 ```html
@@ -202,10 +202,10 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 <div> We're going to use this div to loop over our data later on</div>
 ```
 * Test that everything is working by clicking on a few of the links to see if the templates change based on which link you clicked on. If it's not working, first check your console to see if there are any errors. Try to debug, if you debug for 5 minutes and are still stuck, ask for help.
-* 
+*
 
-###Step 7: Fixing Product Pages
-* The last thing we have to do is show certain product data depending on which page the user is it. For example, if the user is on the shoes page, we want to show them the shoes data. If they're on the socks page, we want to show them the socks data. Remember that in our index.html page our menu looks like this: 
+### Step 7: Fixing Product Pages
+* The last thing we have to do is show certain product data depending on which page the user is it. For example, if the user is on the shoes page, we want to show them the shoes data. If they're on the socks page, we want to show them the socks data. Remember that in our index.html page our menu looks like this:
 ```html
     <div class="menu">
         <ul>
@@ -222,8 +222,8 @@ app.config(function ($stateProvider, $urlRouterProvider) {
     </div>
 ```
 * So we know that in our controller, $stateParams.id (because of :/id in our router) will be either 'socks' or 'shoes' depending on which page the user is in. With this knowledge, we can add a simple 'if' statement to check which product page the user is on.
-* In your products controller, inject ```$stateParams``` and ```productService``` into your controller. 
-* Now write an if statement, if ```$stateParams.id``` is equal to 'shoes', then ```$scope.productData``` should be set to ```productService.shoeData```. If ```$stateParams.id``` is equal to 'socks', then ```$scope.productData``` should be set to ```productService.sockData```.
+* In your products controller, inject `$stateParams` and `productService` into your controller.
+* Now write an if statement, if `$stateParams.id` is equal to 'shoes', then `$scope.productData` should be set to `productService.shoeData```. If `$stateParams.id` is equal to 'socks', then `$scope.productData` should be set to `productService.sockData```.
 * Now we know that we have data on the scope equal to certain product data, depending on which product the user is looking at.
 * Your productCtrl.js should now look like this: (Note: Please don't just copy and paste. Try to really understand what's going on.)
 ```javascript
@@ -243,8 +243,8 @@ app.controller('productsCtrl', function ($scope, $stateParams, productService) {
 ```html
 <h1> Product Page </h1>
 <div ng-repeat="item in productData">
-    Type: {{ item.type }} </br>
-    Color: {{ item.color }} </br>
-    Size: {{ item.size }} </br>
+    Type: {{ item.type }} <br>
+    Color: {{ item.color }} <br>
+    Size: {{ item.size }} <br>
 </div>
 ```
