@@ -1,6 +1,6 @@
 var app = angular.module('nbaRoutes');
 
-app.controller('teamCtrl', function($scope, $routeParams, teamService, teamData){
+app.controller('teamCtrl', function($scope, $stateParams, teamService, teamData){
   $scope.teamData = teamData;
   $scope.newGame = {};
   $scope.showNewGameForm = false;
@@ -8,13 +8,13 @@ app.controller('teamCtrl', function($scope, $routeParams, teamService, teamData)
     $scope.showNewGameForm = !$scope.showNewGameForm;
   }
 
-  if ($routeParams.team = 'utahjazz') {
+  if ($stateParams.team = 'utahjazz') {
       $scope.homeTeam = 'Utah Jazz';
       $scope.logoPath = 'images/jazz-logo.png'; }
-  else if ($routeParams.team = 'losangeleslakers') {
+  else if ($stateParams.team = 'losangeleslakers') {
       $scope.homeTeam = 'Los Angeles Lakers';
       $scope.logoPath = 'images/lakers-logo.png'; }
-  else if ($routeParams.team = 'miamiheat') {
+  else if ($stateParams.team = 'miamiheat') {
       $scope.homeTeam = 'Miami Heat';
       $scope.logoPath = 'images/heat-logo.png'; }
 

@@ -1,10 +1,10 @@
-var app = angular.module('nbaRoutes', ['ngRoute']);
+var app = angular.module('nbaRoutes', ['ui.route']);
 
-app.config(function($routeProvider, $httpProvider) {
+app.config(function($stateProvider, $httpProvider) {
   $httpProvider.interceptors.push('httpRequestInterceptor');
 
-  $routeProvider
-    .when('/', {
+  $stateProvider
+    .state('/', {
       templateUrl: 'js/home/homeTmpl.html',
       controller: 'homeCtrl',
       resolve: {
@@ -13,7 +13,7 @@ app.config(function($routeProvider, $httpProvider) {
         }
       }
     })
-    .when('/teams/:team', {
+    .state('/teams/:team', {
       templateUrl: 'js/teams/teamTmpl.html',
       controller: 'teamCtrl',
       resolve: {
