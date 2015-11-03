@@ -1,1 +1,1 @@
-var app = angular.module('timeApp', []);
+var app = angular.module('timeApp', [angular-timeago]);

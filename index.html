@@ -10,15 +10,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/livestamp/1.1.2/livestamp.js" type="text/javascript"></script>
     <script src="js/app.js"></script>
     <script src="js/mainCtrl.js"></script>
-    <script src="js/timeDirective.js"></script>
+    <!--<script src="js/timeDirective.js"></script>-->
+    <script src="js/at.js"></script>
     <link rel="stylesheet" type="text/css" href="css.css">
 </head>
 
 <body ng-app="timeApp">
     <div ng-controller="mainCtrl">
-
-       You got here right around <span data-livestamp="<show-time></show-time>"></span>.
-
+       <div class="current-time"> it is now {{ nowTime() }}</div>
+  <div class="filter-example">you got here right around {{ pageLoadTime | timeAgo }}</div>
+ <!--You got here right around <span data-livestamp="<show-time></show-time>"></span>.-->
+  <div class="directive-example">which is also about <time-ago from-time='{{ pageLoadTime }}'></time-ago></div>
+  </div>
 
     </div>
 
