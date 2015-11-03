@@ -7,7 +7,6 @@ We've included only a few things for you to begin with. `index.html`, `app.js`, 
 
 
 You'll notice that in the `index.html` we've included the ui.router CDN. Yes, we'll be using ui.router here. Put a `ui-view`` into your `index.html`.
-You'll notice that in the `index.html` we've included the ui-router CDN. Yes, we'll be using ui-router here. Put an `ui-view` into your `index.html`.
 - In your `app.js` set up a `config` and set up our first route for when a user is at the `'/home'` url. *If you're having trouble remembering how to set up the router go look at how you set up the router on the previous project. One way these projects will be beneficial to you is allowing you to look back at something **you** did and seeing how **you** got that something to work.*
 - You may also want add an otherwise that defaults to `/home`.
 - Create a controller and a template file for this route in your `app` folder. *Don't forget to include the controller as a script in your index.html*
