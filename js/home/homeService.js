@@ -8,7 +8,8 @@ app.service('homeService', function($http, $q, teamService){
       la: teamService.getTeamData('losangeleslakers'),
       snazz: teamService.getTeamData('utahjazz')
     }
-    $q.all(vows).then(function(result) {
+    $q.all(vows)
+    .then(function(result) {
       deferred.resolve(result);
     });
     return deferred.promise;
