@@ -1,13 +1,11 @@
-/*
- * This is my standard CSS, as best displayed at zacanger.com/blog
+/* * This is my standard CSS, as best displayed at zacanger.com/blog
  * Additions and modifications will be commented.
  * Inspiration, cues, & some numbers from getskeleton.com
  * and the work of mrmrs.io , jxnblk.com , and feint.me
  * If it's original, it's DBAD; http://dbad-license.org
- */
 
 
-/* First, a wee reset... */
+First, a wee reset...
 html, body { height: 100%; width: 100%; }
 html, body, ul, ol, li, form, fieldset, legend
 { margin: 0; padding: 0; }
@@ -28,9 +26,9 @@ abbr, acronym
 { border-bottom: .1em dotted; cursor: help; }
 
 
-/* Now, some actual styling... */
+Now, some actual styling...
 
-/* For hiding things, but not from screen readers */
+For hiding things, but not from screen readers
 .a11y-hidden {
    position: absolute;
    left: -10000px;
@@ -40,7 +38,7 @@ abbr, acronym
    overflow: hidden;
 }
 
-/* 1.5rem = 15px */
+1.5rem = 15px
 html {
   font-size: 62.5%; }
 body {
@@ -55,7 +53,7 @@ body {
   margin-left: 10rem;
 }
 
-/* Typography */
+Typography
 h1, h2, h3, h4, h5, h6 {
   margin-top: 2rem;
   margin-bottom: 1rem;
@@ -67,7 +65,7 @@ h4 { font-size: 2.4rem; line-height: 1.35; letter-spacing: -.08rem; }
 h5 { font-size: 1.8rem; line-height: 1.5;  letter-spacing: -.05rem; }
 h6 { font-size: 1.6rem; line-height: 1.6;  letter-spacing: 0; }
 
-/* Larger than phablet */
+Larger than phablet
 @media (min-width: 550px) {
   h1 { font-size: 4.0rem; }
   h2 { font-size: 3.6rem; }
@@ -77,13 +75,13 @@ h6 { font-size: 1.6rem; line-height: 1.6;  letter-spacing: 0; }
   h6 { font-size: 1.6rem; }
 }
 
-/* Links */
+Links
 a {
   color: #71A397; }
 a:hover {
   color: #89D470; }
 
-/* Lists */
+Lists
 ul {
   list-style: circle inside; }
 ul {
@@ -95,10 +93,10 @@ ul ul {
 li {
   margin-bottom: 1rem; }
 
-/* Spacing */
+Spacing
 p { margin-top: 1rem; }
 p,ul { margin-bottom: 2.5rem; }
-img /* oh god what */
+img oh god what
   {
   float: left;
   margin: 0 1rem 1rem 0; }
@@ -109,8 +107,8 @@ hr {
   border-width: 0;
   border-top: 1px solid #EDC5E8; }
 
-/* Here down: project-specific styles */
-
+Here down: project-specific styles
+ */
 
 .main-container {
   width: 80%;
