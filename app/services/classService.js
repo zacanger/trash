@@ -6,8 +6,6 @@ angular.module('seatingApp').service('classService', function(){
     }
     
     this.addClass = function(classObj){
-     
-        
         var allTables = [];
         var students = [];
         for(var i = 0; i < classObj.studentCount; i++){
@@ -36,4 +34,11 @@ angular.module('seatingApp').service('classService', function(){
         
         classroom.push(classObj);
     }
+    
+    this.addClass({
+            name: 'Ninja',
+            tableCount: 8,
+            tableCapacity: 4,
+            studentCount: 20
+        });
 });
