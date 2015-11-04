@@ -27,7 +27,7 @@ It can also be very helpful to think of your directive as a route.
  - You didn't link your directive in your index as a script.
  - Your name for your directive doesn't match the name in your html. *Remember camel case becomes snake case so `myDirective` becomes `<my-directive></my-directive>`.*
  - You're file path to your html template is wrong. *You have to think of file paths in angular as relative to the index.*
- 
+
 Here's some code to see just for this part, and just for the directive's `js` file.
 ```javascript
 var app = angular.module('directivePractice');
@@ -42,7 +42,7 @@ What we're returning is the directive object. You won't see anymore code in this
 
 ## Step 2. Advancing directives
 Your directive should be loaded up now, but it's not really doing much. Let's make it better.
-- In your home controller. Make a variable on your `$scope` called user. Set it's value to 
+- In your home controller. Make a variable on your `$scope` called user. Set it's value to
 ```javascript
 {
   name: "Geoff McMammy",
@@ -59,7 +59,7 @@ This is still very cosmetic and really not all that useful. It needs functionali
 - Add into your directive's object the `link` property.
 - The link property's value is a function definition that takes (generally) three parameters. `scope`, `element`, and `attributes`.
 
-Unlike in other places with angular injection these parameter names don't carry meaning. The first parameter will always represent your `$scope` for that directive, the second 
+Unlike in other places with angular injection these parameter names don't carry meaning. The first parameter will always represent your `$scope` for that directive, the second
 will always be the element that wraps your whole directive, and the third will always be an object containing all the properties and values of the attributes on your directive in the dom.
 Try the following to get a feel for all three.
 - Add two attributes to your directive in your html. Like this - `<dir-display test="myTest" my-check="checkItOut"></dir-display>`
@@ -74,7 +74,7 @@ For `attributes` you'll see an object that will look like this:
   myCheck: "checkItOut"
 }
 ```
-An important thing to notice is how it has again converted snake case to camel case for you. `my-check` became `myCheck`. Don't forget this. You'll run into this issue one day. It counts for 
+An important thing to notice is how it has again converted snake case to camel case for you. `my-check` became `myCheck`. Don't forget this. You'll run into this issue one day. It counts for
 both attributes and directive names.
 
 To feel some of what the link function could do let's try this.
@@ -82,7 +82,7 @@ To feel some of what the link function could do let's try this.
 - Now inside your link function add a click event listener to your element property. It's going to look just like jQuery.
 ```javascript
 element.on('click', function(){
-  
+
 })
 ```
 
@@ -96,7 +96,7 @@ using something like jQuery or even angular's jQLite we need to let angular know
 - Add this line of code in place of your `console.log`, `scope.$apply()`.
 - Now try it out. It should be working now, so if you're still having issues it's time to debug.
 
-What we've done is forced angular to run it's digest cycle. This is where angular checks the `scope` object for changes and then applies those to the DOM. This is another good lesson to learn for later. You'll most likely hit this when making changes 
+What we've done is forced angular to run it's digest cycle. This is where angular checks the `scope` object for changes and then applies those to the DOM. This is another good lesson to learn for later. You'll most likely hit this when making changes
 to your element using event listeners.
 
 ## Step 3. Directive's re-usability.
@@ -229,32 +229,32 @@ It's `$scope` object will only be accessible within an instance of your directiv
 - Inside your controller function run the `weatherCall` function with the `city` property from the `currentUser` on your `$scope`.
  - Here's where you need to make sure you've passed in a `city` argument in the attribute function call, and then replace that with your `currentUser`'s city
  using an object with a `city` property.
-- The function call should return a promise, so call `.then` afterward and add the data onto your `$scope` to display both the weather and temperature of 
+- The function call should return a promise, so call `.then` afterward and add the data onto your `$scope` to display both the weather and temperature of
 the `currentUser`'s city. The properties can be named whatever makes sense to you.
  - You may also want to find a way to get rid of all the decimal places on your temperature.
- 
+
  Now you should have everything hooked up so it shows Geoff's data and the weather data for Provo. But is that good enough?
- 
+
 ##Step 6. Ramping up our ramp up.
  Now let's change this so it shows the weather data for whichever user we select. We're going to need to use `'&'` again.
  - Make a function on the `home` controller that takes in a parameter and sets a property on the `$scope` to be that parameter. Maybe you see where this is going.
- 
- We want to get this function into our `dirDisplay` controller. But in order to do that we need to isolate `dirDisplay`'s scope. 
+
+ We want to get this function into our `dirDisplay` controller. But in order to do that we need to isolate `dirDisplay`'s scope.
  This also means we need to pass in each individual user through the `scope` object as well.
  - To make it easier on ourselves, let's pass the current user from our `ng-repeat` into our directive through a `user` attribute. This way we can leave
  our two-way bindings as they are.
  - Also pass our new function that sets our current user from our `home` controller into our directive through a `setUser` attribute.
   - You'll need to add an argument in there again. Go with `user`.
- 
+
  Your scope object in `dirDisplay` should have two properties. `setUser` with the value of `'&'` and `user` with the value of `'='`.
  As before we're going to need to do some tricky stuff to get our argument back to our controller.
  - Call the `setUser` function inside our click event listener and pass in an object the sets our `user` argument to be the user on
  our directive's `scope` object. If you've forgotten this part go back up and take a look at how you did it before or the example in this README.
- 
+
  Whatever user you click on now should show up in the `dirWeather` directive as the current user. But we're missing one thing, we want to be able to see
  the weather for that user too. We'll have to do one more thing that will seem a little bit tricky at first, but it's good to learn if you don't know it already
  since it's actually used quite frequently.
- 
+
  We need to step up a change listener on our `currentUser` in the `dirWeather` directive. We'll use angular's `$watch` functionality. `$watch` is a method on
  your `$scope` that will watch for changes in a variable you give it. It works in two ways.
  ```javascript
@@ -273,14 +273,14 @@ the `currentUser`'s city. The properties can be named whatever makes sense to yo
  - Remove the immediate function call that we have in there now. Maybe just comment it out for now because we'll use it in a bit.
  - Now call the `$watch` method on your scope and have it watch currentUser. Either way of using `$watch` is fine.
  - Have its callback run the `$scope.weatherCall` function just like you had it before.
- 
+
  *One thing to note is that `$scope.$watch` will always run once to begin with. Since that's what we want here it's great, but just be aware of that.*
-  
+
  If you've reached this point congratulate yourself. You've messed with some serious stuff today, namely directives. There are still a lot of things about
  directives that we can't possibly cover in a single project. If you like what we've done so far then you're in a good place to keep going. A developer
  who understands directives well can build a really clean looking code base. Just look at your `home.html`. It could have just two lines in it. If you're feeling
  good move on now to **Step 7**.
- 
+
  ##Step 7. Finishing touches
  Try to work out these problems on your own.
  1. There should be a way to let the user know that the weather data is loading. Something that appears while our $http request is retrieving our data.
