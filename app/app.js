@@ -1,9 +1,10 @@
-var app = angular.module('directives', ['ui.router']);
-
-app.config(function($stateProvider){
+var app = angular.module('directives', ['ui.router'])
+app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
   $stateProvider
-    .otherwise('/', {
+    .state('home', {
+      url: '/',
       templateUrl: 'app/home/home.html',
-      controller: 'app/home/homeCtrl.js'
-    });
-});
+      controller: 'homeCtrl'
+    })
+  $urlRouterProvider.otherwise('/')
+}])
