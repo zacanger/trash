@@ -1,7 +1,6 @@
- 'use strict';
-angular.module('rtfm', ['ui.router', 'firebase'])
-  .service(fb){
-      var firebaseRef = new Firebase("https://dazzling-torch-2219.firebaseio.com/");
+angular.module('rtfm')
+  .service('tSvc', function(fb){
+    var firebaseRef = new Firebase("https://dazzling-torch-2219.firebaseio.com/");
     this.getThreads = function(){
       return new Firebase(fb.url + '/threads')
     };
@@ -9,6 +8,6 @@ angular.module('rtfm', ['ui.router', 'firebase'])
       return new Firebase(fb.url + '/threads' + 'threadId')
     };
     this.getComments = function(threadId){
-      return new Firebase(fb.url + '/threads' + threadId + '/comments');
+      return new Firebase(fb.url + '/threads/' + threadId + '/comments');
     };
-}
+});
