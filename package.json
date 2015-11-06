@@ -1,0 +1,37 @@
+{
+  "name": "markvi",
+  "description": "markdown edtor; vi keys; angular.",
+  "version": "0.1",
+  "keywords": [
+    "vim",
+    "vi",
+    "markdown",
+    "angular"
+  ],
+  "maintainers": [
+    {
+      "name": "Zac Anger",
+      "email": "zac@zacanger.com",
+      "web": "http://zacanger.com"
+    }
+  ],
+  "demos": [
+    ""
+  ],
+  "dependencies": {
+    "": ""
+  },
+  "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/zacanger/markvi.git"
+    }
+  ],
+  "licenses": [
+    {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  ]
+}
+
