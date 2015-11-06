@@ -3,32 +3,33 @@
 Today we will be building a custom directive that checks whether a lesson is already in the provided schedule and striking through that lesson if it is in the schedule. We will cover the fundamentals of directives and demonstrate a real-world use case that will allow you to better understand the power of directives.
 
 ## Step 1: Initializing the file structure.
-All that is provided is the schedule.json and app.js, so lets start by laying out the skeleton of our app. We will need an 'index.html', 'lessonCtrl.js', 'lessonService.js', and last but not least a 'lessonHider.js'. So lets start out by creating those files and setting up the necessary basics such as initializing the app and controller.
+All that is provided is the schedule.json and app.js, so lets start by laying out the skeleton of our app. We will need an `index.html`, `lessonCtrl.js`, `lessonService.js`, and last but not least a `lessonHider.js`. So lets start out by creating those files and setting up the necessary basics such as initializing the app and controller.
 
 ## Step 2: Starting your directive.
-Start by creating your directive. You will use the directive method on your angular module (just like you do when creating controllers and services). This method takes two parameters, a string that will be the name of your directive, and a callback function which will return an object. It should look something like this:
+Start by creating your directive. You will use the directive method on your angular module (just like you do when creating controllers and services). This method takes two parameters: a string that will be the name of your directive, and a callback function which will return an object. It should look something like this:
 
 ```javascript
 angular.module('directivePractice')
 .directive('lessonHider', function() {
 	return {
-	
+
 	}
 });
 ```
 
-Starting out looking pretty familiar right? So let's test it and make sure it works! Start out by creating a new file named 'lessonHider.html' and adding some text. Once you have that done we can add a property called ```templateUrl: ``` to our directive's return object. Point the templateUrl to your newly created 'lessonHider.html'. Now all we need to do is add the directive to our 'index.html' to see if it works. Remember that directives are converted to snake-case in html!
+Starting out looking pretty familiar right? So let's test it and make sure it works! Start out by creating a new file named `lessonHider.html` and adding some text. Once you have that done we can add a property called `templateUrl: ` to our directive's return object. Point the templateUrl to your newly created `lessonHider.html`. Now all we need to do is add the directive to our `index.html` to see if it works. Remember that directives are converted to snake-case in html!
 
-If you are not seeing the text in your 'lessonHider.html' it is time to double check your steps. Did you remember to add your 'lessonHider.js' to your 'index.html'? Did you convert your directive to snake-case? Is the file path in your templateUrl property correct?
+If you are not seeing the text in your `lessonHider.html` it is time to double check your steps. Did you remember to add your `lessonHider.js` to your `index.html`? Did you convert your directive to snake-case? Is the file path in your `templateUrl` property correct?
 
 Your directive in your html should look like this:
 ```html
 <lesson-hider></lesson-hider>
 ```
-It can be helpful to think of a directive as a self contained route, wherever you place that directive it will display the html template you have given it. Before moving on to adding functionality, lets add the `restrict` property to our directive's return object. Restrict determines how you can use the directive in your DOM and there are three options: `'E'`, `'A'`, and `'C'`. These stand for Element, Attribute, and Class. A directive that has `restrict: 'E'` (note that 'E' is a string) can only be used in your html as an element, like we have above. Think through Angular's built in directives such as ng-repeat or ng-options. These are used with the `'A'` restriction because they are passed as attributes to existing elements. Directives as classes are less commonly seen and should not be used as they are being phased out of angular. So for now, let us just restrict our lessonHider directive to only be an Element.
+
+It can be helpful to think of a directive as a self contained route; wherever you place that directive it will display the html template you have given it. Before moving on to adding functionality, lets add the `restrict` property to our directive's return object. Restrict determines how you can use the directive in your DOM, and there are three options: `'E'`, `'A'`, and `'C'`. These stand for Element, Attribute, and Class. A directive that has `restrict: 'E'` (note that 'E' is a string) can only be used in your html as an element, like we have above. Think through Angular's built in directives such as `ng-repeat` or `ng-options`. These are used with the `'A'` restriction because they are passed as attributes to existing elements. Directives as classes are less commonly seen and should not be used as they are being phased out of Angular. So for now, let us just restrict our `lessonHider` directive to only be an Element.
 
 ## Step 3: Adding functionality
-So far our directive is displaying some text, but it isn't doing much else, so lets bring it up a level! Inside your lessonCtrl let's add an array of lessons to your $scope. Give the lessons array these values:
+So far our directive is displaying some text, but it isn't doing much else, so lets bring it up a level! Inside your `lessonCtrl` let's add an array of lessons to your `$scope`. Give the lessons array these values:
 
 ```javascript
 ['Services', 'Routing', 'Directives', 'Review', 'Firebase', 'No server project', 'Node', 'Express', 'Mongo'];
@@ -36,25 +37,28 @@ So far our directive is displaying some text, but it isn't doing much else, so l
 
 Now inside of our directive's template we can display the array of lessons the same way we would in any of our other html. So lets add the lessons array to the template and reload the page to make sure it prints out what we want it to.
 
-Cool! But still not much that is new, so lets dive a little deeper. Inside of your 'lessonHider.js' add another property to your return object called 'link' and give it the value of a function. The link method will (usually) take three paramaters: 'scope', 'element', and 'attributes'. At this point your directive should look like this:
+----------
+
+Cool! But still not much that is new, so lets dive a little deeper. Inside of your `lessonHider.js` add another property to your return object called `link` and give it the value of a function. The link method will (usually) take three paramaters: `scope`, `element`, and `attributes`. At this point your directive should look like this:
 
 ```javascript
 angular.module('directivePractice')
 .directive('lessonHider', function() {
-	
+
 	return {
 		templateUrl: 'lessonHider.html',
 		restrict: 'E',
 		link: function( scope, element, attributes ) {
-			
+
 		}
 	}
 
 });
 ```
+
 Unlike dependency injection used elsewhere in Angular these paramater names don't carry specific meaning. The first paramater represents the `$scope` of your directive, the second is the html element that wraps your directive, and the third is an object containing all the properties and values of the attributes on your directive in the DOM.
 
-Remember that data is passed to directives through attributes on the element. So in our html lets add an attribute named `my-test` and give it a value of `Hello there!`. Just like this : `<lesson-hider my-test="Hello there!"></lesson-hider>`
+Remember that data is passed to directives through attributes on the element. So in our html, let's add an attribute named `my-test` and give it a value of `Hello there!`. Just like this: `<lesson-hider my-test="Hello there!"></lesson-hider>`
 
 Now inside of your link method lets console log the three paramaters (scope, element, attributes) check out the console to see what we're getting. The scope will log out an object containing angular properties, the element will log out the actual DOM element itself, and you will be able to see that the attributes logs out your myTest attribute and value. You can also see that Angular has done it's magic in converting the snake-case in your html to camelCase.
 
@@ -69,7 +73,7 @@ Angular's work around to this problem lies in something called Isolate Scope, Is
 ```javascript
 angular.module('directivePractice')
 .directive('lessonHider', function() {
-	
+
 	return {
 		templateUrl: 'lessonHider.html',
 		restrict: 'E',
@@ -93,22 +97,22 @@ scope: {
 	functionBinding: '&'
 }
 ```
-A two way data binding means that our directive and it's parent controller (lessonCtrl in this case) are in constant communication when the value passed in changes. Any changes made will be reflected both in the controller and inside the directive.
+- A two way data binding means that our directive and it's parent controller (`lessonCtrl` in this case) are in constant communication when the value passed in changes. Any changes made will be reflected both in the controller and inside the directive.
 
-A string binding simply tries to grab the string value that is passed to it.
+- A string binding simply tries to grab the string value that is passed to it.
 
-A function binding allows you to pass a function from the controller, into your directive.
+- A function binding allows you to pass a function from the controller, into your directive.
 
-So lets give our new `scope:` object a key-value pair with the key being `lesson:` and the value being `'='`. What we are doing here is telling our directive that we plan on having an attribute named `lesson` and we want to create a two way data binding between our directive and the parent controller on whatever value is passed to that attribute.To demonstrate this two way binding we first need to pass our directive a `lesson` attribute and give that attribute a value.
+So lets give our new `scope:` object a key-value pair with the key being `lesson:` and the value being `'='`. What we are doing here is telling our directive that we plan on having an attribute named `lesson` and we want to create a two way data binding between our directive and the parent controller on whatever value is passed to that attribute. To demonstrate this two way binding we first need to pass our directive a `lesson` attribute and give that attribute a value.
 
-In our lessonCtrl lets create a new property on the `$scope` and call it 'test', we will give this a value of 'Two way data binding!'. Now let's add `{{ test }}` to a new `<div>` inside our index.html, you should see your page update with 'Two way data binding!'. To get this to display inside of our directive as well, we need to add an attribute to our directive inside our index.html. So lets add the `lesson` attribute to our directive and pass it the value `"test"`. If you don't remember how to do this, look back to the previous section when you used the `my-test` attribute.
+In our `lessonCtrl` lets create a new property on the `$scope` and call it `'test'`; we will give this a value of `'Two way data binding!'`. Now let's add `{{ test }}` to a new `<div>` inside our `index.html`. You should see your page update with 'Two way data binding!'. To get this to display inside of our directive as well, we need to add an attribute to our directive inside our `index.html`. So lets add the `lesson` attribute to our directive and pass it the value `'test'`. If you don't remember how to do this, look back to the previous section when you used the `my-test` attribute.
 
-Now all we need to do to display our string is add it to the lessonHider template. So inside of lessonHider.html lets add `{{ lesson }}` and you should see a second 'Two way data binding!' show up on your page. The reason we use 'lesson' here instead of 'test' is because our directive can no longer talk to our controller, it only knows the values we give it, and we have passed `$scope.test` to our directives `lesson` attribute, so we can only access it by `lesson`.
+Now all we need to do to display our string is add it to the `lessonHider` template. So inside of `lessonHider.html` lets add `{{ lesson }}` and you should see a second 'Two way data binding!' show up on your page. The reason we use `'lesson'` here instead of `'test'` is because our directive can no longer talk to our controller, it only knows the values we give it, and we have passed `$scope.test` to our directive's `lesson` attribute, so we can only access it by `lesson`.
 
 There is only one more step to demonstrate what I mean by two way data binding. Let's create an input box inside of our directive and give it an `ng-model` of `lesson`. Now by typing in the input box you can see that the changes you make effect both `$scope.test` AND `lesson`!
 
 ## Step 5: Adding even more functionality!
-So now we know how to set up the basic layout of a directive, give it a template, isolate the scope, and pass it data! Pretty impressive, but we aren't done yet. Our directive still doesn't really DO much. So lets fix that now. First things first, lets wrap our directive (in our index.html) in a `<ul>` tag and add an `ng-repeat` to our directive, repeating over the lessons array in your lessonCtrl. Don't worry! ng-repeat will work on our directive just like it would on any other element. Next we will pass each lesson in the array to our `lesson` attribute on the directive.
+So now we know how to set up the basic layout of a directive, give it a template, isolate the scope, and pass it data! Pretty impressive, but we aren't done yet. Our directive still doesn't really DO much. Let's fix that now. First things first: let's wrap our directive (in our `index.html`) in a `<ul>` tag and add an `ng-repeat` to our directive, repeating over the lessons array in your `lessonCtrl. __Don't worry!__ `ng-repeat` will work on our directive just like it would on any other element. Next we will pass each lesson in the array to our `lesson` attribute on the directive.
 
 `index.html`:
 ```
@@ -117,7 +121,7 @@ So now we know how to set up the basic layout of a directive, give it a template
 </ul>
 ```
 
-For formatting purposes we'll also want to add `<li>` tags to our lessonHider.html.
+For formatting purposes we'll also want to add `<li>` tags to our `lessonHider.html`.
 `lessonHider.html`:
 ```
 <li>{{ lesson }}</li>
@@ -127,9 +131,9 @@ Now when you reload the page you should see a list of all the different lessons 
 
 What we are going to do now is add a controller to our directive. Simply add the key `controller:` to our directive's return object and give it the value of a function. This may seem a little strange, but we can treat this controller the same way as we do any other controller we are used to using, the only difference is that this controller can only apply to this directive. Knowing that this controller is the same as what we are used to working with, lets inject `$scope` and `lessonService` just like we're used to.
 
-Since we're injecting lessonService lets go add the function there we need. Create a method named `getSchedule` that simply returns a GET request to your schedule.json (You probably haven't done an $http request to one of your own files before, but it works just the same. `return $http.get('schedule.json');`).
+Since we're injecting `lessonService` lets go add the function there we need. Create a method named `getSchedule` that simply returns a GET request to your schedule.json (You probably haven't done an $http request to one of your own files before, but it works just the same. `return $http.get('schedule.json');`).
 
-Because we have injected lessonService into our directive's controller we can now access that function in the same way we are used to in other controllers. Lets assign the return value of `lessonService.getSchedule()` to a new value called `$scope.getSchedule`. You may have noticed that we still haven't called a `.then` yet, we're almost there!
+Because we have injected `lessonService` into our directive's controller we can now access that function in the same way we are used to in other controllers. Lets assign the return value of `lessonService.getSchedule()` to a new value called `$scope.getSchedule`. You may have noticed that we still haven't called a `.then` yet; we're almost there!
 
 ## Step 6: Utilizing the link function.
 If you've forgotten along the way what our directive is going to be doing, here's a reminder: We are going to check whether a lesson is already in the schedule, and if it is, we will cross it out.
@@ -140,7 +144,7 @@ Your directive should now look something like this:
 ```javascript
 angular.module('directivePractice')
 .directive('lessonHider', function() {
-	
+
 	return {
 		templateUrl: 'lessonHider.html',
 		restrict: 'E',
@@ -171,10 +175,11 @@ Our directive now has functionality and is an example of a real world use case! 
 What if the user wants to know what day of the schedule a lesson is active on? Right now all they know is that some lessons are active somewhere in the schedule. Lets fix this!
 
 Before adding more functionality, lets make sure we're up to speed, here is what your directive should look like now:
+
 ```javascript
 angular.module('directivePractice')
 .directive('lessonHider', function() {
-	
+
 	return {
 		templateUrl: 'lessonHider.html',
 		restrict: 'E',
@@ -203,16 +208,16 @@ angular.module('directivePractice')
 });
 ```
 
-First we will need to add a new property onto our scope object, lets call this property `dayAlert:`. We will be passing this value a function, so remember that we want to use the `'&'` instead of the `'='`. Now that we have that property on our scope, we need to give it a value, so lets go back to our lessonCtrl and write a new function named announceDay. This function will be nice and simple, it should take two parameters, lesson and day, and just alert `lesson + ' is active on ' + day + '.'`.
+First we will need to add a new property onto our scope object. Let's call this property `dayAlert:`. We will be passing this value a function, so remember that we want to use the `'&'` instead of the `'='`. Now that we have that property on our scope, we need to give it a value, so lets go back to our `lessonCtrl` and write a new function named `announceDay`. This function will be nice and simple. It should take two parameters, lesson and day, and just alert `lesson + ' is active on ' + day + '.'`.
 
-Our next step is to pass this new function to our directive. Don't forget that angular will swap camelCase to snake-case in your html! The directive element inside your index.html should now look something like this: 
+Our next step is to pass this new function to our directive. Don't forget that Angular will swap camelCase to snake-case in your html! The directive element inside your index.html should now look something like this:
 ```html
 <lesson-hider ng-repeat="lesson in lessons" lesson="lesson" day-alert="announceDay(lesson, day)"></lesson-hider>
 ```
 
 Now that we have access to our new function inside of our directive we need to change a few things. First off, we will need to save a reference to the lesson's day on our scope. So inside our link function's if statement we will create a new property called `scope.lessonDay` and set it equal to the day in the schedule's `weekday` property. With this reference we are ready to make `dayAlert` available to our users.
 
-Inside our directive's template, lets add a button element and give that element an ng-click attribute with the value of `ng-click="dayAlert({ lesson: lesson, day: lessonDay })"`. This syntax is a little strange, but it is just a quirk of directives. We pass the function call a single object with key names that match the parameter names we gave `day-alert` in our html and then give those keys the values of the arguments we would like to pass to the function. In this case we want to pass our `scope.lesson` property as the first argument to `lesson` and our `scope.lessonDay` property as the second argument that will be passed to `day`.
+Inside our directive's template, lets add a button element and give that element an `ng-click` attribute with the value of `ng-click="dayAlert({ lesson: lesson, day: lessonDay })"`. This syntax is a little strange, but it is just a quirk of directives. We pass the function call a single object with key names that match the parameter names we gave `day-alert` in our html and then give those keys the values of the arguments we would like to pass to the function. In this case we want to pass our `scope.lesson` property as the first argument to `lesson` and our `scope.lessonDay` property as the second argument that will be passed to `day`.
 
 ## Step 8: Next steps.
 Congratulations! You have written a new custom directive that utilizes the restrictions, a templateUrl, isolate scope, a controller, and a link function! Directives can be a lot to wrap your head around, so here are a few options to familiarize yourself further:
