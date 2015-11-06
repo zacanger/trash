@@ -1,0 +1,30 @@
+## global
+
+npm-debug.log*
+*.so.*
+*.so
+*.elf
+*.ko
+*.o
+*.out
+*.gz
+*.tar
+*.bz2
+*.7z
+TAGS
+tags
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg
+/.build/
+_build/
+*.zedstate
+/bin/x
+/bin/x/**
+
+## project
+# when we're not in super don't-know-what-we're-doing-yet-mode...
+# /bower_components/
+# /npm_modules/
+
