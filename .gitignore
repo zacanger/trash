@@ -25,6 +25,6 @@ _build/
 
 ## project
 # when we're not in super don't-know-what-we're-doing-yet-mode...
-/bower_components/
+/app/bower_components/
 /node_modules/
 
