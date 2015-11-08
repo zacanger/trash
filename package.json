@@ -29,8 +29,8 @@
   ],
   "licenses": [
     {
-      "name": "MIT",
-      "url": "https://opensource.org/licenses/MIT"
+      "name": "WTFPL",L
+      "url": "http://www.wtfpl.net/"
     }
   ],
   "scripts": {
