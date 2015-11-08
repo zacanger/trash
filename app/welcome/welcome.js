@@ -14,24 +14,18 @@ angular.module('myApp.welcome', ['ngRoute'])
     if(!$scope.username){
         $location.path('/home');
     }
-
     var firebaseObj = new Firebase("https://dm7.firebaseio.com/posts/");
-
-
     var sync = $firebase(firebaseObj.startAt($scope.username).endAt($scope.username));
 
     $scope.articles = sync.$asArray();
-
     $scope.logout = function(){
     CommonProp.logoutUser();
 }
-
 
     $scope.editPost = function(id) {
         var firebaseObj = new Firebase("https://dm7.firebaseio.com/posts/" + id);
         var syn = $firebase(firebaseObj);
         $scope.postToUpdate = syn.$asObject();
-
         $('#editModal').modal();
     }
 
@@ -47,9 +41,7 @@ angular.module('myApp.welcome', ['ngRoute'])
             $('#editModal').modal('hide')
         }, function(error) {
         });
-
     }
-
 
     $scope.confirmDelete = function(id) {
         var fb = new Firebase("https://dm7.firebaseio.com/posts/" + id);
@@ -66,8 +58,5 @@ angular.module('myApp.welcome', ['ngRoute'])
         }, function(error) {
         });
     }
-
-
-
 
 }]);

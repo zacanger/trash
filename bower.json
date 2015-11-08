@@ -3,11 +3,12 @@
   "description": "A beautiful, minimalistic writing platform",
   "version": "0.0.1",
   "homepage": "https://github.com/zacanger/vimark",
-  "license": DBAD,
+  "license": "DBAD",
   "private": false,
   "dependencies": {
-    "angular-loader": "1.2.x",
-    "angular-mocks": "~1.2.x",
-    "html5-boilerplate": "~4.3.0"
+    "angular-loader": "^1.5.0",
+    "angular-mocks": "^1.5.0",
+    "html5-boilerplate": "^5.2.0",
+    "angular-route": "^1.5.0"
   }
 }
