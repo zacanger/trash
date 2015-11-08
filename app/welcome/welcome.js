@@ -15,7 +15,7 @@ angular.module('myApp.welcome', ['ngRoute'])
         $location.path('/home');
     }
 
-    var firebaseObj = new Firebase("https://blistering-heat-2473.firebaseio.com/Articles/");
+    var firebaseObj = new Firebase("https://dm7.firebaseio.com/posts/");
 
 
     var sync = $firebase(firebaseObj.startAt($scope.username).endAt($scope.username));
@@ -29,8 +29,6 @@ angular.module('myApp.welcome', ['ngRoute'])
 
     $scope.editPost = function(id) {
         var firebaseObj = new Firebase("https://dm7.firebaseio.com/posts/" + id);
-
-
         var syn = $firebase(firebaseObj);
         $scope.postToUpdate = syn.$asObject();
 

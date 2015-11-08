@@ -1,16 +1,12 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="icon" href="http://getbootstrap.com/favicon.ico">
-
+<html lang="en">
+    <head>
+		<meta charset="UTF-8">
     <title>appyapp</title>
-
-    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
     <link href="blog.css" rel="stylesheet">
-    
   </head>
-
   <body ng-controller="WelcomeCtrl">
-
    <div class="blog-masthead">
       <div class="container">
         <nav class="blog-nav">
@@ -24,27 +20,24 @@
       <div class="page-header">
         <h1>appyapp</h1>
       </div>
-      <p class="lead">howdy, <strong>{{username}}</strong></p>
+      <p class="lead">howdy, <em>{{username}}</em></p>
       <p>{{pp}}</p>
      <div class="list-group" ng-repeat="article in articles">
     <a href="#" onclick="return false;" class="list-group-item active">
         <h4 class="list-group-item-heading">{{article.title}}</h4>
         <p class="list-group-item-text">{{article.post}}</p>
- 
         <span class="pull-right">
       <button class="btn btn-xs btn-info" ng-click="editPost(article.$id)" data-target="#editModal">edit</button>
       <button class="btn btn-xs btn-warning" ng-click="confirmDelete(article.$id)" data-target="#deleteModal">delete</button>
     </span>
     </a>
 </div>
-
-
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">close</span></button>
-        <h4 class="modal-title" id="editModalLabel">Update Post</h4>
+        <h4 class="modal-title" id="editModalLabel">update</h4>
       </div>
       <div class="modal-body">
         <form role="form">
@@ -91,4 +84,5 @@
       </div>
     </footer>
 
-</body></html>
+</body>
+</html>

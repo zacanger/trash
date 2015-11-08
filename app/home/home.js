@@ -10,11 +10,8 @@ angular.module('myApp.home', ['ngRoute','firebase'])
 }])
 
 .controller('HomeCtrl', ['$scope','$location','CommonProp','$firebaseAuth',function($scope,$location,CommonProp,$firebaseAuth) {
- 
-
-
  var firebaseObj = new Firebase("https://dm7.firebaseio.com/");
-    var loginObj = $firebaseAuth(firebaseObj);
+ var loginObj = $firebaseAuth(firebaseObj);
 
     loginObj.$onAuth(function(authData) {
     if(authData){
@@ -22,7 +19,7 @@ angular.module('myApp.home', ['ngRoute','firebase'])
         $location.path('/welcome');
     }
  });
-  
+
   $scope.user = {};
   var login={};
 
@@ -41,15 +38,11 @@ $scope.login=login;
             password: password
         })
         .then(function(user) {
-            //Success callback
 		login.loading = false;
-            console.log('Authentication successful');
 	CommonProp.setUser(user.password.email);
 		$location.path('/welcome');
         }, function(error) {
-            //Failure callback
 		login.loading = false;
-            console.log('Authentication failure');
         });
 }
 }])
@@ -57,7 +50,6 @@ $scope.login=login;
     var user = '';
     var firebaseObj = new Firebase("https://dm7.firebaseio.com/posts/");
     var loginObj = $firebaseAuth(firebaseObj);
-  
     return {
         getUser: function() {
             if(user == ''){
@@ -67,7 +59,7 @@ $scope.login=login;
         },
         setUser: function(value) {
             localStorage.setItem("userEmail", value);
-            user = value;    
+            user = value;
         },
         logoutUser:function(){
             loginObj.$unauth();
@@ -83,9 +75,7 @@ $scope.login=login;
             link: function(scope, element, attrs) {
                 var Ladda = window.Ladda;
                 var ladda = Ladda.create(element[0]);
-                // Watching login.loading for change
                 scope.$watch(attrs.laddaLoading, function(newVal, oldVal) {
-                    // if true show loading indicator
                     if (newVal) {
                         ladda.start();
                     } else {

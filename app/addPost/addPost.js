@@ -10,7 +10,7 @@ angular.module('myApp.addPost', ['ngRoute'])
 }])
 
 .controller('AddPostCtrl', ['$scope','$firebase','$location','CommonProp',function($scope,$firebase,$location,CommonProp) {
-     
+
 	if(!CommonProp.getUser()){
     $location.path('/home');
 }
@@ -25,13 +25,13 @@ $scope.login=login;
 	login.loading = true;
 	var title = $scope.article.title;
         var post = $scope.article.post;
-	
+
 	var firebaseObj = new Firebase("https://dm7.firebaseio.com/posts/");
-	
-    	var fb = $firebase(firebaseObj);
-        
+
+ 	var fb = $firebase(firebaseObj);
+
 	var user = CommonProp.getUser();
-	
+
 
 	fb.$push({ title: title,post: post,emailId: user,'.priority': user}).then(function(ref) {
 		login.loading = false;
