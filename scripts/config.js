@@ -1,9 +1,12 @@
 'use strict'
 
-angular.module('markdownApp')
+angular.module('markvi')
 
   .config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
-    $locationProvider.html5Mode(true)
+    $locationProvider.html5Mode({
+      enabled: true,
+      requireBase: false
+    })
 
     $stateProvider.state('main', {
       url: '/',

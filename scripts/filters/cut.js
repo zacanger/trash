@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('markdownApp')
+angular.module('markvi')
 
   .filter('cut', function () {
     return function (value, wordwise, max, tail) {

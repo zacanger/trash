@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('markdownApp')
+angular.module('markvi')
 
   .controller('NavCtrl', function ($rootScope, $scope, files) {
     $scope.search = function () {

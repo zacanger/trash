@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('markdownApp')
+angular.module('markvi')
 
   .controller('MainCtrl', function ($rootScope, $scope, $state, $stateParams, files) {
     $rootScope.selectedFile = $stateParams.id

@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('markdownApp')
+angular.module('markvi')
 
   .directive('markdownEditor', function ($window, $document, files) {
     return {

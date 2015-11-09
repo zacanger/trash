@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('markdownApp', [
+angular.module('markvi', [
   'ngAnimate',
   'ngCookies',
   'ngSanitize',

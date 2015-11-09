@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('markdownApp')
+angular.module('markvi')
 
   .controller('BrowserCtrl', function ($rootScope, $scope, $state, $stateParams, files) {
     $scope.files = files.list()
