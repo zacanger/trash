@@ -23,48 +23,48 @@
 }
 
 .page h1 {
-  color: #000;
-  padding: 0 0 6px;
-  border-bottom: 1px solid #eee;
+  color: #222;
+  padding: 0 0 .4em;
+  border-bottom: 1px solid #EDC5E8;
 }
 
 .page h3 {
-  color: #777;
+  color: #222;
   font-weight: normal;
 }
 
 .page a {
-  color: #4183c4;
+  color: #71A397;
 }
 
 .page p {
-  font-size: 14px;
-  color: #444;
+  font-size: 1.4em;
+  color: #303330;
 }
 
 .page pre {
-  font-size: 14px;
-  background: #f6f8fe;
-  padding: 6px 4px;
-  border-radius: 4px;
+  font-size: 1.2em;
+  background: #E3E3DE;
+  padding: .4em .2em;
+  border-radius: 2px;
 }
 
 .page code {
-  color: #278601;
-  background: #f1f6ef;
-  padding: 2px 4px;
-  border-radius: 4px;
+  color: #45573b;
+  background: #E3E3DE;
+  padding: 2px .2em;
+  border-radius: 2px;
 }
 
 .page pre code {
-  color: #59617c;
+  color: #45573b;
   background: none;
 }
 
 .page .copyright {
   display: block;
-  font-size: 12px;
-  color: #999;
+  font-size: .8em;
+  color: #555;
   text-align: center;
-  margin: 40px 0;
+  margin: 3em 0;
 }

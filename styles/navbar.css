@@ -14,6 +14,7 @@
 .navbar ul {
   margin: 0;
   padding: .2em;
+  list-style: none;
 }
 
 .navbar .pure-menu-left {
@@ -27,9 +28,9 @@
 }
 
 .navbar .pure-button {
-  font-size: 1em;
+  font-size: 1.6em;
   font-weight: 700;
-  color: #E3E3DE;
+  color: #303330;
   text-shadow: 1px 1px 0 rgba(0,0,0,.4);
   border: 1px solid #EDC5E8;
   background: #9de5a5;
@@ -37,11 +38,11 @@
 }
 
 .navbar .logo {
-  font-size: 1.2em;
-  color: #303330;
-  font-weight: 700;
+  font-size: 1.6em;
+  color: #555;
+  font-weight: 100;
   text-decoration: none;
-  padding: 0 .5em 0 1em;
+  padding: 0 2em 0 0;
 }
 
 .pure-form.search-form i {
@@ -49,11 +50,10 @@
   top: 1.5em;
   left: 1.5em;
   font-size: 1em;
-  color: #303330;
+  color: #444;
 }
 
 .pure-form.search-form input {
- /* width: 255px; */
-  font-size: .8em;
-  padding: .5em .8em .5em 1.5em;
+  font-size: 1em;
+  padding: 1em .8em 1em .8em;
 }

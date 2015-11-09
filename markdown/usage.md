@@ -136,3 +136,6 @@ This line is separated from the one above by two newlines, so it will be a *sepa
 
 This line is also a separate paragraph, but...
 This line is only separated by a single newline, so it's a separate line in the *same paragraph*.
+
+Traditional markdown needs two spaces at the end of a line to start a newline (like so: `  `).
+To switch back to that method, simply set `breaks` to `false` in the options near the bottom of `scripts/markdown.js`

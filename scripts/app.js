@@ -5,6 +5,5 @@ angular.module('markvi', [
   'ngCookies',
   'ngSanitize',
   'ui.router',
-  'angularMoment',
   'LocalStorageModule'
 ])

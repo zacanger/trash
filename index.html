@@ -5,7 +5,7 @@
   <title>markvi</title>
   <link rel="stylesheet" href="/styles/css.css" type="text/css">
 </head>
-<body ng-app="markvi">
+<body ng-app="markvi" ng-cloak>
   <div class="app">
     <header class="navbar" ng-controller="NavCtrl">
       <nav class="pure-menu-horizontal">
@@ -18,7 +18,7 @@
         </ul>
         <ul class="pure-menu-right">
           <li><button ng-click="create()" class="pure-button">new</button></li>
-          <li><a href="/" class="logo">markvi</a></li>
+
         </ul>
       </nav>
     </header>
@@ -28,7 +28,7 @@
         <span class="modified" am-time-ago="file.modified"></span>
         <p>{{file.content | cut:false:72}}</p>
       </div>
-      <p ng-if="!files.length" class="no-files">better write something first!</p>
+      <p ng-if="!files.length" class="no-files">i'm afraid i can't find that!</p>
     </aside>
     <section class="main">
       <div class="content" ui-view></div>
@@ -39,17 +39,19 @@
   <script src="/bower_components/angular-cookies/angular-cookies.min.js" type="text/javascript"></script>
   <script src="/bower_components/angular-sanitize/angular-sanitize.min.js" type="text/javascript"></script>
   <script src="/bower_components/angular-ui-router/release/angular-ui-router.min.js" type="text/javascript"></script>
-  <script src="/bower_components/angular-moment/angular-moment.min.js" type="text/javascript"></script>
   <script src="/bower_components/angular-local-storage/dist/angular-local-storage.min.js" type="text/javascript"></script>
   <script src="/bower_components/lodash/lodash.min.js" type="text/javascript"></script>
   <script src="/bower_components/highlightjs/highlight.pack.js" type="text/javascript"></script>
-  <script src="/bower_components/moment/min/moment.min.js" type="text/javascript"></script>
-  <script src="/bower_components/marked/marked.min.js" type="text/javascript"></script>
   <script src="/bower_components/codemirror/lib/codemirror.js" type="text/javascript"></script>
   <script src="/bower_components/codemirror/mode/markdown/markdown.js" type="text/javascript"></script>
   <script src="/bower_components/codemirror/addon/display/placeholder.js" type="text/javascript"></script>
+  <script src="/bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
+
+  <script src="/scripts/markdown.js" type="text/javascript"></script>
   <script src="/scripts/app.js" type="text/javascript"></script>
   <script src="/scripts/config.js" type="text/javascript"></script>
+  <script src="/scripts/vi.js" type="text/javascript"></script>
+  <script src="/scripts/load_vi.js" type="text/javascript"></script>
   <script src="/scripts/controllers/main.js" type="text/javascript"></script>
   <script src="/scripts/controllers/browser.js" type="text/javascript"></script>
   <script src="/scripts/controllers/nav.js" type="text/javascript"></script>
