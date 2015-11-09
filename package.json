@@ -1,11 +1,11 @@
 {
   "name": "markvi",
   "private": false,
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": {"name": "Zac Anger", "email": "zac@zacanger.com", "url": "http://zacanger.com"},
   "description": "Markdown editor in Angular",
   "keywords": [ "markdown", "angular", "realtime", "editor", "vi", "vim" ],
-  "demo": "https://zacanger.github.io/markvi",
+  "demo": "http://zacanger.com/markvi",
   "repository": { "type": "git", "url": "https://github.com/zacanger/markvi.git" },
   "license" : "WTFPL",
   "dependencies": {},
