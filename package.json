@@ -1,46 +1,27 @@
 {
   "name": "markvi",
-  "description": "markdown edtor; vi keys; angular.",
-  "version": "0.0.3",
-  "keywords": [
-    "vim",
-    "vi",
-    "markdown",
-    "angular"
-  ],
-  "maintainers": [
-    {
-      "name": "Zac Anger",
-      "email": "zac@zacanger.com",
-      "web": "http://zacanger.com"
-    }
-  ],
-  "demos": [
-    ""
-  ],
-  "dependencies": {
-    "": ""
-  },
-  "repositories": [
-    {
-      "type": "git",
-      "url": "https://github.com/zacanger/markvi.git"
-    }
-  ],
-  "licenses": [
-    {
-      "name": "WTFPL",
-      "url": "http://www.wtfpl.net/"
-    }
-  ],
+  "private": false,
+  "version": "0.1.0",
+  "author": {"name": "Zac Anger", "email": "zac@zacanger.com", "url": "http://zacanger.com"},
+  "description": "Markdown editor in Angular",
+  "keywords": [ "markdown", "angular", "realtime", "editor", "vi", "vim" ],
+  "demo": "https://zacanger.github.io/markvi",
+  "repository": { "type": "git", "url": "https://github.com/zacanger/markvi.git" },
+  "license" : "WTFPL",
+  "dependencies": {},
+  "devDependencies": {
+    "xo": "^0.10.1",
+    "live-server": "^0.8.2",
+    "bower": "^1.6.5",
+    "shelljs": "^0.5.3"
+    },
   "scripts": {
+    "postinstall": "bower install",
+    "start": "live-server --port=4444",
     "test": "xo"
   },
   "xo": {
     "semicolon": false,
     "space": true
-  },
-  "devDependencies": {
-    "xo": "^0.10.1"
   }
 }

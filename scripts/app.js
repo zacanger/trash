@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 angular.module('markdownApp', [
   'ngAnimate',
@@ -7,4 +7,4 @@ angular.module('markdownApp', [
   'ui.router',
   'angularMoment',
   'LocalStorageModule'
-]);
+])
