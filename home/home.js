@@ -1,15 +1,16 @@
 'use strict';
 
-angular.module('myApp.home', ['ngRoute','firebase'])
+angular.module('vimark.home', ['ui.router','firebase'])
 
-.config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/home', {
+.config(['$stateProvider', function($stateProvider) {
+  $stateProvider
+    .state('/home', {
     templateUrl: 'home/home.html',
     controller: 'HomeCtrl'
   });
 }])
 
-.controller('HomeCtrl', ['$scope','$location','CommonProp','$firebaseAuth',function($scope,$location,CommonProp,$firebaseAuth) {
+.controller('HomeCtrl', ['$scope','$location','CommonProp','$firebaseAuth',function($scope, $location, CommonProp, $firebaseAuth) {
  var firebaseObj = new Firebase("https://dm7.firebaseio.com/");
  var loginObj = $firebaseAuth(firebaseObj);
 
@@ -46,7 +47,7 @@ $scope.login=login;
         });
 }
 }])
-.service('CommonProp',['$location','$firebaseAuth',function($location,$firebaseAuth) {
+.service('CommonProp',['$location','$firebaseAuth',function($location, $firebaseAuth) {
     var user = '';
     var firebaseObj = new Firebase("https://dm7.firebaseio.com/posts/");
     var loginObj = $firebaseAuth(firebaseObj);

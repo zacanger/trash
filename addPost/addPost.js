@@ -1,23 +1,23 @@
 'use strict';
 
-angular.module('myApp.addPost', ['ngRoute'])
+angular.module('vimark.addPost', ['ui.router'])
 
-.config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/addPost', {
+.config(['$stateProvider', function($stateProvider) {
+  $stateProvider
+  .state('/addPost', {
     templateUrl: 'addPost/addPost.html',
     controller: 'AddPostCtrl'
   });
 }])
 
-.controller('AddPostCtrl', ['$scope','$firebase','$location','CommonProp',function($scope,$firebase,$location,CommonProp) {
+.controller('AddPostCtrl', ['$scope','$firebase','$location','CommonProp',function($scope, $firebase, $location, CommonProp) {
 
 	if(!CommonProp.getUser()){
     $location.path('/home');
 }
-     var login={};
-$scope.login=login;
-
-	$scope.logout = function(){
+    var login={};
+		$scope.login=login;
+	  $scope.logout = function(){
     CommonProp.logoutUser();
 }
 

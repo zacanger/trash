@@ -1,15 +1,16 @@
 'use strict';
 
-angular.module('myApp.welcome', ['ngRoute'])
+angular.module('vimark.welcome', ['ui.router'])
 
-.config(['$routeProvider', function($routeProvider) {
-    $routeProvider.when('/welcome', {
+.config(['stateProvider', function($stateProvider) {
+    $stateProvider
+    .state('/welcome', {
         templateUrl: 'welcome/welcome.html',
         controller: 'WelcomeCtrl'
     });
 }])
 
-.controller('WelcomeCtrl', ['$scope', '$firebase','$location', 'CommonProp', function($scope, $firebase, $location ,CommonProp) {
+.controller('WelcomeCtrl', ['$scope', '$firebase','$location', 'CommonProp', function($scope, $firebase, $location, CommonProp) {
     $scope.username = CommonProp.getUser();
     if(!$scope.username){
         $location.path('/home');
@@ -58,5 +59,4 @@ angular.module('myApp.welcome', ['ngRoute'])
         }, function(error) {
         });
     }
-
 }]);

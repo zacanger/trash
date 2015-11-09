@@ -1,15 +1,16 @@
 'use strict';
 
-angular.module('myApp.register', ['ngRoute','firebase'])
+angular.module('vimark.register', ['ui.router','firebase'])
 
-.config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/register', {
+.config(['$stateProvider', function($stateProvider) {
+  $stateProvider
+    .state('/register', {
     templateUrl: 'register/register.html',
     controller: 'RegisterCtrl'
   });
 }])
 
-.controller('RegisterCtrl', ['$scope','$location','$firebaseAuth', function($scope,$location,$firebaseAuth) {
+.controller('RegisterCtrl', ['$scope','$location','$firebaseAuth', function($scope, $location, $firebaseAuth) {
 $scope.mesg = 'Hello';
 var firebaseObj = new Firebase("https://dm7.firebaseio.com/");
 var auth = $firebaseAuth(firebaseObj);

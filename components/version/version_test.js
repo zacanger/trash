@@ -1,7 +1,7 @@
 'use strict';
 
-describe('myApp.version module', function() {
-  beforeEach(module('myApp.version'));
+describe('vimark.version module', function() {
+  beforeEach(module('vimark.version'));
 
   describe('version service', function() {
     it('should return current version', inject(function(version) {

@@ -24,7 +24,6 @@ _build/
 /bin/x/**
 
 ## project
-# when we're not in super don't-know-what-we're-doing-yet-mode...
-/app/bower_components/
+/bower_components/
 /node_modules/
 
