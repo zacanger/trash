@@ -1,0 +1,11 @@
+<div class="page" ng-if="!selectedFile">
+  <div class="page-inner">
+    <h2>what's this, then?</h2>
+	<p>i like [markdown](http://daringfireball.com/projects/markdown). i write [my blog](http://zacanger.com/blog) in it. i use it to take notes. it's super handy for documentation. it makes long-form writing of any kind a much smoother, simpler process. markdown editors have been described (not inaccurately) as [an antipattern](https://honza.ca/2015/02/markdown-editors-are-an-anti-pattern), but given the wide range of markdown derivatives, plugins, and extensions in use--not to mention the complete lack of standardization of the original spec--it's sometimes helpful to see what one is working on in realtime.</p>
+  <p>there are likely thousands of decent markdown editors, a large majority of them available [for free](https://www.npmjs.com/search?q=markdown). why not use one of those? i've used several. they're great. none of them were what i was looking for.</p>
+  <p><strong>markvi</strong> won't be for everyone. with a bit of hacking (and a crash course in vimscript) something could be worked up in vim itself. any one of a dozen popular IDEs and editors could be configured to preview markdown without much trouble. i put this one together because it satisfied <em>my</em> need for a no-config fast-as-heck setup with keybinds that make manipulating large blocks of text easy and lightning-quick.</p>
+  <p>if you're not so much into the vi/vim way of life, simply removing or commmenting out the relevant lines (see the scripts directory) will make this a plain old markdown editor. if you're an emacs heathen, i'm sure there's a mode for that. :) </p>.
+<p>oh, by the way, hello, i'm <a href="http://zacanger.com/me">zac</a>. i'm told i'm a technology hipster, but i'm okay with that. please feel free to check out <a href="https://github.com/zacanger/markvi">this project on github</a>, fork or clone away, use however you like (within the bounds of the licenses of markvi's dependencies); my own code is under the [wtfpl](http://www.wtfpl.net).</p>
+</div>
+</div>
+<markdown-editor file="{{selectedFile}}" ng-if="selectedFile"></markdown-editor>

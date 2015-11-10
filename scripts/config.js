@@ -16,6 +16,10 @@ angular.module('markvi')
       url: '/:id',
       templateUrl: '/views/main.html',
       controller: 'MainCtrl'
+    }).state('about', {
+      url: '/about',
+      templateUrl: 'views/about.html',
+      controller: 'AboutCtrl'
     })
 
     $urlRouterProvider.otherwise('/')

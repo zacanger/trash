@@ -12,7 +12,9 @@ window.onload = function () {
 //     }
 //   }
 
-  var target = document.getElementById('editor')
+//   var target = document.getElementById('editor')
+  var target = $('input[type=text, textarea')
+  var target = $(':text')
   if (target !== null) {
     vim.attach_to(target)
     target.focus()
