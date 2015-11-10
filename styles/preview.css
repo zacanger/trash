@@ -2,10 +2,8 @@
   font-family: "Merriweather", "Gentium Book", "Garamond", serif;
   font-size: 1.2em;
   line-height: 1.4;
-  padding-top: .8em;
-  padding-bottom: .8em;
+  padding: .8em 1.2em .8em 1em;
   background-color: #E3E3DE;
-  padding: 2em;
   color: #303330;
 }
 .preview > *:first-child {

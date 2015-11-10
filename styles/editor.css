@@ -1,6 +1,4 @@
-.editor {
-  height: 100%;
-}
+.editor { height: 100%; }
 
 .title-pane {
   width: 100%;
@@ -20,13 +18,9 @@
   background: none;
 }
 
-.editor .title-form input:hover {
-  border: 1px solid #9de5a5;
-}
+.editor .title-form input:hover { border: 1px solid #9de5a5; }
 
-.editor .title-form input:focus {
-  border: 1px solid #89D470;
-}
+.editor .title-form input:focus { border: 1px solid #89D470; }
 
 .title-pane .delete-button {
   color: #303330;
@@ -50,13 +44,9 @@
   width: 50%;
 }
 
-.editor-pane {
-  height: calc(100% - 120px);
-}
+.editor-pane { height: calc(100% - 120px); }
 
-.preview-pane {
-  height: calc(100% - 80px);
-}
+.preview-pane { height: calc(100% - 80px); }
 
 .editor .CodeMirror {
  font-family: "Hasklig", "Fantasque Sans Mono", "Fira Mono", "Hack", "Inconsolata", "Anonymous Pro", monospace;
@@ -66,6 +56,4 @@
   height: 100%;
 }
 
-.editor .preview-pane {
-  overflow: auto;
-}
+.editor .preview-pane { overflow: auto; }

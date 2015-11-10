@@ -42,7 +42,7 @@ angular.module('markvi')
       var file = files.get(id)
 
       if (file) {
-        var confirmDelete = confirm('was ' + file.title + ' really so bad?')
+        var confirmDelete = confirm('was ' + file.title + ' really so bad? you can still go back... delete it anyway?')
         if (confirmDelete) {
           files.delete(id)
           $scope.select($scope.files[0].id)

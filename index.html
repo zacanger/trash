@@ -10,12 +10,14 @@
     <header class="navbar" ng-controller="NavCtrl">
       <nav class="pure-menu-horizontal">
         <ul class="pure-menu-left">
-          <li>
+
+					<li>
             <form class="pure-form search-form" role="search">
               <input type="search" placeholder="search…" ng-model="query" ng-keyup="search()" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="50">
             </form>
           </li>
         </ul>
+        <span><a href="/"><button class="pure-button-light">about</button></a></span>
         <ul class="pure-menu-right">
           <li><button ng-click="create()" class="pure-button">new</button></li>
 
@@ -35,6 +37,7 @@
     </section>
   </div>
   <script src="/bower_components/angular/angular.js" type="text/javascript"></script>
+  <script src="/bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
   <script src="/bower_components/angular-animate/angular-animate.min.js" type="text/javascript"></script>
   <script src="/bower_components/angular-cookies/angular-cookies.min.js" type="text/javascript"></script>
   <script src="/bower_components/angular-sanitize/angular-sanitize.min.js" type="text/javascript"></script>
@@ -45,7 +48,6 @@
   <script src="/bower_components/codemirror/lib/codemirror.js" type="text/javascript"></script>
   <script src="/bower_components/codemirror/mode/markdown/markdown.js" type="text/javascript"></script>
   <script src="/bower_components/codemirror/addon/display/placeholder.js" type="text/javascript"></script>
-  <script src="/bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
 
   <script src="/scripts/markdown.js" type="text/javascript"></script>
   <script src="/scripts/app.js" type="text/javascript"></script>
@@ -55,8 +57,10 @@
   <script src="/scripts/controllers/main.js" type="text/javascript"></script>
   <script src="/scripts/controllers/browser.js" type="text/javascript"></script>
   <script src="/scripts/controllers/nav.js" type="text/javascript"></script>
+  <script src="/scripts/controllers/aboutc.js" type="text/javascript"></script>
   <script src="/scripts/directives/markdown-editor.js" type="text/javascript"></script>
-  <script src="/scripts/services/files.js" type="text/javascript"></script>
+	<script src="/scripts/directives/aboutd.js" type="text/javascript"></script>
+	<script src="/scripts/services/files.js" type="text/javascript"></script>
   <script src="/scripts/filters/cut.js" type="text/javascript"></script>
   <script src="/scripts/filters/filename.js" type="text/javascript"></script>
 </body>

@@ -17,7 +17,7 @@ angular.module('markvi')
           matchBrackets: true,
           lineWrapping: true,
           placeholder: '…',
-          theme: 'default'
+          theme: 'liquibyte'
         })
 
         if ($attr.file) {
