@@ -18,11 +18,10 @@ angular.module('markvi')
       controller: 'MainCtrl'
     }).state('about', {
       url: '/about',
-      templateUrl: '/views/about.html',
-      controller: 'AboutCtrl'
+      templateUrl: '/views/about.html'
     })
     $urlRouterProvider
-			.otherwise('/')
+      .otherwise('/')
   })
 
   .run(function ($rootScope) {
