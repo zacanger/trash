@@ -1,0 +1,70 @@
+.main {
+  position: relative;
+  z-index: 3;
+  height: 100%;
+  margin-left: 22px;
+}
+
+.content {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+}
+
+.page {
+  height: 100%;
+  padding: 0 1em;
+  overflow: hidden;
+}
+
+.page-inner {
+  width: 1000px;
+  margin: 0 auto;
+}
+
+.page h1 {
+  color: #222;
+  padding: 0 0 .4em;
+  border-bottom: 1px solid #EDC5E8;
+}
+
+.page h3 {
+  color: #222;
+  font-weight: normal;
+}
+
+.page a {
+  color: #71A397;
+}
+
+.page p {
+  font-size: 1.4em;
+  color: #303330;
+}
+
+.page pre {
+  font-size: 1.2em;
+  background: #E3E3DE;
+  padding: 2px 4px;
+  border-radius: 2px;
+}
+
+.page code {
+  color: #45573b;
+  background: #E3E3DE;
+  padding: 2px 4px;
+  border-radius: 2px;
+}
+
+.page pre code {
+  color: #45573b;
+  background: none;
+}
+
+.page .copyright {
+  display: block;
+  font-size: 8px;
+  color: #555;
+  text-align: center;
+  margin: 18px 0;
+}

@@ -1,0 +1,69 @@
+.navbar {
+  position: absolute;
+  z-index: 4;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  margin: 0;
+  border: 0;
+  background: #E3E3DE;
+  box-shadow: 0 0 2px rgba(0,0,0,.2);
+}
+
+.navbar ul {
+  margin: 0;
+  padding: 0 5px;
+  list-style: none;
+}
+
+.navbar .pure-menu-left {
+  float: left;
+  padding: 15px;
+}
+
+.navbar .pure-menu-right {
+  float: right;
+  padding: 15px;
+}
+
+.navbar .pure-button {
+  font-size: 16px;
+  font-weight: 700;
+  padding: 10px;
+  color: #303330;
+  text-shadow: 10px 10px 5px rgba(0,0,0,.4);
+  border: 1px solid #EDC5E8;
+  background: #9de5a5;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.4), 0 1px 2px rgba(0,0,0,.2);
+}
+
+.navbar .pure-button-light {
+  font-size: 14px;
+  font-weight: 400;
+  padding: 22px;
+  color: #565a56;
+  text-shadow: 10px 10px 10px rgba(5,5,5,.4);
+  background: #E3E3DE;
+}
+
+.navbar .logo {
+  font-size: 14px;
+  color: #555;
+  font-weight: 100;
+  text-decoration: none;
+  padding: 0 16px 0 0;
+}
+
+.pure-form.search-form i {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  font-size: 10px;
+  color: #444;
+}
+
+.pure-form.search-form input {
+  font-size: 12px;
+  padding: 12px 8px;
+}
