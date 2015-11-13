@@ -1,18 +1,10 @@
 ## mini-Routing
 
-<<<<<<< HEAD
 
 ### Objectives
 The purpose of this Mini Project is to get you used to structuring your Angular app and routing. These are two of the trickiest things to wrap your head around so if something doesn't make sense as you're going through, let us know and we'll come over to help you.
 
 ### Step 1: Angular Skeleton
-=======
-
-### Objectives
-The purpose of this Mini Project is to get you used to structuring your Angular app and routing. These are two of the trickiest things to wrap your head around so if something doesn't make sense as you're going through, let us know and we'll come over to help you. 
-
-### Step 1: Angular Skeleton 
->>>>>>> 173135675a9bcb575ed5a54a4bb0f22033142581
 * Fork this repo, then clone your fork.
 * Create the basics of your Angular application. Your file structure should look like this
 ```
@@ -58,11 +50,7 @@ var app = angular.module('miniRouting', ['ui.router']);
 ```
 
 ### Step 3: Revamp Folder Structure
-<<<<<<< HEAD
 * As we discussed in the lesson, Angular can dynamically change the template or controller based on what the URL is. For example, if we're at '/users' we can tell Angular to use the 'userController' controller as well as the 'userTemplate' html sheet (or view).
-=======
-* As we discussed in the lesson, Angular can dynamically change the template or controller based on what the URL is. For example, if we're at '/users' we can tell Angular to use the 'userController' controller as well as the 'userTemplate' html sheet (or view). 
->>>>>>> 173135675a9bcb575ed5a54a4bb0f22033142581
 * As you can imagine, your app starts to get really large as you have different routes. The Angular community has found that the best way to organize your application is by feature. For example, in our app we're going to have a home page, a products page, and a settings page. Go ahead and create those three folders so that your file structure looks like this:
 ```
   mini-routing
@@ -132,11 +120,7 @@ app.service('productService', function(){
 * Note: it's just filler data that we're going to use later.
 
 ### Step 4: Revamp index.html
-<<<<<<< HEAD
 * What's nice about routing is that we can have certain parts of the page be static (it never changes), while other parts of the page are dynamic (changes) based on the URL. What we're going to do is have a side menu that will always stay the same no matter what page the user is on. Then, we'll use `<div ui-view></div>` which will be where our router kicks in.
-=======
-* What's nice about routing is that we can have certain parts of the page be static (it never changes), while other parts of the page are dynamic (changes) based on the URL. What we're going to do is have a side menu that will always stay the same no matter what page the user is on. Then, we'll use `<div ui-view></div>` which will be where our router kicks in. 
->>>>>>> 173135675a9bcb575ed5a54a4bb0f22033142581
 * Head over to your index.html page and inside the body above your script tags add this template
 ```html
     <div class="menu">
@@ -171,11 +155,7 @@ Notice that we have a side menu and then we have our `<div ui-view></div>` that 
     - chain another invocation of `state` to create a state called `settings` that uses `settingsTmpl.html` as the templateUrl, `settingsCtrl` as the controller and ('/settings') as the url.
     - chain another invocation of `state` to create another state called `products` that uses `productTmpl.html` as the templateUrl, `productsCtrl` as the controller and ('/products/:id') as the url. Notice that 'products' has a `/:id` at the end of it. This is because we're going to tell our app which product the user is looking at based on which link they clicked. For example, if the user clicks on `<li><a ui-sref="products({id: 'shoes'})">Shoes</a>` then in our controller `$stateParams.id` (id correlating with the /:id from earlier) is going to be 'shoes'. This is a little bit tricky, ask for help if you need it.
     - use the `otherwise` method of `$urlRouterProvider` and pass it the default url ('/'), to redirect all other routes to the default.
-<<<<<<< HEAD
 
-=======
-        
->>>>>>> 173135675a9bcb575ed5a54a4bb0f22033142581
 * Here's what app.js should look like when you're done.
 
 ```javascript
@@ -225,11 +205,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 *
 
 ### Step 7: Fixing Product Pages
-<<<<<<< HEAD
 * The last thing we have to do is show certain product data depending on which page the user is it. For example, if the user is on the shoes page, we want to show them the shoes data. If they're on the socks page, we want to show them the socks data. Remember that in our index.html page our menu looks like this:
-=======
-* The last thing we have to do is show certain product data depending on which page the user is it. For example, if the user is on the shoes page, we want to show them the shoes data. If they're on the socks page, we want to show them the socks data. Remember that in our index.html page our menu looks like this: 
->>>>>>> 173135675a9bcb575ed5a54a4bb0f22033142581
 ```html
     <div class="menu">
         <ul>
@@ -246,11 +222,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
     </div>
 ```
 * So we know that in our controller, $stateParams.id (because of :/id in our router) will be either 'socks' or 'shoes' depending on which page the user is in. With this knowledge, we can add a simple 'if' statement to check which product page the user is on.
-<<<<<<< HEAD
 * In your products controller, inject `$stateParams` and `productService` into your controller.
-=======
-* In your products controller, inject `$stateParams` and `productService` into your controller. 
->>>>>>> 173135675a9bcb575ed5a54a4bb0f22033142581
 * Now write an if statement, if `$stateParams.id` is equal to 'shoes', then `$scope.productData` should be set to `productService.shoeData```. If `$stateParams.id` is equal to 'socks', then `$scope.productData` should be set to `productService.sockData```.
 * Now we know that we have data on the scope equal to certain product data, depending on which product the user is looking at.
 * Your productCtrl.js should now look like this: (Note: Please don't just copy and paste. Try to really understand what's going on.)
