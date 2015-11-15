@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html ng-app="dm7FirstApp">
+  <head>
+ 
+    <meta charset="utf-8">
+    <title>JS Bin</title>
+  </head>
+  <body ng-controller="myCtrl">
+      This is Plain Text
+    
+    <div style="background-color: red">
+      {{name}}
+    </div>
+    
+    Input box : <input type="text"
+           ng-model="foo">
+    </input>
+   <div>Curly Brackets : {{foo}}</div>
+  
+  <input ng-model="person.name"></input>
+  <input ng-model="person.cereal"></input>
+  <input ng-model="person.media"></input>
+  <input ng-model="person.random"></input>
+
+  <div>
+    Your person is :
+    <div>{{person.name}}</div>
+    <div>{{person.cereal}}</div>
+    <div>{{person.media}}</div>
+    <div>{{person.random}}</div>
+  </div>
+
+  <h2>Repeat</h2>
+
+  Filter: <input ng-model="carfilter.name">
+
+  <div ng-repeat="car in cars | filter: carfilter " class="car">
+    {{car.name}} - Year: {{car.year}}
+  </div>
+    
+  <h2 ng-init="isAwesome = true">Show/Hide</h2>
+  
+  <div ng-show="isAwesome">
+    Yay, you are awesome!
+  </div>
+
+  <div ng-hide="isAwesome">
+    We're sorry you're not awesome
+  </div>
+
+  <div ng-if="isAdmin">
+    You must be the boss
+  </div>
+
+<button ng-click="isAwesome = !isAwesome">Click Me!</button>
+
+    
+     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
+  </body>
+</html>
+
