@@ -1,18 +1,25 @@
-// Heroku sets the value of process.env.NODE_ENV
-process.env.NODE_ENV = process.env.NODE_ENV || 'development'
+var express     = require('express')
+  , bodyparser  = require('body-parser')
+  , app         = express()
+  , port        = 9999
+  , usersCtrl   = require('./usersCtrl')
+  , filmsCtrl   = require('./filmsCtrl')
 
-// Heroku sets the port, but we also need a port for development
-var port = process.env.PORT || 8000
+app.use(bodyparser())
 
-// Including the configured express and mongoose objects
-var mongoose = require('./core/server/config/mongoose'),
-  express = require('./core/server/config/express')
-
-// Let's run this!
-var db = mongoose(),
-  app = express()
-
-// Let's listen for incoming calls!
-app.listen(port, function () {
-  console.log('listening on ' + port)
+app.listen(port, function(){
+  console.log('up and active on ' + port + '!')
 })
+
+app.get('/users', usersCtrl.index)
+app.get('/users/:id', usersCtrl.show)
+app.post('/users', usersCtrl.build)
+app.put('/users/:id', usersCtrl.update)
+app.delete('/users/:id', usersCtrl.byebye)
+
+app.get('/films', filmsCtrl.index)
+app.get('/films/:id', filmsCtrl.show)
+app.post('/films', filmsCtrl.build)
+app.put('/films/:id', filmsCtrl.update)
+app.delete('/films/:id', filmsCtrl.byebye)
+
