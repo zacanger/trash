@@ -1,37 +1,29 @@
-'use strict';
+'use strict'
 
-angular.module('vimark.register', ['ui.router','firebase'])
+angular.module('vimark')
 
-.config(['$stateProvider', function($stateProvider) {
-  $stateProvider
-    .state('/register', {
-    templateUrl: 'register/register.html',
-    controller: 'RegisterCtrl'
-  });
-}])
+  .controller('RegisterCtrl', ['$scope', '$location', '$firebaseAuth', function ($scope, $location, $firebaseAuth) {
+    $scope.mesg = 'Hello'
+    var firebaseObj = new Firebase('https://dm7.firebaseio.com/')
+    var auth = $firebaseAuth(firebaseObj)
 
-.controller('RegisterCtrl', ['$scope','$location','$firebaseAuth', function($scope, $location, $firebaseAuth) {
-$scope.mesg = 'Hello';
-var firebaseObj = new Firebase("https://dm7.firebaseio.com/");
-var auth = $firebaseAuth(firebaseObj);
+    var login = {}
+    $scope.login = login
 
-var login={};
-$scope.login=login;
-
-$scope.signUp = function() {
-  if (!$scope.regForm.$invalid) {
-    var email = $scope.user.email;
-    var password = $scope.user.password;
-    if (email && password) {
-			login.loading = true;
-      auth.$createUser(email, password)
-      .then(function() {
-        $location.path('/home');
-        }, function(error) {
-          $scope.regError = true;
-         $scope.regErrorMessage = error.message;
-                });
+    $scope.signUp = function () {
+      if (!$scope.regForm.$invalid) {
+        var email = $scope.user.email
+        var password = $scope.user.password
+        if (email && password) {
+          login.loading = true
+          auth.$createUser(email, password)
+            .then(function () {
+              $location.path('/home')
+            }, function (error) {
+              $scope.regError = true
+              $scope.regErrorMessage = error.message
+            })
         }
+      }
     }
-};
-}]);
+  }])

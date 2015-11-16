@@ -1,45 +1,34 @@
-'use strict';
+'use strict'
 
-angular.module('vimark.addPost', ['ui.router'])
+angular.module('vimark')
 
-.config(['$stateProvider', function($stateProvider) {
-  $stateProvider
-  .state('/addPost', {
-    templateUrl: 'addPost/addPost.html',
-    controller: 'AddPostCtrl'
-  });
-}])
+  .controller('AddPostCtrl', ['$scope', '$firebase', '$location', 'CommonProp', function ($scope, $firebase, $location, CommonProp) {
+    if (!CommonProp.getUser()) {
+      $location.path('/home')
+    }
+    var login = {}
+    $scope.login = login
+    $scope.logout = function () {
+      CommonProp.logoutUser()
+    }
 
-.controller('AddPostCtrl', ['$scope','$firebase','$location','CommonProp',function($scope, $firebase, $location, CommonProp) {
+    $scope.AddPost = function () {
+      login.loading = true
+      var title = $scope.article.title
+      var post = $scope.article.post
 
-	if(!CommonProp.getUser()){
-    $location.path('/home');
-}
-    var login={};
-		$scope.login=login;
-	  $scope.logout = function(){
-    CommonProp.logoutUser();
-}
+      var firebaseObj = new Firebase('https://dm7.firebaseio.com/posts/')
 
-    $scope.AddPost = function(){
-	login.loading = true;
-	var title = $scope.article.title;
-        var post = $scope.article.post;
+      var fb = $firebase(firebaseObj)
 
-	var firebaseObj = new Firebase("https://dm7.firebaseio.com/posts/");
+      var user = CommonProp.getUser()
 
- 	var fb = $firebase(firebaseObj);
-
-	var user = CommonProp.getUser();
-
-
-	fb.$push({ title: title,post: post,emailId: user,'.priority': user}).then(function(ref) {
-		login.loading = false;
-		$location.path('/welcome');
-	}, function(error) {
-		login.loading = false;
-	});
+      fb.$push({ title: title,post: post,emailId: user,'.priority': user}).then(function (ref) {
+        login.loading = false
+        $location.path('/welcome')
+      }, function (error) {
+        login.loading = false
+      })
 
     }
-}]);
-
+  }])
