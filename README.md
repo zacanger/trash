@@ -1,7 +1,3 @@
-
-After that, I can go ahead and `git remote add -f 11b https://github.com/zacanger/11b`... and so on. It'll take a wee bit, but that way commit history will be preserved, and I won't have several pages of tiny test projects on Github, and I can tarball up this whole darned thing and put it up on a shelf to get dusty, instead of moving thousands of tiny files around for the next however many years.
-
-
 This is now a meta-repo for all DevMountain daily projects, as well as notes and assorted whatevers, and more substantial projects that didn't quite make it. I've kept individual repos for everything, which has made a bit of a mess of my synced directories (not to mention my Github).
 
 If anyone's considering doing the same (consolidating repos, whether that's devmtn/school related or otherwise) but is concerned about losing commit history/logs/whatever, here's how I did it:
