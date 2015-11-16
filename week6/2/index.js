@@ -1,18 +1,16 @@
-var express = require('express');
-var bodyParser = require('body-parser');
+var express = require('express')
+  , app = express()
+  , UsersCtrl = require ('./controllers/UsersCtrl')
+  , MoviesCtrl = require('./controllers/MoviesCtrl')
+  , cors = require('cors')
 
-var UsersCtrl = require('./controllers/UsersCtrl');
-var MoviesCtrl = require('./controllers/MoviesCtrl');
+app.use(bodyParser.json())
 
-var app = express();
-
-app.use(bodyParser.json());
-
-app.get('/users', UsersCtrl.index);
-app.get('/users/:id', UsersCtrl.show);
-app.post('/users', UsersCtrl.build);
-app.put('/users/:id', UsersCtrl.update);
-app.delete('/users/:id', UsersCtrl.destroy);
+app.get('/users', UsersCtrl.index)
+app.get('/users/:id', UsersCtrl.show)
+app.post('/users', UsersCtrl.build)
+app.put('/users/:id', UsersCtrl.update)
+app.delete('/users/:id', UsersCtrl.destroy)
 
 // app.get('/movies', MoviesCtrl.index);
 // app.get('/movies/:id', MoviesCtrl.show);
