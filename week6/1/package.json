@@ -4,7 +4,8 @@
   "description": "user profiles, devmtn",
   "main": "index.js",
   "scripts": {
-    "test": "standard"
+		"start": "node index.js",
+		"test": "xo"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,10 @@
     "express-session": "^1.12.1"
   },
   "devDependencies": {
-    "standard": "^5.3.1"
+    "xo": "^0.11.0"
+  },
+  "xo": {
+    "space": true,
+    "semicolon": false
   }
 }
