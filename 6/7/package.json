@@ -1,0 +1,26 @@
+{
+  "name": "mini-birds-mongoose",
+  "version": "1.0.0",
+  "description": "DevMountain mini-project for learning Mongoose",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dallincrane/mini-birds-mongoose"
+  },
+  "author": "https://github.com/dallincrane",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dallincrane/mini-birds-mongoose/issues"
+  },
+  "homepage": "https://github.com/dallincrane/mini-birds-mongoose",
+  "dependencies": {
+    "body-parser": "^1.12.3",
+    "cors": "^2.6.0",
+    "express": "^4.12.3",
+    "mongoose": "^4.0.2"
+  }
+}
