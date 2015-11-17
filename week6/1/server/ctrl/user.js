@@ -16,8 +16,8 @@ var users = [
 
 module.exports = {
   login: function(req, res){
-    users.forEach(function(user){
-      if (user.userName === req.body.name && user.pass === req.body.pass){
+		users.forEach(function(user){
+			if (user.userName === req.body.name && user.pass === req.body.pass){
         req.session.currentUser = user
         res.send({userFound: true})
         return
@@ -26,3 +26,6 @@ module.exports = {
     res.send({userFound: false})
   }
 }
+
+
+
