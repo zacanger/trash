@@ -48,4 +48,5 @@ OBVIOUSLY this only applies when everything's local; this is a proxy server, ess
 also there's an express builtin: `app.use(express.static()`, eg `app.use(express.static('public'))`
 
 
-
+#### monogooooooooooo(se)
+Turns out if you send Mongoose anything that's not in your schema, it's just like "Oh, okay, I'm not interested" and tosses that bit out, I guess.
