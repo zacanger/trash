@@ -1,3 +1,8 @@
+# Quiz | VS_Theory
+1. Give a business case where Mongoose would be preferred to MongoJS
+1. Give a business case where MongoJS would be preferred to Mongoose
+
+
 # Quiz | Schemas
 1. Write a userSchema that conforms to the following property requirements:
   + moniker
@@ -33,3 +38,20 @@
   User.findOne({createdAt: {'$gt': new Date(2015, 02, 12)}}).exec();
   User.findOne({age: 12}).exec();
   ```
+
+# Quiz | Review
+1. Put the following Mongo components in a hierarchy
+  + Documents
+  + Databases
+  + Collections
+2. What data structure does Mongo use to store documents?
+3. Name two ways document databases(noSQL) are different than table databases(SQL)
+4. Are calls from Node to Mongo synchronous or asynchronous?
+
+
+# Quiz | Lifecycle
+1. What are the two many phases of the mongoose lifecycle?
+2. What does having multiple phases in the req/res lifecycle help us accomplish?
+3. In what ways is the req/res lifecycle for mongoose similar to req/res in Express?
+
+

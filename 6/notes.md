@@ -50,3 +50,7 @@ also there's an express builtin: `app.use(express.static()`, eg `app.use(express
 
 #### monogooooooooooo(se)
 Turns out if you send Mongoose anything that's not in your schema, it's just like "Oh, okay, I'm not interested" and tosses that bit out, I guess.
+
+When we're not doing eg `require('./path')` (but rather `require(/path)' with no dot first`), it looks in `node_modules/`. Obvs usually we'll probably look from cwd instead. Any way to look from project root by default?
+``
+
