@@ -1,7 +1,17 @@
-this is a possible part of my no-server project at @devmountain
+    JSVI - VI in JavaScript.
+    Copyright (C) 2006-2008 Internet Connection, Inc.
+    Copyright (C) 2013 Jakub Jankiewicz
 
-based on [this tutorial series](http://code.tutsplus.com/series/creating-a-web-app-from-scratch-using-angularjs-and-firebase--cms-717), modified to actually work with current libraries (still need to switch to ui-router), and eventually intended as the platform that'll serve to showcase [markvi](https://github.com/zacanger/markvi).
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 3 of the License, or
+    (at your option) any later version.
 
-probably not exactly useable at the moment. clone at your own peril. feel free to fork. any and all PRs welcome. see <http://zacanger.com/blog/no-server-projects.html> for a rough sketch of current and long-term dev plans.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
 
-
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
