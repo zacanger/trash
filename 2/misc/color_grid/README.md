@@ -1,1 +1,0 @@
-jquery random color grid
