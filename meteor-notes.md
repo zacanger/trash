@@ -33,5 +33,21 @@ return this.first + ' ' +  this.last
 }
 })
 ```
+a dedicated {{log}} helper can be more useful than console.log(this)
+```javascript
+Template.profile.helpers({
+log: function(){
+console.log(this)
+}})
+```
+```html
+<template name="profile">
+{{#with profile}}
+{{log}}
+<!-- etc -->
+{{/with}}
+```
+
+the `..` keyword in helpers is to access a parent. That's pretty fucking rad, actually. And the `../..` also works exactly as expected (eg `{{blah ..}}` and `{{blahblah ../..}}`).
 
 
