@@ -51,3 +51,42 @@ console.log(this)
 the `..` keyword in helpers is to access a parent. That's pretty fucking rad, actually. And the `../..` also works exactly as expected (eg `{{blah ..}}` and `{{blahblah ../..}}`).
 
 
+#### Reactivity in Meteor
+
+Reactive computation: block of code (inside of a function) that re-runs when a reactive data source _inside_ it changes.
+
+```javascript
+Template.hello.helpers{(
+counter: function(){
+console.log('counter helper is running')
+return Session.get('count')
+}
+)}
+```
+
+Here, counter re-runs whenever count changes (count is retrieved by Session.get('count_')).  
+Session variables are _reactive sources_. Template helpers are _reactive computations_.
+
+Reactive variables in Meteor:
+- Session variables
+  - defined with `Session.set()`
+	- retrieved with `Session.get()`
+	- global to the app, and reactive
+- Cursors
+	- what you get when querying db
+	- (via `Collection.find()`)
+- Subscription's `ready()` method
+  - `subscription.ready()` is when the client has received all data
+- some others, including:
+	- `Meteor.user()`
+	- `Meteor.userId()`
+	- `Meteor.status`
+	- `Meteor.loggingIn`
+
+Reactive computations:
+- template helpers (eg `{{something}}` in a template, duh)
+- iron router (third party) hooks are reactive
+	- route functions and _most_ hooks are run in a reactive computation
+
+Custom reactivity in meteor:
+
