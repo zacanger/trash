@@ -88,5 +88,47 @@ Reactive computations:
 - iron router (third party) hooks are reactive
 	- route functions and _most_ hooks are run in a reactive computation
 
-Custom reactivity in meteor:
+Custom reactivity in meteor:  
+reactive-var (third party package) enables defining own reactive variables.  
+these don't have global names (like Session.get('foo')'s foo), more like this.foo.get()  
+declared like `new ReactiveVar()`.
+```javascript
+var count = new ReactiveVar(0)
+count.set(1)
+count.get() // 1
+```
+There's also `ReactiveDict`. That's a thing.
+
+Custom reactive computations:  
+`Tracker.autorun(function(){})`  
+Read the full Meteor manual for more on that, I guess.
+
+Reactivity can be passed on through composition, eg `var getCount = function(){ return Session.get('count') }` -- getCount is a reactive data source, by virtue of Session.get('count'), which is itself a reactive data source.  
+SO...
+```javascript
+Template.hello.helpers({
+counter: function(){
+console.log('counter helper is running')
+return Session.get('count')
+}
+})
+```
+
+IS THE SAME AS
+
+```javascript
+var getCount = function(){
+return Session.get('count')
+}
+
+Template.hello.helpers({
+counter: function(){
+console.log('counter helper is running')
+return getCount()
+}
+})
+```
+both ways, counter reruns whenever count session variable changes.
+
+composition only applies to functions. not variables.
 
