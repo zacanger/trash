@@ -9,7 +9,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 passport.use(new Facebook({
-	, callbackURL: 'http://127.0.0.1:3000/auth/facebook/callback'
+	, callbackURL: 'http://localhost:3000/auth/facebook/callback'
 }, function(token, refreshToken, profile, done){
 	return done(null, profile)
 }))
@@ -31,6 +31,11 @@ passport.deserializeUser(function(obj, done){
 	done(null, obj)
 })
 
-app.get('/me')
-app.listen(port)
+app.get('/me', function(req, ers){
+	var currentUser = req.session.user
+	res.send(currentUser)
+})
+app.listen(port, function(){
+	console.log('oi oi oi at ' + port)
+})
 
