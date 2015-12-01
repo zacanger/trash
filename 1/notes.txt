@@ -1,4 +1,5 @@
-slack: #web-dm7
+slack channel: #web-dm7  
+slack: AOL chatrooms, but 15 years later.
 
 ```
 object that contains a function = {
