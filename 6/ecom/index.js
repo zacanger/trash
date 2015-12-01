@@ -7,9 +7,9 @@ var express     = require('express')
   , port        = 9999
   , user        = require('./server/user.js')
   , productCtrl = require('./server/productCtrl.js')
-  
+
 app.use(cors())
-app.use(bodyparser.json())  
+app.use(bodyparser.json())
 
 mongoose.connect(mongo, function(err){
   if (err) throw err
