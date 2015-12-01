@@ -9,8 +9,6 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 passport.use(new Facebook({
-		clientID: '180983508917361'
-	, clientSecret: 'd6ee8ef75debec26780093367709fd1a'
 	, callbackURL: 'http://127.0.0.1:3000/auth/facebook/callback'
 }, function(token, refreshToken, profile, done){
 	return done(null, profile)
