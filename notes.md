@@ -16,3 +16,23 @@ Recursive populates, create vs insert fixed, find/create and save using differen
 
 Generators DO look just like infinite loops. I'm not wrong. Turns out that's because they are infinite loops, but that's okay, because they're basically kind of backgrounded until called. You hit it up with an iterator, get what you need, and then it goes back to sleep. So, in a way, maybe that's kind of like a builtin thing that you'd imagine needs to be an infinite loop, but isn't in the way because you only poke it when you need it. (Like Math.random(), kinda?) That's my interpretation, anyway.
 
+--------
+
+## Notes on Mongo schema design
+
+#### (in a one-to-n sort of situation...)
+	- Embed N if low cardinality & don't need to access embedded N standalone (outside parent object's context) (array of documents)
+	- Array of refs to N objects if cardinality is one-to-many, or if N objects should need to stand alone (array of refs)
+	- Ref to One from the N objects if cardinality is very high (parent ref in the N-side document)
+
+#### the six rules of thumb, according to mongodb:
+	1. favour embedding unless there is a compelling reason not to
+	1. needing to access an object on its own is a compelling reason
+	1. arrays should not grow. more than a couple hundred on the 'many' side, don't embed. if there are more than a couple thousand, don't use an array of objectid refs.
+	1. don't fear application-level joins.
+	1. keep r/w ratio in mind when denormalizing. mostly read is a good candidate. frequently updated means it's not worth it.
+	1. structure your models around how you will access data. how the app queries and updates are very important here.
+
+
+
+
