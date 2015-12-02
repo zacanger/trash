@@ -2,7 +2,7 @@
   position: relative;
   z-index: 3;
   height: 100%;
-  margin-left: 22px;
+  margin-left: 10em;
 }
 
 .content {
@@ -14,22 +14,23 @@
 .page {
   height: 100%;
   padding: 0 1em;
-  overflow: hidden;
+  overflow: auto;
 }
 
 .page-inner {
-  width: 1000px;
+  max-width: 840px;
   margin: 0 auto;
+  background: #131413;
 }
 
 .page h1 {
-  color: #222;
+  color: #f6f4d5;
   padding: 0 0 .4em;
-  border-bottom: 1px solid #EDC5E8;
+  border-bottom: 1px solid #f0bcc2;
 }
 
 .page h3 {
-  color: #222;
+  color: #131413;
   font-weight: normal;
 }
 
@@ -39,32 +40,32 @@
 
 .page p {
   font-size: 1.4em;
-  color: #303330;
+  color: #f6f4d5;
 }
 
 .page pre {
   font-size: 1.2em;
-  background: #E3E3DE;
-  padding: 2px 4px;
+  background: #131413;
+  padding: .4em .2em;
   border-radius: 2px;
 }
 
 .page code {
-  color: #45573b;
-  background: #E3E3DE;
-  padding: 2px 4px;
+  color: #abcdef;
+  background: #0f0f0f;
+  padding: 2px .2em;
   border-radius: 2px;
 }
 
 .page pre code {
-  color: #45573b;
+  color: #abcdef;
   background: none;
 }
 
 .page .copyright {
   display: block;
-  font-size: 8px;
+  font-size: .8em;
   color: #555;
   text-align: center;
-  margin: 18px 0;
+  margin: 3em 0;
 }

@@ -56,7 +56,7 @@ angular.module('markvi')
           { title: 'usage', file: 'usage.md' }
         ]
         _.each(docs, function (doc) {
-          $http.get('file:///home/z/Dropbox/skool/projects/noserver/app/markdown/' + doc.file).then(function (res) {
+          $http.get('/markdown/' + doc.file).then(function (res) {
             self.save(Date.now(), {
               title: doc.title,
               content: res.data

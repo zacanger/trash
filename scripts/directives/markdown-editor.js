@@ -6,7 +6,7 @@ angular.module('markvi')
     return {
       restrict: 'E',
       transclude: true,
-      template: "<div class='editor'><div class='title-pane'><form class='pure-form title-form'><input class='title' type='text' ng-model='title' placeholder='title' maxlength='50'><button ng-click='delete()' class='pure-button delete-button'>delete</button></form></div><div class='editor-pane'><textarea class='codemirror' id='editor'></textarea></div><div class='preview-pane'><div class='preview'></div></div></div>",
+      template: "<div class='editor'><div class='title-pane'><form class='pure-form title-form'><input class='title' type='text' ng-model='title' placeholder='title' maxlength='50'><button ng-click='delete()' class='pure-button delete-button'>delete</button></form></div><div id='master' class='editor-pane'><textarea class='codemirror' id='editor'></textarea></div><div class='preview-pane' id='slave'><div class='preview'></div></div></div>",
       replace: true,
       link: function ($scope, $elem, $attr) {
         var editorEl = angular.element(document.querySelector('.codemirror'))
@@ -17,7 +17,8 @@ angular.module('markvi')
           matchBrackets: true,
           lineWrapping: true,
           placeholder: '…',
-          theme: 'liquibyte'
+          theme: 'abcdef',
+          keyMap: 'vim'
         })
 
         if ($attr.file) {
@@ -35,6 +36,7 @@ angular.module('markvi')
 
         $scope.editor.on('change', $scope.update)
       },
+
       controller: function ($rootScope, $scope, $http) {
         $scope.editor = {}
 
@@ -58,5 +60,7 @@ angular.module('markvi')
           preview.html(marked(val))
         }
       }
+
+
     }
   })
