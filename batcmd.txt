@@ -1,0 +1,10 @@
+trying this in bat first, because (vanilla) electron failed me miserably last
+time around. it's already a little bit better... though for whatever reason,
+some file paths just don't work. like, the ones that include views. or
+markdown. BUT the css and js work just fine. HMMM.
+
+anyway, this is the command for running bat (assuming you have it globally
+installed)
+
+`bat --title markvi --size 1200x800 --debug -d ./index.html`
+
