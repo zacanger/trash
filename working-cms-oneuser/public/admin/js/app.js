@@ -4,7 +4,7 @@ var adminApp = angular.module('mean-blog.admin', [
   'mean-blog.posts'
 ])
 
-adminApp.config(function ($stateProvider, $urlRouterProvider) {
+adminApp.config(function($stateProvider, $urlRouterProvider){
   $urlRouterProvider.otherwise('/')
 
   $stateProvider
@@ -13,7 +13,7 @@ adminApp.config(function ($stateProvider, $urlRouterProvider) {
       templateUrl: '/admin/templates/allPosts.html',
       resolve: {
         postList: function (Posts) {
-          return Posts.all().then(function (data) {
+          return Posts.all().then(function(data){
             return data
           })
         }
