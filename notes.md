@@ -33,6 +33,45 @@ Generators DO look just like infinite loops. I'm not wrong. Turns out that's bec
 	1. keep r/w ratio in mind when denormalizing. mostly read is a good candidate. frequently updated means it's not worth it.
 	1. structure your models around how you will access data. how the app queries and updates are very important here.
 
+--------
 
+Type _introspection_ is a feature of languages where, at runtime (which, for the sake of keeping it in my head, we'll say is when said language goes from source to not-source, whether that's a binary or a browser window, or whatever... Java bytecode doesn't count, because Java is an ancient zombie, and I'm not even sure where it falls on the range of 'scripting' to 'compiled,' since it actually kind of is dumb as fuck), a program can take a peek inside and see what the _type_ of an _object_ is.
+
+So:
+```ruby
+A=Class.new
+B=Class.new A
+a=A.new
+b=B.new
+a.instance_of? A
+=> true
+b.instance_of? A
+=> false
+b.kind_of? A
+=> true
+
+```
+```php
+if ($obj instanceof Cat) {
+	// hey look, it's a cat!
+}
+```
+```python
+thingy = whatever(100)
+blingy = blahhh(17)
+type(thingy)
+<type 'whatever'>
+isinstance(thingy, type(whatever))
+True
+isinstance(thingy, type(blingy))
+False
+```
+Python also has `hasattr`, which is nifty.
+
+--------
+
+## Cron in Node
+
+`node-schedule` seems quite popular. It's a 'cron-like' and 'not-cron-like' scheduler. I believe that means it's a scheduler, but it's time based instead of interval based (because `setInterval` exists). Node-schedule is for in-process scheduling, so once your script has executed, it's gone (and then cron makes a lot more sense, because otherwise you'd have to write a script just to start node-schedule to do whatever it is that you need done at whatever time and/or date).
 
 
