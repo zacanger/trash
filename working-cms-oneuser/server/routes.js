@@ -55,7 +55,7 @@ module.exports = function(app, passport){
   })
 }
 
-function isAdmin (req, res, next){
+function isAdmin(req, res, next){
   if (req.isAuthenticated() && req.user.email === 'no@nope.not') {
     console.log('don\'t break  anything.')
 //    console.image('http://zacanger.com/gifland/hellooo.gif')
