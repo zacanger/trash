@@ -1,12 +1,32 @@
-var app = angular.module('links', [])
+var app = angular.module('links', ['ui.router'])
 
-app.factory('posts', [function(){
+app.config(['$stateProvider', '$urlRouterProvider',
+	function($stateProvider, $urlRouterProvider){
+	$stateProvider
+		.state('home', {
+			url: '/home'
+		, templateUrl: '/home.html'
+		, controller: 'mainCtrl'
+		})
+		.state('posts', {
+			url: '/posts/{id}'
+		, templateUrl: '/posts.html'
+		, controller: 'postCtrl'
+		})
 
+	$urlRouterProvider
+		.otherwise('home')
 }])
 
-app.controller('mainCtrl', [
-	'$scope',
-	function($scope){
+app.factory('posts', [function(){
+	var o = {
+		post: []
+	}
+	return o
+}])
+
+app.controller('mainCtrl', ['$scope', 'posts',
+	function($scope, posts){
 
 		$scope.addPost = function(){
 			if (!$scope.title || $scope.title === ''){return}
@@ -14,6 +34,11 @@ app.controller('mainCtrl', [
 				title: $scope.title
 			, link: $scope.link
 			, upvotes: 0
+			, comments: [
+					{author: 'you', body: 'HI YOU SUCK', upvotes: 172}
+				, {author: 'someone else', body: 'yeah, true dat', upvotes: 49}
+				, {author: 'i dunno...', body: 'i did not think it was all that bad, to be honest', upvotes: 1}
+			]
 			})
 			$scope.title = ''
 		, $scope.link = ''
@@ -23,13 +48,12 @@ app.controller('mainCtrl', [
 			post.upvotes += 1
 		}
 
-		$scope.posts = [
-			{title: 'post1', upvotes: 3}
-		, {title: 'post2', upvotes: 1324}
-		, {title: 'post3', upvotes: 1}
-		, {title: 'post4', upvotes: 99}
-		, {title: 'post5', upvotes: 67}
-		]
+		$scope.posts = posts.posts
 	}
 ])
 
+app.controller('postCtrl', ['$scope', '$stateParams', 'posts',
+	function($scope, $stateParams, posts){
+		$scope.post = posts.posts[$stateParams.id]
+	}
+])
