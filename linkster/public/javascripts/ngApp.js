@@ -36,7 +36,7 @@ app.config(['$stateProvider', '$urlRouterProvider',
       }]
     })
     .state('register', {
-      url: '/register',
+      url: '/register'
     , templateUrl: '/register.html'
     , controller: 'authCtrl'
     , onEnter: ['$state', 'auth', function($state, auth){
@@ -110,7 +110,7 @@ app.factory('auth', ['$http', '$window', function($http, $window){
     $window.localStorage['linkster-token'] = token
   }
 
-  auth.getToken = functin(){
+  auth.getToken = function(){
     return $window.localStorage['linkster-token']
   }
 

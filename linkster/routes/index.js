@@ -36,7 +36,8 @@ router.get('/', function (req, res, next){
 router.get('/posts/:post', function(req, res, next){
   req.post.populate('comments', function(err, post){
     if (err) {return next(err)}
-  res.send(req.post)
+  	res.send(req.post)
+	})
 })
 
 router.get('/posts', function(req, res, next){
@@ -89,7 +90,7 @@ router.post('/login', function(req, res, next){
     return res.status(400).json({message: 'no really, why not finish the job?'})
   }
   passport.authenticate('local', function(err, user, info){
-    if (err) {return next(err))
+    if (err) {return next(err)}
     if (user) {return res.json({token: user.generateJWT()})
     } else {
       return res.status(400).json(info)

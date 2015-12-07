@@ -1,10 +1,11 @@
 var mongoose = require('mongoose')
+  , objId = mongoose.Schema.Types.ObjectId
 
 var PostSchema = new mongoose.Schema({
     title: String
   , link: String
   , upvotes: {type: Number, default: 0}
-  , comments: [{type: mongoose.Schema.Types.ObjectID, ref: 'comment'}]
+  , comments: [{type: objId, ref: 'comment'}]
 })
 
 PostSchema.methods.upvote = function(cb){
@@ -12,4 +13,4 @@ PostSchema.methods.upvote = function(cb){
   this.save(cb)
 }
 
-mongoose.model('post', PostSchema)
+mongoose.model('Post', PostSchema)
