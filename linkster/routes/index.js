@@ -5,6 +5,7 @@ var express   = require('express')
   , Comment   = mongoose.model('Comment')
   , User      = mongoose.model('User')
   , passport  = require('passport')
+  , jwt       = require('express-jwt')
 
 // params
 router.param('post', function(req, res, next, id){
@@ -46,8 +47,9 @@ router.get('/posts', function(req, res, next){
 })
 
 // posts
-router.post('/posts', function(req, res, next){
+router.post('/posts', auth, function(req, res, next){
   var post = new Post(req.body)
+  post.author = req.payload.username
   post.save(function(err, post){
     if (err) {return next(err)}
     res.send(post)
@@ -55,10 +57,11 @@ router.post('/posts', function(req, res, next){
 })
 
 
-router.post('/posts/:post/comments', function(req, res, next){
+router.post('/posts/:post/comments', auth, function(req, res, next){
   var comment = new Comment(req.body)
   comment.post = req.post
-  coment.save(function(err, comment){
+  comment.author = req.payload.username
+  comment.save(function(err, comment){
     if (err) {return next(err)}
     req.post.comments.push(comment)
     req.post.save(function(err, post){
@@ -95,7 +98,7 @@ router.post('/login', function(req, res, next){
 })
 
 // puts
-router.put('/posts/:post/upvote', function(req, res, next){
+router.put('/posts/:post/upvote', auth, function(req, res, next){
   req.post.upvote(function(err, post){
     if (err) {return next(err)}
     res.send(post)
