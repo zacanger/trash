@@ -16,11 +16,13 @@
 		<div ng-repeat="post in posts | orderBy: '-upvotes'">
 			<span ng-click="incrementUpvotes(post)">^</span>
 			<a ng-show="post.link" href="{{post.link}}">{{post.title}}</a>
+      <span ng-show="post.author">by <a>{{post.author}}</a></span>
 			<span ng-hide="post.link">{{post.title}}</span>
 			<span><a href="#/posts/{{post._id}}">comments</a></span>
 			&mdash; upvotes: {{post.upvotes}}
 		</div>
-		<form ng-submit="addPost()">
+    <div ng-hide="isLoggedIn()"><h4>please <a href="/#/login">log in</a> or <a href="/#/register">register</a> to add a post.</h4></div>
+    <form ng-submit="addPost()" ng-show="isLoggedIn()">
 			<input type="text" placeholder="title" ng-model="title"></input>
 			<br><input type="text" placeholder="https://example.com/foobar" ng-model="link"></input>
 			<br><button type="submit">Post</button>
@@ -39,7 +41,8 @@
 				{{comment.upvotes}} &mdash; {{comment.author}}
 				<span>{{comment.body}}</span>
 			</div>
-			<form ng-submit="addComment()">
+      <div ng-hide="isLoggedIn()"><h4>please <a href="/#/login">log in</a> or <a href="/#/register">register</a> to add a comment.</h4></div>
+			<form ng-submit="addComment()" ng-show="isLoggedIn()">
 				<h4>new comment</h4>
 				<div>
 					<input type="text" placeholder="comment" ng-model="body"></input>
@@ -48,8 +51,45 @@
 			</form>
 		</script>
 
+    <script type="text/ng-template" id="/login.html">
+      <header><h2>linkster</h2></header>
+      <div ng-show="error">
+        <span>{{error.message}}</span>
+      </div>
+      <form ng-submit="register()">
+        <h3>register</h3>
+        <div>
+          <input type="text" placeholder="username" ng-model="user.username"></input>
+        </div>
+      <button type="submit">register</button>
+      </form>
+    </script>
+
+    <script type="text/ng-template" id="/login.html">
+    <header><h2>linkster</h2></header>
+    <div ng-show="error">
+      <span>{{error.message}}</span>
+    </div>
+    <form ng-submit="logIn()">
+      <h3>log in</h3>
+      <div>
+        <input type="text" placeholder="username" ng-model="user.username"></input>
+      </div>
+      <div>
+        <input type="password" placeholder="password" ng-model="user.password"></input>
+      </div>
+    </form>
+  </script>
 	</head>
-	<body ng-app"links">
+	<body ng-app"linkster">
+    <nav ng-controller="navCtrl">
+      <ul>
+        <li ng-show="isLoggedIn()"><a>{{currentUser()}}</a></li>
+        <li ng-show="isLoggedIn()"><a href="" ng-click="logOut()">log out</a></li>
+        <li ng-show="isLoggedIn()"><a href="/#/login">log in</a></li>
+        <li ng-show="isLoggedIn()"><a href="/#/register">register</a></li>
+      </ul>
+    </nav>
 		<ui-view></ui-view>
 	</body>
 </html>
