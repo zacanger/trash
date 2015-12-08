@@ -9,7 +9,7 @@ http.createServer(function(request, respons){
     , filename = path.join(process.cwd(), uri)
 
   var contentTypesByExtension = {
-    , '.html': 'text/html'
+      '.html': 'text/html'
     , '.css': 'text/css'
     , '.js': 'text/javascript'
   }
