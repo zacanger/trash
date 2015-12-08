@@ -4,8 +4,7 @@
   "description": "just a little sample to play with vue 1.0",
   "main": "src/index.js",
   "scripts": {
-    "dev": "webpack-dev-server --inline --hot",
-    "start": "http-server"
+    "start": "webpack-dev-server --inline --hot"
   },
   "author": "zacanger",
   "license": "WTFPL",

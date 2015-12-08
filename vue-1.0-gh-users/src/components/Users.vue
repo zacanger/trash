@@ -1,8 +1,9 @@
 <template>
   <h1>Users</h1>
   <button @click="fetchUsers()">Get Users</button>
+  <div class="container">
   <div class="row">
-    <div class="col" v-for="user in users">
+    <div class="four.columns" v-for="user in users">
       <div class="thumbnail">
         <img :src="user.avatar_url" alt="{{user.login}}">
         <div class="caption">

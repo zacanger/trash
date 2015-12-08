@@ -1,5 +1,5 @@
 <template>
-  <div id="wrapper">
+  <div id="wrapper" class="container">
     <nav>
       <ul>
         <li><a v-link="'home'">home</a></li>
