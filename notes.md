@@ -74,4 +74,11 @@ Python also has `hasattr`, which is nifty.
 
 `node-schedule` seems quite popular. It's a 'cron-like' and 'not-cron-like' scheduler. I believe that means it's a scheduler, but it's time based instead of interval based (because `setInterval` exists). Node-schedule is for in-process scheduling, so once your script has executed, it's gone (and then cron makes a lot more sense, because otherwise you'd have to write a script just to start node-schedule to do whatever it is that you need done at whatever time and/or date).
 
+--------
+
+Gulp:
+```javascript
+gulp.task('nameoftaskNOSPACES', ['arraywithTasksToExecute', 'beforeThisTaskHappens', 'whichAreOptionalReally'], function(){})
+
+```
 
