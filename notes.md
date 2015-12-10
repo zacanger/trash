@@ -95,3 +95,38 @@ gulp.task('nameoftaskNOSPACES', ['arraywithTasksToExecute', 'beforeThisTaskHappe
 - nw: shell calls are totally fine.
 - electron: need to spawn child procs with the `pipe` stdio option.
 
+- A package for nw.js is a zip archive wit hthe extension 'nw.' There must be a package.json, which includes the 'main' key (html to open on load), and name of package (similar to node modules).  
+'nodejs' field on package.json is boolean; set false to disable nodeurnning there (purely client-side). node-main is the path to the script for node to run (so we could have nodde run the server, and nwjs working with its own files, and there _shouldn't- be conflict.)
+- user-agent (should be pretty obvious.)
+- remote enalbes calling node in remote pages, whitelist of hostnames.
+- chromium-args (literally).
+- js-flags (string) for example:`{"name": "test", "main": "index.html", "js-flags": etc function etc}`
+- inject-js-start and inject-js-end (THIS ARE THE IMPORTANT BITS, PAY ATTENTION HERE!)
+	- start: local filename (relative to index.html) to specify js to inject. js is executed AFTER all css, but BEFORE any other scripts are run or the dom is built.
+	- end: same, but it's excecuted AFTER loaded, before the onload event. mostly used as an option of Window.open() to inject js into a new window.
+
+- window:
+	- title str
+	- width/height int
+	- tooolbar bool
+	- icon str (path to the icon)
+	- position  str (null, center, or mouse)
+	- `min_width`, `min_height`, `max_width`, `max_height` int
+	- `as_desktop` bool show as x server desktop background window
+	- resizable bool
+  - always-on-top bool
+	- visible-on-all-workspaces bool
+	- fullscreen bool
+	- `show_in_taskbar` bool
+	- frame bool (sets frameless; avoid if setting fullscreen to true!)
+	- show bool (false would mean hidden startup [tray?])
+	- kiosk bool (fullscreen, prevents mouse-driven leaving app; alt-f4 still works, and ctrl-q probably does as well)
+	- transparent bool (would need composition support) (if true, set with rgba as in css)
+
+- webkit
+	- plugin bool (defaults false, for loading media plugins)
+	- java bool (fuck no, leave that shit where it is)
+	- page-cache bool
+
+More on nw stuff:  
+whether a .nw file (renamed zip) or project directory, the package.json needs to be in the root, and if it's the .nw, that needs to be the actual project directory contents, not a directory containing them
