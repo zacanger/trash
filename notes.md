@@ -129,4 +129,15 @@ gulp.task('nameoftaskNOSPACES', ['arraywithTasksToExecute', 'beforeThisTaskHappe
 	- page-cache bool
 
 More on nw stuff:  
-whether a .nw file (renamed zip) or project directory, the package.json needs to be in the root, and if it's the .nw, that needs to be the actual project directory contents, not a directory containing them
+whether a .nw file (renamed zip) or project directory, the package.json needs to be in the root, and if it's the .nw, that needs to be the actual project directory contents, not a directory containing them.
+
+`console.log` redirects to dev tools (same with console.warn and console.error)
+
+the `process` object:
+  - `process.versions['node-webkit']` is set with nw's version
+	- `process.versions['chromium']` is set with the chromium version that the nw version is based on (so, for example, node-webkit version 0.13.0-alpha7, chromium version 47.0.2526.73, node version 5.1.0)
+	- `process.mainModule` is set to the _start_ page, eg `index.html`--this is whatever's under `main` in the package.json, UNLESS there's a specified `node-main` field there.
+
+`__dirname` can only be called by node modules (with `require()`). webkit doesn't have that (not in devtools either). a hacky fix:  
+`exports.dirname = __dirname` in a file, then require that (eg `var dirname = require('./dirnamefile').dirname; console.log(dirname)` would return dirname).
+
