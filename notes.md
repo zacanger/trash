@@ -82,3 +82,16 @@ gulp.task('nameoftaskNOSPACES', ['arraywithTasksToExecute', 'beforeThisTaskHappe
 
 ```
 
+--------
+
+## Electron vs Node Webkit
+
+- Electron: `main` in `package.json` is the `app.js` or whatever to run.
+- nw.js: `main` is the `index.html` to display.
+- nw.js: can specify options about window, such as toolbar, width, and height.
+- electron: you do that in the app.js or whatever.
+- electron's menus are available on the main process. for dynamic updates to menus from within the app (rendering process), need to use ipc (built-in to electron).
+- nw: call set menu, and set stuff. it's all bundled anyway, so whatever.
+- nw: shell calls are totally fine.
+- electron: need to spawn child procs with the `pipe` stdio option.
+
