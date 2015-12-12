@@ -26,7 +26,7 @@ exports.saveImage = function(req, res){
   s3.upload(params, function(err, data){
     console.log(err, data)
     if (err) return res.status(500).send(err)
-    // TODO: save data to mongo
+    // this is where we'd actually deal with this data, save the metadata to mongo, etc.
     res.json(data)
   })
 }
