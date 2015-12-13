@@ -141,3 +141,13 @@ the `process` object:
 `__dirname` can only be called by node modules (with `require()`). webkit doesn't have that (not in devtools either). a hacky fix:  
 `exports.dirname = __dirname` in a file, then require that (eg `var dirname = require('./dirnamefile').dirname; console.log(dirname)` would return dirname).
 
+--------
+
+# MISC NODE THINGS
+
+What the hell is an event emitter, anyway? Oh, okay. So. Here's an example. `net.Server` emits an event when a peer connects. `fs.readStream` emits an event when a file is opened. `events.EventEmitter` objects! This can be accessed directly by requiring `events`.  
+Functions can be executed when an event is emitted--these are called __listeners__ (not something silly like emitter methods or whatever, that would just be nonsense). In those functions, `this` is the `EventEmitter` to which the listener is attached.
+
+Something worth noting: _HANDLE EVENTEMITTER ERRORS_. Errors are special events in node, and if there's no listener for it, node'll just print a stack trace and exit. So always always always be aware, and do something like `.on('error', fn)` to make sure you're handling errors the way you __want__ to handle them, rather than just letting shit crash and die.
+
+
