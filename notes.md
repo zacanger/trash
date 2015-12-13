@@ -150,4 +150,15 @@ Functions can be executed when an event is emitted--these are called __listeners
 
 Something worth noting: _HANDLE EVENTEMITTER ERRORS_. Errors are special events in node, and if there's no listener for it, node'll just print a stack trace and exit. So always always always be aware, and do something like `.on('error', fn)` to make sure you're handling errors the way you __want__ to handle them, rather than just letting shit crash and die.
 
+--------
+
+Gulp core's api is THIS SIMPLE. Check this out.
+```javascript
+.src(globs [, options]) // takes glob, returns stream in
+.dest(path) // takes path, returns stream out
+.task(name [, deps], fn) // defines task
+.run(tasks... [, cb]) // runs task
+.watch(glob [, opts], cb) // watches fs
+```
+That's IT. The entire codebase is actually readable in a relatively short amount of time. That's fuckin' beautiful, man.
 
