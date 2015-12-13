@@ -59,5 +59,8 @@
     "gulp-uglify": "^1.5.1",
     "gulp-watch": "^4.3.5",
     "jshint": "^2.8.0"
+  },
+  "window": {
+    "toolbar": false
   }
 }

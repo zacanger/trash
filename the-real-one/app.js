@@ -11,12 +11,8 @@ app.on('window-all-closed', function(){
 // electron is ready to create a window!
 app.on('ready', function(){
   mainWindow = new BrowserWindow({
-    width: 1920
- ,  height: 1080
- ,  'min-width': 1920
- ,  'min-height': 1080
- ,  'max-width': 1920
- ,  'max-height': 1080
+    width: 1600
+ ,  height: 900
  ,  'accept-first-mouse': true
  ,  'title-bar-style': 'hidden'
   })
