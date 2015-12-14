@@ -15,6 +15,7 @@ app.on('ready', function(){
  ,  height: 900
  ,  'accept-first-mouse': true
  ,  'title-bar-style': 'hidden'
+ ,  'node-integration': false
   })
 
   mainWindow.loadUrl('http://127.0.0.1:4444/admin')
