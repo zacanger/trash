@@ -1,10 +1,5 @@
-; /*! showdown 19-10-2015 */
-(function () {
-  /**
-   * Created by Tivie on 13-07-2015.
-   */
-
-  function getDefaultOpts (simple) {
+;(function(){
+  function getDefaultOpts(simple){
     'use strict'
 
     var defaultOptions = {
@@ -86,11 +81,6 @@
     return ret
   }
 
-  /**
-   * Created by Tivie on 06-01-2015.
-   */
-
-  // Private properties
   var showdown = {},
     parsers = {},
     extensions = {},
