@@ -1,14 +1,13 @@
 var adminApp = angular.module('ayuba.admin', ['ui.router', 'btford.markdown', 'ayuba.posts'])
 
 adminApp.config(function($stateProvider, $urlRouterProvider){
-
   $stateProvider
     .state('allPosts', {
       url: '/',
       templateUrl: '/admin/templates/allPosts.html',
       resolve: {
         postList: function(Posts){
-          return Posts.all().then(function (data) {
+          return Posts.all().then(function(data){
             return data
           })
         }

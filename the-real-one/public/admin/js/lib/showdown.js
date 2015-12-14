@@ -34,7 +34,7 @@
         type: 'boolean'
       },
       simplifiedAutoLink: {
-        default: false,
+        default: true,
         describe: 'Turn on/off GFM autolink style',
         type: 'boolean'
       },
@@ -44,17 +44,17 @@
         type: 'boolean'
       },
       strikethrough: {
-        default: false,
+        default: true,
         describe: 'Turn on/off strikethrough support',
         type: 'boolean'
       },
       tables: {
-        default: false,
+        default: true,
         describe: 'Turn on/off tables support',
         type: 'boolean'
       },
       tablesHeaderId: {
-        default: false,
+        default: true,
         describe: 'Add an id to table headers',
         type: 'boolean'
       },
@@ -64,12 +64,12 @@
         type: 'boolean'
       },
       tasklists: {
-        default: false,
+        default: true,
         describe: 'Turn on/off GFM tasklist support',
         type: 'boolean'
       },
       smoothLivePreview: {
-        default: false,
+        default: true,
         describe: 'Prevents weird effects in live previews due to incomplete input',
         type: 'boolean'
       }

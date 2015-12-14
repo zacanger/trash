@@ -1,5 +1,3 @@
-// angular-markdown-directive by and (c) 2013-2014 Brian Ford http://briantford.com license MIT
-
 'use strict'
 
 angular.module('btford.markdown', ['ngSanitize']).provider('markdownConverter', function(){

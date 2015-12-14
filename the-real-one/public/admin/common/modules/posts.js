@@ -9,9 +9,9 @@ postsModule.service('Posts', function($http){
     },
     add: function(newPost){
       return $http({
-        method: 'post',
-        url: '/api/posts',
-        data: newPost
+        method: 'post'
+      , url: '/api/posts'
+      , data: newPost
       }).then(function(res){
         return res.data
       }).catch(function(err){
@@ -19,8 +19,6 @@ postsModule.service('Posts', function($http){
         console.error(err)
         return err
       })
-    },
-    remove: function(){},
-    update: function(){}
+    }
   }
 })

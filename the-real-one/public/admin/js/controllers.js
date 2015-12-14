@@ -14,11 +14,12 @@ adminApp.controller('AllPostsCtrl', function($scope, postList){
   }
 })
 
-adminApp.controller('AddPostCtrl', function($scope, Posts){
+adminApp.controller('AddPostCtrl', function($scope, $state, Posts){
   $scope.post = {}
   $scope.addPost = function(newPost){
     Posts.add(newPost).then(function(res){
       console.log(res)
     })
+    $state.go('allPosts')
   }
 })

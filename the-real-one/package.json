@@ -26,7 +26,8 @@
   },
   "license": "WTFPL",
   "scripts": {
-    "start": "gulp",
+    "start": "node index.js",
+    "desktop": "electron app.js",
     "test": "echo 'ERROR ERROR ERROR ERROR'"
   },
   "dependencies": {
