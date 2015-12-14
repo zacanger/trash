@@ -1,21 +1,17 @@
 <!doctype html>
 <html><head><title>asdf</title>
-
-		<style>
-			textarea {
-				height: 900px;
-				width: 50%
-			}
-
-		</style>
-
-	</head>
-	<body>
-<textarea name="my-markdown-editor" data-editor="markdown"></textarea>
+<style>
+  textarea {
+    height: 900px;
+    width: 800px;
+  }
+</style>
+</head>
+<body>
+	<textarea name="my-markdown-editor" data-editor="javascript"></textarea>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
 <script src="./src-min-noconflict/ace.js"></script>
 <script>
-    // Hook up ACE editor to all textareas with data-editor attribute
     $(function () {
         $('textarea[data-editor]').each(function () {
             var textarea = $(this);
@@ -32,17 +28,15 @@
             textarea.css('display', 'none');
 
             var editor = ace.edit(editDiv[0]);
-						editor.renderer.setShowGutter(true);
-						editor.setKeyboardHandler("ace/keyboard/vim")
+            editor.renderer.setShowGutter(true);
+            editor.setKeyboardHandler("ace/keyboard/vim")
             editor.getSession().setValue(textarea.val());
             editor.getSession().setMode("ace/mode/" + mode);
             editor.setTheme("ace/theme/monokai");
             textarea.closest('form').submit(function () {
                 textarea.val(editor.getSession().getValue());
             })
-
         });
     });
-	</script>
-
+  </script>
 </body></html>
