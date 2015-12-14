@@ -4,28 +4,27 @@ var app = require('app')
 
 app.on('window-all-closed', function(){
   if (process.platform != 'darwin') {
-    app.quit()  // this is because os x was built by apes
-  }             // trendy apes
-})              // but still apes
+    app.quit()  // because osx holds processes open even after
+  }             // all windows are closed
+})
 
-// electron is ready to create a window!
+// electron's window!
 app.on('ready', function(){
   mainWindow = new BrowserWindow({
     width: 1600
  ,  height: 900
  ,  'accept-first-mouse': true
  ,  'title-bar-style': 'hidden'
- ,  'node-integration': false
+ ,  'node-integration': false // otherwise various client-side things break
   })
 
-  mainWindow.loadUrl('http://127.0.0.1:4444/admin')
+  mainWindow.loadUrl('http://127.0.0.1:4444/admin') // our internal server...
 
   // mainWindow.openDevTools()
 
   mainWindow.on('closed', function(){
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
+    // if we have multiple windows, store them in an array
+    // this is where we'd get rid of those
     mainWindow = null
   })
 })

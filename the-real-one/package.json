@@ -26,9 +26,9 @@
   },
   "license": "WTFPL",
   "scripts": {
-    "start": "node index.js",
-    "desktop": "electron app.js",
-    "test": "echo 'ERROR ERROR ERROR ERROR'"
+    "start": "node index.js && electron app.js",
+    "app": "electron app.js",
+		"test": "echo 'ERROR ERROR ERROR ERROR'"
   },
   "dependencies": {
     "body-parser": "^1.14.1",
