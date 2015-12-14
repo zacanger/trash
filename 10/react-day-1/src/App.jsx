@@ -3,10 +3,18 @@ var React 		= require('react')
 
 var App = React.createClass({
 	getInitialState() {
-		return {}
+		return {
+			textToDisplay: 'foo, bar'
+		}
 	},
-	componentDidMount() {
-		return {}
+
+	componentdidmount() {
+		return {
+			setTimeout(() => {
+				this.setState({
+					textToDisplay: 'qux, bax'
+				})}, 500)
+		}
 	},
 
 	componentWillMount() {
@@ -15,27 +23,14 @@ var App = React.createClass({
 
 	render() {
 		return (
-			<span>HOWDY</span>
+			<span className="oi">{this.state.textToDisplay}</span>
 		)
 	}
 })
 
 ReactDOM.render(<App />, document.getElementById('app'))
 
-//////////////////////////////////////
-/// REACT BASICS: createClass
-//////////////////////////////////////
-// 1. Install `react` and `react-dom`: `npm install react react-dom --save`
-// 2. Include the newly installed `react` & `react-dom node` modules into this file
-// 3. Create a basic React component using `createClass` and `createElement`. Have it render out some basic text.
-// 4. Using `ReactDOM.render`, render the React component into `react` div in `index.html`
-// 5. Run `webpack` and make sure you can still load `index.html` in a browser
 
-
-
-
-//////////////////////////////////////
-/// JSX
 //////////////////////////////////////
 // 1. JSX comes built in with Babel, so we don't need to install anything additional
 // 2. Convert `createElement` to JSX
