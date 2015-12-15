@@ -28,7 +28,8 @@
   "scripts": {
     "start": "node index.js && electron app.js",
     "app": "electron app.js",
-		"test": "echo 'ERROR ERROR ERROR ERROR'"
+		"test": "echo 'ERROR ERROR ERROR ERROR'",
+    "release": "electron-packager . markvi --platform=all --arch=all --version=0.34.1 --out=../releases"
   },
   "dependencies": {
     "body-parser": "^1.14.1",

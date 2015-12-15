@@ -6,7 +6,7 @@ var express = require('express')
   , methodOverride = require('method-override')
   , cors = require('cors')
   , app = express()
-  , env = process.env.NODE_ENV = process.env.NODE_ENV || 'development'
+  , env = process.env.NODE_ENV = process.env.NODE_ENV || 'production'
   , envConfig = require('./server/env')[env]
 
 mongoose.connect(envConfig.db)
