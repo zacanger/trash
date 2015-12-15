@@ -10,7 +10,6 @@ module.exports = {
 			include: /src/, // only run through files located in the `src` directory
 			exclude: /node_modules/, // ignore the `node_modules` directory
 			loader: 'babel?presets[]=react'
-
 		}]
 	}
 }

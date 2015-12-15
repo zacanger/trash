@@ -27,6 +27,7 @@ var App = React.createClass({
 	render() {
 		return (
 			<span onCLick={this._handleClick} className="oi">{this.state.textToDisplay}</span>
+			<input type='text' value='' placeholder='howdy' />
 		)
 	}
 })
