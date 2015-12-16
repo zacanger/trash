@@ -28,7 +28,7 @@
   "scripts": {
     "start": "node index.js && electron app.js",
     "app": "electron app.js",
-		"test": "echo 'ERROR ERROR ERROR ERROR'",
+    "test": "echo 'ERROR ERROR ERROR ERROR'",
     "release": "electron-packager . markvi --platform=all --arch=all --version=0.34.1 --out=../releases"
   },
   "dependencies": {
@@ -57,6 +57,7 @@
     "gulp-concat": "^2.6.0",
     "gulp-cssmin": "^0.1.7",
     "gulp-ng-annotate": "^1.1.0",
+    "gulp-strip-comments": "^1.1.1",
     "gulp-task-listing": "^1.0.1",
     "gulp-uglify": "^1.5.1",
     "gulp-watch": "^4.3.5",

@@ -7,7 +7,7 @@ html, body, section, .full-height {
 
 input, .form-group, .form-control, .col-lg-21, textarea, #title, #pad, #editor, .navbar, .navbar-nav, .navbar-default, .navbar-fixed-top {
   font-family: "Hasklig", "Fantasque Sans Mono", "Fira Mono", "Hack", "Inconsolata", "Anonymous Pro", monospace;
-  background: #e7e5e2;
+  background: #e8f2ff;
   color: #2a2e34;
 	margin: 0;
 	padding: 0;
@@ -20,7 +20,7 @@ input, .form-group, .form-control, .col-lg-21, textarea, #title, #pad, #editor, 
 	line-height: 2;
 	padding: 5px;
 	color: #2a2e34;
-	background: #e7e5e2;
+	background: #e8f2ff;
 }
 
 .titleplease {
@@ -37,7 +37,7 @@ input, .form-group, .form-control, .col-lg-21, textarea, #title, #pad, #editor, 
 body {
   position: relative;
   z-index: 1;
-  background: #e7e5e2;
+  background: #e8f2ff;
   margin: 0;
   color: #2a2e34;
   padding: 0;
@@ -87,7 +87,7 @@ body {
   font-size: 1.2em !important;
   line-height: 1.2 !important;
   padding: .4em .8em .4em 6em !important;
-  background-color: #e7e5e2 !important;
+  background-color: #e8f2ff !important;
   color: #2a2e34 !important;
 }
 .preview > *:first-child {
@@ -271,7 +271,7 @@ body {
 }
 .preview table tr {
   border-top: 1px solid #59917e !important;
-  background-color: #e7e5e2 !important;
+  background-color: #e8f2ff !important;
   margin: 0 !important;
   padding: 0 !important;
 }
@@ -379,7 +379,7 @@ body {
   padding: 0 .4em !important;
   white-space: nowrap !important;
   border: 1px solid #0a0a0a !important;
-  background-color: #e7e5e2 !important;
+  background-color: #e8f2ff !important;
   border-radius: 2px !important;
 }
 .preview pre code {
@@ -399,7 +399,7 @@ body {
   border-radius: 2px !important;
 }
 .preview pre {
-  background-color: #e7e5e2 !important;
+  background-color: #e8f2ff !important;
   border: 1px solid #0a0a0a !important;
   font-size: 1.0em !important;
   line-height: 19px !important;
@@ -419,7 +419,7 @@ body {
   font-size: 1.2em;
   line-height: 1.2;
   padding: .4em .8em .4em 6em;
-  background-color: #e7e5e2;
+  background-color: #e8f2ff;
   color: #2a2e34;
 }
 .allPreview > *:first-child {
@@ -603,7 +603,7 @@ body {
 }
 .allPreview table tr {
   border-top: 1px solid #59917e;
-  background-color: #e7e5e2;
+  background-color: #e8f2ff;
   margin: 0;
   padding: 0;
 }
@@ -711,7 +711,7 @@ body {
   padding: 0 .4em;
   white-space: nowrap;
   border: 1px solid #0a0a0a;
-  background-color: #e7e5e2;
+  background-color: #e8f2ff;
   border-radius: 2px;
 }
 .allPreview pre code {
@@ -731,7 +731,7 @@ body {
   border-radius: 2px;
 }
 .allPreview pre {
-  background-color: #e7e5e2;
+  background-color: #e8f2ff;
   border: 1px solid #0a0a0a;
   font-size: 1.0em;
   line-height: 19px;

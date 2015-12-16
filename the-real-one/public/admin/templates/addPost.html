@@ -12,21 +12,25 @@ publish
     <textarea id="pad" class="col-md-6 full-height" ng-model='post.body' placeholder='write here…'></textarea>
 
     <div class="col-md-6 full-height" id="markdown" class="preview">
-			<div btf-markdown='post.body'></div>
+      <div btf-markdown='post.body'></div>
     </div>
   </div>
 </div>
 <script>
-	var codeMirror = CodeMirror.fromTextArea(document.getElementById("pad"), {
+  var codeMirror = CodeMirror.fromTextArea(document.getElementById("pad"), {
     mode: 'markdown'
+//    mode: 'javascript'
   , lineNumbers: true
   , matchBrackets: true
   , lineWrapping: true
   , placeholder: 'write here…'
-  , theme: 'abcdef'
+  , theme: 'icecoder'
   , keyMap: 'vim'
   , autoCloseBrackets: true
   , autoCloseTags: true
 	})
+
+
 </script>
+
 

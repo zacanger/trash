@@ -1,13 +1,13 @@
-var express = require('express')
-  , mongoose = require('mongoose')
-  , bodyParser = require('body-parser')
-  , passport = require('passport')
-  , cookieParser = require('cookie-parser')
+var express        = require('express')
+  , mongoose       = require('mongoose')
+  , bodyParser     = require('body-parser')
+  , passport       = require('passport')
+  , cookieParser   = require('cookie-parser')
   , methodOverride = require('method-override')
-  , cors = require('cors')
-  , app = express()
-  , env = process.env.NODE_ENV = process.env.NODE_ENV || 'production'
-  , envConfig = require('./server/env')[env]
+  , cors           = require('cors')
+  , app            = express()
+  , env            = process.env.NODE_ENV = process.env.NODE_ENV || 'development'
+  , envConfig      = require('./server/env')[env]
 
 mongoose.connect(envConfig.db)
 
