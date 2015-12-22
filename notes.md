@@ -164,3 +164,25 @@ That's IT. The entire codebase is actually readable in a relatively short amount
 
 Clearly that doesn't include `.pipe()`, but pipe isn't exactly an api thing I think. It's a pipe. That'd be like saying 'oh yeah, you need to learn |, that's a really important thing' or whatever. Sure, it's the most vital and fundamental thing about *n*x, but it's not a thing you learn, I guess.
 
+--------
+
+Regarding ES6 `let` and `const`: `let` would be mutable. `const` is basically exactly what it sounds like.
+
+--------
+
+React things:  
+
+`componentWillMount()` is triggered _once_, before any rendering.  
+`componentDidMount()` is triggered _after_ initial rendering. Access to DOM, here!  
+`componentWillReceiveProps(object nextProps)` triggers after component receives new props.  
+`shouldComponentUpdate(object nextProps, object nextState)` optimize rendering, return false if no need to update.  
+`componentWillUpdate(same as above, there ^^ )` triggered after shouldEtc,etc..., and before `render()`.  
+`compnentDidUpdate()` after rendering. Modify the DOM here.  
+`componentWillUnmount()` just before component unmounted from DOM--do cleanup here.
+
+`displayName` good for debug especially. ES6 classes, derived from class name.  
+`getInitialState()` equivalent of constructor in classes.  
+`getDefaultProps()` same, bro.  
+`mixins` array  
+`statics` properties and methods for component
+
