@@ -1,0 +1,47 @@
+body {
+	background: #222;
+	color: #ddd;
+	font-size: 1.2em;
+	font-family: "Hack", "Hasklig", "Fira Code", monospace;
+}
+
+.add-note {
+	background: #333;
+	border: 1px dotted #eee;
+}
+
+.notes {
+	margin: 0.4em;
+	padding-left: 0;
+	max-width: 8em;
+	list-style: none;
+}
+.note {
+	margin-bottom: 0.4em;
+	padding: 0.4em;
+	background: #101010;
+	box-shadow: 0 0 0.1em 0.01em rgba(70, 70, 70, 0.2);
+}
+
+.note:hover {
+	box-shadow: 0 0 0.1em 0.01em rgba(70, 70, 70, 0.6);
+	transition: 0.4s;
+}
+
+.note .task {
+	display: inline-block;
+}
+
+.note .delete {
+	float: right;
+	padding: 0;
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	visibility: hidden;
+}
+
+.note:hover .delete {
+	visibility: visible;
+}
+
