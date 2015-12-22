@@ -1,47 +1,78 @@
 body {
-	background: #222;
-	color: #ddd;
-	font-size: 1.2em;
-	font-family: "Hack", "Hasklig", "Fira Code", monospace;
+  background: #222;
+  color: #ddd;
+  font-size: 1.2em;
+  font-family: "Hack", "Hasklig", "Fira Code", monospace;
+}
+
+.lane {
+  display: inline-block;
+  margin: 0.8em;
+  background-color: transparent;
+  border: 1px solid #ccc;
+  border-radius: 0.5em;
+  min-width: 8em;
+  vertical-align: top;
+}
+
+.lane-header {
+  overflow: auto;
+  padding: 0.8em;
+  color: #ddd;
+  border-top-left-radius: 0.5em;
+  border-top-right-radius: 0.5em;
+}
+
+.lane-name {
+  float: left;
+}
+
+.lane-add-note {
+  float: right;
+  margin-left: 0.4em;
+}
+
+.add-lane, .lane-add-note button {
+  background-color: #212121;
+  border: 1px solid #ddd;
 }
 
 .add-note {
-	background: #333;
-	border: 1px dotted #eee;
+  border: 1px dotted #eee;
 }
 
 .notes {
-	margin: 0.4em;
-	padding-left: 0;
-	max-width: 8em;
-	list-style: none;
+  margin: 0.4em;
+  padding-left: 0;
+  max-width: 8em;
+  list-style: none;
 }
 .note {
-	margin-bottom: 0.4em;
-	padding: 0.4em;
-	background: #101010;
-	box-shadow: 0 0 0.1em 0.01em rgba(70, 70, 70, 0.2);
+  margin-bottom: 0.4em;
+  padding: 0.4em;
+  background: #101010;
+  box-shadow: 0 0 0.1em 0.01em rgba(70, 70, 70, 0.2);
 }
 
 .note:hover {
-	box-shadow: 0 0 0.1em 0.01em rgba(70, 70, 70, 0.6);
-	transition: 0.4s;
-}
-
-.note .task {
-	display: inline-block;
+  box-shadow: 0 0 0.1em 0.01em rgba(70, 70, 70, 0.6);
+  transition: 0.4s;
 }
 
 .note .delete {
-	float: right;
-	padding: 0;
-	background: transparent;
-	border: none;
-	cursor: pointer;
-	visibility: hidden;
+  float: right;
+  padding: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  visibility: hidden;
 }
 
 .note:hover .delete {
-	visibility: visible;
+  visibility: visible;
+}
+
+.note .value {
+  display: inline-block;
 }
 

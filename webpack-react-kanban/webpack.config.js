@@ -1,52 +1,71 @@
-var path    = require('path')
-  , htmlplug = require('html-webpack-plugin')
-  , webpack  = require('webpack')
-  , merge    = require('merge')
+var path = require('path')
+  , HtmlwebpackPlugin = require('html-webpack-plugin')
+  , webpack = require('webpack')
+  , Clean = require('clean-webpack-plugin')
+  , ExtractTextPlugin = require('extract-text-webpack-plugin')
 
-const TARGET = process.env.npm_lifecycle_event
-const PATHS = {
-    app: path.join(__dirname, 'app')
-  , build: path.join(__dirname, 'build')
-}
-process.env.BABEL_ENV = TARGET
-
-var common = {
-    entry: PATHS.app
-/*  , output: {
-    path: PATHS.build
-    , filename: 'bundle.js'
-  }, */
-, resolve: {
-  extensions: ['', '.js', '.jsx']
-}
-,  module: {
-  loaders: [
-  {
-    test: /\.css$/
-  , loaders: ['style', 'css']
-  , include: PATHS.app
-  },{
-    test: /\.jsx?$/
-  , loaders: ['babel']
-  , include: PATHS.app
+module.exports = function(o){
+  if(!o.inputPath) {
+    console.warn('missing input path')
   }
-  ]
-  },
-  plugins: [new htmlplug({title: 'appy'})]
-}
+  if(!o.outputPath) {
+    console.warn('missing output path')
+  }
+  var appPath = path.resolve(o.inputPath, 'app')
 
-if (TARGET === 'start' || !TARGET) {
-  module.exports = merge(common, {
-  devtool: 'eval-source-map'
-  ,  devServer: {
-    historyApiFallback: true
-  , hot: true
-  , inline: true
-  , progress: true
-  , stats: 'errors-only'
-  , host: process.env.HOST
-  , port: process.env.PORT
-  },
-  plugins: [new webpack.HotModuleReplacementPlugin()]
-  })
+  //var pkg = require(path.resolve(o.inputPath, 'package.json'));
+  //var deps = pkg.dependencies || {};
+
+  return {
+    entry: {
+      app: appPath
+      //vendor: Object.keys(deps)
+    },
+    resolve: {
+      root: o.inputPath,
+      extensions: ['', '.js', '.jsx']
+    },
+    output: {
+      path: o.outputPath,
+      filename: 'app.[chunkhash].js'
+    },
+    //devtool: 'source-map', // big!!! skipping
+    module: {
+      loaders: [
+        {
+          test: /\.css$/,
+          loader: ExtractTextPlugin.extract('style', 'css'),
+          include: appPath
+        },
+        {
+          test: /\.jsx?$/,
+          loaders: ['babel'],
+          include: appPath
+        }
+      ]
+    },
+    plugins: [
+      new HtmlwebpackPlugin({
+        title: 'appy'
+      }),
+      new ExtractTextPlugin('styles.css'),
+      new Clean(['.'], o.outputPath),
+      // XXXXX: gives Uncaught Error: Cannot find module "alt"
+      /*new webpack.optimize.CommonsChunkPlugin(
+        'vendor',
+        'vendor.[chunkhash].js'
+      ),*/
+      new webpack.DefinePlugin({
+        'process.env': {
+          // This affects react lib size
+          'NODE_ENV': JSON.stringify('production')
+        }
+      }),
+      new webpack.optimize.UglifyJsPlugin({
+        compress: {
+          warnings: false
+        }
+      })
+    ]
+  }
 }
