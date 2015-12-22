@@ -1,45 +1,32 @@
-import uuid from 'node-uuid'
+import AltContainer from 'alt-container'
 import React from 'react'
-import Notes from './Notes.jsx'
+import Lanes from './Lanes.jsx'
+import LaneActions from '../actions/LaneActions'
+import LaneStore from '../stores/LaneStore'
 
 export default class App extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      notes: []
-    }
-  }
-  render() {
-    const notes = this.state.notes
+   render() {
     return (
       <div>
-				<button className="add-note" onClick={this.addNote}>+</button>
-				<Notes items={notes}
-					onEdit={this.editNote}
-					onDelete={this.deleteNote} />
+				<button className="add-lane" onClick={this.addNote}>+</button>
+				<AltContainer
+					stores={[LaneStore]}
+					inject={{
+						items: () => LaneStore.getState().Lanes
+					}}>
+					<Lanes />
+				</AltContainer>
       </div>
     )
 	}
-  addNote = () => {
-    this.setState({
-      notes: this.state.notes.concat([{
-        id: uuid.v4()
-      , task: 'new task'
-      }])
-    })
+	addItem() {
+		LaneActions.create({task: 'new lane'})
 	}
-	deleteNote = (id) => {
-		this.setState({
-			notes: this.state.notes.filter((note) => note.id !== id)
-		})
+	editLane(id, task) {
+		LaneActions.update({id, lane})
 	}
-	editNote = (id, task) => {
-		const notes = this.state.notes.map((note) => {
-			if (note.id === id) {
-				note.task - task
-			}
-			return note
-		})
-		this.setState({notes})
+	deleteLane(id) {
+		LaneActions.delete(id)
 	}
 }
+
