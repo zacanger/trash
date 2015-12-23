@@ -1,24 +1,30 @@
 body {
-  background: #222;
-  color: #ddd;
-  font-size: 1.2em;
-  font-family: "Hack", "Hasklig", "Fira Code", monospace;
+  background: cornsilk;
+
+  font-family: sans-serif;
 }
 
 .lane {
   display: inline-block;
-  margin: 0.8em;
-  background-color: transparent;
+
+  margin: 1em;
+
+  background-color: #efefef;
   border: 1px solid #ccc;
   border-radius: 0.5em;
-  min-width: 8em;
+
+  min-width: 10em;
   vertical-align: top;
 }
 
 .lane-header {
   overflow: auto;
-  padding: 0.8em;
-  color: #ddd;
+
+  padding: 1em;
+
+  color: #efefef;
+  background-color: #333;
+
   border-top-left-radius: 0.5em;
   border-top-right-radius: 0.5em;
 }
@@ -29,50 +35,53 @@ body {
 
 .lane-add-note {
   float: right;
-  margin-left: 0.4em;
+
+  margin-left: 0.5em;
 }
 
 .add-lane, .lane-add-note button {
-  background-color: #212121;
-  border: 1px solid #ddd;
-}
-
-.add-note {
-  border: 1px dotted #eee;
+  background-color: #fdfdfd;
+  border: 1px solid #ccc;
 }
 
 .notes {
-  margin: 0.4em;
+  margin: 0.5em;
   padding-left: 0;
-  max-width: 8em;
+
+  max-width: 10em;
   list-style: none;
 }
+
 .note {
-  margin-bottom: 0.4em;
-  padding: 0.4em;
-  background: #101010;
-  box-shadow: 0 0 0.1em 0.01em rgba(70, 70, 70, 0.2);
+  margin-bottom: 0.5em;
+  padding: 0.5em;
+
+  background-color: #fdfdfd;
+  box-shadow: 0 0 0.3em .03em rgba(0,0,0,.3);
+}
+.note:hover {
+  box-shadow: 0 0 0.3em .03em rgba(0,0,0,.7);
+
+  transition: .6s;
 }
 
-.note:hover {
-  box-shadow: 0 0 0.1em 0.01em rgba(70, 70, 70, 0.6);
-  transition: 0.4s;
+.note .value {
+  /* force to use inline-block so that it gets minimum height */
+  display: inline-block;
 }
 
 .note .delete {
   float: right;
+
   padding: 0;
-  background: transparent;
+
+  background-color: #fdfdfd;
   border: none;
+
   cursor: pointer;
+
   visibility: hidden;
 }
-
 .note:hover .delete {
   visibility: visible;
 }
-
-.note .value {
-  display: inline-block;
-}
-
