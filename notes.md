@@ -186,3 +186,19 @@ React things:
 `mixins` array  
 `statics` properties and methods for component
 
+--------
+
+Webpack: `preLoaders` gets executed before `loaders`, regardless of order; this still goes in under `module:{}`.  `jshint-loader` works in here! That'll just look for your standard `.jshintrc`.
+
+Eslint would be better for React, especially because of `eslint-plugin-react`. Eslint also has autofixing (--fix) for some stuff.
+
+With eslint we'd just include that as an npm script, eg `npm run lint` with `"lint": "eslint . --ext .js --ext .jsx --fix"`.
+
+Eslint also follows an `.eslintignore`, and an `.eslintrc`. Rules have _severity_: 0 for disabled, 1 for warning, 2 for error. Some rules take an _array_ instead, like `"quotes": [2, "single"]`.
+
+When there's a lint error with Eslint, npm will give you an `ELIFECYCLE` error. To hide that, we could do `npm run lint --silent`; alternatively, the same npm script above could have `|| true` appended, but if we invoke that from somewhere else, it'll pass even when there are failures.
+
+`jscs`, with `jscs-loader`, follows `.jscsrc`.
+
+And, lastly, there's always EditorConfig and the `.editorconfig` file.
+
