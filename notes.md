@@ -202,3 +202,7 @@ When there's a lint error with Eslint, npm will give you an `ELIFECYCLE` error. 
 
 And, lastly, there's always EditorConfig and the `.editorconfig` file.
 
+--------
+
+Flux: really just an architecture pattern that means it has a _unidirectional data flow_. Like, seriously, that's all. Here's an example diagram: `Actions -> Data Stores -> Components (Views)`. That's _it_. All Flux really is is a way of _thinking_ about things. That's why there are libraries that _implement_ Flux patterns, like Alt.
+
