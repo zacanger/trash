@@ -216,20 +216,3 @@ Another example diagram:
 ```
 
 --------
-
-EVERYTHING IS A STREAM, or Notes On FRP
-
-IT ALL MAKES SENSE NOW.
-
-Promises are Observables. Promise++, specifically. Note that that means Observables are _not_ Promises/A+ compliant. A Promise would be an Observable with one single emitted value. Our streams return many values.
-
-Listening to streams is Subscribing. We return _new_ streams, hence the term Immutability, which is regarding the original (unchanged, unchangeable) streams.
-
-We do things like mapping, filtering, and scanning. Simple functions applied to streams that return new streams.
-
-A `map(f)` takes input stream, applies `f()`, produces value on output stream.
-
-If one creates what we will call a 'metastream' we're basically making a stream of POINTERS. WHY DOES THIS ALL MAKE PERFECT SENSE?!
-
-RxJS has a `.flatMap()` which is brilliant, it flattens said 'metastream' and emits on a _trunk_ stream everything that would be emitted on the _branch_ streams.
-
