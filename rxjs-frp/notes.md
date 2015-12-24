@@ -42,4 +42,11 @@ Huh. I don't actually know why this isn't working, exactly.
 
 OH WAIT DUH, I forgot jQuery. Thank fuck. I really was hoping I wasn't gonna have dumb problems. YAY THIS IS NICE!
 
+--------
+
+Other Rx notes:
+
+Cold Observables start running _on subscription_; that is, the values are pushed from the observable to the observers when Subscribe is called. Values are not shared among subscribers.
+
+Hot Observables are already producing values, even before a subscription is active. (Mouse events or constant input streams from an API would be good examples.) When an observer subscribes to a hot observable, it gets all the values in the stream starting from when it subscribes. This sequence is shared among subscribers.
 
