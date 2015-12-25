@@ -12,8 +12,7 @@ type alias Model = {
   , y:Float
   , vx:Float
   , vy:Float
-  , dir:Direction
-}
+  , dir:Direction }
 
 type Direction = Left | Right
 
@@ -25,8 +24,7 @@ mario = {
   , y   = 0
   , vx  = 0
   , vy  = 0
-  , dir = Right
-}
+  , dir = Right }
 
 -- update
 
@@ -41,10 +39,72 @@ update (dt, keys) mario =
 jump : Keys -> Model -> Model
 jump keys mario =
   if keys.y > 0 && mario.vy == 0 then
-    {mario | vy =6.0}
+    { mario | vy =6.0 }
   else
     mario
 
 gravity : Float -> Model -> Model
 gravity dt mario =
-  {}
+  { mario | vy = if mario.y > 0 then mario.vy - dt/4 else 0 }
+
+physics : Float -> Model -> Model
+physics dt mario =
+  { mario | x = mario.x + dt * mario.vx,
+           y = max 0 (mario.y + dt * mario.vy) }
+
+walk : Keys -> Model -> Model
+walk keys mario =
+  { mario | vx = toFloat keys.x,
+           dir =
+            if keys.x < 0 then
+              Left
+            else if keys.x > 0 then
+              Right
+            else
+              mario.dir }
+
+-- view
+
+view : (Int, Int) -> Model -> Element
+view (w', h') mario =
+  let
+    (w, h) = (toFloat w', toFloat h')
+    verb =
+      if mario.y > 0 then
+        "jump"
+      else if mario.vx /= 0 then
+        "walk"
+      else
+        "stand"
+    src = "/img/"++ verb ++ ".png"
+    marioImage =
+      image 100 100 src
+
+    groundY = 62 - h/2
+
+    position =
+      (mario.x, mario.y + groundY)
+
+  in
+    collage w' h'
+    [ rect w h
+        |> filled (rgb 255 255 255)
+    , rect w 50
+        |> filled (rgb 0 0 0)
+        |> move (0, 24 - h/2)
+    , marioImage
+        |> toForm
+        |> move position ]
+
+-- signals
+
+main : Signal Element
+main =
+  Signal.map2 view Window.dimensions (Signal.foldp update mario input)
+
+input : Signal (Float, Keys)
+input =
+  let
+    delta = Signal.map (\t -> t/20) (fps 30)
+  in
+    Signal.sampleOn delta (Signal.map2 (,) delta Keyboard.arrows)
