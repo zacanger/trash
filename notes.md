@@ -216,3 +216,61 @@ Another example diagram:
 ```
 
 --------
+
+Some React Vocab:
+
+As of some...time, _all_ React custom components _must_ be Uppercase, like This, to differentiate from standard xml/html. See [this gist](https://gist.github.com/sebmarkbage/f1f4ba40816e7d7848ad) for more info on that.
+
+There are five main types in React (and that's a horrible word to use, can we think of something better? Kinds of elements? Things? Idk...).
+
+React Elements are the primary... thing. A `ReactElement` has four properties: type, props, key, ref. No methods, nothing on prototype. Created like `var foo = React.createElement('div'). You pass these to `React.render`, with a DOM element (HTML or SVG), like `React.render(foo, document.body)`. To add properties to it, pass a properties object as the second argument. Children to the third. (Note that if using JSX, that's a bit less verbose. And if you're not using JSX, why the fuck even use React, really?)
+
+`ReactElement`-_factory_ is a function that generates `ReactElement` with specific `type` property. `function createFactory(type){return React.createElement.bind(null, type)}`; `var div = React.createFactory('div'); var foo = div({className: 'my-div'}); React.render(foo, document.body)`. Common HTML tags have built-in factories in React (like `var quux = React.DOM.ul` or `var bar = React.DOM.li`). But, again, JSX negates the need for factories.
+
+`ReactNode` could be `ReactElement`, string, number, or array of ReactNodes (`ReactFragment`). This is a property of other `ReactElement`s used to represent children. Kind of basically create a tree of REs.
+
+`ReactComponent` would be where the real meat of React can be found. Here we can create whatsits in React, and then sort of encapsulate them with their own little embedded _state_. And remember, in React, everything is state. And everything is a really ugly bit of PHP that wants to be Javascript. So, `var thingy = React.createElement(SomeComponent)` or `var thingy = <Some Component />` (WHY ARE WE EVEN CARING ABOUT NON-JSX? REACT IS ALREADY RUINED, SO JUST USE IT ALREADY!).
+
+```
+
+React.render = (ReactElement, HTMLElement | SVGElement) => ReactComponent
+
+type ReactNode = ReactElement | ReactFragment | ReactText
+
+type ReactElement = ReactComponentElement | ReactDOMElement
+
+type ReactDOMElement = {
+	type: string,
+	props: {
+		children: ReactNodeList,
+		className: string,
+		etc.
+	},
+	key : string | boolean | number | null,
+	ref : string | null
+}
+
+type ReactComponentElement<TProps> = {
+	type: ReacetClass<TProps>,
+	props: TProps,
+	key : string | boolean | number | null,
+	ref : string | null
+}
+
+type ReactFragment = Array<ReactNode | ReactEmpty>
+
+type ReactNodeList = ReactNode | ReactEmpty
+
+type ReactText string | number
+
+type ReactEmpty = null | undefined | boolean
+
+type ReacetClass<TProps> = (TProps) => ReactComponent<TProps>
+
+type ReactComponent<TProps> = {
+	props: TProps,
+	render: () => ReactElement
+}
+
+```
+`
