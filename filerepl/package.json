@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zacanger/devmtn.mgit.git"
+    "url": "git+https://github.com/zacanger/excerpts-and-exercises.git"
   },
   "keywords": [
     "repl"
@@ -16,9 +16,8 @@
   "author": "zacanger",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/zacanger/devmtn.mgit/issues"
+    "url": "https://github.com/zacanger/excerpts-and-exercises.git/issues"
   },
-  "homepage": "https://github.com/zacanger/devmtn.mgit#readme",
   "dependencies": {
     "temp": "^0.8.3"
   }
