@@ -79,7 +79,7 @@ function setScore(score){
 // AND ALSO THIS IS THE BIT WHERE WE MAKE THINGS CHANGE SIZE
 // GOD, I'M SO LOUD. WHY AM I SO LOUD?
 
-Bacon.Observable.prototype.slidingWindowBy = function(lenthObs){
+Bacon.Observable.prototype.slidingWindowBy = function(lengthObs){
   var self = this
   return new Bacon.EventStream(function(sink){
     var buf    = []
