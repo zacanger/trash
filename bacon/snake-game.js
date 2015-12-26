@@ -124,4 +124,62 @@ function bindInputs(){
     , lefts     = keys.filter(function(x){return x === 37})
     , rights    = keys.filter(function(x){return x === 39})
     , restart   = keys.filter(function(x){return x === 32})
+    , tick      = Bacon.interval(100)
+  return {left: lefts, right: rights, tick: tick, restart: restart}
 }
+
+function getPosition(input, tick){
+  var actions =
+    input.left.map(function(){return rotateLeft}).merge(
+   input.right.map(function(){return rotateRight}))
+
+  var startDirection = new Pos(0,1)
+    , startPosition  = new Pos(0,0)
+    , direction      = actions.scan(startDirection, function(x, f){return f(x)})
+
+  return direction
+    .sampledBy(input.tick)
+    .scan(startPosition, function(x, y){return x.add(y)})
+}
+
+function apple(position){
+  var applePos = randomPos()
+  return position
+    .filter(function(p){return p.equals(applePos)})
+    .take(1)
+    .flatMapLatest(apple.bind(null, position))
+    .toProperty(applePos)
+}
+
+function game(position){
+  var pos    = position()
+    , app    = apple(pos)
+    , length = app.map(1).scan(10, function(x, y){return x + y})
+    , score  = app.map(1).scan(0,  function(x, y){return x + y})
+    , snake  = pos.slidingWindowBy(length)
+    , dead   = snake.filter(function(snake){return contains(_.tail(snake, _.head(snake)))})
+    , game   = Bacon.combineTemplate({snake: snake, apple: app, score: score})
+  return game.takeUntil(dead)
+}
+
+var repeated = function(game, restart){
+  var gm = function(){
+    var tmp = game()
+    tmp.onEnd(logRestart)
+    return tmp
+  }
+  restart.onValue(logClear)
+  return Bacon.seperateBy(restart, gm)
+}
+
+drawGame(size)
+
+var inputs   = bindInputs()
+  , position = getPosition.bind(null, inputs)
+  , newGame  = game.bind(null, position)
+
+repeated(newGame, inputs.restart).onValue(function(e){
+  drawSnake(e.snake)
+  drawApple([e.apple])
+  setScore(e.score)
+})
