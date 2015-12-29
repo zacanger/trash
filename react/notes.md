@@ -39,3 +39,27 @@ which is really even more annoying, but whatever. Lastly, as far as style goes, 
    onChange={this.foo.bar} />
 ```
 
+--------
+
+Redux:
+
+Actions describe a desired change inside the app. Actions have types. What I'm doing in my example Redux todo app is putting functions in the actions subdirectory, rather than putting them directly in the components; this is because we're not changing the internal state, we're changing the Redux store.
+
+The idea behind immutable is simply what it sounds like: mutable states are not desirable. So instead of making changes to states, immutable returns a new copy for every change. The API of the lib is pretty close to regular Js variable types, which is why we can just ~~push~~ _unshift_ (because we want it on the top, duh) to a list like we would to an array.
+
+The way this little project works is like this:
+- component fires an event (adding or removing a task)
+- action is dispatched
+- if the action is addTodo, task is pushed to the current state, and a new copy is returned
+- etc., etc., etc.
+- store is updated
+
+... that's all I've got. So far.
+
+With Redux, you will always only have **one** store, and use _reducers_.
+
+The `connect` bit lets you choose which parts of the state you want to give to your component. That's kinda necessary in anything resembling a real app, which would have multiple reducers.
+
+Oh, so what we're doing is handling all state in Redux, and taking it completely out of the actual components. That's sensible, I guess. Hence the term 'state container.'
+
+And actions are just pure functions. so `dispatch(addTodo('test'))` is exactly the same as `dispatch({type: 'addTodo', todo: 'test'})`. (One thing to keep in mind, then, is to never do an AJAX request before returning an action; that would mean a possibly different output, if there was a failure, which would make the function totally not pure at all.)
