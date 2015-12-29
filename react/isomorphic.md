@@ -115,3 +115,6 @@ And on the server:
 - send html to the client
 
 How to do this isomorphically? Check that itsquiz app again, it's so much easier than typing out an example here.
+
+For a full-on tutorial using React and Redux to make an isomorphic app (Todos, of course...), check here: https://medium.com/front-end-developers/handcrafting-an-isomorphic-redux-application-with-love-40ada4468af4
+
