@@ -63,3 +63,63 @@ The `connect` bit lets you choose which parts of the state you want to give to y
 Oh, so what we're doing is handling all state in Redux, and taking it completely out of the actual components. That's sensible, I guess. Hence the term 'state container.'
 
 And actions are just pure functions. so `dispatch(addTodo('test'))` is exactly the same as `dispatch({type: 'addTodo', todo: 'test'})`. (One thing to keep in mind, then, is to never do an AJAX request before returning an action; that would mean a possibly different output, if there was a failure, which would make the function totally not pure at all.)
+
+Directory structure: A lot of examples and boilerplates will organize files by nature (including the ones I've been doing), so something like this:
+```
+actions/
+  thoseActions.js
+  theseActions.js
+components/
+  header.jsx
+	footer.jsx
+	somestuff.jsx
+	otherstuff.jsx
+containers/
+  thiscontainer.js
+	thatcontainer.js
+reducers/
+	index.js
+	foobar.js
+routes.js
+tests/
+	... basically the same structure as above, repeated.
+```
+...etc., etc., etc., and there's nothing necessarily _wrong_ with that, but it's kinda not actually scalable, I think. Especially since that means every time you have a new 'feature,' you're throwing files in several directories. Doesn't that sort of obstruct the whole componentized way of doing shit? If we're using ES6, which we are, because we need to find some relief from JSX, and ES6 at least makes some things a little less horribly unpleasant, we can export more than once from a file. Since Redux is handling state, and our components are just dump pluggable bits, why not nix some of that?
+```jsx
+import {something} from 'redux'
+import {connect} from 'react-redux'
+import * as WhateverActions from './WhateverActions'
+
+export function Foo(){name, stuff}{
+	return <div>lots of stuff here</div>
+}
+
+function mapStateToProps(state){
+	return {...state}
+}
+function mapDispatchToProps(dispatch){
+	return bindActionCreators({...WhateverActions}, dispatch)
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Whatever)
+```
+So now we have one less file, and if we are actually doing some testing, we can, like, `import {Whatever} from './Whatever.js'`. Lovely. And instead of throwing all our tests in a mirroring directory, let's be a _wee_ bit more like Python (where we'd just have tests in the actual goddamn files) and move our tests closer to our code, shall we?
+```
+src/
+	app/
+		header.jsx
+		header-test.js
+		app.js
+		app-test.js
+		routes.js
+		routes-test.js
+		reducers.js
+		reducers-test.js
+	whatever/
+		whatever.jsx (this would be the file we faked above, with component and container both)
+		whatever-test.js
+		whatever-reducer.js
+		whatever-reducer-test.js
+	... and you get the idea....
+```
+That's even more of a bad example of _actual_ separation of concerns, but it's incredibly evident that React's idea of 'separation of concerns' differs wildly from the rest of the world's. If we're trying to just organize things by component, which we very definitely are in React, this makes a lot more sense. Good going, interwebsh, you've helped me clean up my directories a lot! Thanks. :)
+
