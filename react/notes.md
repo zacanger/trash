@@ -123,3 +123,14 @@ src/
 ```
 That's even more of a bad example of _actual_ separation of concerns, but it's incredibly evident that React's idea of 'separation of concerns' differs wildly from the rest of the world's. If we're trying to just organize things by component, which we very definitely are in React, this makes a lot more sense. Good going, interwebsh, you've helped me clean up my directories a lot! Thanks. :)
 
+--------
+
+```jsx
+ES7:        ::a.b  <->  a::a.b
+             a::c  <->  c.bind(a)
+So:         ::a.b  <->  a.b.bind(a)
+
+So: <input onChange{this.onInputChange.bind(this)} />
+Is: <input onChange={::this.onInputChange} />
+```
+
