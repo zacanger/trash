@@ -183,6 +183,68 @@ That's quite a bit more annyoing than
 
 -- comment
 
+{-
+multiline comment
+  {-
+    with another multiline comment
+    inside of it
+  -}
+-}
+
+{--} -- by removing that '}', we can toggle between commented and uncommented
+add x y = x + y
+--}
+
+-- bool
+True  : Bool
+False : Bool
+
+4     : number -- Int OR Float, depending on usage
+1.6   : Float
+'z'   : Char
+'zac' : String
+
+"""
+This is a multiline string.
+It's handy for things that need their own quotation marks.
+One could see how "JSON" might "need" it.
+"""
+
+"zac" ++ " anger" -- string concatenation
+
+-- lists: all these things are equivalent:
+[1..4]
+[1,2,3,4]
+1 :: [2,3,4]
+1 :: 2 :: 3 :: 4 :: []
+
+if foo > 4 then "HI!" else "bye..."
+
+-- records are kind of like objects in js, but without all the stupid bits
+point = { x = 2, y = 2 }
+point.x -- access it
+{ point | x = 4 } -- update it
+
+-- functions
+square n =
+  n^2
+hypotenuse a b =
+  sqrt (sqare a + square b)
+distance (a,b) (x,y) =
+  hypotenuse (a-x) (b-y)
+
+-- and anonymous functions
+square =
+  \n -> n^2
+squares =
+  Listmap (\n -> n^2 [1..100])
+
+let
+  foo = 8
+  y   = 8 -- this is indent-significant!
+in
+  foo + bar
+
 isPositive : Int -> Bool -- type annotation: takes Int, returns Bool
 
 isPositive number = number > 0 -- function definition
@@ -199,6 +261,7 @@ transformTuple : (Int, Int) -> (Float, Float) -- tuples
 transformTuple(a, b) =
   (toFloat a, toFloat b)
 
+(,,,) 1 2 3 -- shorthand for creating tuples
 
 -- chained functions, infix operators, so
 filled red (square 40) -- is identical to
@@ -211,3 +274,23 @@ square 40 -- here's a much less... ah... _parenthetical_ way of doing ^that^
   |> move (100, 100)
   |> rotate (Degrees 60)
 ```
+
+In every Elm file, there are default imports, things I'd basically _have_ to bring in no matter what -- elm-core stuff, I suppose, like the core-est of the core.
+```elm
+import Basics exposing (..)
+import List   exposing ( List, (..) )
+import Maybe  exposing ( Maybe( Just, Nothing ) )
+import Result exposing ( Result(Ok, Err) )
+import Signal exposing ( Signal )
+```
+That's the basic shtuff, right there.
+
+[Elm's little online editor thing](http://elm-lang.org/try) is pretty nifty.
+
+Elm has some built-in handlers for ports:
+- `title` sets page title, ignores empty strings
+- `log` puts to (js) console
+- `redirect` also ignores empty strings
+- `favicon`
+- `stdout` to node stdout, devtools console
+- `stderr` as well
