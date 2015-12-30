@@ -39,21 +39,22 @@ defGame =
 
 
 -- UPDATE
+
 update : (Float, Keys) -> Game -> Game
 update (dt, keys) game =
   let player' =
-    game.player
-      |> movePlayer keys
-      |> physics dt
-      |> shoot keys
-    bullets' =
-      game.bullets
-        |> moveBullets dt
-        |> addBullet
-            game.player.shoot
-            { x = game.player.x, y = game.player.y }
-    enemies' =
-      game.enemies
+        game.player
+          |> movePlayer keys
+          |> physics dt
+          |> shoot keys
+      bullets' =
+        game.bullets
+          |> moveBullets dt
+          |> addBullet
+              game.player.shoot
+              { x = game.player.x, y = game.player.y }
+      enemies' =
+        game.enemies
   in Debug.watch "game"
     { game | player  <- player'
            , bullets <- bullets'
@@ -82,3 +83,41 @@ addBullet really p list =
 
 
 -- VIEW
+
+renderBullet : Float -> Point -> Form
+renderBullet yOffset point =
+  ngon 3 5
+    |> filled Color.red
+    |> move (point.x, point.y + yOffset)
+    |> rotate (degrees 90)
+
+render : (Int, Int) -> Game -> Element
+render (w', h') game =
+  let (w,h)   = (toFloat w', toFloat h')
+      yOffset = playerSize - (h/2)
+      p       = game.player
+      player  = ngon 3 playerSize
+                  |> filled Color.black
+                  |> move (p.x, p.y + yOffset)
+                  |> rotate (degrees 90)
+      bg      = rect w h
+                  |> filled Color.lightGray
+      bullets = List.map (renderBullet (yOffset + playerSize))
+                  (List.filter (\b -> b.y < h) game.bullets)
+      forms   = [ bg, player ] ++ bullets
+  in  collage w' h'
+        forms
+
+-- SIGNALS
+
+main : Signal Element
+main =
+  Signal.map2 render Window.dimensions (Signal.foldp update defGame input)
+
+input : Signal (Float, Keys)
+input =
+  let delta = Signal.map (\t -> t*moveSpeedFactor) (fps 30)
+    deltaArrows =
+      Signal.map2 (,) delta (Signal.map (Debug.watch "arrows") Keyboard.arrows)
+  in
+    Signal.sampleOn delta deltaArrows
