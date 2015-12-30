@@ -50,3 +50,128 @@ The `=>` in Elm is not what you think it is. It's a shorthand for `(,)`, which i
 
 To run native code that we didn't install with `elm package`, `"native-modules": true` needs to be in the `elm-package.json` file.
 
+--------
+
+Some additional style tipes:
+- Line length <= 80
+- 2 sp indentation (duh)
+- no trailing spaces (duh)
+- newline (duh)
+- do write type annotations
+- do write records (etc) with spaces between special chars
+- on compilation, use `elm-make --warn`; get rid of the warnings
+- for totally fresh compilation, `rm elm-stuff/build-artifacts`
+- for any block > 1 line, drop it down on the first line
+  - means more indentation and more lines, but is more readable
+  - do the same for accompanying block, even if short
+    - same reason as for the above
+```elm
+type alias Foo =
+  { thisWhatever : Float
+  , thinyMajiggy : Float
+  }
+```
+That's good!
+
+```elm
+bar = {
+  thing = 100
+  stuff = 9
+}
+```
+That's no good!
+
+Avoid nested declarations. So use type aliases for this. (So we don't get shit like `type alias Bar = { something : { name: String, stuff: FLoat } }`).
+
+```elm
+quux =
+  [ "okay"
+  , "things"
+  , "are"
+  , "logical"
+  ]
+```
+good!
+
+bad:
+```elm
+baz = ["okay", "nope", "gross"]
+
+lol = [
+  "stuffs",
+  "thingses",
+  "et ceteras"
+]
+```
+
+```elm
+doStuff this that =
+  let
+    something =
+      mix this that
+        ]> andDoThings
+    thingsome =
+      mix this that
+  in
+    [ something
+    , thingsome
+    ]
+```
+GOOD!
+
+BAD:
+```elm
+doWhatever you me =
+  let something = andDoThings (mix you me)
+      thingsome = mix me you
+  in [ something, thingsome ]
+```
+
+use newlines for 'then' and 'else'
+
+use newlines for the bits of a case
+
+import modules in the following order:
+1. non-exposing imports
+2. explicitly exposing imports
+3. imports exposing evertything
+
+... and by 'order' i mean preference order. like:
+
+```elm
+import Woot
+import Aw exposing (We, Tried)
+import OhDear exposing (..)
+```
+
+In declarations, use a newline after `=`, and use `|>`, on newlines.
+
+All of `elm-html`'s elements are functions, with two lists as parameters. We can concat the child list with `++` (for flexibility), but when rendering we ought to map over it.
+
+```elm
+consChildren : Modal -> Html
+consChildren model =
+  div
+  [
+  ]
+  <| [ Header.render model.title ]
+  ++ renderMaybe model.subTitle
+  ++ [ Footer.render model.footerThings ]
+
+mapChildren : List Thing -> Html
+mapChildren : things =
+  div
+  [
+  ]
+  <| List.map renderThing Things
+```
+
+That's quite a bit more annyoing than
+```elm
+[ Header.render model.title
+, renderSubTitle model.subTitle
+, Footer.render model.footerThings
+]
+```
+... but I hear it's worth it, since with great concat comes great flexibility.
+
