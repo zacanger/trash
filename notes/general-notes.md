@@ -162,7 +162,7 @@ Gulp core's api is THIS SIMPLE. Check this out.
 ```
 That's IT. The entire codebase is actually readable in a relatively short amount of time. That's fuckin' beautiful, man.
 
-Clearly that doesn't include `.pipe()`, but pipe isn't exactly an api thing I think. It's a pipe. That'd be like saying 'oh yeah, you need to learn |, that's a really important thing' or whatever. Sure, it's the most vital and fundamental thing about *n*x, but it's not a thing you learn, I guess.
+Clearly that doesn't include `.pipe()`, but pipe isn't exactly an api thing I think. It's a pipe. That'd be like saying 'oh yeah, you need to learn |, that's a really important thing' or whatever. Sure, it's the most vital and fundamental thing about \*n\*x, but it's not a thing you learn, I guess.
 
 --------
 
@@ -273,4 +273,23 @@ type ReactComponent<TProps> = {
 }
 
 ```
-`
+
+--------
+
+#### Waterfall Model:
+```
+Requirements ==>
+  Design       ==>
+    Implementation ==>
+        Verification ==>
+            Maintenance
+```
+
+Also known as:
+```
+Denial ==>
+  Bargaining ==>
+    Anger      ==>
+      Depression ==>
+          Acceptance
+```

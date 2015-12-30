@@ -175,3 +175,39 @@ That's quite a bit more annyoing than
 ```
 ... but I hear it's worth it, since with great concat comes great flexibility.
 
+--------
+
+#### I GUESS AN ACTUAL SYNTAX REFERENCE MIGHT BE USEFUL, SO HERE'S A REALLY SHORT RUN-DOWN ON ELM. OKAY.
+
+```elm
+
+-- comment
+
+isPositive : Int -> Bool -- type annotation: takes Int, returns Bool
+
+isPositive number = number > 0 -- function definition
+
+someFunc : Int -> Int -> Int -- takes two Ints, returns Int
+
+somefunc a b =
+  let sum    = a + b -- define intermediate values let
+      square = sum * sum
+  in  square         -- and use them in (in)
+
+transformTuple : (Int, Int) -> (Float, Float) -- tuples
+
+transformTuple(a, b) =
+  (toFloat a, toFloat b)
+
+
+-- chained functions, infix operators, so
+filled red (square 40) -- is identical to
+square 40
+  |> filled red
+
+rotate (degrees 60) ((move (100, 100) (filled red (square 40)))) -- looks a little lispy, neh?
+square 40 -- here's a much less... ah... _parenthetical_ way of doing ^that^
+  |> filled red
+  |> move (100, 100)
+  |> rotate (Degrees 60)
+```
