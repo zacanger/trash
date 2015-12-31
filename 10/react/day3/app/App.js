@@ -1,29 +1,26 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var ReactRouter = require('react-router');
-
-var Router = ReactRouter.Router;
-var Route = ReactRouter.Route;
-var Link = ReactRouter.Link;
-var IndexRoute = ReactRouter.IndexRoute;
-
-var About = require('./About');
-var Contact = require('./Contact');
-var Home = require('./Home');
+var React = require('react')
+  , ReactDOM = require('react-dom')
+  , ReactRouter = require('react-router')
+  , Router = ReactRouter.Router
+  , Route = ReactRouter.Route
+  , Link = ReactRouter.Link
+  , IndexRoute = ReactRouter.IndexRoute
+  , About = require('./About')
+  , Contact = require('./Contact')
+  , Home = require('./Home')
 
 var App = React.createClass({
-  render: function () {
+  render: function(){
     return (
       <div>
         <Link to='/'>Home</Link>
-        <Link to='/about/brandon'>About</Link>
+        <Link to='/about/z'>About</Link>
         <Link to='/contact'>Contact</Link>
-
         {this.props.children}
       </div>
-    );
+    )
   }
-});
+})
 
 ReactDOM.render(
   <Router>
@@ -34,19 +31,4 @@ ReactDOM.render(
     </Route>
   </Router>,
   document.getElementById('app')
-);
-
-
-////////////////////////////////////
-// BREAK
-////////////////////////////////////
-
-
-// add flux to our chat project
-
-
-////////////////////////////////////
-// MINI PROJECT (IF TIME)
-////////////////////////////////////
-
-// https://github.com/ReactWeek/mini3-todofire
+)

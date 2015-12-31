@@ -1,6 +1,6 @@
-var React = require('react');
-var AddChat = require('./AddChat');
-var ChatList = require('./ChatList');
+var React = require('react')
+  , AddChat = require('./AddChat')
+  , ChatList = require('./ChatList')
 
 var App = React.createClass({
   render: function(){
@@ -23,9 +23,9 @@ var App = React.createClass({
       </div>
     )
   }
-});
+})
 
 React.render(
   <App />,
   document.getElementById('app')
-);
+)

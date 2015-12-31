@@ -1,19 +1,17 @@
-const React = require('react');
+const React = require('react')
 
 const PersonList = React.createClass({
   propTypes: {
     onCardClick: React.PropTypes.func,
     people: React.PropTypes.array
   },
-
-  getDefaultProps () {
+  getDefaultProps(){
     return {
       onCardClick: () => {},
       people: []
     }
   },
-
-  render () {
+  render (){
     return (
       <div>
         {this.props.people.map(person => {
@@ -24,9 +22,9 @@ const PersonList = React.createClass({
           )
         })}
       </div>
-    );
+    )
   }
-});
+})
 
 const styles = {
   card: {
@@ -37,6 +35,6 @@ const styles = {
     margin: '20px',
     fontFamily: 'Helvetica'
   }
-};
+}
 
-module.exports = PersonList;
+module.exports = PersonList

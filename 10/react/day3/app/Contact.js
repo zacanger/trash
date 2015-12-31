@@ -1,13 +1,13 @@
-var React = require('react');
+var React = require('react')
 
 var Contact = React.createClass({
-  render: function () {
+  render: function(){
     return (
       <div>
         Contact
       </div>
-    );
+    )
   }
-});
+})
 
-module.exports = Contact;
+module.exports = Contact
