@@ -24,5 +24,5 @@ solution?
 
 move your stuff into the file where you want to access it, i guess.
 
-module.exports can be an array, too. that makes sense in a a db context, okay.
+module.exports can be an array, too. that makes sense in a db context, okay.
 

@@ -14,4 +14,3 @@ The 'big' projects are in their own repos:
   - [pharaoh.js](https://github.com/pharaoh-js)
 
 And assorted repos full of samples, boilerplates, and practices, are broken out into their own repos, by technology or language.
-
