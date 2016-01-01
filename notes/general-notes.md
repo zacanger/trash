@@ -293,3 +293,8 @@ Denial ==>
       Depression ==>
           Acceptance
 ```
+
+--------
+
+TO DISPLAY BRACES (`{{}}`) IN ANGULAR, YOU NEED TO WRAP THEM IN A WHATEVER (`<span>`, `<p>`, whatever) AND GIVE THAT TAG THE ATTRIBUTE `ng-non-bindable`, LIKE IN `<code ng-non-bindable>{{show.things}}</code>`.
+
