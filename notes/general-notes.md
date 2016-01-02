@@ -298,3 +298,16 @@ Denial ==>
 
 TO DISPLAY BRACES (`{{}}`) IN ANGULAR, YOU NEED TO WRAP THEM IN A WHATEVER (`<span>`, `<p>`, whatever) AND GIVE THAT TAG THE ATTRIBUTE `ng-non-bindable`, LIKE IN `<code ng-non-bindable>{{show.things}}</code>`.
 
+--------
+
+Dates/times in JS:
+
+```javascript
+var myDate  = new Date('December 31, 2015 11:58:30')
+  , myEpoch = myDate.getTime()/1000.0
+console.log(myEpoch)
+
+var yourDate  = new Date(1451631690 * 1000)
+console.log(yourDate.toGMTString() + ' ' + yourDate.toLocaleString())
+```
+
