@@ -330,3 +330,8 @@ _.isString(str) = (typeof str === 'string') = (toString.call(str) === '[object S
 // underscore's okay, typeof is okay, but this one here is the shiznit, fo sho
 ```
 
+--------
+
+Just for the sake of not being an annoying asshat, let's actually define 'transpiler.' A transpiler is a compiler. It takes code that can't be run on whatever engine it's targetting, and compiles it so it works. The only actual difference is that when funky-code-X is compiled into normal-code-Y, it stays at around the same level of abstraction. So, turning JSX or ES6 into ES5 doesn't really make a vast difference in terms of performance, and it's not like Javascript is a low-level language that we're compiling to, using Babel--we're just basically cross-piling. Hence the 'trans' prefix.
+
+
