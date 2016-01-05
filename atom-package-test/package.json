@@ -8,7 +8,7 @@
   "activationCommands": {
     "atom-workspace": "wordcount:toggle"
   },
-  "repository": "https://github.com/zacanger/excerpts-and-exercises.git",
+  "repository": "https://github.com/zacanger/devmtn.git",
   "license": "ISC",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
