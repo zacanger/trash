@@ -1,4 +1,16 @@
-can pass arguments to console.log and console.error that will be passed to util.format()  
+```javascript
+function format(){
+  var args = [].slice.call(arguments)
+  var initial = args.shift()
+  function replacer(text, replacement){
+    return text.replace('%s', replacement)
+  }
+  return args.reduce(replacer, initial)
+}
+```
+this is my implementation, called format.js, stolen mostly from bevacqua. it's like util.format(), but for not-node.
+
+so, you can pass arguments to console.log and console.error that will be passed to util.format()  
 so %s for strings, %d for numbers, and %j for objects are valid
 
 console.trace(label)  
@@ -309,5 +321,12 @@ console.log(myEpoch)
 
 var yourDate  = new Date(1451631690 * 1000)
 console.log(yourDate.toGMTString() + ' ' + yourDate.toLocaleString())
+```
+
+--------
+
+```javascript
+_.isString(str) = (typeof str === 'string') = (toString.call(str) === '[object String]')
+// underscore's okay, typeof is okay, but this one here is the shiznit, fo sho
 ```
 
