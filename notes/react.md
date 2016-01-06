@@ -359,3 +359,27 @@ app
 This is _definitely_ more for larger React applications... this is complicated, kinda, and takes a lot of files and a lot of directories, but it's easy to see how it could work out well and be maintainable.
 
 Note that we're using the word 'screen' here because 'view' has a lot of other connotations, for example as the V in MVC, or as a shared template. Screens are literally just one screen in the app. Almost like using web languages to make _web stuff_, for the web. Y'know, like we used to, back in the good old days.
+
+--------
+
+#### REDUX
+
+Something worthy of note: immutability doesn't mean one _can't_ change an object, it just means we don't, I guess. The rule here is, basically, 'if you change it, replace it.'
+
+```javascript
+var obj = {something: 'value'}
+obj.something = 'new value'
+// we just changed 'obj'
+
+let obj = {something: 'value'}
+obj = {...obj, something: 'new value'}
+// we just made a new copy of 'obj', with that key changed
+
+shouldComponentUpdate(newProps){
+  return newProps.obj !== this.props.obj
+}
+// method to determine if components need to update themselves
+```
+
+Everything is an _action_. Only one state object. No weird buzzwords, just straight up objects & arrays & primitives. Everything works by reducers (to change state). You have a starting state and a current value. You return a new state. Everything is sequential. Any series of identical actions performed against the same state will result in the same returned state (so, states _could_ be thought of as 'purely functional,' at least in that respect).
+
