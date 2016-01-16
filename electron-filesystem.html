@@ -1,0 +1,18 @@
+<div id="holder">drag file</div>
+
+<script type="text/javascript">
+  var holder = document.getElementById('holder')
+  holder.ondragover = function(){
+    return false
+  }
+  holder.ondragleave = holder.ondragend = function(){
+    return false
+  }
+  holder.ondrop = function(e){
+    e.preventDefault()
+    var file = e.dataTransfer.files[0]
+    console.log('file is ' + file.path)
+    return false
+  }
+</script>
+
