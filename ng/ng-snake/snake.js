@@ -145,3 +145,4 @@ angular.module('snake', [])
     update()
   }
 })
+
