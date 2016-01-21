@@ -108,3 +108,4 @@ input =
     delta = Signal.map (\t -> t/20) (fps 30)
   in
     Signal.sampleOn delta (Signal.map2 (,) delta Keyboard.arrows)
+
