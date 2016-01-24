@@ -1,4 +1,0 @@
-NOPE, it's totally broken on the rendering, there
-
-but otherwise, it works. npm i, then node index.js url.to/scrape (the http:// is added on automatically, yo).
-
