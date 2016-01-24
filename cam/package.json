@@ -1,0 +1,16 @@
+{
+  "name": "cam",
+  "main": "cam.html",
+  "window": {
+    "show": false,
+    "frame": false,
+    "position": "mouse",
+    "width": 400,
+    "height": 300,
+    "toolbar": false
+  },
+  "scripts": {
+    "start": "nw ."
+  }
+}
+

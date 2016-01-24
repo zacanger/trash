@@ -1,2 +1,2 @@
-some atom package attempts, hacks on electron (atom-shell), and miscellaneous other things of this sort. it may absorb the nw.js (node-webkit) experiments, at some point, as well.
+atom package attempts, hacks on electron (atom-shell), bits and pieces built on nw.js (node-webkit), and things like that, y'know.
 
