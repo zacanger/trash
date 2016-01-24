@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var ineed = require('ineed')
   , url   = process.argv[2]
 
