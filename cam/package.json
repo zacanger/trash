@@ -9,7 +9,9 @@
     "height": 300,
     "toolbar": false
   },
-  "scripts": {
+   "bin": "nw .",
+   "preferGlobal": true,
+ "scripts": {
     "start": "nw ."
   }
 }
