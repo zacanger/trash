@@ -1,31 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>underscore tests</title>
-    <link rel="stylesheet" href="lib/css/mocha.css" />
-    <script src="lib/jquery.js"></script>
-    <script src="lib/expect.js"></script>
-    <script src="lib/mocha.js"></script>
-    <script src="lib/sinon.js"></script>
-    <script>
-      // Tell mocha to use bdd-style expects
-      mocha.setup('bdd')
-    </script>
-
-    <!-- Load tests and helpers here -->
-    <script src="spec/underscoreSpec.js"></script>
-    <script src="src/lib.js"></script>
-
-    <script>
-      // Mocha expects a global onload var here and automagically executes it on pageload
-      onload = function(){
-        mocha.run();
-      };
-    </script>
-  </head>
-  <body>
-    <div id="mocha"></div>
-  </body>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>underscore tests</title>
+  <link rel="stylesheet" href="lib/css/mocha.css">
+  <script type="text/javascript" src="lib/jquery.js"></script>
+  <script type="text/javascript" src="lib/expect.js"></script>
+  <script type="text/javascript" src="lib/mocha.js"></script>
+  <script type="text/javascript" src="lib/sinon.js"></script>
+  <script type="text/javascript">
+    mocha.setup('bdd')
+  </script>
+  <script type="text/javascript" src="spec.js"></script>
+  <script type="text/javascript" src="src/lib.js"></script>
+  <script type="text/javascript">
+    onload = function(){mocha.run()}
+  </script>
+</head>
+<body>
+  <div id="mocha"></div>
+</body>
 </html>
 

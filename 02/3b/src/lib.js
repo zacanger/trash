@@ -171,25 +171,21 @@ var _ = { };
     return flag;
   };
 
-
   // Determine whether all of the elements match a truth test.
   _.every = function(collection, iterator) {
     for (var i in collection) {
       if (!iterator) {
         if (!collection[i]) {
           return false;
-          break;
         }
       } else {
         if (!iterator(collection[i])) {
           return false;
-          break;
         }
       }
     }
     return true;
   };
-
 
   // Determine whether any of the elements pass a truth test. If no iterator is
   // provided, provide a default one
@@ -206,12 +202,10 @@ var _ = { };
     for (var i in collection) {
       if (iterator(collection[i])) {
         return true;
-        break;
       }
     }
     return false;
   };
-
 
   /**
    * OBJECTS
@@ -296,8 +290,6 @@ var _ = { };
       func.apply(null,args);
     } ,wait);
   };
-
-
 
   // Shuffle an array.
   _.shuffle = function(array) {
