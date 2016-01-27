@@ -1,7 +1,7 @@
 /*jshint eqnull:true, expr:true*/
-var _ = { };
+var _ = {}
 
-(function(){
+;(function(){
 
   /**
    * COLLECTIONS
