@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>foo</title>
+    <script>
+    function expandText(){
+ var expandedParagraph = "The history of borscht is hard to trace. Most gastronomic historians agree that its origins are in Ukraine, for it has the most variety in this country, with each location having a particular recipe – such as the Kiev verison, the Odessa version, and the Lviv version. There are Polish and Lithuanian and Russian versions as well. But it's origins are dated back to Kievan Rus, with the modern-day city of Kiev as Russia's capital. The term derives from the Slavic \"borschevik\" which means \"hogweed.\" Hogweed, which is predominantly a Western plant, still grows in some  parts of Ukraine."
+ document.getElementById("borsch").innerHTML = expandedParagraph
+    }
+    </script>
+    <script>
+      function expand(elementid){
+  if(document.getElementById(elementid).style.display == 'none'){
+    document.getElementById(elementid).style.display = ''
+  } else {
+    document.getElementById(elementid).style.display = 'none'
+  }
+}
+</script>
+  </head>
+  <body>
+    <figure>
+        <img src="pics/Borsch.jpg" alt="Russian Borsch">
+        <figcaption class="recipe" id="borsch"><a href="javascript:void(0);" onClick="expandText();">some text</a></figcaption>
+    </figure>
+    <figure>
+  <img src="pics/Borsch.jpg" alt="Russian Borsh">
+  <figcaption class="recipe" id="borsch"><a href="javascript:expand('expanded')">Read More</a>
+  <p id="expanded" style="display:none">
+The history of borscht is hard to trace. Most gastronomic historians agree that its origins are in Ukraine, for it has the most variety in this country, with each location having a particular recipe – such as the Kiev verison, the Odessa version, and the Lviv version. There are Polish and Lithuanian and Russian versions as well. But it’s origins are dated back to Kievan Rus, with the modern-day city of Kiev as Russia’s capital. The term derives from the Slavic “borschevik” which means “hogweed.” Hogweed, which is predominantly a Western plant, still grows in some  parts of Ukraine.
+</p>
+</figcaption>
+</figure>
+
+  </body>
+</html>
