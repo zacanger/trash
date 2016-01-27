@@ -15,7 +15,7 @@ var myKids = ['Isaac','Abbi','Natalia','Camila','Bella'];
 if (myAge < 20) {
   // do something
 } else if (myAge < 40) {
-    
+
 } else {
   // do something else
 }
@@ -37,7 +37,6 @@ if ('42' === 42) {
   console.log("'42' === 42");
 }
 
-
 // Function Declaration
 function DoubleANumber(number) {
   console.log(number * 2);
@@ -47,7 +46,6 @@ function DoubleANumber(number) {
 function DoubleANumber2(number) {
   return number * 2;
 }
-
 
 // Function Invocation
 
@@ -70,7 +68,7 @@ var func1 = function () {
   console.log("Hello");
 };
 
-// We'll see where using anonymous functions is a common 
+// We'll see where using anonymous functions is a common
 // pattern in a future lesson
 
 // Scope
@@ -109,18 +107,14 @@ function ShowAge() {
 
 //console.log(age) // This is an error because "age" isn't defined
 
-
 // Functions can be "nested" inside of other functions.  Scope works
 // from the inside-out.
 function Grandpa() {
   var name = "Grandpa";
-  
   function Dad() {
     var name = "Dad";
-    
     function Son() {
       var name = "Son";
-      
     }
   }
 }
@@ -128,7 +122,7 @@ function Grandpa() {
 // There are two rules to remember with functions
 // 1. A function can access the the variables declared in outer functions
 // 2. A function can access those variables even after the outer function
-//    has been invoked and returned.  
+//    has been invoked and returned.
 // A function that has "remembered" these values is called a closure.
 
 // Closures
@@ -136,15 +130,12 @@ function Person(firstName, lastName) {
   function SayMyName() {
     console.log(firstName + ' ' + lastName);
   }
-  
   console.log('All done');
   return SayMyName;
 }
 
 var person = Person('Jared','Stark');
 person();
-
-
 
 .call(scope, arg1, arg2, etc) // takes ARGUMENTS, comma sep
 .apply(scope, [arg1, arg2, etc])// takes ARRAY of arguments

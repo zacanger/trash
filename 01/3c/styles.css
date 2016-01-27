@@ -2,7 +2,7 @@ body {
   font-family: sans-serif;
   justify-content: center;
   display: flex;
-  }
+}
 
 .container {
   position: relative;
@@ -13,6 +13,7 @@ body {
   max-width: 800px;
   line-height: 2em;
 }
+
 .text { font-size: 1.2rem; }
 a { text-decoration: none; }
 a:hover { text-decoration: underline; }
@@ -22,7 +23,8 @@ hr {
   margin-top: 10px;
   margin-bottom: 10px;
   color: #666666;
-  }
+}
+
 footer a { margin: 10px; }
 
 .wikis {
@@ -36,7 +38,7 @@ footer a { margin: 10px; }
   width: 25%;
   margin-bottom: 20px;
   height: 135px;
-  }
+}
 
 img {
   max-width: 135px;
@@ -50,13 +52,14 @@ img {
   flex: 1;
   position: relative;
   min-height: 600px;
-  }
+}
 
-  footer {
-    text-align: center;
-    font-size: .6rem;
-    bottom: 0;
-    flex: auto;
-    align-items :center;
-    align-content: center;
-  }
+footer {
+  text-align: center;
+  font-size: .6rem;
+  bottom: 0;
+  flex: auto;
+  align-items :center;
+  align-content: center;
+}
+

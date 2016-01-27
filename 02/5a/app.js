@@ -15,10 +15,8 @@ $(document).ready(function() {
       method: 'GET',
       url: 'http://reqres.in/api/users?page=1',
     }).then(handleSuccess);
-  }); 
-  
-  
-  
+  });
+
   var insertData = function(arr) {
     var tpl = '<div>' + 'User Info: <ul>' + '<li>First name: <span class="js-first">none</span></li>' +
       '<li>Last name: <span class="js-last">none</span></li>' + '</ul>' + '<hr>' + '</div>';
@@ -40,14 +38,6 @@ $(document).ready(function() {
       console.error(err);
     });
   });
-
-
-
-
-
-
-
-
 
   $('body').on('click', '.js-add-user', function(ev) {
     ev.preventDefault();
@@ -75,6 +65,5 @@ $(document).ready(function() {
       window.alert('Something went wrong!');
     });
   });
-});
-
+})()
 

@@ -48,29 +48,29 @@ var user = {
   username: 'zee',
   email: 'zee@zee.zee',
   getUsername: function () {
-    return this.username;
+    return this.username
   }
-};
+}
 
 // Now, invoke the getUsername method and verify you got the username of the object and not anything else.
 
-user.getUsername();
+user.getUsername()
 
 // Write the function definitions which will make the following function invocations function properly.
 
 var Car = function (make, model, year) {
-  this.make = make;
-  this.model = model;
-  this.year = year;
+  this.make = make
+  this.model = model
+  this.year = year
   this.moveCar = function () {
-    this.move = 0;
-    this.move += 10;
-    return this.move;
-  };
-};
+    this.move = 0
+    this.move += 10
+    return this.move
+  }
+}
 
-var Prius = new Car('Toyota', 'Prius', 2011);
-var Mustang = new Car('Ford', 'Mustang', 2013);
+var Prius = new Car('Toyota', 'Prius', 2011)
+var Mustang = new Car('Ford', 'Mustang', 2013)
 
 Prius.moveCar(); // increments Prius's move property by 10. Returns the new move property.
 Mustang.moveCar(); // increments Mustang's move property by 10. Returns the new move property.
@@ -80,13 +80,13 @@ Mustang.moveCar(); // increments Mustang's move property by 10. Returns the new 
 // in order to make sure you're invoking moveCar on the correct object.
 
 var getYear = function () {
-  return this.year;
-};
+  return this.year
+}
 
 /* Above you're given the getYear function. Using your Prius and Mustang objects from above, use the proper syntax that will allow for you to call the getYear function with the Prius, then the Mustang objects being the focal objects. **Don't add getYear as a property on both objects**. */
 
-getYear.call(Prius);
-getYear.call(Mustang);
+getYear.call(Prius)
+getYear.call(Mustang)
 
 //
 
@@ -94,13 +94,13 @@ var user = {
   username: 'iliketurtles',
   age: 13,
   email: 'iliketurtles@gmail.com'
-};
+}
 
 var getUsername = function () {
-  console.log(user.username);
-};
+  console.log(user.username)
+}
 
-setTimeout(getUsername, 5000);
+setTimeout(getUsername, 5000)
 
 // Above you're given an object, a function, and a setTimeout invocation. After 5 seconds, what will the getUsername function return?
 
@@ -118,8 +118,7 @@ setTimeout(getUsername, 5000);
 
 // this is not correct...
 // setTimeout(function() {
-//   console.log(this.username);
-// }, 5000);
+//   console.log(this.username)
+// }, 5000)
 
-// setTimeout(user.getUsername, 5000);
-
+// setTimeout(user.getUsername, 5000)

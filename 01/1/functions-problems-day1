@@ -1,7 +1,6 @@
-codecardio
+// codecardio
 
-functions 26
-
+// functions 26
 function getPerson) {
   var person = new Object {
     this.name = "lashawnda",
@@ -18,8 +17,7 @@ function getPerson) {
   return(person.name, person.age);
 }
 
-functions 28
-
+// functions 28
 var car = {
   make: "subie",
   model: "justy" };
@@ -36,11 +34,7 @@ function newCar(){
   return(car.make, car.model);
 }
 
-
-
-
-functions 29
-
+// functions 29
 var person = person {
   name:"lashawnda",
   age:"32", };
@@ -56,13 +50,11 @@ function canDrive() {
     return(person.name + " must not be human, I guess.")
 }
 
-
-
-functions 30-?
+// functions 30-?
 var user = {role:"bro", email:"bro@bro.bro" }
 
 
-functions 31
+// functions 31
 var user = { email:"bro@bro.bro" };
 
 function addRole(x) {
@@ -70,9 +62,7 @@ function addRole(x) {
   alert(x);
 }
 
-  
-
-functions 32
+// functions 32
 var user = {role:"bro", email:"bro@bro.bro" };
 
 function removeRole(user);
@@ -80,12 +70,8 @@ function removeRole(user);
   return(user);
 }
 
-
-functions 33
-
+// functions 33
 var person = { name:"lashawnda", age:"32", gender:"transwoman", career:"cat watcher" };
-
-
 function unknownPerson() {
   for (var value in person) {
     if (person.hasOwnProperty(value));

@@ -1,6 +1,6 @@
 JS-Arrays
 =========
-##### Fork this repo, clone your fork, then open arraysPractice.js and complete all the activities. 
+##### Fork this repo, clone your fork, then open arraysPractice.js and complete all the activities.
 * COMMIT AND PUSH YOUR CODE OFTEN!
 
 ### Learning Objectives
@@ -10,3 +10,4 @@ JS-Arrays
     - how to get values from arrays
     - array properties (length, push/pop, shift/unshift, split/join, splice/slice, reverse, indexOf
     - how to loop through an array
+

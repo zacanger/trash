@@ -48,3 +48,4 @@ $(document).ready(function () {
     $('.box').removeClass(colors)
   })
 })
+

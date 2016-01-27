@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$GG(document).ready(function() {
       $('body').timeago();
       $('.controls').hide();
       $('.reply').hide();
@@ -56,3 +56,4 @@ $(document).ready(function() {
             $('actions').hide();
           });
 });
+

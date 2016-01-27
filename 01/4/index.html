@@ -13,10 +13,8 @@
 <div class="container">
 <a href="http://zacanger.com/gifland/" title="Get yer gifs here!"><img src="http://zacanger.com/gifland/dance.gif" title="danceydance"></a>
 
-
-
 <!-- here be dragons... or at least, hacky php (is there any other kind?) -->
-<p>           
+<p>
 <?php
 $action=$_REQUEST['action'];
 if ($action=="")    /* display the contact form */
@@ -31,27 +29,25 @@ if ($action=="")    /* display the contact form */
         <input name="email" type="text" value=""/></div>
            <div> <label>Message</label>
     <textarea name="message" rows="6"></textarea><br>
-   <div> <input value="Submit" name="save" type="hidden"><button type="submit">Submit</button> 
+   <div> <input value="Submit" name="save" type="hidden"><button type="submit">Submit</button>
     </form>
     <?php
-    } 
-else              
+    }
+else
     {
     $name=$_REQUEST['name'];
     $email=$_REQUEST['email'];
     $message=$_REQUEST['message'];
-    {        
+    {
         $from="From: $name  Return-path: $email";
         $subject="Message from Contact Form";
         mail("e@mail.to", $subject, $message, $from);
         echo "Email sent!";
         }
-    }  
-?> 
-</p>   
-
-
-
+    }
+?>
+</p>
 </div>
 </body>
 </html>
+

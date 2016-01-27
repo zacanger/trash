@@ -32,3 +32,4 @@ var onPaint = function () {
   ctx.lineTo(mouse.x, mouse.y)
   ctx.stroke()
 }
+

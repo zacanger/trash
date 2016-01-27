@@ -9,3 +9,4 @@ box-model:
 - padding goes IN and squishes the element
 - LOTS of padding will actually stretch an element out
 - margins--space between picture and other items
+

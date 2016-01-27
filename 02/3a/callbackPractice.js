@@ -131,3 +131,4 @@ getUserById(users, id, function (user) { // i changed this to accept an argument
   console.log('The user with the id ' + id + ' has the email of ' + user.email + ' the name of ' + user.name +
     ' and the address of ' + user.address);
 }); // otherwise it can only ever return ryan's info. poor cahlan and tyler. :(
+

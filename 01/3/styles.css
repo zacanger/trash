@@ -1,12 +1,12 @@
 body {
   font-family: "Cardo", "Garamond", serif;
   font-size: 1.6em;
-  }
+}
 
 .wrapper {
   width: 80%;
   max-width: 750px;
-  }
+}
 
 .navbar {
   position: sticky;
@@ -15,34 +15,34 @@ body {
   margin-right: auto;
   margin-top: 2em;
   background-color: cream;
-  }
+}
 
 .nav {
  overflow: auto;
  a:hover: #222;
  a: #333;
- font-size: 1.8em; 
+ font-size: 1.8em;
 }
 
 .content {
   display: flex;
   align-contents: center;
   align-items: center;
-  }
-  
+}
+
 .triplets {
   margin: 5px, 20px;
   max-width: 60%;
   max-height: 30%;
   overflow: hidden;
-  }
+}
 
 .logo {
   float: left;
   height: 50px;
   width: 100px;
-  }
-  
+}
+
 .navbar-right {
   flex: 1;
   justify-content: center;
@@ -51,6 +51,5 @@ body {
   top: 40px;
   left: -90%;
   overflow: hidden;
-  }
-  
+}
 
