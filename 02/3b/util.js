@@ -391,7 +391,7 @@ var _ = {}
         if(typeof item === 'number'){
           levelArr.push(item)
         } else {
-          Array.prototype.push.apply(levelArr, this.flatten(nestedArray[j])) // if item is array, flatten it and add values to level array
+          Array.prototype.push.apply(levelArr, this.flatten(nestedArray[j]))
         }
       }
       return levelArr // return the flattened level array
