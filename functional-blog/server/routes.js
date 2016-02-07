@@ -69,3 +69,4 @@ function isAdmin (req, res, next) {
     res.redirect('/admin')
   }
 }
+

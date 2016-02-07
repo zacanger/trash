@@ -1,3 +1,17 @@
-This is mostly a bunch of sad attempts at getting Markvi into a blog type of platform, for the desktop. Even sadder attempts are over in my excerpts-and-exercises repo. Markvi itself will probably end up with the working features from this repo merged in, eventually.
+This repo holds three sorta-working attempts at turning `markvi` into
+a blogging platform for the desktop--and one working one (`the-real-one`).
 
+I wound up ceasing work on both `markvi` and this app. If you need a desktop
+Markdown editor, I can very highly recomment [Haroopad](http://pad.haroopress.com/).
+
+I originally tried this withi `bat`, because (vanilla) electron was giving me some
+trouble. Photon, then, gave me different sorts of trouble... and it turned out
+that all along, I really just needed `node-integration:false` in the file where
+we're building the Electron window. Hmph.
+
+Assuming you have `bat` globally installed:
+
+`bat --title markvi --size 1200x800 --debug -d ./index.html`
+
+(or whatever).
 

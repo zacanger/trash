@@ -26,8 +26,7 @@
     },
     "license": "WTFPL"
   , "scripts": {
-      "postinstall": "bower install"
-    , "start": "gulp"
+      "start": "gulp"
     , "test": "echo 'ERROR ERROR ERROR ERROR'"
     },
     "dependencies": {
@@ -60,3 +59,4 @@
     , "jshint": "^2.8.0"
   }
 }
+
