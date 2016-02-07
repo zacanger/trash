@@ -9,7 +9,7 @@ module.exports = {
    }
  , production: {
     rootPath: rootPath,
-    db: process.env.MONGOLAB_URI || 'mongodb://markvi:markvi@ds061464.mongolab.com:61464/markvi', // #ignoreline
     port: process.env.PORT || 80
   }
 }
+
