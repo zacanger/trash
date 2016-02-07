@@ -70,5 +70,5 @@ var innerFn = outerFn()
 
 // Now invoke innerFn.
 
-console.log(innerFn)
+console.log(innerFn())
 
