@@ -92,31 +92,33 @@ var counter = function () {
 /*
 Make the following code work
 
-fuckArray[0]() //0
-fuckArray[1]() //1
-fuckArray[2]() //2
-fuckArray[3]() //3
-fuckArray[4]() //4
-fuckArray[5]() //5
+funcArray[0]() //0
+funcArray[1]() //1
+funcArray[2]() //2
+funcArray[3]() //3
+funcArray[4]() //4
+funcArray[5]() //5
 
 *Hint: Don't let this fool you. Break down what's really happening here.
 */
 console.log("I'm not a mind-reader. I hiave no idea what you're trying to accomplish, here. A function that loops through an array and returns... indices?")
 
-function fuckArrayz (what) {
-  var fuckedArray = []
-  var i = 0
-  while (i <= what) {
-    var fuckingArray = function (i) {
-      fuckedArray.push(function () {
-        console.log(i)
+function blah(gross){
+  var soTired = []
+    , i = 0
+  while(i <= gross){
+    var lolwut = function(i){
+      soTired.push(function(){
+        return(i)
       })
     }
-    fuckingArray(i)
+    lolwut(i)
     i++
   }
-  console.log('did that thang')
-  return fuckedArray
+  console.error('happy now?')
+  console.warn('if this doesn\'t work, i\'m actually totally okay with that.')
+  console.log('it\'s late.')
+  return soTired
 }
-var fuckedArray = fuckingArray(5)
+var funcArray = blah(5)
 
