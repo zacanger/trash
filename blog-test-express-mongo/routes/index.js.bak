@@ -38,7 +38,7 @@ formatTime    = function(){
 }
 
 exports.index = function(req, res){
-  post.find({}).sort('-_id').exec('find', function(err, posts){
+  post.find({}).sort('-_id').execFind(function(err, posts){
     res.render('index', {title: title, posts: posts, admin: admin_check(req.session.admin)})
   })
 }
@@ -80,7 +80,7 @@ exports.admin_post = function(req, res){
 
 exports.admin_new = function(req, res){
   if (admin_check(req.session.admin) == false) res.redirect('/home')
-  post.find({}).sort('-_id').exec('find', function (err, posts) {
+  post.find({}).sort('-_id').execFind(function (err, posts) {
     if (posts) {
       res.render('admin_new', {title: title, posts: posts, admin: admin_check(req.session.admin)})
     } else {
@@ -134,7 +134,7 @@ exports.admin_edit_post = function(req, res){
 
 exports.admin_delete = function(req, res){
   if (admin_check(req.session.admin) == false) res.redirect('/home')
-  post.find({}).sort('-_id').exec('find', function (err, posts){
+  post.find({}).sort('-_id').execFind(function (err, posts){
     if (posts) {
       res.render('admin_delete', {title: title, posts: posts, admin: admin_check(req.session.admin)})
     } else {

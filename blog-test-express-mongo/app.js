@@ -1,10 +1,10 @@
-
 var express = require('express')
-  , routes = require('./routes')
-  , http = require('http')
-  , path = require('path')
-  , app = express()
-  , store = new express.session.MemoryStore
+  , routes  = require('./routes')
+  , http    = require('http')
+  , path    = require('path')
+  , app     = express()
+  , store   = new express.session.MemoryStore
+  , port    = 3000
 
 admin = null
 password = 'password'
@@ -18,7 +18,6 @@ app.configure(function(){
   app.use(express.bodyParser())
   app.use(express.methodOverride())
   app.use(express.cookieParser())
-  app.use(express.session({ secret: 'a272abda5cb35144d6ef351bd1b24a0f', // #ignoreline
     store: store
   }))
   app.use(app.router)
@@ -52,6 +51,7 @@ app.get('/admin/logout', function (req, res) {
   res.redirect('/home')
 })
 
-http.createServer(app).listen(app.get('port'), function () {
-  console.log('check it, over on ' + app.get('port'))
-})
+http.createServer(app)
+app.listen(port)
+console.log('check it, on', app.get('port'))
+
