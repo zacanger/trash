@@ -1,8 +1,14 @@
-var debug = true,
-  _log = function(){
+var debug = true
+
+var _log = function(){
     debug && window.console && console.log.apply(console, arguments)
   }
 
-function whatever(){
-  _log('yup, that worked')
+function whatever(things){
+  _log(things)
 }
+
+whatever('testing from fn\n')
+
+_log('this is testing directly\n')
+
