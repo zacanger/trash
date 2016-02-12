@@ -24,6 +24,7 @@ $GG(document).ready(function() {
       });
 
       $('.submit').on('click', function() {
+        alert('foo')
         var top = $('.oldTop').clone();
         var topTweet = $('.compose').val();
 
