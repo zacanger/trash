@@ -1,5 +1,6 @@
 var size = 5
-var cb = ''
+  , cb   = ''
+
 for (var i = 1; i <= size; i++) {
   var charp = false
   if (i % 2 === 0) {
@@ -24,4 +25,6 @@ for (var i = 1; i <= size; i++) {
   }
   cb += '\n'
 }
+
 console.log(cb)
+

@@ -1,12 +1,11 @@
 #!/usr/bin/env node
 
-// Reads a list of unique names from stdin then when the stream is closed,
-// Prints the assignments to stdout
+// reads list of unique names from stdin;
+// prints to stdout when stream closes.
 
-var es = require('event-stream'),
-  random = require('random-item-in-array')
-
-var names = {}
+var es     = require('event-stream')
+  , random = require('random-item-in-array')
+  , names  = {}
 
 process.stdin
   .pipe(es.split())
@@ -22,9 +21,8 @@ process.stdin
     var toAssign = Object.keys(names)
 
     names = Object.keys(names).reduce(function(prev, curr){
-      // Get a name that isn't their own
       var name = random(
-        toAssign
+        toAssign // get a name that isn't their own
           .filter(function(name){
           return name !== curr
       }))
@@ -37,5 +35,6 @@ process.stdin
       return prev
     }, {})
 
-    console.log('Assignments:', names)
+    console.log('assignments:', names)
   })
+

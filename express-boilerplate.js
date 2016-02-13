@@ -1,8 +1,8 @@
-var express = require('express')
+var express    = require('express')
   , bodyparser = require('body-parser')
-  , session = require('express-session')
-  , app = express()
-  , port = 9999
+  , session    = require('express-session')
+  , app        = express()
+  , port       = 9999
 
 var logger = function(req, res, next){
   console.log('\n\n')
@@ -14,9 +14,9 @@ var logger = function(req, res, next){
 
 app.use(bodyparser.json())
 app.use(session({
-  secret: 'barFOO',
-  saveUninitialized: true,
-  resave: true
+  secret            : 'barFOO'
+, saveUninitialized : true
+, resave            : true
 }))
 
 app.post('/cart', function(req, res, next){
@@ -36,3 +36,4 @@ app.get('/cart', function(req, res, next){
 app.listen(port, function(){
   console.log('doin it on ' + port)
 })
+

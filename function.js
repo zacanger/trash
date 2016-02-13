@@ -17,3 +17,4 @@ function countChar (txt, character) {
 function countBs (txt) {
   return countChar(txt, 'B')
 }
+

@@ -1,5 +1,7 @@
 'use strict'
+
 const max = process.argv[2]
+
 let FizzBuzz = function* (){
   let num = 1
   while (num <= max){

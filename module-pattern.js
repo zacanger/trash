@@ -1,11 +1,11 @@
 var moduleName = function(){
   function privateFunction(){}
   function publicFunction(){
-    privateFunction()
-    otherModule.doSomething() // imports!
+    privateFunction() // imports!
+    otherModule.doSomething()
   }
-  return {
-    publicFunction: publicFunction // exports!
+  return { // exports!
+    publicFunction: publicFunction
   }
 }()
 
