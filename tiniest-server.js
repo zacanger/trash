@@ -1,11 +1,11 @@
 var http = require('http')
-  , url = require('url')
+  , url  = require('url')
   , path = require('path')
-  , fs = require('fs')
+  , fs   = require('fs')
   , port = process.argv[2] || 4444
 
 http.createServer(function(request, response){
-  var uri = url.parse(request.url).pathname
+  var uri      = url.parse(request.url).pathname
     , filename = path.join(process.cwd(), uri)
   fs.exists(filename, function(exists){
     if (!exists) {
@@ -30,3 +30,4 @@ http.createServer(function(request, response){
 }).listen(parseInt(port, 10))
 
 console.log('server up on ' + port)
+

@@ -1,17 +1,17 @@
 var http = require('http')
-  , url = require('url')
+  , url  = require('url')
   , path = require('path')
-  , fs = require('fs')
+  , fs   = require('fs')
   , port = process.argv[2] || 9999
 
 http.createServer(function(request, respons){
-  var uri = url.parse(request.url).pathname
+  var uri      = url.parse(request.url).pathname
     , filename = path.join(process.cwd(), uri)
 
   var contentTypesByExtension = {
-      '.html': 'text/html'
-    , '.css': 'text/css'
-    , '.js': 'text/javascript'
+      '.html' : 'text/html'
+    , '.css'  : 'text/css'
+    , '.js'   : 'text/javascript'
   }
 
   fs.exists(filename, function(exists){
@@ -43,3 +43,4 @@ http.createServer(function(request, respons){
 }).listen(parseInt(port, 10))
 
 console.log('server up on ' + port)
+

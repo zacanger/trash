@@ -1,15 +1,17 @@
 // instead of a bunch of foo = require("foo")
 // list our required modules and loop through
-var r = [ "fs", "http", "mime", "path", "url" ];
+
+var r = ['fs', 'http', 'mime', 'path', 'url']
+
 for (var i = 0; i < r.length; i++) {
-  global[r[i]] = require(r[i]);
+  global[r[i]] = require(r[i])
 }
 
 // some constants
 var k = {
-  "port": 4444,
-  "dir": "public"
-};
+  'port' : 4444
+, 'dir'  : 'public'
+}
 
 // the main thing
 var server = http.createServer(function(request, response){
@@ -31,10 +33,10 @@ var server = http.createServer(function(request, response){
 
     // no, bail out
     if (!gotPath) {
-        response.writeHead(404, {"Content-Type": "text/plain"})
-        response.write("404 Not Found")
-        response.end()
-        return
+      response.writeHead(404, {'Content-Type': 'text/plain'})
+      response.write("404 Not Found")
+      response.end()
+      return
     }
 
     // still here? filename is good
@@ -45,10 +47,10 @@ var server = http.createServer(function(request, response){
     // but it feels less block-ish than reading the whole file
     // and we get to do awesome things with listeners
     fs.createReadStream(filename, {
-      'flags': 'r',
-      'encoding': 'binary',
-      'mode': 0666,
-      'bufferSize': 4 * 1024
+      'flags': 'r'
+    , 'encoding': 'binary'
+    , 'mode': 0666
+    , 'bufferSize': 4 * 1024
     }).addListener( "data", function(chunk) {
       response.write(chunk, 'binary')
     }).addListener( "close",function() {
@@ -61,7 +63,7 @@ var server = http.createServer(function(request, response){
       if (err) throw err
       response.write(data, 'utf8')
       response.end()
-    });
+    })
     */
 
   })
@@ -69,3 +71,4 @@ var server = http.createServer(function(request, response){
 
 // fire it up
 server.listen(k.port)
+
