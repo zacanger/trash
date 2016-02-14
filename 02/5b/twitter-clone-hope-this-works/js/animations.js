@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
   $('#tweet-controls').hide()
   $('.stats').hide()
   $('.reply').hide()
@@ -42,26 +43,27 @@ $(document).ready(function() {
 
   })
 
-  var swap = true
-
   $(document).on('click', '.tweet', function() {
-    if (swap) {
-      $(this).find('.stats').toggle(swap)
-      $(this).find('.reply').toggle(swap)
-      swap = false
+
+    var t = true
+
+    $(this).find('.stats').toggle(t)
+    $(this).find('.reply').toggle(t)
+
+    if (t) {
+     t = false
     } else {
-      $(this).find('.stats').toggle(swap)
-      $(this).find('.reply').toggle(swap)
-      swap = true
+     t = true
     }
   })
 
   $(document).on('mouseenter', '.content', function() {
-    $('tweet-actions').show()
+    $('.tweet-actions').show()
   })
 
   $(document).on('mouseleave', '.content', function() {
-    $('tweet-actions').hide()
+    $('.tweet-actions').hide()
   })
 
 })
+
