@@ -1,4 +1,4 @@
-var app = angular.module('userProfiles');
+var app = angular.module('userProfiles')
 
 app.service('thatService', function() {
   var data =
@@ -22,8 +22,9 @@ app.service('thatService', function() {
         "avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/olegpogodaev/128.jpg"
     }
   ]
-});
+})
 
 function getUsers(){
-  return this.data;
+  return this.data
 }
+
