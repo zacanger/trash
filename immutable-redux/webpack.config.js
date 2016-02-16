@@ -1,24 +1,27 @@
 var path = require('path')
+
 module.exports = {
-  entry: './components/app.jsx',
-  output: {
-    path: path.resolve(__dirname, 'build'),
-    publicPath: '/',
-    filename: 'bundle.js'
+  devtool : 'cheap-module-eval'
+, entry   : './components/app.jsx'
+, output  : {
+    path       : path.resolve(__dirname, 'public')
+  , publicPath : 'http://127.0.0.1:9090'
+  , filename   : 'bundle.js'
   },
-  module: {
-    loaders: [
+  module : {
+    loaders : [
       {
-        test: /\.jsx?$/,
-        exclude: /(node_modules|bower_components)/,
-        loader: 'babel',
-        query: {
-          presets: ['react', 'es2015']
+        test    : /\.jsx?$/
+      , exclude : /(node_modules|bower_components)/
+      , loader  : 'babel'
+      , query   : {
+          presets : ['react', 'es2015']
         }
       }
     ]
   },
-  resolve: {
-    extensions: ['', '.js', '.jsx']
+  resolve : {
+    extensions : ['', '.js', '.jsx']
   }
 }
+
