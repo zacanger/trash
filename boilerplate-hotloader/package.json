@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "react boiler",
   "scripts": {
-    "start": "node server.js",
+    "start": "webpack-dev-server --quiet",
     "lint": "eslint src"
   },
   "repository": {
@@ -34,3 +34,4 @@
     "react-dom": "^0.14.0"
   }
 }
+
