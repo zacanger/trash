@@ -32,7 +32,8 @@
     "gulp": "^3.9.0",
     "gulp-eslint": "^1.1.1",
     "gulp-mocha": "^2.2.0",
-    "gulp-plumber": "^1.0.1"
+    "gulp-plumber": "^1.0.1",
+    "gulp-task-listing": "^1.0.1"
   },
   "dependencies": {
     "bluebird": "^3.1.1",
@@ -40,3 +41,4 @@
     "should": "^8.1.1"
   }
 }
+
