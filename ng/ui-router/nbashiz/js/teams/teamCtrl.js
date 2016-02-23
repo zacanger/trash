@@ -1,7 +1,10 @@
-app.controller('teamCtrl', function ($scope, $stateParams, teamService, teamData) {
-  $scope.teamData = teamData
-  $scope.newGame = {}
-  $scope.showNewGameForm = false
+angular.module('nbaRoutes')
+
+.controller('teamCtrl', function ($scope, $stateParams, teamService, teamData) {
+
+  $scope.teamData          = teamData
+  $scope.newGame           = {}
+  $scope.showNewGameForm   = false
   $scope.toggleNewGameForm = function () {
     $scope.showNewGameForm = !$scope.showNewGameForm
   }
@@ -20,20 +23,16 @@ app.controller('teamCtrl', function ($scope, $stateParams, teamService, teamData
   $scope.submitGame = function () {
     $scope.newGame.homeTeam = $scope.homeTeam.split(' ').join('').toLowerCase()
     teamService.addNewGame($scope.newGame)
-      .then(function (result) {
-        console.log(result)
-        teamService.getTeamData($stateParams.team).then(function (res) {
-          $scope.teamData = res
-        })
-        $scope.newGame = {}
-        $scope.showNewGameForm = false
-      }, function (error) {
-        console.log('error error aha aha')
+    .then(function (result) {
+      teamService.getTeamData($stateParams.team).then(function (res) {
+        $scope.teamData = res
       })
+      $scope.newGame         = {}
+      $scope.showNewGameForm = false
+    }, function (error) {
+      console.error(error)
+    })
   }
-  console.log($scope)
-  console.log($scope.teamData)
-  console.log($scope.teamData.wins)
-  console.log($scope.teamData.losses)
 
 })
+

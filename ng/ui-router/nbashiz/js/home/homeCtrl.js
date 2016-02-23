@@ -1,6 +1,10 @@
-angular.module('nbaRoutes').controller('homeCtrl', function ($scope, $stateParams, homeService, allData) {
-  $scope.jazzData = allData['utahjazz']
+angular.module('nbaRoutes')
+
+.controller('homeCtrl', function ($scope, $stateParams, homeService, allData) {
+
+  $scope.jazzData  = allData['utahjazz']
   $scope.lakerData = allData['losangeleslakers']
-  $scope.heatData = allData['miamiheat']
+  $scope.heatData  = allData['miamiheat']
 
 })
+

@@ -1,10 +1,10 @@
-var app = angular.module('nbaRoutes')
+angular.module('nbaRoutes')
 
-app.service('teamService', function ($http, $q) {
-  // service code
+.service('teamService', function ($http, $q) {
 
   this.addNewGame = function (gameObj) {
     var url = 'https://api.parse.com/1/classes/' + gameObj.homeTeam
+
     if (parseInt(gameObj.homeTeamScore) > parseInt(gameObj.opponentScore)) {
       gameObj.won = true
     } else {
@@ -12,43 +12,39 @@ app.service('teamService', function ($http, $q) {
     }
 
     return $http({
-      method: 'POST',
-      url: url,
-      data: gameObj
+      method : 'POST'
+    , url    : url
+    , data   : gameObj
     })
   }
 
   this.getTeamData = function (team) {
     var deferred = $q.defer()
-    var url = 'https://api.parse.com/1/classes/' + team + '?order=-createdAt'
+      , url      = 'https://api.parse.com/1/classes/' + team + '?order=-createdAt'
 
-    $http({
-      method: 'GET',
-      url: url,
-    })
-      .then(function (data) {
-        var results = data.data.results
-        var wins = 0
-        var losses = 0
-        results.forEach(function (value, index) {
-          if (value.won === true) {
-            wins++
-          } else {
-            losses++
-          }
-        })
+    $http.get(url)
+    .then(function (data) {
+      var results = data.data.results
+        , wins    = 0
+        , losses  = 0
 
-        results.wins = wins
-        results.losses = losses
-        console.log(results)
-        deferred.resolve(results)
-
-      }, function (error) {
-        deferred.reject(error)
-        console.log('code light bihhhhhh')
+      results.forEach(function (value, index) {
+        if (value.won === true) {
+          wins++
+        } else {
+          losses++
+        }
       })
 
+      results.wins   = wins
+      results.losses = losses
+      console.log(results)
+      deferred.resolve(results)
+    }, function (error) {
+      deferred.reject(error)
+    })
     return deferred.promise
   }
 
 })
+
