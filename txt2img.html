@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8">
+  <title>txt2img</title>
+
+  <style type="text/css">
+    html, body {
+      padding: 0;
+      margin: 0;
+      box-sizing:
+      border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    body {
+      background: #101010;
+      font-family: "Fira Code", "Source Code Pro", "Monaco", monospace;
+      color: #212121;
+    }
+    #text {
+      width: 600px;
+      height: 800px;
+    }
+    #newImg {
+      width: 600px;
+      height: 800px;
+      border: none;
+    }
+  </style>
+
+  <script type="text/javascript">
+
+    function multilineText(context, text, width){
+
+      var len      = text.length
+        , strArray = []
+        , tmp      = ''
+        , i        = 0
+
+      if(len < 1){
+        return strArray
+      }
+
+      for(i = 0; i < len; i++){
+        var c = text.charAt(i)
+
+        if(c == '\n'){
+          strArray.push(tmp)
+          tmp = ''
+          continue
+        }
+
+        if(context.measureText(tmp + c).width <= width){
+          tmp += c
+        } else {
+          strArray.push(tmp)
+          tmp = c
+        }
+
+      }
+
+      if(tmp.length > 0)
+        strArray.push(tmp)
+      return strArray
+
+    }
+
+    function change(){
+
+      var canvas  = document.getElementById('canvas')
+        , text    = document.getElementById('text')
+        , context = canvas.getContext('2d')
+        , arr     = multilineText(context, text.value, 600)
+
+      context.font = '10pt monospace'
+      context.clearRect(0, 0, canvas.width, canvas.height)
+      context.fillStyle = 'rgb(30,30,30)'
+      context.fillRect(0, 0, 600, 800)
+      context.fillStyle = 'rgb(200,200,200)'
+
+      for(var i = 0; i < arr.length; i++){
+        context.fillText(arr[i], 10, 50 + (i * 26))
+      }
+
+      var jpg = canvas.toDataURL()
+      document.getElementById('newImg').src = jpg
+
+    }
+
+</script>
+
+</head>
+
+<body>
+  <canvas id="canvas" width="600" height="800" hidden="true"></canvas>
+  <textarea id= "text" onChange="change()"></textarea>
+  <div><img id="newImg"></div>
+</body>
+</html>
+
