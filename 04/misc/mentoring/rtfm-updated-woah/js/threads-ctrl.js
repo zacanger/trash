@@ -1,4 +1,5 @@
-angular.module('rtfmApp').controller('threadsCtrl', function (threadsRef, $scope, $firebaseArray) {
+angular.module('rtfmApp')
+.controller('threadsCtrl', function (threadsRef, $scope, $firebaseArray) {
 
   $scope.threads = $firebaseArray(threadsRef)
 
