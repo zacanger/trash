@@ -22,3 +22,7 @@ requires a large amount of setup to actually do the building, and i don't
 have java on this computer at all because screw that, so i won't be doing
 that, basically.
 
+crap. gotta go back to work. oh well, this was fun, maybe i can one day
+get pharaoh into a native app. (wait, what? there's no use-case for an
+educational IDE that runs on smartphones, is there? probably not, no.)
+
