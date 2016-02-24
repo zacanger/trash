@@ -1,3 +1,5 @@
-tiny light template lib in node
-see 'test.js' for usage
+tiny itty bitty templating thingy
+works in node yay
+works in not-node too yay
+see the example for an example
 

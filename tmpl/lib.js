@@ -1,4 +1,6 @@
 // simplest templating system EVAR.
+// it's also kinda gross. so. yeah.
+
 String.prototype.tmpl = function(dic, parentKey){
   var src = this
   for(var key in dic){

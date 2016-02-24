@@ -1,14 +1,14 @@
 {
   "name": "tmpl",
-  "version": "0.5.0",
-  "description": "supertiny templating thingamajig",
+  "version": "0.6.0",
+  "description": "itty bitty lil templating thingy for node and also for not-node",
   "main": "index.js",
   "scripts": {
-    "test": "node test.js"
+    "test": "node example"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zacanger/examples.git"
+    "url": "git+https://github.com/zacanger/node-misc.git"
   },
   "keywords": [
     "template",
