@@ -1,4 +1,5 @@
-angular.module('rtfmApp').controller('threadCtrl', function (threadRef, commentsRef, $scope, $firebaseObject, $firebaseArray) {
+angular.module('rtfmApp')
+.controller('threadCtrl', function (threadRef, commentsRef, $scope, $firebaseObject, $firebaseArray) {
   var thread = $firebaseObject(threadRef)
 
   thread.$bindTo($scope, 'thread')
@@ -13,3 +14,4 @@ angular.module('rtfmApp').controller('threadCtrl', function (threadRef, comments
   }
 
 })
+
