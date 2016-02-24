@@ -13,3 +13,4 @@ angular.module('rtfmApp').controller('threadsCtrl', function (threadsRef, $scope
     })
   }
 })
+
