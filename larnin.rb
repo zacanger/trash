@@ -355,3 +355,16 @@ var.lines.to_a.reverse # turns a heredoc's lines into an array
 
 # hashes and dictionaries -- same thing, different words, whatever.
 
+# werkin' with the fs
+Dir.entries '/path' # show all at that path. can take wild cards:
+Dir['/path/to/stuff/*.js']
+print File.read('/home/z/bin/js/fizzbuzz.js')
+FileUtils.cp('/home/z/bin/js/fizzbuzz.js', '/home/z/toy-problems/fizzbuzz.js')
+
+File.open('/path/to/file.js', 'a') do |f|
+end
+# opens that file in append mode, i think... what's the |f| block, exactly?
+
+File.mtime('/file') # checks modification time
+File.mtime('/file').hour # just the hour
+
