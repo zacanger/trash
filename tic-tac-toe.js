@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var P='X';var N='O';var C=0;var p=process;var i=p.stdin;i.setRawMode(1);
 i.resume();i.setEncoding('utf8');var o=p.stdout;var b=[1,2,3,4,5,6,7,8,9];
 function d(){o.write('\033c'+b[0]+'|'+b[1]+'|'+b[2]+'\n'+b[3]+'|'+b[4]+'|'+b[5]
