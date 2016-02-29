@@ -6,3 +6,11 @@ $(function(){ // grabs all 'a' elements and looks for
   })
 })
 
+// another version of the same thing, named
+function classyActives(){
+  var url = window.location.href
+  $('a').filter(function(){
+    return this.href == url
+  }).addClass('active')
+}
+
