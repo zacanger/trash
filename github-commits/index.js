@@ -1,10 +1,10 @@
-var apiUrl = 'https://api.github.com/repos/pharaoh-js/pharaoh/commits?per_page=8&sha='
+var apiUrl = 'https://api.github.com/repos/pharaoh-js/pharaoh-desktop/commits?per_page=8&sha='
 
-var demo = new Vue({
+var gh = new Vue({
 
-  el : '#gh'
+  el : '#gh',
 
-, data : {
+  data : {
     branches      : ['master', 'nwjs', 'refspropswhatsits']
   , currentBranch : 'nwjs'
   , commits       : null
@@ -41,3 +41,4 @@ var demo = new Vue({
   }
 
 })
+
