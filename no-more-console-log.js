@@ -1,8 +1,8 @@
 var debug = true
 // set debug = false to disable logging
 var log = function(){
-    debug && console && console.log.apply(console, arguments)
-  }
+  debug && console && console.log.apply(console, arguments)
+}
 
 // example usage in fn
 function ex(ample){
