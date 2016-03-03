@@ -1,4 +1,5 @@
 var txt = '#######'
-for (var i = txt.length; i >= 0; i--) {
+fo (var i = txt.length; i >= 0; i--){
   console.log(txt.slice(i))
 }
+
