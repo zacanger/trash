@@ -59,3 +59,4 @@ module.exports = {
     res.send({hobbies: hobbies})
   }
 }
+
