@@ -4,7 +4,7 @@
   "description": "ecommerce project",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "mkdir db && mongod --dbpath=db/ --fork --nojournal --syslog & node index"
   },
   "author": "zacanger",
   "license": "WTFPL",
@@ -16,3 +16,4 @@
     "mongoose": "^4.2.6"
   }
 }
+
