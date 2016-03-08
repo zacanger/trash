@@ -5,7 +5,34 @@ function get_keypad_digits1(string){
 }
 function get_keypad_digits2(string){
   return String(string).toUpperCase().replace(/[A-Z]/g, function(letter){
-    return ({A: 2, B: 2, C: 2, D: 3, E: 3, F: 3, G: 4, H: 4, I: 4, J: 5, K: 5, L: 5, M: 6, N: 6, O: 6, P: 7, Q: 7, R: 7, S: 7, T: 8, U: 8, V: 8, W: 9, X: 9, Y: 9, Z: 9})[letter]
+    return ({
+      A : 2
+    , B : 2
+    , C : 2
+    , D : 3
+    , E : 3
+    , F : 3
+    , G : 4
+    , H : 4
+    , I : 4
+    , J : 5
+    , K : 5
+    , L : 5
+    , M : 6
+    , N : 6
+    , O : 6
+    , P : 7
+    , Q : 7
+    , R : 7
+    , S : 7
+    , T : 8
+    , U : 8
+    , V : 8
+    , W : 9
+    , X : 9
+    , Y : 9
+    , Z : 9
+    })[letter]
   })
 }
 function get_keypad_digits3(string){
@@ -23,7 +50,34 @@ var get_keypad_digits4 = (function(){
   }
 })()
 var get_keypad_digits5 = (function(){
-  var mapping = {A: 2, B: 2, C: 2, D: 3, E: 3, F: 3, G: 4, H: 4, I: 4, J: 5, K: 5, L: 5, M: 6, N: 6, O: 6, P: 7, Q: 7, R: 7, S: 7, T: 8, U: 8, V: 8, W: 9, X: 9, Y: 9, Z: 9}
+  var mapping = {
+    A : 2
+  , B : 2
+  , C : 2
+  , D : 3
+  , E : 3
+  , F : 3
+  , G : 4
+  , H : 4
+  , I : 4
+  , J : 5
+  , K : 5
+  , L : 5
+  , M : 6
+  , N : 6
+  , O : 6
+  , P : 7
+  , Q : 7
+  , R : 7
+  , S : 7
+  , T : 8
+  , U : 8
+  , V : 8
+  , W : 9
+  , X : 9
+  , Y : 9
+  , Z : 9
+  }
   var replacer = function(letter){return mapping[letter]}
   return function(string){
     return String(string).toUpperCase().replace(/[A-Z]/g, replacer)
@@ -36,4 +90,32 @@ var get_keypad_digits6 = (function(){
     return String(string).toUpperCase().replace(/[A-Z]/g, replacer)
   }
 })()
-var strings = ['Alpha', 'Bravo', 'Charlie', 'Delta', 'Echo', 'Foxtrot', 'Golf', 'Hotel', 'India', 'Juliet', 'Kilo', 'Lima', 'Mike', 'November', 'Oscar', 'Papa', 'Quebec', 'Romeo', 'Sierra', 'Tango', 'Uniform', 'Victor', 'Whiskey', 'X-ray', 'Yankee', 'Zulu']
+var strings = [
+  'Alpha'
+, 'Bravo'
+, 'Charlie'
+, 'Delta'
+, 'Echo'
+, 'Foxtrot'
+, 'Golf'
+, 'Hotel'
+, 'India'
+, 'Juliet'
+, 'Kilo'
+, 'Lima'
+, 'Mike'
+, 'November'
+, 'Oscar'
+, 'Papa'
+, 'Quebec'
+, 'Romeo'
+, 'Sierra'
+, 'Tango'
+, 'Uniform'
+, 'Victor'
+, 'Whiskey'
+, 'X-ray'
+, 'Yankee'
+, 'Zulu'
+]
+

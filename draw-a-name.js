@@ -37,4 +37,3 @@ process.stdin
 
     console.log('assignments:', names)
   })
-

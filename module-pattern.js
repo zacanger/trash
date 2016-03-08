@@ -12,4 +12,3 @@ var moduleName = function(){
 // <script type="text/javascript">
 // moduleName.publicFunction()
 // </script>
-

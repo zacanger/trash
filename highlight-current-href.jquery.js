@@ -13,4 +13,3 @@ function classyActives(){
     return this.href == url
   }).addClass('active')
 }
-

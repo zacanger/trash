@@ -12,4 +12,3 @@ whatever('testing from fn\n')
 
 // example direct usage
 log('this is testing directly\n')
-

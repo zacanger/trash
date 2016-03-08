@@ -36,4 +36,3 @@ app.get('/cart', function(req, res, next){
 app.listen(port, function(){
   console.log('doin it on ' + port)
 })
-

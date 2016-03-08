@@ -21,4 +21,3 @@ if(ref.indexOf('quux') > -1){
 else {
   $scope.title = 'howdy'
 }
-

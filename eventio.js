@@ -9,12 +9,11 @@ stdout.write("Type your name: ")
 stdin.setEncoding('utf8')
 
 stdin.on('data',function(chunk){
-    var name = chunk.replace('\n','')
-    stdout.write("Entered '" + name + "' while counting to " + count + "\n")
-    process.exit(0)
+  var name = chunk.replace('\n','')
+  stdout.write("Entered '" + name + "' while counting to " + count + "\n")
+  process.exit(0)
 })
 
 setInterval(function(){
-    count++
+  count++
 },1000)
-

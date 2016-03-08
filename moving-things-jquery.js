@@ -8,4 +8,3 @@ function checkSize(){
     $("#initial").detach().appendTo("#eventual")
   }
 }
-

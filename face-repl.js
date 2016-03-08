@@ -31,4 +31,3 @@ console.log('remote repl available on ' + port)
 
 var local = repl.start(face()+' |> ')
 local.context.face = face
-

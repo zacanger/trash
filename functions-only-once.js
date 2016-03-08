@@ -39,4 +39,3 @@ function once(fn, context){
     return result
   }
 }
-

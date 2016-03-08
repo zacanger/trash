@@ -18,8 +18,6 @@ function get(url, responseType){
 }
 
 // and, somewhere else:
-get('url/api/something', 'text')
-  .then(function(x){
-    console.log(x) // do stuff, i guess
-  })
-
+get('url/api/something', 'text').then(function(x){
+  console.log(x) // do stuff, i guess
+})

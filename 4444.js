@@ -22,7 +22,6 @@ http.createServer(function(req, res){
     res.end()
   })
   stream.pipe(res)
-}).listen(4444)
+}).listen(port)
 
 console.log('check over at ' + port)
-

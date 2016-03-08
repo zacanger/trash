@@ -7,4 +7,3 @@ function palindrome(str){
 }
 
 console.log('is ' + str + ' a palindrome? that\'s ' + palindrome(str))
-

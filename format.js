@@ -11,4 +11,3 @@ function format(){
   }
   return args.reduce(replacer, initial)
 }
-
