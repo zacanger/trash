@@ -1,9 +1,8 @@
-# markdown-powered knowledgebase
+# markdown knowledgebase
 
 ## how to use:
 
 * `npm i`
-* `mkdir content`
 * `cd content`
 * `touch foo.md`
 * then put stuff in there.
@@ -30,6 +29,6 @@
 
 ## credits:
 
+* Mihai Ionut Vilcu (see LICENSE.md)
 * gh:zacanger
-* Mihai Ionut Vilcu
 
