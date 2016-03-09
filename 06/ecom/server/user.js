@@ -1,3 +1,5 @@
+'use strict'
+
 var mongoose = require('mongoose')
   , bcrypt   = require('bcrypt')
   , cart     = require('./cart')

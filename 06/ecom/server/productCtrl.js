@@ -1,3 +1,5 @@
+'use strict'
+
 var Product = require('./product')
 
 var handleGet = function(req, res){
@@ -6,6 +8,17 @@ var handleGet = function(req, res){
       res.status(500).json(err)
     } else {
       res.json(response)
+    }
+  })
+}
+
+var handleGetId = function(req, res){
+  Product.findById(req.params.id)
+  .exec(function(err, result){
+    if(err){
+      res.send(err)
+    } else {
+      res.send(result)
     }
   })
 }
@@ -42,6 +55,7 @@ var handleDelete = function(req, res){
 
 module.exports = {
   get    : handleGet
+, getId  : handleGetId
 , post   : handlePost
 , put    : handlePut
 , delete : handleDelete
