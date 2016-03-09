@@ -7,9 +7,9 @@
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   color: #333;
-  font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
-  font-size: 16px;
-  line-height: 1.6;
+  font-family: "Merriweather", serif;
+  font-size: 14px;
+  line-height: 1.2;
   word-wrap: break-word;
 }
 
@@ -23,7 +23,7 @@
 }
 
 .markdown-body strong {
-  font-weight: bold;
+  font-weight: 700;
 }
 
 .markdown-body h1 {
@@ -47,7 +47,7 @@
 .markdown-body code,
 .markdown-body kbd,
 .markdown-body pre {
-  font-family: monospace, monospace;
+  font-family: "Proggy Tiny", "Hack", "Inconsolata", monospace;
   font-size: 1em;
 }
 
@@ -85,7 +85,7 @@
 }
 
 .markdown-body input {
-  font: 13px/1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+  font: 12px/1.2 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
 .markdown-body a {
@@ -181,7 +181,7 @@
 }
 
 .markdown-body code {
-  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-family: "Hack", "Hasklig", "Fira Code", Menlo, Courier, monospace;
   font-size: 12px;
 }
 
@@ -347,7 +347,7 @@
   height: 4px;
   padding: 0;
   margin: 16px 0;
-  background-color: #e7e7e7;
+  background-color: #101010;
   border: 0 none;
 }
 
@@ -418,22 +418,23 @@
 }
 
 .markdown-body table tr {
-  background-color: #fff;
+  background-color: #212121;
   border-top: 1px solid #ccc;
 }
 
 .markdown-body table tr:nth-child(2n) {
-  background-color: #f8f8f8;
+  background-color: #202020;
 }
 
 .markdown-body img {
   max-width: 100%;
   box-sizing: content-box;
-  background-color: #fff;
+  background-color: #101010;
 }
 
 .markdown-body code {
   padding: 0;
+  color: #eee;
   padding-top: 0.2em;
   padding-bottom: 0.2em;
   margin: 0;
@@ -468,7 +469,7 @@
   overflow: auto;
   font-size: 85%;
   line-height: 1.45;
-  background-color: #f7f7f7;
+  background-color: #303030;
   border-radius: 3px;
 }
 
@@ -483,6 +484,7 @@
 
 .markdown-body pre code {
   display: inline;
+  color: #eee;
   max-width: initial;
   padding: 0;
   margin: 0;
@@ -501,11 +503,11 @@
 .markdown-body kbd {
   display: inline-block;
   padding: 3px 5px;
-  font-size: 11px;
-  line-height: 10px;
+  font-size: 10px;
+  line-height: 8px;
   color: #555;
   vertical-align: middle;
-  background-color: #fcfcfc;
+  background-color: #101010;
   border: solid 1px #ccc;
   border-bottom-color: #bbb;
   border-radius: 3px;
@@ -614,11 +616,11 @@
 .markdown-body kbd {
   display: inline-block;
   padding: 3px 5px;
-  font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
-  line-height: 10px;
+  font: 10px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  line-height: 8px;
   color: #555;
   vertical-align: middle;
-  background-color: #fcfcfc;
+  background-color: #101010;
   border: solid 1px #ccc;
   border-bottom-color: #bbb;
   border-radius: 3px;
@@ -654,3 +656,4 @@
   position: relative;
   border-color: #4078c0;
 }
+

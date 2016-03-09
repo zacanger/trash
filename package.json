@@ -1,19 +1,23 @@
 {
-  "name": "my-docs",
-  "version": "1.0.0",
-  "description": "A markdown powered knowledgebase.",
+  "name": "knowledgebase",
+  "version": "0.1.0",
+  "description": "markdown + knowledge = this.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server/index.js"
+    "start": "node server"
   },
   "keywords": [
     "docs",
     "viewer",
     "markdown"
   ],
-  "author": "Mihai Ionut Vilcu <ionutvmi@gmail.com>",
-  "license": "MIT",
+  "author": {
+    "name": "Zac Anger",
+    "email": "zac@zacanger.com",
+    "url": "http://zacanger.com"
+  },
+  "license": "WTFPL",
   "dependencies": {
     "express": "^4.13.3",
     "glob": "^5.0.15",
@@ -25,3 +29,4 @@
     "underscore.string": "^3.2.2"
   }
 }
+
