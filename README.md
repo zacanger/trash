@@ -1,7 +1,6 @@
 # markdown knowledgebase
 
-## how to use:
-
+## to use:
 * `npm i`
 * `cd content`
 * `touch foo.md`
@@ -11,8 +10,7 @@
 
 --------
 
-## shiz this uses:
-
+## this uses:
 * [markdown-it](https://github.com/markdown-it/markdown-it)
 * [markdown-it-checkbox](https://github.com/mcecot/markdown-it-checkbox)
 * [markdown-it-toc](https://github.com/samchrisinger/markdown-it-toc)
@@ -28,7 +26,6 @@
 --------
 
 ## credits:
-
 * Mihai Ionut Vilcu (see LICENSE.md)
 * gh:zacanger
 
