@@ -3,7 +3,7 @@ var express      = require('express')
   , config       = require('./config')
   , hoganExpress = require('hogan-express')
   , path         = require('path')
-  , myDocs       = require('../app/my-docs')
+  , mdkb         = require('../app/mdkb')
 
 app.use('/assets', express.static('public/assets'))
 app.use('/content/UPLOADS', express.static('content/UPLOADS'))
@@ -21,11 +21,11 @@ app.engine('html', hoganExpress)
 app.get('*', function(req, res){
   var page
   if (req.query.search) { // do the search logic
-    page = myDocs.searchPages(req.query.search)
+    page = mdkb.searchPages(req.query.search)
   } else if (req.params[0]) { // render docs page
-    page = myDocs.getPage(req.params[0])
+    page = mdkb.getPage(req.params[0])
   } else { // index page
-    page = myDocs.getHomePage()
+    page = mdkb.getHomePage()
   }
   res.render(page.template, page)
 })

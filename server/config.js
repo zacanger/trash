@@ -5,8 +5,8 @@ module.exports = {
 , excerpt_length : 400
 , readme         : __dirname + '/../README.md'
 , markdown       : {
-    html        : true
-  , linkify     : true
+    linkify     : true
+  , breaks      : true
   , typographer : true
   }
 }

@@ -1,6 +1,4 @@
-*$py.class
 **.key
-**/api.key
 *.7z
 *.bz2
 *.egg
@@ -17,14 +15,9 @@
 *.so.*
 *.swp
 *.tar
-*.zedstate
 *~
 .completer.hist
-.config/nvim/bundle/*
-.config/nvim/session/*
 /.build/
-/bin/x
-/bin/x/**
 TAGS
 __pycache__/
 _build/
@@ -36,5 +29,4 @@ data
 db
 node_modules
 tags
-x/**
 
