@@ -37,16 +37,16 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 int maxY,maxX;
 int helpBarUpdate=0;
 
-char *version = "0.8.5";
+char *version = "0.9.0";
 
 /* Preferences and default values */
-int maxUndoLength = 500;
+int maxUndoLength = 1000;
 char undoEnabled=1;
 char autoIndent=1;
 int numberOfBuffers = 10;
 char bottomRowToggle = 1;
 char bufferQuit = 0;
-char tabWidth = 8;
+char tabWidth = 2;
 char smartCursor = 1;
 char optimize = 0;
 
@@ -61,7 +61,7 @@ int currentBufferNum = 0;
 int main(int argc, char *argv[])
 {
   int x,y;
-  int keypress; 
+  int keypress;
 
   signal(2,sigcatch);
 
@@ -76,9 +76,9 @@ int main(int argc, char *argv[])
   Fn_ptr[9] = toggleBottomRow;
   loadSettings();
 
-  if(numberOfBuffers > 100) numberOfBuffers = 100;  
+  if(numberOfBuffers > 100) numberOfBuffers = 100;
   buffers = (struct buffer *)malloc(numberOfBuffers * sizeof(struct buffer));
-  
+
   //Set up initial buffers
   for(x=0;x<numberOfBuffers;x++)
   {
@@ -113,7 +113,7 @@ int main(int argc, char *argv[])
   }
 
   currentBuffer = &buffers[0];
- 
+
   initscr();
   cbreak();
   nonl();
@@ -130,7 +130,7 @@ int main(int argc, char *argv[])
 
   helpBar();
   showRow();
-  
+
   while(1)
   {
     move(currentBuffer->cursor.cursY,currentBuffer->cursor.cursX);
@@ -165,8 +165,8 @@ void tryQuit()
   move(maxY-1,26);
   t = getch();
   mvaddch(maxY-1,26,' ');
-  if(t=='y' || t=='Y') { 
-    save(); 
+  if(t=='y' || t=='Y') {
+    save();
     t = 'n';
   }
   if(t=='n' || t=='N') {
@@ -186,7 +186,7 @@ void quit(char *text)
     if(t==currentBufferNum) continue;
     if(buffers[t].updated) {
       displayBottomRow();
-      mvaddstr(maxY-1,0,"One or more buffers have not been saved. Quit? y/[N]");
+      mvaddstr(maxY-1,0,"there are unsaved buffers. quit anyway? y/[N]");
       t = getch();
       if(t=='y' || t=='Y') {
         break;
@@ -196,7 +196,7 @@ void quit(char *text)
         return;
       }
     }
-  } 
+  }
 
   for(t=0;t<maxX;t++) {
     mvaddch(maxY-1,t,' ');
@@ -204,23 +204,23 @@ void quit(char *text)
   nodelay(stdscr, TRUE);
   getch();
   endwin();
-  
+
   if(undoEnabled) {
     for(t=0;t<numberOfBuffers;t++) {
       free(buffers[t].undoMoves);
     }
   }
-  
+
   for(t=0;t<numberOfBuffers;t++) {
     l = buffers[t].head;
-    while(l != buffers[t].tail) { 
-      l=l->next; 
-      if(l->prev->data) free(l->prev->data); 
-      free(l->prev); 
-    }  
+    while(l != buffers[t].tail) {
+      l=l->next;
+      if(l->prev->data) free(l->prev->data);
+      free(l->prev);
+    }
     free(buffers[t].tail);
   }
-  
+
   free(buffers);
   free(lastDisplayed);
   printf("%s",text);
@@ -237,10 +237,10 @@ void doArguments(int argc, char *argv[])
       /* Specifying a file name */
       if(!firstFile) {
         goToNextBuffer();
-      }      
+      }
       load(argv[x]);
       firstFile = 0;
-    } else { 
+    } else {
       /* Option */
       if(!strcmp(argv[x],"--help")) {
         displayHelp();
@@ -252,14 +252,14 @@ void doArguments(int argc, char *argv[])
         /* Mistyped something */
         displayHelp();
       }
-    }    
+    }
   }
-  
+
   /* Go to first buffer */
   while (currentBuffer != &buffers[0]) {
     goToPrevBuffer();
   }
-  
+
   displayScreen();
 }
 
@@ -307,12 +307,12 @@ void displayHelp()
     else if(Fn_ptr[t] == tryCompile)
       printf("Compile and print error messages\n");
     else if(Fn_ptr[t] == toggleBottomRow)
-      printf("Toggle help bar\n");  
+      printf("Toggle help bar\n");
     else if(Fn_ptr[t] == goToNextBuffer)
       printf("Switch to next text buffer\n");
     else if(Fn_ptr[t] == goToPrevBuffer)
-      printf("Switch to previous text buffer\n");  
-    
+      printf("Switch to previous text buffer\n");
+
   }
   printf("  Ctrl-C : Quit (won't ask for save)\n");
   printf("  Ctrl-K : Erase to end of line\n");
@@ -351,7 +351,7 @@ void loadSettings()
   while(!feof(fp)) {
     fgets(s, 200, fp);
     if(s[0]=='#') continue;
-    r = strtok(s," =");    
+    r = strtok(s," =");
     c = strtok(NULL," =");
     if(c==NULL) continue;
     l = atoi(c);
@@ -436,7 +436,7 @@ void loadSettings()
         Fn_ptr[l] = goToNextBuffer;
         FnGotten[l] = 13;
       }
-      else 
+      else
       {
         Fn_ptr[l] = nothing;
         FnGotten[l] = 0;
@@ -491,7 +491,7 @@ void writeRC(FILE *fp)
   fprintf(fp,"# want to change it to 1.\n");
   fprintf(fp,"#0 = Optimized for memory efficiency (uses quicksort)\n");
   fprintf(fp,"#1 = Optimized for cpu efficiency (uses radix sort)\n");
-  fprintf(fp,"optimize = %i\n\n",optimize);  
+  fprintf(fp,"optimize = %i\n\n",optimize);
   fprintf(fp,"#Function Key definitions:\n");
   fprintf(fp,"#  SEARCH : Search the file for a string\n");
   fprintf(fp,"#  REPLACE : Find and replace strings\n");
@@ -556,16 +556,16 @@ char positionDown(struct position *p) {
   Returns 0 upon normal movement
   Returns 1 if the position stayed on the same line (end of file)
   */
-  
+
   int tempX = p->cursX;
   char temp = 0;
-  
+
   while(!temp) {
-    /* 
+    /*
     Move the cursor right until it wraps to the next line.
     If it hits the end of the file, return 1 instead.
     */
-    
+
     temp = moveRight(p);
     if(temp==1) {
       return 1;
@@ -573,13 +573,13 @@ char positionDown(struct position *p) {
   }
   while(1) {
     /* Move the cursor right until it hits the correct location. */
-    
+
     if(p->cursX >= tempX) {
       return 0;
     } else if(p->offset == p->l->length - 1) {
       return 0;
     }
-    
+
     temp = moveRight(p);
     if(temp == 1) {
       return 0;
@@ -670,7 +670,7 @@ void determineCursX(struct position *p)
 {
   struct position temp;
   unsigned char c;
-  
+
   temp.l = p->l;
   temp.offset = 0;
   temp.cursX = 0;
@@ -678,14 +678,14 @@ void determineCursX(struct position *p)
   {
     c = temp.l->data[temp.offset];
     temp.offset++;
-    if(c!=9)    
+    if(c!=9)
       temp.cursX++;
     else
-      temp.cursX+= tabWidth - (temp.cursX % tabWidth); 
+      temp.cursX+= tabWidth - (temp.cursX % tabWidth);
     if(temp.cursX >= maxX) temp.cursX=0;
-  }  
+  }
   p->cursX = temp.cursX;
-} 
+}
 
 void logMsg(char *msg) {
   char text[256];
@@ -703,7 +703,7 @@ void radixSort(char **strings, int number) {
   int radix = 0;
   int t;
   int i,j;
-  
+
   for(i=0; i<256; i++) {
     buckets[i] = (char **)malloc(0*sizeof(char *));
   }
@@ -712,14 +712,14 @@ void radixSort(char **strings, int number) {
     for(t=0; t<256; t++) {
       numberInBuckets[t] = 0;
     }
-    
+
     for(t=0; t<number; t++) {
       int bucket = (int)((unsigned char)strings[t][radix]);
       buckets[bucket] = realloc(buckets[bucket], (numberInBuckets[bucket] + 1)*sizeof(char *));
       buckets[bucket][numberInBuckets[bucket]] = strings[t];
       numberInBuckets[bucket]++;
     }
-    
+
     t = 0;
     for(i=0; i<256; i++) {
       for(j=0; j<numberInBuckets[i]; j++) {
@@ -728,7 +728,7 @@ void radixSort(char **strings, int number) {
       }
     }
   }
-  
+
   for(i=0; i<256; i++) {
     free(buckets[i]);
   }
@@ -740,11 +740,11 @@ void randomizedQuickSort(char **strings, int low, int high) {
   int oldLow = low;
   int oldHigh = high;
   char *temp;
-  
+
   if (low >= high) { //Zero or one element
     return;
   }
-  
+
   if (high - low == 1) { //Only two elements
     if (strcmp(strings[high], strings[low]) < 0) {
       temp = strings[high];
@@ -753,7 +753,7 @@ void randomizedQuickSort(char **strings, int low, int high) {
     }
     return;
   }
-  
+
   //Swap axis element with last element
   axis = (rand() % (high - low + 1)) + low;
   temp = strings[axis];
@@ -761,20 +761,20 @@ void randomizedQuickSort(char **strings, int low, int high) {
   strings[high] = temp;
   axis = high;
   high--;
-  
+
   while (1) {
     while (strcmp(strings[low], strings[axis]) <= 0 && low < high) {
       low++;
     }
-    
+
     while (strcmp(strings[high], strings[axis]) >= 0 && low < high) {
       high--;
     }
-    
+
     if (low >= high) {
       break;
     }
-    
+
     temp = strings[low];
     strings[low] = strings[high];
     strings[high] = temp;
@@ -782,11 +782,11 @@ void randomizedQuickSort(char **strings, int low, int high) {
 
   if (strcmp(strings[low], strings[axis]) < 0) {
     low++;
-  }  
+  }
   temp = strings[axis];
   strings[axis] = strings[low];
   strings[low] = temp;
-  
+
   randomizedQuickSort(strings, oldLow, low-1);
   randomizedQuickSort(strings, low+1, oldHigh);
 }
