@@ -1,7 +1,6 @@
 'use strict'
 
-const
-  gulp     = require('gulp')
+const gulp = require('gulp')
 , stylus   = require('gulp-stylus')
 , concat   = require('gulp-concat')
 , uglify   = require('gulp-uglify')
@@ -10,7 +9,7 @@ const
 , annotate = require('gulp-ng-annotate')
 
 gulp.task('server', () => {
-  gulp.src(['./src', './dist'])
+  gulp.src('./dist')
   .pipe(server({
     livereload : true
   , open       : true
@@ -37,7 +36,6 @@ gulp.task('js', () => {
 gulp.task('watch', () => {
   gulp.watch('./src/styles/*.styl', ['stylus'])
   gulp.watch('./src/scripts/*.js', ['js'])
-  gulp.watch('./dist/*.html', ['html'])
 })
 
 gulp.task('default', ['stylus', 'js', 'server', 'watch'])

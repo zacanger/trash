@@ -1,5 +1,5 @@
 angular.module('gulpSample')
-.factory('homeService', function($http){
-	return {
-	}
-})
+  .factory('homeService', function ($http) {
+    return {
+    }
+  })
