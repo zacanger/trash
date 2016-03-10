@@ -6,9 +6,8 @@ const
 , concat   = require('gulp-concat')
 , uglify   = require('gulp-uglify')
 , server   = require('gulp-webserver')
-, ugcss    = require('gulp-uglifycss')
+, uglicss  = require('gulp-uglifycss')
 , annotate = require('gulp-ng-annotate')
-, tasklist = require('gulp-task-listing')
 
 gulp.task('server', () => {
   gulp.src(['./src', './dist'])
@@ -19,14 +18,10 @@ gulp.task('server', () => {
   }))
 })
 
-gulp.task('html', () => {
-  gulp.src('./dist/*.html')
-})
-
 gulp.task('stylus', () => {
   gulp.src('./src/styles/*.styl')
   .pipe(stylus())
-  .pipe(ugcss())
+  .pipe(uglicss())
   .pipe(concat('css.min.css'))
   .pipe(gulp.dest('./dist'))
 })
@@ -45,7 +40,5 @@ gulp.task('watch', () => {
   gulp.watch('./dist/*.html', ['html'])
 })
 
-gulp.task('help', tasklist)
-
-gulp.task('default', ['html', 'stylus', 'js', 'server', 'watch'])
+gulp.task('default', ['stylus', 'js', 'server', 'watch'])
 
