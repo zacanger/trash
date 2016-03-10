@@ -26,7 +26,7 @@ module.exports = {
   },
 
   getId(req, res){
-    user.findById(req.params.id).exec((err, result) => {
+    User.findById(req.params.id).exec((err, result) => {
       if(err){
         res.send(err)
       } else {

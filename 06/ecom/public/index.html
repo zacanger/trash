@@ -1,18 +1,24 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
-  <meta name="author" content="your name">
-  <title>ui-router thing</title>
-  <link rel="stylesheet" type="text/css" href="./css.css">
+  <title>eCommerce</title>
+  <link rel="stylesheet" type="text/css" href="./style.css">
 </head>
-<body ng-app="app">
+<body ng-app="eCommerceApp">
+
   <ui-view></ui-view>
-  <script type="text/javascript" src="https://code.angularjs.org/1.5.0-beta.0/angular.min.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.18/angular-ui-router.min.js"></script>
-  <script type="text/javascript" src="./app.js"></script>
-  <script type="text/javascript" src="./ctrl.js"></script>
-  <script type="text/javascript" src="./svc.js"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.js"></script>
+  <script src="app.js"></script>
+  <script src="controllers/mainCtrl.js"></script>
+  <script src="controllers/adminCtrl.js"></script>
+  <script src="controllers/loginCtrl.js"></script>
+  <script src="services/prodService.js"></script>
+  <script src="services/authService.js"></script>
+
 </body>
 </html>
 
