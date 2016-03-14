@@ -1,9 +1,12 @@
-var uMVC = {}
-uMVC.Model = function(){this._observers = []}
-uMVC.Model.prototype.observe = function(observer){
+var tinyMVC = {}
+
+tinyMVC.Model = function(){this._observers = []}
+
+tinyMVC.Model.prototype.observe = function(observer){
   this._observers.push(observer)
 }
-uMVC.Model.prototype.unobserve = function(observer){
+
+tinyMVC.Model.prototype.unobserve = function(observer){
   for(var i = 0, ilen = this._observers.length; i < ilen; i++){
     if(this._observers[i] === observer){
       this._observers.splice(i, 1)
@@ -11,33 +14,42 @@ uMVC.Model.prototype.unobserve = function(observer){
     }
   }
 }
-uMVC.Model.prototype.notify = function(data){
+
+tinyMVC.Model.prototype.notify = function(data){
   var observers = this._observers.slice(0)
   for(var i = 0, ilen = observers.length; i < ilen; i++){
     observers[i].update(data)
   }
 }
-uMVC.View = function(){this._subViews = []}
-uMVC.View.prototype.update = function(){}
-uMVC.View.prototype.getModel = function(){
+
+tinyMVC.View = function(){this._subViews = []}
+
+tinyMVC.View.prototype.update = function(){}
+
+tinyMVC.View.prototype.getModel = function(){
   return this._model
 }
-uMVC.View.prototype.setModel = function(model){
+
+tinyMVC.View.prototype.setModel = function(model){
   this._setModelAndController(model, this._controller)
 }
-uMVC.View.prototype.getDefaultController = function(){
-  return new uMVC.Controller()
+
+tinyMVC.View.prototype.getDefaultController = function(){
+  return new tinyMVC.Controller()
 }
-uMVC.View.prototype.getController = function(){
+
+tinyMVC.View.prototype.getController = function(){
   if(!this._controller){
     this.setController(this.getDefaultController())
   }
   return this._controller
 }
-uMVC.View.prototype.setController = function(controller){
+
+tinyMVC.View.prototype.setController = function(controller){
   this._setModelAndController(this._model, controller)
 }
-uMVC.View.prototype._setModelAndController = function(model, controller){
+
+tinyMVC.View.prototype._setModelAndController = function(model, controller){
   if(this._model !== model){
     if(this._model){
       this._model.unobserve(this)
@@ -53,10 +65,12 @@ uMVC.View.prototype._setModelAndController = function(model, controller){
   }
   this._controller = controller
 }
-uMVC.View.prototype.getSubViews = function(){
+
+tinyMVC.View.prototype.getSubViews = function(){
   return this._subViews.slice(0)
 }
-uMVC.View.prototype.addSubView = function(subView){
+
+tinyMVC.View.prototype.addSubView = function(subView){
   var previousSuperView = subView.getSuperView()
   if(previousSuperView){
     previousSuperView.removeSubView(subView)
@@ -64,7 +78,8 @@ uMVC.View.prototype.addSubView = function(subView){
   this._subViews.push(subView)
   subView.setSuperView(this)
 }
-uMVC.View.prototype.removeSubView = function(subView){
+
+tinyMVC.View.prototype.removeSubView = function(subView){
   for(var i = 0, ilen = this._subViews.length; i < ilen; i++){
     if(this._subViews[i] === subView){
       this._subViews[i].setSuperView(null)
@@ -73,13 +88,16 @@ uMVC.View.prototype.removeSubView = function(subView){
     }
   }
 }
-uMVC.View.prototype.setSuperView = function(superView){
+
+tinyMVC.View.prototype.setSuperView = function(superView){
   this._superView = superView
 }
-uMVC.View.prototype.getSuperView = function(){
+
+tinyMVC.View.prototype.getSuperView = function(){
   return this._superView
 }
-uMVC.View.prototype.destroy = function(){
+
+tinyMVC.View.prototype.destroy = function(){
   if(this._model){
     this._model.unobserve(this)
   }
@@ -87,16 +105,21 @@ uMVC.View.prototype.destroy = function(){
     this._subViews[i].destroy()
   }
 }
-uMVC.Controller = function(){}
-uMVC.Controller.prototype.getModel = function(){
+
+tinyMVC.Controller = function(){}
+
+tinyMVC.Controller.prototype.getModel = function(){
   return this._model
 }
-uMVC.Controller.prototype.setModel = function(model){
+
+tinyMVC.Controller.prototype.setModel = function(model){
   this._model = model
 }
-uMVC.Controller.prototype.getView = function(){
+
+tinyMVC.Controller.prototype.getView = function(){
   return this._view
 }
-uMVC.Controller.prototype.setView = function(view){
+
+tinyMVC.Controller.prototype.setView = function(view){
   this._view = view
 }
