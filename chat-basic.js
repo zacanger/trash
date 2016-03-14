@@ -1,23 +1,24 @@
 // tcp chat server
+// to connect: `nc localhost 7777`
 
-var net     = require('net')
-  , sockets = []
-  , port    = 7777
-
-var server = net.createServer(function(socket){
+const
+  net     = require('net')
+, sockets = []
+, port    = 7777
+, server = net.createServer((socket) => {
   socket.write('welcome to the chat\n')
   sockets.push(socket)
 
-  socket.on('data',function(data){
-    sockets.forEach(function(s){
+  socket.on('data',(data) => {
+    sockets.forEach((s) => {
       if(s != socket){
         s.write(data)
       }
     })
   })
 
-  socket.on('end',function(){
-    sockets.forEach(function(s,i){
+  socket.on('end',() => {
+    sockets.forEach((s,i) => {
       if(s == socket){
         sockets.slice(i,1)
       }
