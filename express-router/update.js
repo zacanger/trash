@@ -1,4 +1,5 @@
 // unfinished. will finish later. mebbe.
+// probably not, though. this is enough for you to get the idea.
 
 const router = require('express').Router()
 
