@@ -20,12 +20,12 @@ const
 // here are some users. obviously these would be pulled from a db or something.
 var users = [
   {
-    'id' : 001
+    'id'       : 101
   , 'username' : 'zac'
   , 'password' : 'password'
   }
 , {
-    'id'    : 002
+    'id'    : 202
   , 'email' : 'someone@something.whatever'
   , 'name'  : 'you'
   , 'token' : 'lsadkjfalj48l4ajk'
@@ -103,4 +103,3 @@ app
 
 console.log('serving on ' + port)
 console.log(users)
-
