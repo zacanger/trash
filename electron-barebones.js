@@ -29,4 +29,3 @@ app.on('ready', function(){
     mainWindow = null // destroy from array if stored multiple windows
   })
 })
-
