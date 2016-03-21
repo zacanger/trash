@@ -15,6 +15,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
+
 #include "buffers.h"
 #include "screenIO.h"
 #include <string.h>
@@ -30,10 +31,11 @@ extern int currentBufferNum;
 void keyHit(int keypress, char undoNow);
 void quit(char *text);
 
-void goToNextBuffer()
-{
+void goToNextBuffer() {
   currentBufferNum++;
-  if(currentBufferNum == numberOfBuffers) currentBufferNum = 0;
+  if (currentBufferNum == numberOfBuffers) {
+    currentBufferNum = 0;
+  }
   currentBuffer = &buffers[currentBufferNum];
   currentBuffer->lineUpdate = currentBuffer->topLine;
   currentBuffer->lineUpdate.lineNum = 0;
@@ -41,10 +43,11 @@ void goToNextBuffer()
   helpBarUpdate=1;
 }
 
-void goToPrevBuffer()
-{
+void goToPrevBuffer() {
   currentBufferNum--;
-  if(currentBufferNum == -1) currentBufferNum = numberOfBuffers - 1;
+  if (currentBufferNum == -1) {
+    currentBufferNum = numberOfBuffers - 1;
+  }
   currentBuffer = &buffers[currentBufferNum];
   currentBuffer->lineUpdate = currentBuffer->topLine;
   currentBuffer->lineUpdate.lineNum = 0;
@@ -52,27 +55,30 @@ void goToPrevBuffer()
   helpBarUpdate=1;
 }
 
-void closeBuffer()
-{
+void closeBuffer() {
   struct buffer *b = currentBuffer;
   char tempSmartCursor = smartCursor;
   smartCursor = 0;
 
-  //Go to the very beginning of the buffer
-  while(currentBuffer->cursor.l!=currentBuffer->head->next || currentBuffer->cursor.offset!=0)
-    keyHit(259, 0); //Key_Up
+  // go to the very beginning of the buffer
+  while(currentBuffer->cursor.l!=currentBuffer->head->next || currentBuffer->cursor.offset!=0) {
+    keyHit(259, 0); // key_Up
+  }
 
-  //Wipe out lines
-  while(currentBuffer->numLines)
-    keyHit(21, 0); //Ctrl-U
-  keyHit(21, 0); //Last remaining line
+  // wipe out lines
+  while (currentBuffer->numLines) {
+    keyHit(21, 0); // Ctrl-U
+  }
+  keyHit(21, 0); // last remaining line
 
   currentBuffer->updated = 0;
   strcpy(currentBuffer->fname, "");
-  
-  while(strcmp(currentBuffer->fname, "") == 0 && !currentBuffer->updated) {
+
+  while (strcmp(currentBuffer->fname, "") == 0 && !currentBuffer->updated) {
     goToPrevBuffer();
-    if(currentBuffer == b) quit("");
+    if (currentBuffer == b) {
+      quit("");
+    }
   }
   smartCursor = tempSmartCursor;
   //helpBarUpdate = 1;

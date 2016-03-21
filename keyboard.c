@@ -15,6 +15,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
+
 #include <ncurses.h>
 #include <stdlib.h>
 #include <string.h>
@@ -33,13 +34,13 @@ void keyHit(int keypress, char undoNow)
   unsigned char *ptr;
   unsigned char **data;
 
-  if(keypress==27) { 
-    ctrl=3; 
-    return; 
+  if(keypress==27) {
+    ctrl=3;
+    return;
   }
-  if(keypress==79 && ctrl==3) { 
-    ctrl--; 
-    return; 
+  if(keypress==79 && ctrl==3) {
+    ctrl--;
+    return;
   }
   if(keypress==99 && ctrl==2) {
     currentBuffer->lineUpdate.offset = -1;
@@ -75,13 +76,13 @@ void keyHit(int keypress, char undoNow)
     moveRight(&currentBuffer->cursor);
     return;
   }
-  if(keypress==91 && ctrl==3) { 
-    ctrl--; 
-    return; 
+  if(keypress==91 && ctrl==3) {
+    ctrl--;
+    return;
   }
-  if(keypress==55 && ctrl==2) { 
-    ctrl=1; 
-    return; 
+  if(keypress==55 && ctrl==2) {
+    ctrl=1;
+    return;
   }
   else if((keypress==94 && ctrl==1) || keypress==391)
   {
@@ -119,13 +120,13 @@ void keyHit(int keypress, char undoNow)
       {
         struct line *tempLine = currentBuffer->cursor.l;
         t = currentBuffer->cursor.offset;
-        
+
         /* Reset to top left */
         keyHit(262, 0); /* Home key */
         while (currentBuffer->cursor.cursY > 0) {
           keyHit(259, 0); /* Up key */
         }
-        
+
         getmaxyx(stdscr,maxY,maxX);
         free(lastDisplayed);
         lastDisplayed = (int *)malloc(maxY*sizeof(int));
@@ -143,10 +144,10 @@ void keyHit(int keypress, char undoNow)
         currentBuffer->lineUpdate = currentBuffer->topLine;
         currentBuffer->lineUpdate.lineNum = 0;
         currentBuffer->keepGoing = 1;
-        
+
         /* Tell the display to refresh the whole screen */
         displayWholeScreen = 1;
-        
+
         break;
       }
 
@@ -215,7 +216,7 @@ void keyHit(int keypress, char undoNow)
           moveRight(&currentBuffer->cursor);
         }
       }
-      
+
       break;
 
     case 339: //PgUp
@@ -397,7 +398,7 @@ void listChoice(int n, char **choices, char *answer, char *message)
   newName[0] = '\0';
 
   while(1)
-  {  
+  {
     for(y=0;y<maxY;y++)
       for(x=0;x<maxX;x++)
         mvaddch(y,x,' ');

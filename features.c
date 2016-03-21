@@ -15,6 +15,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
+
 #include <stdlib.h>
 #include <string.h>
 #include <ncurses.h>
@@ -27,45 +28,50 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "buffers.h"
 #include "move.h"
 
-void search()
-{
+void search() {
   unsigned char *t;
   int offset;
   struct line *l = *currentBuffer->currentLine;
-  char down=1; //Whether or not the found word is below the current position
+  char down=1; // whether or not the found word is below the current position
   char count=2;
 
   if (currentBuffer->head->next->next == currentBuffer->tail && currentBuffer->head->next->length == 1) {
-    //No characters in the buffer
-    return;
+    return; // no characters in the buffer
   }
-  
+
   if (helpBarUpdate==0 || strcmp(currentBuffer->searchString,"")==0) {
     displayBottomRow();
     mvaddstr(maxY-1,0,"Search for what word?");
     mvgetstr(maxY-1,22,currentBuffer->searchString);
   }
+
   if (l == currentBuffer->tail->prev && currentBuffer->cursor.offset >= l->length - 2) {
     l = currentBuffer->head->next;
     offset = 0;
     down = 0;
   }
+
   else {
     offset = currentBuffer->cursor.offset + 1;
   }
+
   while (1) {
     t = (unsigned char *)strstr(l->data + offset, currentBuffer->searchString);
     if (t!=NULL) break;
     offset = 0;
     l = l->next;
-    if (l==((*currentBuffer->currentLine)->next)) count--;
-    if (l==currentBuffer->tail) { 
-      l = currentBuffer->head->next; 
-      down=0; 
+    if (l==((*currentBuffer->currentLine)->next)) {
+      count--;
     }
-    if (count==0) break;
+    if (l==currentBuffer->tail) {
+      l = currentBuffer->head->next;
+      down=0;
+    }
+    if (count==0) {
+      break;
+    }
   }
-  
+
   if (t==NULL) {
     displayBottomRow();
     mvaddstr(maxY-1,0,"String not found.");
@@ -73,35 +79,40 @@ void search()
     strcpy(currentBuffer->searchString,"");
     return;
   }
-  
+
   offset = t - l->data;
-  
+
   if (down) {
-    while(currentBuffer->cursor.l != l)
+    while (currentBuffer->cursor.l != l) {
       moveDown(&currentBuffer->cursor);
-  }
-  else {
-    while(currentBuffer->cursor.l != l)
-      moveUp(&currentBuffer->cursor);
-  }
-  
-  while(currentBuffer->cursor.offset < offset) {
-    if (moveRight(&currentBuffer->cursor) == 1) break;
+    }
   }
 
-  while(currentBuffer->cursor.offset > offset) {
-    if (moveLeft(&currentBuffer->cursor) == 1) break;
+  else {
+    while (currentBuffer->cursor.l != l) {
+      moveUp(&currentBuffer->cursor);
+    }
+  }
+
+  while (currentBuffer->cursor.offset < offset) {
+    if (moveRight(&currentBuffer->cursor) == 1) {
+      break;
+    }
+  }
+
+  while (currentBuffer->cursor.offset > offset) {
+    if (moveLeft(&currentBuffer->cursor) == 1) {
+      break;
+    }
   }
 
   currentBuffer->lineUpdate = currentBuffer->topLine;
   currentBuffer->lineUpdate.lineNum = 0;
   currentBuffer->keepGoing = 1;
-  
   helpBarUpdate = 2;
 }
 
-void replace()
-{
+void replace() {
   static char replaceString[80];
   static char findString[80];
   unsigned char *t;
@@ -110,8 +121,7 @@ void replace()
   char down=1; //Whether or not the found word is below the current position
   char count=2;
 
-  if(helpBarUpdate==0 || !strcmp(findString,"") || !strcmp(replaceString,""))
-  {
+  if (helpBarUpdate==0 || !strcmp(findString,"") || !strcmp(replaceString,"")) {
     displayBottomRow();
     mvaddstr(maxY-1, 0, "Replace what?");
     mvgetstr(maxY-1, 14, findString);
@@ -119,20 +129,26 @@ void replace()
     mvaddstr(maxY-1, 0, "Replace with what?");
     mvgetstr(maxY-1, 19, replaceString);
   }
+
   offset = currentBuffer->cursor.offset + 1;
-  while(1)
-  {
+
+  while (1) {
     t = (unsigned char *)strstr(l->data + offset, findString);
-    if(t!=NULL) break;
+    if (t!=NULL) break;
     offset = 0;
     l = l->next;
-    if(l==((*currentBuffer->currentLine)->next)) count--;
-    if(l==currentBuffer->tail) { l = currentBuffer->head->next; down=0; }
-    if(count==0) break;
+    if (l==((*currentBuffer->currentLine)->next)) {
+      count--;
+    }
+    if (l==currentBuffer->tail) {
+      l = currentBuffer->head->next; down=0;
+    }
+    if (count==0) {
+      break;
+    }
   }
 
-  if(t==NULL)
-  {
+  if (t==NULL) {
     displayBottomRow();
     mvaddstr(maxY-1,0,"String not found.");
     helpBarUpdate=2;
@@ -143,59 +159,69 @@ void replace()
   offset = t - l->data;
 
   if (down) {
-    while(currentBuffer->cursor.l != l)
+    while(currentBuffer->cursor.l != l) {
       moveDown(&currentBuffer->cursor);
+    }
   }
+
   else {
-    while(currentBuffer->cursor.l != l)
+    while(currentBuffer->cursor.l != l) {
       moveUp(&currentBuffer->cursor);
+    }
   }
 
   while(currentBuffer->cursor.offset < offset) {
-    if (moveRight(&currentBuffer->cursor) == 1) break;
+    if (moveRight(&currentBuffer->cursor) == 1) {
+      break;
+    }
   }
 
   while(currentBuffer->cursor.offset > offset) {
-    if (moveLeft(&currentBuffer->cursor) == 1) break;
+    if (moveLeft(&currentBuffer->cursor) == 1) {
+      break;
+    }
   }
 
-  //Delete the findstring
-  for(offset = strlen(findString);offset;offset--)
-    keyHit(330, 0);
+  for (offset = strlen(findString);offset;offset--) {
+    keyHit(330, 0); // delete findstring
+  }
 
-  //Add the replacestring
-  for(offset=0;offset<strlen(replaceString);offset++)
-    keyHit(replaceString[offset], 0);
+  for (offset=0;offset<strlen(replaceString);offset++) {
+    keyHit(replaceString[offset], 0); // add replacestring
+  }
 
   currentBuffer->lineUpdate = currentBuffer->topLine;
   currentBuffer->lineUpdate.lineNum = 0;
   currentBuffer->keepGoing = 1;
-
   helpBarUpdate = 2;
 }
 
-void tryCompile()
-{
+void tryCompile() {
   FILE *fp;
   displayBottomRow();
   mvaddstr(maxY-1,0,"Running Makefile...");
   ungetch(' ');
   getch();
-  if(strcmp(currentBuffer->fname, "")) save();
+
+  if (strcmp(currentBuffer->fname, "")) {
+    save();
+  }
+
   system("make 2>dav.err >/dev/null");
   fp = fopen("dav.err","r");
   fgetc(fp);
-  if(feof(fp))
-  {
+
+  if (feof(fp)) {
     displayBottomRow();
     mvaddstr(maxY-1,0,"Compile successful.");
     helpBarUpdate = 2;
   }
-  else
-  {
+
+  else {
     displayBottomRow();
-    while(currentBuffer->head->next->next != currentBuffer->tail || currentBuffer->head->next->length!=1)
+    while(currentBuffer->head->next->next != currentBuffer->tail || currentBuffer->head->next->length!=1) {
       goToNextBuffer();
+    }
     load("dav.err");
     currentBuffer->lineUpdate = currentBuffer->cursor;
     currentBuffer->lineUpdate.lineNum = 0;
@@ -206,28 +232,26 @@ void tryCompile()
   system("rm dav.err");
 }
 
-void gotoLine(int line)
-{
-  while(currentBuffer->cursor.lineNum < line - 1) {
-    if(scrollDown()) {
+void gotoLine(int line) {
+  while (currentBuffer->cursor.lineNum < line - 1) {
+    if (scrollDown()) {
       break;
     }
   }
-  
+
   while (currentBuffer->cursor.lineNum < line - 1) {
     if (positionDown(&currentBuffer->cursor)) {
       break;
     }
   }
-  
+
   currentBuffer->lineUpdate = currentBuffer->topLine;
   currentBuffer->lineUpdate.lineNum = 0;
   currentBuffer->keepGoing = 1;
   displayScreen();
 }
 
-void toggleAutoIndent()
-{
+void toggleAutoIndent() {
   currentBuffer->lineUpdate.offset = -1;
   autoIndent = !autoIndent;
   displayBottomRow();
@@ -236,8 +260,7 @@ void toggleAutoIndent()
   helpBarUpdate = 2;
 }
 
-void toggleBottomRow()
-{
+void toggleBottomRow() {
   bottomRowToggle = !bottomRowToggle;
   helpBar();
   currentBuffer->lineUpdate.offset = -1;
