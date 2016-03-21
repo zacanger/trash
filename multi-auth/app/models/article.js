@@ -10,7 +10,7 @@ const
   title : {type : String, default : '', trim : true}
 , body  : {type : String, default : '', trim : true}
 , user  : {type : Schema.ObjectId, ref : 'User'}
-  comments : [{
+, comments : [{
     body      : {type : String, default : ''}
   , user      : {type : Schema.ObjectId, ref : 'User'}
   , createdAt : {type : Date, default : Date.now}

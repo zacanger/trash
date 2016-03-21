@@ -11,9 +11,9 @@ exports.index = wrap(function * (req, res) {
   , page     = (req.params.page > 0 ? req.params.page : 1) - 1
   , limit    = 30
   , options  = {
-  , limit    : limit
+    limit    : limit
   , page     : page
-    criteria : criteria
+  , criteria : criteria
   }
   , articles = yield Article.list(options)
   , count    = yield Article.count(criteria)
