@@ -2,12 +2,14 @@
 
 const wrap = require('co-express')
 
-exports.load = function (req, res, next, id) {
+exports.load = (req, res, next, id) => {
   req.comment = req.article.comments
-    .filter(comment => comment.id === id)
-    .reduce(c => c)
+  .filter(comment => comment.id === id)
+  .reduce(c => c)
 
-  if (!req.comment) return next(new Error('Comment not found'))
+  if (!req.comment) {
+    return next(new Error('Comment not found'))
+  }
   next()
 }
 
@@ -22,3 +24,4 @@ exports.destroy = wrap(function * (req, res) {
   req.flash('info', 'Removed comment')
   res.redirect('/articles/' + req.article.id)
 })
+

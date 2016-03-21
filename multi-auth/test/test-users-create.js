@@ -1,18 +1,15 @@
-'use strict';
+'use strict'
 
-/**
- * Module dependencies.
- */
+const
+  mongoose = require('mongoose')
+, test     = require('ava')
+, request  = require('supertest')
+, app      = require('../server')
+, cleanup  = require('./helper').cleanup
+, User     = mongoose.model('User')
 
-const mongoose = require('mongoose');
-const test = require('ava');
-const request = require('supertest');
-const app = require('../server');
-const cleanup = require('./helper').cleanup;
-const User = mongoose.model('User');
-
-test.before(cleanup);
-test.after(cleanup);
+test.before(cleanup)
+test.after(cleanup)
 
 test('no email - should respond with errors', t => {
   request(app)
@@ -25,12 +22,12 @@ test('no email - should respond with errors', t => {
   .expect(200)
   .expect(/Email cannot be blank/)
   .end(async err => {
-    const count = await User.count().exec();
-    t.ifError(err);
-    t.same(count, 0, 'count of users should be 0');
-    t.end();
-  });
-});
+    const count = await User.count().exec()
+    t.ifError(err)
+    t.same(count, 0, 'count of users should be 0')
+    t.end()
+  })
+})
 
 test('no name - should respond with errors', t => {
   request(app)
@@ -43,12 +40,12 @@ test('no name - should respond with errors', t => {
   .expect(200)
   .expect(/Name cannot be blank/)
   .end(async err => {
-    const count = await User.count().exec();
-    t.ifError(err);
-    t.same(count, 0, 'count of users should be 0');
-    t.end();
-  });
-});
+    const count = await User.count().exec()
+    t.ifError(err)
+    t.same(count, 0, 'count of users should be 0')
+    t.end()
+  })
+})
 
 test('valid signup - should redirect to /', t => {
   request(app)
@@ -61,11 +58,12 @@ test('valid signup - should redirect to /', t => {
   .expect('Location', /\//)
   .expect(302)
   .end(async err => {
-    const count = await User.count().exec();
-    const user = await User.findOne({ username: 'foobar' }).exec();
-    t.ifError(err);
-    t.same(count, 1, 'count of users should be 1');
-    t.same(user.email, 'foobar@example.com');
-    t.end();
-  });
-});
+    const count = await User.count().exec()
+    const user = await User.findOne({username : 'foobar'}).exec()
+    t.ifError(err)
+    t.same(count, 1, 'count of users should be 1')
+    t.same(user.email, 'foobar@example.com')
+    t.end()
+  })
+})
+

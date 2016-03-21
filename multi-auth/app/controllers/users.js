@@ -1,13 +1,16 @@
 'use strict'
 
-const mongoose = require('mongoose')
-const wrap = require('co-express')
-const User = mongoose.model('User')
+const
+  mongoose = require('mongoose')
+, wrap     = require('co-express')
+, User     = mongoose.model('User')
 
 exports.load = wrap(function * (req, res, next, _id) {
   const criteria = { _id}
   req.profile = yield User.load({ criteria})
-  if (!req.profile) return next(new Error('no user!'))
+  if (!req.profile) {
+    return next(new Error('no user!'))
+  }
   next()
 })
 
@@ -16,37 +19,39 @@ exports.create = wrap(function * (req, res) {
   user.provider = 'local'
   yield user.save()
   req.logIn(user, err => {
-    if (err) req.flash('info', 'sorry!')
+    if (err) {
+      req.flash('info', 'sorry!')
+    }
     return res.redirect('/')
   })
 })
 
-exports.show = function (req, res) {
+exports.show = (req, res) => {
   const user = req.profile
   res.render('users/show', {
-    title: user.name,
-    user: user
+    title : user.name
+  , user  : user
   })
 }
 
-exports.signin = function () {}
+exports.signin = () => {}
 
 exports.authCallback = login
 
-exports.login = function (req, res) {
+exports.login = (req, res) => {
   res.render('users/login', {
-    title: 'Login'
+    title : 'Login'
   })
 }
 
-exports.signup = function (req, res) {
+exports.signup = (req, res) => {
   res.render('users/signup', {
-    title: 'Sign up',
-    user: new User()
+    title : 'Sign up'
+  , user  : new User()
   })
 }
 
-exports.logout = function (req, res) {
+exports.logout = (req, res) => {
   req.logout()
   res.redirect('/login')
 }
@@ -54,9 +59,9 @@ exports.logout = function (req, res) {
 exports.session = login
 
 function login (req, res) {
-  const redirectTo = req.session.returnTo
-    ? req.session.returnTo
-    : '/'
+  const redirectTo = req.session.returnTo ?
+    req.session.returnTo : '/'
   delete req.session.returnTo
   res.redirect(redirectTo)
 }
+

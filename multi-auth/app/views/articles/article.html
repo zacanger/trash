@@ -9,7 +9,7 @@
   <span class="muted">{{ article.createdAt.toISOString()|date('M d, Y  h:i a') }}</span>
 
   {% if (article.user) %}
-    &nbsp; - &nbsp;
+    &nbsp; &mdash; &nbsp;
     <span>Author: </span>
     <a href="{{ '/users/' + article.user._id }}">
       {{ article.user.name || article.user.username }}
@@ -17,7 +17,7 @@
   {% endif %}
 
   {% if (article.tags) %}
-    &nbsp; - &nbsp;
+    &nbsp; &mdash; &nbsp;
     <span>Tags: </span>
     {% for tag in article.tags.split(',') %}
       <i class="muted fa fa-tag"></i>&nbsp;
@@ -26,3 +26,4 @@
     {% endfor %}
   {% endif %}
 </div>
+

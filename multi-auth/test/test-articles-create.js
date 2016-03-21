@@ -1,31 +1,27 @@
-'use strict';
+'use strict'
 
-/**
- * Module dependencies.
- */
-
-const mongoose = require('mongoose');
-const test = require('ava');
-const request = require('supertest');
-const app = require('../server');
-const cleanup = require('./helper').cleanup;
-const User = mongoose.model('User');
-const Article = mongoose.model('Article');
-const agent = request.agent(app);
+const
+  mongoose = require('mongoose')
+, test     = require('ava')
+, request  = require('supertest')
+, app      = require('../server')
+, cleanup  = require('./helper').cleanup
+, User     = mongoose.model('User')
+, Article  = mongoose.model('Article')
+, agent    = request.agent(app)
 
 const _user = {
-  email: 'foo@email.com',
-  name: 'Foo bar',
-  username: 'foobar',
-  password: 'foobar'
-};
+  email    : 'foo@email.com'
+  , name     : 'Foo bar'
+  , username : 'foobar'
+  , password : 'foobar'
+}
 
-
-test.before(cleanup);
+test.before(cleanup)
 test.before(async t => {
-  const user = new User(_user);
-  return await user.save(t.end);
-});
+  const user = new User(_user)
+  return await user.save(t.end)
+})
 
 test.beforeEach(t => {
   agent
@@ -34,11 +30,10 @@ test.beforeEach(t => {
   .field('password', _user.password)
   .expect('Location', '/')
   .expect('Content-Type', /text/)
-  .end(t.end);
-});
+  .end(t.end)
+})
 
-test.after(cleanup);
-
+test.after(cleanup)
 
 test('POST /articles - when not logged in - should redirect to /login', t => {
   request(app)
@@ -47,9 +42,8 @@ test('POST /articles - when not logged in - should redirect to /login', t => {
   .expect(302)
   .expect('Location', '/login')
   .expect(/Redirecting/)
-  .end(t.end);
-});
-
+  .end(t.end)
+})
 
 test('POST /articles - invalid form - should respond with error', t => {
   agent
@@ -60,13 +54,12 @@ test('POST /articles - invalid form - should respond with error', t => {
   .expect(422)
   .expect(/Article title cannot be blank/)
   .end(async err => {
-    const count = await Article.count().exec();
-    t.ifError(err);
-    t.same(count, 0, 'Count should be 0');
-    t.end();
-  });
-});
-
+    const count = await Article.count().exec()
+    t.ifError(err)
+    t.same(count, 0, 'Count should be 0')
+    t.end()
+  })
+})
 
 test('POST /articles - valid form - should redirect to the new article page', t => {
   agent
@@ -78,9 +71,10 @@ test('POST /articles - valid form - should redirect to the new article page', t 
   .expect(302)
   .expect(/Redirecting/)
   .end(async err => {
-    const count = await Article.count().exec();
-    t.ifError(err);
-    t.same(count, 1, 'Count should be 1');
-    t.end();
-  });
-});
+    const count = await Article.count().exec()
+    t.ifError(err)
+    t.same(count, 1, 'Count should be 1')
+    t.end()
+  })
+})
+

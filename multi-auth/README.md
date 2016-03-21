@@ -1,1 +1,4 @@
-test of the same old thing, but with multiple auth strategies
+much more advanced, messy kinda thing
+
+multiple auth strategies
+
