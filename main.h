@@ -15,6 +15,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
+
 #ifndef main_h
 #define main_h
 
@@ -44,14 +45,14 @@ void connectLines(struct line *baseline);
 void determineLineNum(struct position *p);
 void countTabs(struct line *l);
 void determineCursX(struct position *p);
-ptrToFunction Fn_ptr[12]; //Bindings for the Fn keys; Fx = Fn_ptr[x-1]
+ptrToFunction Fn_ptr[12]; // bindings for the Fn keys; Fx = Fn_ptr[x-1]
 
 extern int maxY,maxX;
 extern int helpBarUpdate;
 
 extern char *version;
 
-//Preferences and default values
+// preferences and default values
 extern int maxUndoLength;
 extern char undoEnabled;
 extern char autoIndent;
@@ -62,8 +63,8 @@ extern char tabWidth;
 extern char smartCursor;
 extern char optimize;
 
-extern int *lastDisplayed; /* Number of characters last displayed on various lines */
-extern char displayWholeScreen; /* Whether to refresh the whole screen */
+extern int *lastDisplayed; // number of characters last displayed on various lines
+extern char displayWholeScreen; // whether to refresh the whole screen
 
 extern struct buffer *buffers;
 extern struct buffer *currentBuffer;

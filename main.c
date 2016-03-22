@@ -15,6 +15,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <ncurses.h>
@@ -39,7 +40,7 @@ int helpBarUpdate=0;
 
 char *version = "0.9.0";
 
-/* Preferences and default values */
+// preferences and default values
 int maxUndoLength = 1000;
 char undoEnabled=1;
 char autoIndent=1;
@@ -50,7 +51,7 @@ char tabWidth = 2;
 char smartCursor = 1;
 char optimize = 0;
 
-int *lastDisplayed; //Number of characters last displayed on various lines
+int *lastDisplayed; // number of characters last displayed on various lines
 char displayWholeScreen = 0;
 
 struct buffer *buffers;
@@ -58,8 +59,7 @@ struct buffer *currentBuffer;
 int currentBufferNum = 0;
 
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
   int x,y;
   int keypress;
 
@@ -76,12 +76,12 @@ int main(int argc, char *argv[])
   Fn_ptr[9] = toggleBottomRow;
   loadSettings();
 
-  if(numberOfBuffers > 100) numberOfBuffers = 100;
+  if (numberOfBuffers > 100) {
+    numberOfBuffers = 100;
+  }
   buffers = (struct buffer *)malloc(numberOfBuffers * sizeof(struct buffer));
 
-  //Set up initial buffers
-  for(x=0;x<numberOfBuffers;x++)
-  {
+  for(x=0;x<numberOfBuffers;x++) { // set up initial buffers
     buffers[x].head = (struct line *)malloc(sizeof(struct line));
     buffers[x].tail = (struct line *)malloc(sizeof(struct line));
     buffers[x].head->next = buffers[x].tail;
@@ -90,10 +90,8 @@ int main(int argc, char *argv[])
     buffers[x].tail->next = buffers[x].tail;
     buffers[x].tail->data = NULL;
     buffers[x].tail->hasTabs = 0;
-
     currentBuffer = &buffers[x];
     addLineAfter(buffers[x].head, " ");
-
     buffers[x].cursor.l = buffers[x].head->next;
     buffers[x].cursor.offset = 0;
     buffers[x].cursor.lineNum = 0;
@@ -105,10 +103,11 @@ int main(int argc, char *argv[])
     buffers[x].cursor.wantCursX = 0;
     buffers[x].currentLine = &buffers[x].cursor.l;
     buffers[x].lineUpdate.offset = -1;
-
     buffers[x].numLines = 0;
     buffers[x].updated = 0;
-    if(undoEnabled) buffers[x].undoMoves = (struct undoMove *)malloc(maxUndoLength*sizeof(struct undoMove));
+    if (undoEnabled) {
+      buffers[x].undoMoves = (struct undoMove *)malloc(maxUndoLength*sizeof(struct undoMove));
+    }
     buffers[x].undoBufferPointer = buffers[x].undoBufferLength = 0;
   }
 
@@ -120,43 +119,47 @@ int main(int argc, char *argv[])
   intrflush(stdscr, FALSE);
   keypad(stdscr, TRUE);
   getmaxyx(stdscr,maxY,maxX);
-  for(x=0;x<maxX;x++)
-    for(y=0;y<maxY;y++)
+  for (x=0;x<maxX;x++) {
+    for (y=0;y<maxY;y++) {
       mvaddch(y,x,' ');
+    }
+  }
   move(0,0);
   lastDisplayed = (int *)malloc(maxY*sizeof(int));
 
-  if(argc>=2) doArguments(argc,argv);
+  if (argc>=2) {
+    doArguments(argc,argv);
+  }
 
   helpBar();
   showRow();
 
-  while(1)
-  {
+  while (1) {
     move(currentBuffer->cursor.cursY,currentBuffer->cursor.cursX);
     keypress=getch();
     keyHit(keypress,undoEnabled);
     displayScreen();
     showRow();
-    if(helpBarUpdate)
-    {
+    if (helpBarUpdate) {
       helpBarUpdate--;
-      if(!helpBarUpdate) helpBar();
+      if (!helpBarUpdate) {
+        helpBar();
+      }
     }
   }
   return 0;
 }
 
-void nothing()
-{
+void nothing() {
   currentBuffer->lineUpdate.offset = -1;
 }
 
-void tryQuit()
-{
+void tryQuit() {
   int t;
-  if(!currentBuffer->updated) {
-    if(!bufferQuit) quit("");
+  if (!currentBuffer->updated) {
+    if (!bufferQuit) {
+      quit("");
+    }
     else closeBuffer();
     return;
   }
@@ -165,30 +168,33 @@ void tryQuit()
   move(maxY-1,26);
   t = getch();
   mvaddch(maxY-1,26,' ');
-  if(t=='y' || t=='Y') {
+  if (t=='y' || t=='Y') {
     save();
     t = 'n';
   }
-  if(t=='n' || t=='N') {
-    if(!bufferQuit) quit("");
+  if (t=='n' || t=='N') {
+    if (!bufferQuit) {
+      quit("");
+    }
     else closeBuffer();
   }
   helpBarUpdate = 1;
   currentBuffer->lineUpdate.offset = -1;
 }
 
-void quit(char *text)
-{
+void quit(char *text) {
   struct line *l;
   int t;
 
-  for(t=0;t<numberOfBuffers;t++) {
-    if(t==currentBufferNum) continue;
-    if(buffers[t].updated) {
+  for (t=0;t<numberOfBuffers;t++) {
+    if (t==currentBufferNum) {
+      continue;
+    }
+    if (buffers[t].updated) {
       displayBottomRow();
       mvaddstr(maxY-1,0,"there are unsaved buffers. quit anyway? y/[N]");
       t = getch();
-      if(t=='y' || t=='Y') {
+      if (t=='y' || t=='Y') {
         break;
       }
       else {
@@ -198,24 +204,26 @@ void quit(char *text)
     }
   }
 
-  for(t=0;t<maxX;t++) {
+  for (t=0;t<maxX;t++) {
     mvaddch(maxY-1,t,' ');
   }
   nodelay(stdscr, TRUE);
   getch();
   endwin();
 
-  if(undoEnabled) {
-    for(t=0;t<numberOfBuffers;t++) {
+  if (undoEnabled) {
+    for (t=0;t<numberOfBuffers;t++) {
       free(buffers[t].undoMoves);
     }
   }
 
-  for(t=0;t<numberOfBuffers;t++) {
+  for (t=0;t<numberOfBuffers;t++) {
     l = buffers[t].head;
-    while(l != buffers[t].tail) {
+    while (l != buffers[t].tail) {
       l=l->next;
-      if(l->prev->data) free(l->prev->data);
+      if (l->prev->data) {
+        free(l->prev->data);
+      }
       free(l->prev);
     }
     free(buffers[t].tail);
@@ -227,51 +235,43 @@ void quit(char *text)
   exit(0);
 }
 
-void doArguments(int argc, char *argv[])
-{
+void doArguments(int argc, char *argv[]) {
   int x;
   char firstFile = 1;
-  for(x=1;x<argc;x++)
-  {
-    if(argv[x][0]!='-') {
-      /* Specifying a file name */
-      if(!firstFile) {
+  for (x=1;x<argc;x++) {
+    if (argv[x][0]!='-') { // specifying filename
+      if (!firstFile) {
         goToNextBuffer();
       }
       load(argv[x]);
       firstFile = 0;
     } else {
-      /* Option */
-      if(!strcmp(argv[x],"--help")) {
+      if (!strcmp(argv[x],"--help")) { // options
         displayHelp();
-      } else if(!strcmp(argv[x],"--version")) {
+      } else if (!strcmp(argv[x],"--version")) {
         displayVersion();
-      } else if(strstr(argv[x], "-l")!=NULL && isdigit(argv[x][2])) {
+      } else if (strstr(argv[x], "-l")!=NULL && isdigit(argv[x][2])) {
         gotoLine(atoi(&argv[x][2]));
       } else {
-        /* Mistyped something */
-        displayHelp();
+        displayHelp(); // typos
       }
     }
   }
 
-  /* Go to first buffer */
   while (currentBuffer != &buffers[0]) {
-    goToPrevBuffer();
+    goToPrevBuffer(); // go to first buffer
   }
 
   displayScreen();
 }
 
-void displayVersion()
-{
+void displayVersion() {
   char text[30];
   sprintf(text, "Dav version %s\n", version);
   quit(text);
 }
 
-void displayHelp()
-{
+void displayHelp() {
   char *c = getenv("HOME");
   int t;
   endwin();
@@ -283,36 +283,47 @@ void displayHelp()
   printf("  --version: Display the version of Dav that you are running\n");
   printf("  -l#: Initialize Dav at a specific line number. (eg -l123)\n");
   printf("Basic commands:\n");
-  for(t=0;t<12;t++)
-  {
-    if(!Fn_ptr[t] || Fn_ptr[t]==nothing)
+  for (t=0;t<12;t++) {
+    if (!Fn_ptr[t] || Fn_ptr[t]==nothing) {
       continue;
+    }
     printf("  F%i : ",t+1);
-    if(Fn_ptr[t] == search)
+    if (Fn_ptr[t] == search) {
       printf("Search\n");
-    else if(Fn_ptr[t] == replace)
+    }
+    else if (Fn_ptr[t] == replace) {
       printf("Find and replace\n");
-    else if(Fn_ptr[t] == save)
+    }
+    else if (Fn_ptr[t] == save) {
       printf("Save current file\n");
-    else if(Fn_ptr[t] == saveAs)
+    }
+    else if (Fn_ptr[t] == saveAs) {
       printf("Save current file, prompt for filename\n");
-    else if(Fn_ptr[t] == askLoad)
+    }
+    else if (Fn_ptr[t] == askLoad) {
       printf("Load file from within Dav\n");
-    else if(Fn_ptr[t] == tryQuit)
+    }
+    else if (Fn_ptr[t] == tryQuit) {
       printf("Quit (ask for save if needed)\n");
-    else if(Fn_ptr[t] == Undo)
+    }
+    else if (Fn_ptr[t] == Undo) {
       printf("Undo last keypress\n");
-    else if(Fn_ptr[t] == toggleAutoIndent)
+    }
+    else if (Fn_ptr[t] == toggleAutoIndent) {
       printf("Toggle auto-indenting\n");
-    else if(Fn_ptr[t] == tryCompile)
+    }
+    else if (Fn_ptr[t] == tryCompile) {
       printf("Compile and print error messages\n");
-    else if(Fn_ptr[t] == toggleBottomRow)
+    }
+    else if (Fn_ptr[t] == toggleBottomRow) {
       printf("Toggle help bar\n");
-    else if(Fn_ptr[t] == goToNextBuffer)
+    }
+    else if (Fn_ptr[t] == goToNextBuffer) {
       printf("Switch to next text buffer\n");
-    else if(Fn_ptr[t] == goToPrevBuffer)
+    }
+    else if (Fn_ptr[t] == goToPrevBuffer) {
       printf("Switch to previous text buffer\n");
-
+    }
   }
   printf("  Ctrl-C : Quit (won't ask for save)\n");
   printf("  Ctrl-K : Erase to end of line\n");
@@ -324,8 +335,7 @@ void displayHelp()
   quit("");
 }
 
-void loadSettings()
-{
+void loadSettings() {
   int l;
   char s[80];
   char home[80];
@@ -334,132 +344,140 @@ void loadSettings()
   FILE *fp;
   int gotten=0;
   char FnGotten[12];
-  for(l=0;l<12;l++)
+  for (l=0;l<12;l++) {
     FnGotten[l] = 0;
+  }
   strcpy(home,getenv("HOME"));
   strcat(home,"/.davrc");
   fp = fopen(home,"r");
-  if(fp==NULL) //File doesn't exist, make one
-  {
+  if (fp==NULL) {// file doesn't exist; make one
     fp = fopen(home,"w");
-    if(fp==NULL) { return; }
+    if (fp==NULL) {
+      return;
+    }
     writeRC(fp);
     fclose(fp);
     fp = fopen(home,"r");
   }
   //It's there, so read from it
-  while(!feof(fp)) {
+  while (!feof(fp)) {
     fgets(s, 200, fp);
-    if(s[0]=='#') continue;
+    if (s[0]=='#') {
+      continue;
+    }
     r = strtok(s," =");
     c = strtok(NULL," =");
-    if(c==NULL) continue;
+    if (c==NULL) {
+      continue;
+    }
     l = atoi(c);
-    if(!strcmp(r,"Undo")) { undoEnabled = l; gotten|=1; }
-    if(!strcmp(r,"UndoBuffer")) { maxUndoLength = l; gotten|=2; }
-    if(!strcmp(r,"autoIndent")) { autoIndent = l; gotten|=4; }
-    if(!strcmp(r,"helpBarInit")) { bottomRowToggle = l; gotten|=8; }
-    if(!strcmp(r,"buffers")) { numberOfBuffers = l; gotten|=16; }
-    if(!strcmp(r,"bufferQuit")) { bufferQuit = l; gotten|=32; }
-    if(!strcmp(r,"tabWidth")) { tabWidth = l; gotten|=64; }
-    if(!strcmp(r,"smartCursor")) { smartCursor = l; gotten|=128; }
-    if(!strcmp(r,"optimize")) { optimize = l; gotten|=256; }
-    if(r[0] == 'F')
-    {
+    if (!strcmp(r,"Undo")) {
+      undoEnabled = l; gotten|=1;
+    }
+    if (!strcmp(r,"UndoBuffer")) {
+      maxUndoLength = l; gotten|=2;
+    }
+    if (!strcmp(r,"autoIndent")) {
+      autoIndent = l; gotten|=4;
+    }
+    if (!strcmp(r,"helpBarInit")) {
+      bottomRowToggle = l; gotten|=8;
+    }
+    if (!strcmp(r,"buffers")) {
+      numberOfBuffers = l; gotten|=16;
+    }
+    if (!strcmp(r,"bufferQuit")) {
+      bufferQuit = l; gotten|=32;
+    }
+    if (!strcmp(r,"tabWidth")) {
+      tabWidth = l; gotten|=64;
+    }
+    if (!strcmp(r,"smartCursor")) {
+      smartCursor = l; gotten|=128;
+    }
+    if (!strcmp(r,"optimize")) {
+      optimize = l; gotten|=256;
+    }
+    if (r[0] == 'F') {
       c[strlen(c)-1]  = '\0';
       r++;
       l = atoi(r);
       l--;
-      //Function key binding
-      if(!strcmp(c, "SEARCH"))
-      {
+      if (!strcmp(c, "SEARCH")) { // function keybinding
         Fn_ptr[l] = search;
         FnGotten[l] = 1;
       }
-      else if(!strcmp(c, "SAVE"))
-      {
+      else if(!strcmp(c, "SAVE")) {
         Fn_ptr[l] = save;
         FnGotten[l] = 2;
       }
-      else if(!strcmp(c, "SAVE_AS"))
-      {
+      else if(!strcmp(c, "SAVE_AS")) {
         Fn_ptr[l] = saveAs;
         FnGotten[l] = 3;
       }
-      else if(!strcmp(c, "LOAD"))
-      {
+      else if(!strcmp(c, "LOAD")) {
         Fn_ptr[l] = askLoad;
         FnGotten[l] = 4;
       }
-      else if(!strcmp(c, "QUIT"))
-      {
+      else if(!strcmp(c, "QUIT")) {
         Fn_ptr[l] = tryQuit;
         FnGotten[l] = 5;
       }
-      else if(!strcmp(c, "UNDO"))
-      {
+      else if(!strcmp(c, "UNDO")) {
         Fn_ptr[l] = Undo;
         FnGotten[l] = 6;
       }
-      else if(!strcmp(c, "COMPILE"))
-      {
+      else if(!strcmp(c, "COMPILE")) {
         Fn_ptr[l] = tryCompile;
         FnGotten[l] = 7;
       }
-      else if(!strcmp(c, "TOGGLE_AUTOINDENT"))
-      {
+      else if(!strcmp(c, "TOGGLE_AUTOINDENT")) {
         Fn_ptr[l] = toggleAutoIndent;
         FnGotten[l] = 8;
       }
-      else if(!strcmp(c, "TOGGLE_BOTTOM_ROW"))
-      {
+      else if(!strcmp(c, "TOGGLE_BOTTOM_ROW")) {
         Fn_ptr[l] = toggleBottomRow;
         FnGotten[l] = 9;
       }
-      else if(!strcmp(c, "NOTHING"))
-      {
+      else if(!strcmp(c, "NOTHING")) {
         Fn_ptr[l] = nothing;
         FnGotten[l] = 10;
       }
-      else if(!strcmp(c, "REPLACE"))
-      {
+      else if(!strcmp(c, "REPLACE")) {
         Fn_ptr[l] = replace;
         FnGotten[l] = 11;
       }
-      else if(!strcmp(c, "PREV"))
-      {
+      else if(!strcmp(c, "PREV")) {
         Fn_ptr[l] = goToPrevBuffer;
         FnGotten[l] = 12;
       }
-      else if(!strcmp(c, "NEXT"))
-      {
+      else if(!strcmp(c, "NEXT")) {
         Fn_ptr[l] = goToNextBuffer;
         FnGotten[l] = 13;
       }
-      else
-      {
+      else {
         Fn_ptr[l] = nothing;
         FnGotten[l] = 0;
       }
     }
   }
   fclose(fp);
-  for(l=0;l<12;l++)
-  {
-    if(FnGotten[l]==0)
+  for (l=0;l<12;l++) {
+    if (FnGotten[l]==0) {
       gotten = 0;
+    }
   }
-  if(gotten!=511)
-  {
+  if (gotten!=511) {
     fp = fopen(home,"w");
-    if(fp==NULL) return;
+    if (fp==NULL) {
+      return;
+    }
     writeRC(fp);
     fclose(fp);
   }
 }
 
-void writeRC(FILE *fp)
-{
+void writeRC(FILE *fp) {
   int t;
   fprintf(fp,"#Set this to 1 if you want undoing enabled, otherwise set it to 0.\n");
   fprintf(fp,"#Having the undo feature enabled uses a little more processor power.\n");
@@ -505,39 +523,53 @@ void writeRC(FILE *fp)
   fprintf(fp,"#  TOGGLE_BOTTOM_ROW : Switches between displaying Fn bindings and file name\n");
   fprintf(fp,"#  PREV : Switches to the previous text buffer (of 10)\n");
   fprintf(fp,"#  NEXT : Switches to the next text buffer (of 10)\n");
-  for(t=0;t<12;t++)
-  {
+
+  for (t=0;t<12;t++) {
     fprintf(fp,"F%i = ", t+1);
-    if(Fn_ptr[t] == search)
+
+    if(Fn_ptr[t] == search) {
       fprintf(fp,"SEARCH\n");
-    else if(Fn_ptr[t] == save)
+    }
+    else if(Fn_ptr[t] == save) {
       fprintf(fp,"SAVE\n");
-    else if(Fn_ptr[t] == saveAs)
+    }
+    else if(Fn_ptr[t] == saveAs) {
       fprintf(fp,"SAVE_AS\n");
-    else if(Fn_ptr[t] == askLoad)
+    }
+    else if(Fn_ptr[t] == askLoad) {
       fprintf(fp,"LOAD\n");
-    else if(Fn_ptr[t] == tryQuit)
+    }
+    else if(Fn_ptr[t] == tryQuit) {
       fprintf(fp,"QUIT\n");
-    else if(Fn_ptr[t] == Undo)
+    }
+    else if(Fn_ptr[t] == Undo) {
       fprintf(fp,"UNDO\n");
-    else if(Fn_ptr[t] == tryCompile)
+    }
+    else if(Fn_ptr[t] == tryCompile) {
       fprintf(fp,"COMPILE\n");
-    else if(Fn_ptr[t] == toggleAutoIndent)
+    }
+    else if(Fn_ptr[t] == toggleAutoIndent) {
       fprintf(fp,"TOGGLE_AUTOINDENT\n");
-    else if(Fn_ptr[t] == toggleBottomRow)
+    }
+    else if(Fn_ptr[t] == toggleBottomRow) {
       fprintf(fp,"TOGGLE_BOTTOM_ROW\n");
-    else if(Fn_ptr[t] == replace)
+    }
+    else if(Fn_ptr[t] == replace) {
       fprintf(fp,"REPLACE\n");
-    else if(Fn_ptr[t] == goToNextBuffer)
+    }
+    else if(Fn_ptr[t] == goToNextBuffer) {
       fprintf(fp,"NEXT\n");
-    else if(Fn_ptr[t] == goToPrevBuffer)
+    }
+    else if(Fn_ptr[t] == goToPrevBuffer) {
       fprintf(fp,"PREV\n");
-    else fprintf(fp,"NOTHING\n");
+    }
+    else {
+      fprintf(fp,"NOTHING\n");
+    }
   }
 }
 
-void addLineAfter(struct line *whichLine, char *data)
-{
+void addLineAfter(struct line *whichLine, char *data) {
   struct line *temp = whichLine->next;
   struct line *newLine = (struct line *)malloc(sizeof(struct line));
   temp->prev = newLine;
@@ -556,74 +588,67 @@ char positionDown(struct position *p) {
   Returns 0 upon normal movement
   Returns 1 if the position stayed on the same line (end of file)
   */
-
   int tempX = p->cursX;
   char temp = 0;
 
-  while(!temp) {
+  while (!temp) {
     /*
     Move the cursor right until it wraps to the next line.
     If it hits the end of the file, return 1 instead.
     */
-
     temp = moveRight(p);
-    if(temp==1) {
+    if (temp==1) {
       return 1;
     }
   }
-  while(1) {
-    /* Move the cursor right until it hits the correct location. */
-
-    if(p->cursX >= tempX) {
+  while (1) { // move cursor right until it hits correct location
+    if (p->cursX >= tempX) {
       return 0;
-    } else if(p->offset == p->l->length - 1) {
+    } else if (p->offset == p->l->length - 1) {
       return 0;
     }
 
     temp = moveRight(p);
-    if(temp == 1) {
+    if (temp == 1) {
       return 0;
-    } else if(temp > 1) {
+    } else if (temp > 1) {
       moveLeft(p);
       return 0;
     }
   }
 }
 
-char positionUp(struct position *p)
-{
+char positionUp(struct position *p) {
   /*
   Returns 0 upon normal movement
   Returns 1 if the position stayed on the same line (beginning of file)
   */
-
   int tempX = p->cursX;
   char temp=0;
-  while(!temp) {
+  while (!temp) {
     temp = moveLeft(p);
-    if(temp==1) {
-      if(p == &currentBuffer->cursor) {
+    if (temp==1) {
+      if (p == &currentBuffer->cursor) {
         currentBuffer->cursor.wantCursX = currentBuffer->cursor.cursX;
       }
       return 1;
     }
   }
-  while(1) {
-    if(p->cursX <= tempX) {
+  while (1) {
+    if (p->cursX <= tempX) {
       return 0;
     }
     temp = moveLeft(p);
-    if(temp == 1) {
+    if (temp == 1) {
       return 0;
-    } else if(temp > 1) {
+    } else if (temp > 1) {
       moveRight(p);
       return 0;
     }
   }
 }
 
-void connectLines(struct line *baseline)
-{
+void connectLines(struct line *baseline) {
   struct line *l = baseline->next;
   unsigned char *ptr = (unsigned char *)malloc(baseline->length + l->length);
   memmove(ptr, baseline->data, baseline->length);
@@ -639,50 +664,55 @@ void connectLines(struct line *baseline)
   currentBuffer->numLines--;
 }
 
-void determineLineNum(struct position *p)
-{
+void determineLineNum(struct position *p) {
   struct position temp;
   int cX=p->cursX,cY=p->cursY;
 
   temp.l = currentBuffer->head->next;
   temp.offset = 0;
   temp.lineNum = 0;
-  while(temp.l != p->l)
+  while (temp.l != p->l) {
     positionDown(&temp);
+  }
 
-  while(temp.offset+maxX <= p->offset)
+  while (temp.offset+maxX <= p->offset) {
     positionDown(&temp);
+  }
 
   p->lineNum = temp.lineNum;
   p->cursX=cX;
   p->cursY=cY;
 }
 
-void countTabs(struct line *l)
-{
+void countTabs(struct line *l) {
   int t;
   l->hasTabs = 0;
-  for(t=l->length-1;t>=0;t--)
-    if(l->data[t]==9) l->hasTabs++;
+  for (t=l->length-1;t>=0;t--) {
+    if (l->data[t]==9) {
+      l->hasTabs++;
+    }
+  }
 }
 
-void determineCursX(struct position *p)
-{
+void determineCursX(struct position *p) {
   struct position temp;
   unsigned char c;
 
   temp.l = p->l;
   temp.offset = 0;
   temp.cursX = 0;
-  while(p->offset!=temp.offset)
-  {
+  while (p->offset!=temp.offset) {
     c = temp.l->data[temp.offset];
     temp.offset++;
-    if(c!=9)
+    if (c!=9) {
       temp.cursX++;
-    else
+    }
+    else {
       temp.cursX+= tabWidth - (temp.cursX % tabWidth);
-    if(temp.cursX >= maxX) temp.cursX=0;
+    }
+    if (temp.cursX >= maxX) {
+      temp.cursX=0;
+    }
   }
   p->cursX = temp.cursX;
 }
@@ -704,16 +734,16 @@ void radixSort(char **strings, int number) {
   int t;
   int i,j;
 
-  for(i=0; i<256; i++) {
+  for (i=0; i<256; i++) {
     buckets[i] = (char **)malloc(0*sizeof(char *));
   }
 
-  for(radix=255; radix>=0; radix--) {
-    for(t=0; t<256; t++) {
+  for (radix=255; radix>=0; radix--) {
+    for (t=0; t<256; t++) {
       numberInBuckets[t] = 0;
     }
 
-    for(t=0; t<number; t++) {
+    for (t=0; t<number; t++) {
       int bucket = (int)((unsigned char)strings[t][radix]);
       buckets[bucket] = realloc(buckets[bucket], (numberInBuckets[bucket] + 1)*sizeof(char *));
       buckets[bucket][numberInBuckets[bucket]] = strings[t];
@@ -721,31 +751,30 @@ void radixSort(char **strings, int number) {
     }
 
     t = 0;
-    for(i=0; i<256; i++) {
-      for(j=0; j<numberInBuckets[i]; j++) {
+    for (i=0; i<256; i++) {
+      for (j=0; j<numberInBuckets[i]; j++) {
         strings[t] = buckets[i][j];
         t++;
       }
     }
   }
 
-  for(i=0; i<256; i++) {
+  for (i=0; i<256; i++) {
     free(buckets[i]);
   }
 }
 
 void randomizedQuickSort(char **strings, int low, int high) {
-  //Pick a random element
-  int axis;
+  int axis; // pick random element
   int oldLow = low;
   int oldHigh = high;
   char *temp;
 
-  if (low >= high) { //Zero or one element
+  if (low >= high) { // zero or one element
     return;
   }
 
-  if (high - low == 1) { //Only two elements
+  if (high - low == 1) { // only two elements
     if (strcmp(strings[high], strings[low]) < 0) {
       temp = strings[high];
       strings[high] = strings[low];
@@ -754,8 +783,7 @@ void randomizedQuickSort(char **strings, int low, int high) {
     return;
   }
 
-  //Swap axis element with last element
-  axis = (rand() % (high - low + 1)) + low;
+  axis = (rand() % (high - low + 2)) + low; // swap axis element with last element
   temp = strings[axis];
   strings[axis] = strings[high];
   strings[high] = temp;

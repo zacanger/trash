@@ -15,6 +15,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
+
 #include <ncurses.h>
 #include <string.h>
 
@@ -33,12 +34,11 @@ void displayLine(int line, struct position *pos) {
   unsigned char *end = pos->l->data + length;
   int screenX = 0;
 
-  if(pos->l != currentBuffer->tail) {
-    while(1) {
+  if (pos->l != currentBuffer->tail) {
+    while (1) {
       ch = *data++;
-      if(ch==9) {
-        /* Tab */
-        while((screenX % tabWidth) != tabWidth-1) {
+      if (ch==9) { // tab
+        while ((screenX % tabWidth) != tabWidth-1) {
           mvaddch(line, screenX++, ' ');
         }
       }
@@ -49,19 +49,17 @@ void displayLine(int line, struct position *pos) {
       }
     }
   }
-
   length = lastDisplayed[line];
   lastDisplayed[line] = screenX;
   while (screenX<length) {
     mvaddch(line, screenX++, ' ');
   }
-
 }
 
 void displayScreen() {
   int lineNum = currentBuffer->lineUpdate.lineNum;
 
-  if(currentBuffer->lineUpdate.offset == -1) {
+  if (currentBuffer->lineUpdate.offset == -1) {
     return;
   }
 
@@ -73,18 +71,18 @@ void displayScreen() {
     displayWholeScreen = 0;
   }
 
-  while(currentBuffer->lineUpdate.cursX) {
+  while (currentBuffer->lineUpdate.cursX) {
     moveLeft(&currentBuffer->lineUpdate);
   }
 
   do {
     displayLine(lineNum++, &currentBuffer->lineUpdate);
-  } while(!positionDown(&currentBuffer->lineUpdate) && currentBuffer->lineUpdate.cursY<maxY-1);
+  } while (!positionDown(&currentBuffer->lineUpdate) && currentBuffer->lineUpdate.cursY<maxY-1);
 
-  if(currentBuffer->keepGoing) {
-    while(lineNum<maxY-1) {
+  if (currentBuffer->keepGoing) {
+    while (lineNum<maxY-1) {
       displayLine(lineNum, &currentBuffer->lineUpdate);
-      if(positionDown(&currentBuffer->lineUpdate)==1) {
+      if (positionDown(&currentBuffer->lineUpdate)==1) {
         currentBuffer->lineUpdate.l = currentBuffer->tail;
       }
       lineNum++;
@@ -110,14 +108,14 @@ void showRow() {
   total[3] = ((currentBuffer->numLines+1)/10) % 10 + 48;
   total[4] = (currentBuffer->numLines+1) % 10 + 48;
   for (t=0; t<4; t++) {
-    if(num[t]==48) {
+    if (num[t]==48) {
       num[t]=' ';
     } else {
       break;
     }
   }
   for (t=0; t<4; t++) {
-    if(total[t]==48) {
+    if (total[t]==48) {
       total[t]=' ';
     } else {
       break;
@@ -134,56 +132,55 @@ void helpBar() {
   int t;
   displayBottomRow();
 
-  if(bottomRowToggle) {
+  if (bottomRowToggle) {
     strcpy(ptr,"F|");
     ptr += 2;
-    for(t=0;t<12;t++)
-    {
-      if(t<=8)
+    for(t=0;t<12;t++) {
+      if (t<=8) {
         *ptr++ = t + '1';
-      else
-      {
+      }
+      else {
         *ptr++ = '1';
         *ptr++ = t + '1' - 10;
       }
       *ptr++ = ':';
-      if(Fn_ptr[t] == search) {
+      if (Fn_ptr[t] == search) {
         strcpy(ptr, "search");
         ptr+=6;
-      } else if(Fn_ptr[t] == save) {
+      } else if (Fn_ptr[t] == save) {
         strcpy(ptr, "save");
         ptr+=4;
-      } else if(Fn_ptr[t] == saveAs) {
+      } else if (Fn_ptr[t] == saveAs) {
         strcpy(ptr, "saveas");
         ptr+=6;
-      } else if(Fn_ptr[t] == askLoad) {
+      } else if (Fn_ptr[t] == askLoad) {
         strcpy(ptr, "load");
         ptr+=4;
-      } else if(Fn_ptr[t] == tryQuit) {
+      } else if (Fn_ptr[t] == tryQuit) {
         strcpy(ptr, "quit");
         ptr+=4;
-      } else if(Fn_ptr[t] == Undo) {
+      } else if (Fn_ptr[t] == Undo) {
         strcpy(ptr, "undo");
         ptr+=4;
-      } else if(Fn_ptr[t] == tryCompile) {
+      } else if (Fn_ptr[t] == tryCompile) {
         strcpy(ptr, "compile");
         ptr+=7;
-      } else if(Fn_ptr[t] == toggleAutoIndent) {
+      } else if (Fn_ptr[t] == toggleAutoIndent) {
         strcpy(ptr, "autoindent");
         ptr+=10;
-      } else if(Fn_ptr[t] == toggleBottomRow) {
+      } else if (Fn_ptr[t] == toggleBottomRow) {
         strcpy(ptr, "bottomrow");
         ptr+=9;
-      } else if(Fn_ptr[t] == replace) {
+      } else if (Fn_ptr[t] == replace) {
         strcpy(ptr, "replace");
         ptr+=7;
-      } else if(Fn_ptr[t] == goToNextBuffer) {
+      } else if (Fn_ptr[t] == goToNextBuffer) {
         strcpy(ptr, "next");
         ptr+=4;
-      } else if(Fn_ptr[t] == goToPrevBuffer) {
+      } else if (Fn_ptr[t] == goToPrevBuffer) {
         strcpy(ptr, "prev");
         ptr+=4;
-      } else if(Fn_ptr[t] == nothing) {
+      } else if (Fn_ptr[t] == nothing) {
         ptr-=3;
       }
       *ptr++ = '|';
@@ -198,7 +195,7 @@ void helpBar() {
     strcpy(c,"Editing ");
     strcat(c,currentBuffer->fname);
     strcat(c," [");
-    if(currentBufferNum >= 10) {
+    if (currentBufferNum >= 10) {
       strcat(c,temp);
     } else {
       strcat(c,temp+1);
@@ -211,7 +208,7 @@ void helpBar() {
 
 void displayBottomRow() {
   int x;
-  for(x=maxX-12; x; x--) {
+  for (x=maxX-12; x; x--) {
     mvaddch(maxY-1, x, ' ');
   }
 }

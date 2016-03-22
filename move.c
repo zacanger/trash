@@ -15,20 +15,21 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
+
 #include "move.h"
 #include "main.h"
 
 void moveDown(struct position *p) {
   positionDown(p);
-  if(p->cursY==maxY-1 && p==&currentBuffer->cursor) { 
-    scrollDown(); 
+  if (p->cursY==maxY-1 && p==&currentBuffer->cursor) {
+    scrollDown();
   }
 }
 
 void moveUp(struct position *p) {
   positionUp(p);
-  if(p->cursY==-1 && p==&currentBuffer->cursor) { 
-    scrollUp(); 
+  if (p->cursY==-1 && p==&currentBuffer->cursor) {
+    scrollUp();
   }
 }
 
@@ -39,17 +40,15 @@ char moveLeft(struct position *p) {
   Returns 2 if moving left caused the position to enter the previous line
   Returns 3 if moving left caused the position to wrap on the same line
   */
-  
+
   char r = 0;
-  if(p->l == currentBuffer->head->next && p->offset == 0) {
-    /* Beginning of file */
-    return 1;
+  if (p->l == currentBuffer->head->next && p->offset == 0) {
+    return 1; // beginning of file
   }
-  if(!p->offset) {
-  /* Beginning of line */
-    p->l = p->l->prev;
+  if (!p->offset) {
+    p->l = p->l->prev; // beginning of line
     p->offset = p->l->length - 1;
-    if(p->l->hasTabs) {
+    if (p->l->hasTabs) {
       determineCursX(p);
     }
     else {
@@ -61,10 +60,10 @@ char moveLeft(struct position *p) {
   }
   else {
     p->offset--;
-    if(!p->cursX) {
+    if (!p->cursX) {
       r = 3;
       p->cursY--;
-      if(p->l->hasTabs) {
+      if (p->l->hasTabs) {
         determineCursX(p);
       }
       else {
@@ -72,21 +71,20 @@ char moveLeft(struct position *p) {
       }
     }
     else {
-      if(p->l->hasTabs)
+      if (p->l->hasTabs)
         determineCursX(p);
       else
         p->cursX--;
     }
-
   }
-  if(p->cursY==-1 && p==&currentBuffer->cursor) { 
-    scrollUp(); 
+  if (p->cursY==-1 && p==&currentBuffer->cursor) {
+    scrollUp();
   }
   return r;
 }
 
 char moveRight(struct position *p) {
-  /* 
+  /*
   Returns 0 upon normal movement
   Returns 1 if the position could not be moved right (end of file)
   Returns 2 if moving right caused the position to enter the next line
@@ -94,14 +92,12 @@ char moveRight(struct position *p) {
   */
 
   char r=0;
-  if(p->l->next == currentBuffer->tail && p->offset == p->l->length-1) {
-    /* End of file */
-    return 1;
+  if (p->l->next == currentBuffer->tail && p->offset == p->l->length-1) {
+    return 1; // end of file
   }
-  
-  if(p->offset < p->l->length - 1) {
-    /* Normal movement */
-    int temp = p->cursX;
+
+  if (p->offset < p->l->length - 1) {
+    int temp = p->cursX; // normal movement
     p->offset++;
     if (p->l->hasTabs) {
       determineCursX(p);
@@ -117,32 +113,28 @@ char moveRight(struct position *p) {
     }
   }
   else {
-    /* Next line */
-    p->l = p->l->next;
+    p->l = p->l->next; // next line
     p->cursX = p->offset = 0;
     p->cursY++;
     p->lineNum++;
-    r = 2; //Hit a new line
+    r = 2; // hit a new line
   }
-  if(p->cursY == maxY-1 && p==&currentBuffer->cursor) { 
-    scrollDown(); 
+  if (p->cursY == maxY-1 && p==&currentBuffer->cursor) {
+    scrollDown();
   }
   return r;
 }
 
-char scrollDown()
-{
-  /* Returns 1 if the screen did not scroll down */
-
-  if(currentBuffer->topLine.lineNum + (maxY>>1) > currentBuffer->numLines) {
+char scrollDown() { // returns 1 if screen did not scroll down
+  if (currentBuffer->topLine.lineNum + (maxY>>1) > currentBuffer->numLines) {
     return 1;
   }
 
-  if(currentBuffer->cursor.cursY==0) {
+  if (currentBuffer->cursor.cursY==0) {
     positionDown(&currentBuffer->cursor);
   }
 
-  if(!positionDown(&currentBuffer->topLine)) {
+  if (!positionDown(&currentBuffer->topLine)) {
     currentBuffer->cursor.cursY--;
   }
 
@@ -152,17 +144,15 @@ char scrollDown()
   return 0;
 }
 
-char scrollUp()
-{
-  /* Returns 1 if the screen did not scroll up */
-  if(currentBuffer->cursor.cursY==maxY-1) {
+char scrollUp() { // returns 1 if screen did not scroll up
+  if (currentBuffer->cursor.cursY==maxY-1) {
     positionUp(&currentBuffer->cursor);
   }
-  
-  if(!positionUp(&currentBuffer->topLine)) {
+
+  if (!positionUp(&currentBuffer->topLine)) {
     currentBuffer->cursor.cursY++;
   }
-  
+
   currentBuffer->lineUpdate = currentBuffer->topLine;
   currentBuffer->lineUpdate.lineNum = 0;
   currentBuffer->keepGoing = 1;

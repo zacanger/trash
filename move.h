@@ -15,6 +15,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
+
 #ifndef move_h
 #define move_h
 
@@ -24,8 +25,8 @@ char positionDown(struct position *p);
 char positionUp(struct position *p);
 void moveUp(struct position *p);
 void moveDown(struct position *p);
-char moveLeft(struct position *p); //Returns 1 when you hit the beginning of the buffer
-char moveRight(struct position *p); //Returns 1 when you hit the end of the buffer
+char moveLeft(struct position *p); // returns 1 when you hit the beginning of the buffer
+char moveRight(struct position *p); // returns 1 when you hit the end of the buffer
 char scrollDown();
 char scrollUp();
 
