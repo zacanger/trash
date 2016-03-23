@@ -3,6 +3,9 @@ const foo = 2
 foo // => 2
 foo = false // ERROR!
 
+
+
+
 // let
 let something = 'this is something!'
 something = 0 // this is okay, just like with `var`
@@ -24,6 +27,10 @@ asdf() // woahhhh
 
 
 
+
+
+
+
 // arrow functions
 var numbers = [1,2,3,4,5]
 numbers.map(function(x) {
@@ -42,6 +49,10 @@ $('.btn').click(e => {
 })
 
 
+
+
+
+
 // arrow functions bind 'this' when defined, rather than when called!
 // new kind of methods!
 var obj = {
@@ -54,6 +65,7 @@ var obj = {
     })
   }
 } // undefined is friends with g (etc.)
+
 // vs
 const obj = {
   name    : 'z'
@@ -70,9 +82,14 @@ const obj = {
 
 
 
+
+
 // template strings
 const greetz = 'hello'
 console.log(`${greetz}, world`)
+
+
+
 
 
 // multiline strings (using one backtick)
@@ -80,6 +97,10 @@ var thing = 'this is a multi-line string\ndoing things the old way.\nkinda gross
 let stuff = `here's a multi-line string
 doing things the new way.
 much nicer, i think.`
+
+
+
+
 
 
 
@@ -92,10 +113,18 @@ function add(x, y) {
     return x + y
   }
 }
+
 // vs
 function add(x = 0, y = 0) { return x + y }
 add(2, 2)
 add()
+
+
+
+
+
+
+
 
 // destructuring:
 var peeps = ['scott', 'josh', 'erin', 'sam', 'nick', 'cole', 'geordyn']
@@ -134,6 +163,12 @@ console.log(senseless)
 
 
 
+
+
+
+
+
+
 // putting some things together:
 const eliteBook = {
   brand     : 'hp'
@@ -152,23 +187,42 @@ function laptopInfo({brand}, {overheats}, {ram}, {cores}){
 }
 
 
+
+
+
+
+
+
+
 // rest:
 var nums = [1,2,3,4,5]
+
 function vals(list){
   var first  = nums[0]
     , second = nums[1]
     , rest   = list.slice(2)
   console.log(first, second, rest)
 }
+
 // vs
 const nums = [1,2,3,4,5]
+
 function vals([first, second, ...rest]){
   console.log(first, second, rest)
 }
+
 function logThings(...stuff){
   console.log(stuff)
 }
+
 logThings('thing one', 'thing two', false, 2)
+
+
+
+
+
+
+
 
 
 // spread:
@@ -176,6 +230,7 @@ var a = [1,2,3]
   , b = [4,5,6]
   , c = [7,8,9]
   , x = [].concat(a,b,c)
+
 // vs
 let y = [...a, ...b, ...c]
 
@@ -183,8 +238,13 @@ var paragraphs = document.querySelectorAll('p')
 Array.prototype.forEach.call(ps, (elm) => {
   console.log(elm.textContent)
 })
+
 // or
 [...ps].forEach(elm => console.log(elm.textContent))
+
+
+
+
 
 
 
@@ -211,6 +271,12 @@ let
   total = Math.add(1,2,3,4,5)
 , twice = square(16)
 
+
+
+
+
+
+
 // classes:
 // NO.
 // https://medium.com/javascript-scene/common-misconceptions-about-inheritance-in-javascript-d5d9bab29b0a
@@ -218,6 +284,7 @@ let
 // https://medium.com/javascript-scene/inside-the-dev-team-death-spiral-6a7ea255467b
 // http://www.johndcook.com/blog/2011/07/19/you-wanted-banana/
 // http://harmful.cat-v.org/software/OO_programming/
+
 class Mammal {
   constructor(name, limbs) {
     this.name  = name
@@ -242,6 +309,12 @@ me.detail()
 me.skilled()
 
 
+
+
+
+
+
+
 // promises
 // generators
 // async/await
@@ -249,4 +322,4 @@ me.skilled()
 // observables
 // array methods
 // object methods
-//
+
