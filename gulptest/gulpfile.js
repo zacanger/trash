@@ -30,5 +30,3 @@ gulp.task('default', ['minify']);
 //	return merge(thisThing, thatThing) // combines streams rather than needing to write to disk, hurray
 // })
 
-gulp.task('./src/index.html')
-	.pipe()
