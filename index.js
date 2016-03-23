@@ -1,6 +1,26 @@
 // const
-// let
+const foo = 2
+foo // => 2
+foo = false // ERROR!
 
+// let
+let something = 'this is something!'
+something = 0 // this is okay, just like with `var`
+while (true) {
+  let something = 'this is a new thing'
+  console.log(something)
+  break
+}
+console.log(something)
+// that's not a function, it's a block.
+function asdf() {
+  for (let i = 0; i < 100; i++) {
+    let j = 'string'
+    console.log(j)
+  }
+  console.log(j)
+}
+asdf() // woahhhh
 
 
 
@@ -74,9 +94,8 @@ function add(x, y) {
 }
 // vs
 function add(x = 0, y = 0) { return x + y }
-
-
-
+add(2, 2)
+add()
 
 // destructuring:
 var peeps = ['scott', 'josh', 'erin', 'sam', 'nick', 'cole', 'geordyn']
@@ -102,6 +121,16 @@ const self = {
 , does : 'stuff'
 }
 const {nom, old, things} = self
+let
+  foo    = 'foo'
+, bar    = 'bar'
+, fooBar = {foo, bar}
+console.log(fooBar)
+let
+  nonsense = {key : 'value', newKey : 'newValue'}
+, {key, newKey} = senseless
+console.log(key, newKey)
+console.log(senseless)
 
 
 
@@ -136,6 +165,10 @@ const nums = [1,2,3,4,5]
 function vals([first, second, ...rest]){
   console.log(first, second, rest)
 }
+function logThings(...stuff){
+  console.log(stuff)
+}
+logThings('thing one', 'thing two', false, 2)
 
 
 // spread:
