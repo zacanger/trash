@@ -215,7 +215,14 @@ function personFactory(name, age, eyes, hair){
   return {name, age, eyes, hair}
 }
 
+let [x, y] = [1, 2]
+console.log(x, y)
+[x, y] = [y, x]
+console.log(x, y)
 
+let foo = () => return [10, 20, 30]
+let [, q, r] = foo()
+console.log(q, r)
 
 
 
@@ -471,4 +478,6 @@ me.skilled()
 // }
 // var genAsync = runTimeoutFuncAsync();
 // genAsync.next(); // kick off the tasks
+
+
 
