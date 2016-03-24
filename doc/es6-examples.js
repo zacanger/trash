@@ -1,5 +1,3 @@
-// npm i -S babel-core babel-preset-es2015
-
 // index.js:
 // var register = require('babel-core/register')
 // register({

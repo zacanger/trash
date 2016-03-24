@@ -1,30 +1,30 @@
-var gulp = require('gulp'),
-    traceur = require('gulp-traceur'),
-    babel = require('gulp-babel'),
-    plumber = require('gulp-plumber'),
-    es6Path = 'es6/*.js',
-    compilePath = 'es6/compiled';
+'use strict'
 
-gulp.task('traceur', function () {
-    gulp.src([es6Path])
-        .pipe(plumber())
-        .pipe(traceur({ blockBinding: true }))
-        .pipe(gulp.dest(compilePath + '/traceur'));
-});
+const
+  gulp    = require('gulp')
+, traceur = require('gulp-traceur')
+, babel   = require('gulp-babel')
+, plumber = require('gulp-plumber')
+, srcPath = './es6/*.js'
+, outPath = './es5ified'
 
-gulp.task('babel', function () {
-    return gulp.src([
-            es6Path
-         ])
-        .pipe(plumber())
-        .pipe(babel())
-        .pipe(gulp.dest(compilePath + '/babel'));
-});
+gulp.task('traceur', () => {
+  gulp.src([srcPath])
+  .pipe(plumber())
+  .pipe(traceur({blockBinding : true}))
+  .pipe(gulp.dest(outPath + '/traceur'))
+})
 
-gulp.task('watch', function() {
+gulp.task('babel', () => {
+  gulp.src([srcPath])
+  .pipe(plumber())
+  .pipe(babel())
+  .pipe(gulp.dest(outPath + '/babel'))
+})
 
-    gulp.watch([es6Path], ['traceur', 'babel']);
+gulp.task('watch', () => {
+  gulp.watch([srcPath], ['traceur', 'babel'])
+})
 
-});
+gulp.task('default', ['traceur', 'babel', 'watch'])
 
-gulp.task('default', ['traceur', 'babel', 'watch']);

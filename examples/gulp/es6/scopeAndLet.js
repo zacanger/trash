@@ -1,11 +1,12 @@
-﻿var age = 55;
+var age = 26
 
 for (let i = 0; i < 5; i++) {
-    age += 5;
+  age += 5
 }
 
 try {
-    console.log(i);
+    console.log(i)
 } catch (e) {
-    console.log('i is out of scope due to using let!');
+    console.log('i is out of scope! (used let!)')
 }
+
