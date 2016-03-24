@@ -1,6 +1,7 @@
 'use strict'
 
-const gulp = require('gulp')
+const
+  gulp     = require('gulp')
 , stylus   = require('gulp-stylus')
 , concat   = require('gulp-concat')
 , uglify   = require('gulp-uglify')
@@ -9,7 +10,7 @@ const gulp = require('gulp')
 , annotate = require('gulp-ng-annotate')
 
 gulp.task('server', () => {
-  gulp.src('./dist')
+  return gulp.src('./dist')
   .pipe(server({
     livereload : true
   , open       : true
@@ -18,7 +19,7 @@ gulp.task('server', () => {
 })
 
 gulp.task('stylus', () => {
-  gulp.src('./src/styles/*.styl')
+  return gulp.src('./src/styles/*.styl')
   .pipe(stylus())
   .pipe(uglicss())
   .pipe(concat('css.min.css'))
@@ -26,7 +27,7 @@ gulp.task('stylus', () => {
 })
 
 gulp.task('js', () => {
-  gulp.src('./src/scripts/*.js')
+  return gulp.src('./src/scripts/*.js')
   .pipe(annotate())
   .pipe(uglify())
   .pipe(concat('js.min.js'))

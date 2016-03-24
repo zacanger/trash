@@ -15,13 +15,13 @@ gulp.task('server', function(){
 })
 
 gulp.task('livereload', function(){
-  gulp.src(['./main/styles/*.styl', './main/src/*.js'])
+  return gulp.src(['./main/styles/*.styl', './main/src/*.js'])
   .pipe(watch())
   .pipe(connect.reload())
 })
 
 gulp.task('stylus', function(){
-  gulp.src('./main/styles/*.styl')
+  return gulp.src('./main/styles/*.styl')
   .pipe(stylus())
   .pipe(uglifycss())
   .pipe(concat('styles.css'))
@@ -29,7 +29,7 @@ gulp.task('stylus', function(){
 })
 
 gulp.task('js', function(){
-  gulp.src('./main/src/*.js')
+  return gulp.src('./main/src/*.js')
   .pipe(annotate())
   .pipe(uglify())
   .pipe(concat('min.js'))
@@ -42,5 +42,5 @@ gulp.task('watch', function(){
 
 connect.server({port: 9999})
 
-// gulp.task('default', ['stylus', 'server', 'livereload', 'watch'])
 gulp.task('default', ['stylus', 'js', 'server', 'livereload', 'watch'])
+

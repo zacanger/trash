@@ -1,33 +1,44 @@
-// https://gist.github.com/Contra/8066801
+'use stict'
 
-var gulp    = require('gulp')
-  , gutil   = require('gulp-util')
-  , express = require('express')
-  , path    = require('path')
-  , tinylr  = require('tiny-lr')
+// this is not at all a good example of a gulpfile.
+// you wouldn't normally do things this way, like, ever.
 
-var createServers = function(port, lrport){
-  var lr = tinylr()
-  lr.listen(lrport, function(){
+// this IS a good example of setting up a gulpfile with
+// basically no actual gulp plugins, though.
+
+const
+  gulp    = require('gulp')
+, gutil   = require('gulp-util')
+, express = require('express')
+, path    = require('path')
+, tinylr  = require('tiny-lr')
+, createServers = (port, lrport) => {
+  let
+    app = express()
+  , lr  = tinylr()
+
+  lr.listen(lrport, () => {
     gutil.log('livereload over at', lrport)
   })
-  var app = express()
+
   app.use(express.static(path.resolve('./')))
-  app.listen(port, function(){
+  app.listen(port, () => {
     gutil.log('express on', port)
   })
+
   return {
     lr  : lr
   , app : app
   }
 }
-var servers = createServers(9876, 35729)
 
-gulp.task('default', function(){
-  gulp.watch(['./**/*', '!./node_modules/**/*'], function(evt){
+const servers = createServers(9876, 35729)
+
+gulp.task('default', () => {
+  gulp.watch(['./**/*', '!./node_modules/**/*'], (evt) => {
     gutil.log(gutil.colors.cyan(evt.path), 'changed')
     servers.lr.changed({
-      body: {files: [evt.path]}
+      body : {files : [evt.path]}
     })
   })
 })

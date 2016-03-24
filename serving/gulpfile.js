@@ -1,6 +1,8 @@
-var gulp = require('gulp')
+'use strict'
 
-gulp.task('default', ['things', 'stuff'], function(cb){
+const gulp = require('gulp')
+
+gulp.task('default', ['things', 'stuff'], (cb) => {
   var argv = require('minimist')(process.argv.slice(2))
   if(argv.serve){
     if(typeof argv.serve === 'number'){

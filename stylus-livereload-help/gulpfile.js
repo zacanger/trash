@@ -1,12 +1,15 @@
-var gulp     = require('gulp')
-  , stylus   = require('gulp-stylus')
-  , watch    = require('gulp-watch')
-  , connect  = require('gulp-connect')
-  , concat   = require('gulp-concat')
-  , uglify   = require('gulp-uglify')
-  , ugcss    = require('gulp-uglifycss')
-  , annotate = require('gulp-ng-annotate')
-  , tasklist = require('gulp-task-listing')
+'use strict'
+
+var
+  gulp     = require('gulp')
+, stylus   = require('gulp-stylus')
+, watch    = require('gulp-watch')
+, connect  = require('gulp-connect')
+, concat   = require('gulp-concat')
+, uglify   = require('gulp-uglify')
+, ugcss    = require('gulp-uglifycss')
+, annotate = require('gulp-ng-annotate')
+, tasklist = require('gulp-task-listing')
 
 gulp.task('server', function(){
   connect.server({
@@ -17,12 +20,12 @@ gulp.task('server', function(){
 })
 
 gulp.task('livereload', function(){
-  gulp.src('./public/**')
+  return gulp.src('./public/**')
   .pipe(connect.reload())
 })
 
 gulp.task('stylus', function(){
-  gulp.src('./css/*.styl')
+  return gulp.src('./css/*.styl')
   .pipe(stylus())
   .pipe(ugcss())
   .pipe(concat('css.min.css'))
@@ -30,7 +33,7 @@ gulp.task('stylus', function(){
 })
 
 gulp.task('js', function(){
-  gulp.src('./js/*.js')
+  return gulp.src('./js/*.js')
   .pipe(annotate())
   .pipe(uglify())
   .pipe(concat('js.min.js'))
@@ -45,5 +48,4 @@ gulp.task('watch', function(){
 gulp.task('help', tasklist)
 
 gulp.task('default', ['stylus', 'js', 'server', 'livereload', 'watch'])
-// gulp.task('default', ['stylus', 'js'])
 
