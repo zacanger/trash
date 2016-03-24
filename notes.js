@@ -1,3 +1,15 @@
+// topics still to do:
+// promises
+// generators
+// iterators
+// async/await
+// decorators
+// observables
+// array methods
+// object methods
+
+
+
 // const
 const foo = 2
 foo // => 2
@@ -129,9 +141,6 @@ const greetz = 'hello'
 console.log(`${greetz}, world`)
 
 
-
-
-
 // multiline strings (using one backtick)
 var thing = 'this is a multi-line string\ndoing things the old way.\nkinda gross, huh?'
 let stuff = `here's a multi-line string
@@ -139,6 +148,14 @@ doing things the new way.
 much nicer, i think.`
 
 
+
+
+
+// function parameters:
+function us({a: x, b: y}){
+   console.log(x, y)
+}
+us({a : 'me', b : 'you'})
 
 
 
@@ -220,7 +237,7 @@ console.log(x, y)
 [x, y] = [y, x]
 console.log(x, y)
 
-let foo = () => return [10, 20, 30]
+let foo = () => [10, 20, 30]
 let [, q, r] = foo()
 console.log(q, r)
 
@@ -294,18 +311,13 @@ var a = [1,2,3]
 // vs
 let y = [...a, ...b, ...c]
 
-var paragraphs = document.querySelectorAll('p')
-Array.prototype.forEach.call(ps, (elm) => {
-  console.log(elm.textContent)
-})
+let arr = [2, 3, 4]
+console.log(1, ...a, 5, 6)
 
-// or
-[...ps].forEach(elm => console.log(elm.textContent))
-
-
-
-
-
+let fn = (a, b, c) => {
+  console.log(a + b + c)
+}
+fun(...arr)
 
 
 // MODULES! http://www.2ality.com/2014/09/es6-modules-final.html
@@ -339,6 +351,7 @@ let
 
 // classes:
 // NO.
+// JUST DON'T.
 // https://medium.com/javascript-scene/common-misconceptions-about-inheritance-in-javascript-d5d9bab29b0a
 // https://medium.com/javascript-scene/how-to-fix-the-es6-class-keyword-2d42bb3f4caf
 // https://medium.com/javascript-scene/inside-the-dev-team-death-spiral-6a7ea255467b
@@ -369,22 +382,188 @@ me.detail()
 me.skilled()
 
 
+// old way
+var Car - function(odometer = 0){
+  this.odometer = odometer
+}
+Car.prototype.drive = function(distance){
+  this.odometer += distance
+}
+var beetle = new Car()
+beetle.drive(10)
+console.log(beetle)
+
+// new way
+class Car {
+  constructor(odometer = 0){
+    this.odometer = odometer
+  }
+  drive(distance){
+    this.odometer += distance
+  }
+}
+let jetta = new Car()
+jetta.drive(20)
+console.log(jetta)
 
 
 
 
 
-// promises
+
+// sets
+let s = new Set()
+s.add(1)
+s.add(1)
+console.log(s.size)
+s.add(2)
+s.delete(2)
+s.clear()
+console.log(s.haz(1))
+let set = new Set(['foo', 'bar', 'quux', 'baz'])
+// for...of works on sets _in order_!
+for (let x of set) {
+  console.log(x)
+}
+// spread works with sets, so you can make a set an array!
+let arr = [...set]
+// which means you can easily remove duplicates from an array
+let newArr = [1, 1, 2, 1, 4, 2, 4, 6, 9, false, NaN]
+let newSet = [...new Set(newArr)]
+// also new: WeakSet. see other example code for this.
+
+
+
+
+
+
+
+// maps
+let m = new Map()
+let [x, y] = [{id : 1}, {id : 2}]
+m.set(x, 'foo')
+m.set(y, 'bar')
+let xVal = m.get(x)
+console.log(xVal)
+for (let i of m) {
+  console.log(i)
+}
+let keys = m.keys()
+m.delete(y)
+console.log(keys.next())
+console.log(keys.next())
+m.clear()
+console.log(keys.next())
+
+let map = new Map([
+  [1, 'one']
+, [2, 'two']
+, [3, 'tre']
+])
+
+let newMap = new Map()
+.set(1, 'one')
+.set(2, 'two')
+.set(3, 'tre')
+
+for (let val of map.values()) {
+  console.log(val)
+}
+
+for (let key of newMap.keys()) {
+  console.log(key)
+}
+
+for (let ent of map.entries()) {
+  console.log(ent[0], ent[1])
+}
+// OR:
+for (let [key, value] of map.entries()) {
+  console.log(key, value)
+}
+// but since `entries()` is the default way of iterating:
+for (let [key, value] of map) {
+  console.log(key, value)
+}
+// as with sets, maps can be easily converted to and from arrays
+// also see: WeakMap.
+
+
+
+
+
+
+
+
+
+
+
+
+
+// tag functions
+// let [a, b] = [13, 17];
+// let myTagFunction = function (words, ...values) {
+//     // does stuff
+// };
+// let result = myTagFunction `I have ${a} brothers and ${b} sisters`;
+
+
+// iterators
+let it = ['a', 'b', 'c', 'd'][Symbol.iterator]();
+console.log(it.next().value);
+console.log(it.next().value);
+console.log(it.next().value);
+console.log(it.next().value);
+console.log(it.next().value);
+let anotherIt = 'Provo'[Symbol.iterator]();
+console.log(anotherIt.next().value);
+console.log(anotherIt.next().value);
+console.log(anotherIt.next().value);
+console.log(anotherIt.next().value);
+console.log(anotherIt.next().value);
+console.log(anotherIt.next().value);
+
+let obj = [7, 14, 21];
+for (let v of obj) {
+  console.log(v);
+}
+let str = 'javascript';
+for (let ch of str) {
+  console.log(ch);
+}
+
+
+
+
 // generators
-// async/await
-// decorators
-// observables
-// array methods
-// object methods
+// let makeIt = function* (obj) {
+//     for (let i in obj) {
+//         yield obj[i];
+//     }
+// };
+// let anIt = makeIt({ a: 10, b: 20, c: 30 });
+// console.log(anIt.next().value);
+// console.log(anIt.next().value);
+// console.log(anIt.next().value);
+// console.log(anIt.next().value);
+
+
+
+// array comprehensions
+// let myArr = [for (e of [1, 2, 3, 4]) if (e % 2 === 0) e * e];
+// console.log(myArr);
+// let firsts = ['Peter', 'John', 'Nick'];
+// let middles = ['Miles', 'James', 'John'];
+// let names = [for (f of firsts) for (m of middles) if (f !== m) f + ' ' + m + ' Smith'];
+// for (let n of names) {
+//     console.log(n);
+// }
 
 
 
 
+
+// generators
 
 // Official description of generators:
 // Generators are functions which can be exited and later re-entered. Their context (variable bindings)
@@ -478,6 +657,3 @@ me.skilled()
 // }
 // var genAsync = runTimeoutFuncAsync();
 // genAsync.next(); // kick off the tasks
-
-
-
