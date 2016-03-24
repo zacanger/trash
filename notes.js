@@ -7,14 +7,22 @@ foo = false // ERROR!
 
 
 // let
+if(true){var asdf = 'hi'}
+console.log(asdf) // this works
+
+if(true){let ghjkl = 'hullo'}
+console.log(ghjkl) // this does not!
+
 let something = 'this is something!'
 something = 0 // this is okay, just like with `var`
+
 while (true) {
   let something = 'this is a new thing'
   console.log(something)
   break
 }
 console.log(something)
+
 // that's not a function, it's a block.
 function asdf() {
   for (let i = 0; i < 100; i++) {
@@ -40,12 +48,44 @@ $('.btn').click(function(e) {
   e.preventDefault()
   this.toggle()
 })
-// or:
+// vs
 let numbers = [1,2,3,4,5]
 numbers.map(x => x * x)
 $('.btn').click(e => {
   e.preventDefault()
   this.toggle()
+})
+
+
+var fs = require('fs')
+function add(x, y){
+  return x + y
+}
+var nums = [1,2,3,4,5]
+var newNums = nums.map(function(n){
+  return n * 2
+})
+console.log(add(4, 12))
+console.log(nums, newNums)
+fs.readFile('./package.json', 'utf-8', function(err, data){
+  if(err){
+    console.error(err)
+  }
+  console.log(data)
+})
+// vs
+const
+  fs   = require('fs')
+, add  = (x, y) => x + y
+, nums = [1,2,3,4,5]
+, newNums = nums.map(n => n * 2)
+console.log(add(32, 32))
+console.log(nums, newNums)
+fs.readFile('./package.json', 'utf-8', (err, data) => {
+  if(err){
+    console.error(err)
+  }
+  console.log(data)
 })
 
 
@@ -161,6 +201,19 @@ let
 console.log(key, newKey)
 console.log(senseless)
 
+// also
+function personFactory(name, age, eyes, hair){
+  return {
+    name : name
+  , age  : age
+  , eyes : eyes
+  , hair : hair
+  }
+}
+// vs
+function personFactory(name, age, eyes, hair){
+  return {name, age, eyes, hair}
+}
 
 
 
@@ -314,7 +367,6 @@ me.skilled()
 
 
 
-
 // promises
 // generators
 // async/await
@@ -322,4 +374,101 @@ me.skilled()
 // observables
 // array methods
 // object methods
+
+
+
+
+
+// Official description of generators:
+// Generators are functions which can be exited and later re-entered. Their context (variable bindings)
+// will be saved across re-entrances.
+// Calling a generator function does not execute its body immediately; an iterator object for the function is returned
+// instead. When the iterator’s next() method is called, the generator function’s body is executed until the first
+// yield expression, which specifies the value to be returned from the iterator or, with yield*, delegates to another
+// generator function. The next() method returns an object with a value property containing the yielded value and a done
+// property which indicates whether the generator has yielded its last value.
+//
+// Generator examples:
+// // simple generator function
+// function* simpleGeneratorFunc() {
+//     yield 1;
+//     yield 2;
+//     return "finished";
+// }
+// let gen = simpleGeneratorFunc();
+// console.log(gen.next());    // { value: 1, done: false }
+// console.log(gen.next());    // { value: 2, done: false }
+// console.log(gen.next());    // { value: 'finished', done: true }
+//
+//
+// // calling generator function inside a generator function
+// function* callGeneratorInGenerator() {
+//     yield 'a';
+//     yield* simpleGeneratorFunc();
+//     yield 'b';
+// }
+// gen = callGeneratorInGenerator();
+// console.log(gen.next());    // { value: 'a', done: false }
+// console.log(gen.next());    // { value: 1, done: false }
+// console.log(gen.next());    // { value: 2, done: false }
+// console.log(gen.next());    // { value: 'b', done: false }
+// console.log(gen.next());    // { value: undefined, done: true }
+//
+// // ways of iterating through all the yields in the generator function
+//
+// // while loop
+// gen = simpleGeneratorFunc();
+// let item = {"done":false};
+// while(!item.done) {
+//     item = gen.next();
+//     console.log(item);
+// }
+// // { value: 1, done: false }
+// // { value: 2, done: false }
+// // { value: 'finished', done: true }
+//
+//
+// // for of
+// for (let g of simpleGeneratorFunc()) {
+//     console.log(g);
+// }
+// //1
+// //2
+//
+// // the three dots spread operator ...
+// let arr = [...simpleGeneratorFunc()];
+// console.log(arr); // [1, 2]
+//
+// // destructuring
+// let [a, b] = simpleGeneratorFunc();
+// console.log(a); // 1
+// console.log(b); // 2
+//
+//
+//
+// In node.js, input and output operations are asynchronous or non-blocking I/O. It allows other operations to continue
+// before the I/O transmission are finished. For example, when it encounters a file read operation, it will not wait
+// for the file reading operation to finish, but instead it will jump to the next line of code and go on it’s execution.
+// This causes the results of the I/O operation to be out of order. There are ways of to control the order, such as
+// nested callback function, async libraries, promise libraries and generator function. Generator function is a new
+// feature in es6, the snippet below is an example of using generator function to make sure the asynchronous functions
+// to run in the order it is written in the code.
+// // synchronous timeout function
+// // genAsync is a generator object in global scope
+// // genAsync.next in this function keeps the tasks to run till completed
+// function timeoutFunc(order) {
+//     var random = Math.random();
+//     setTimeout(function(){
+//         genAsync.next(random + order);
+//     }, random * 3000);
+// }
+//
+// // The generator function runing the asynchronous function in series, one after another
+// function* runTimeoutFuncAsync() {
+//     var random1 = yield timeoutFunc(1); console.log(random1);
+//     var random2 = yield timeoutFunc(2); console.log(random2);
+//     var random3 = yield timeoutFunc(3); console.log(random3);
+// }
+// var genAsync = runTimeoutFuncAsync();
+// genAsync.next(); // kick off the tasks
 
