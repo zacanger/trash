@@ -9,6 +9,7 @@ mini-lecture on es6 for dm9.
 * [ES6 in 350 Bullet Points](https://ponyfoo.com/articles/es6)
 * [How To Learn ES6](https://medium.com/javascript-scene/how-to-learn-es6-47d9a1ac2620) — everything Eric Elliot writes is worth reading. In Depth. At least twice.
 * [Getting Started With ES6](http://www.2ality.com/2015/08/getting-started-es6.html) and every other article this guy has ever written.
+* [Exploring JS](http://exploringjs.com/) free ebook by Dr. Rauschmayer, definitely read this if/when you have time.
 * [ES6 Equivalents in ES5](https://github.com/addyosmani/es6-equivalents-in-es5)
 * [ES6 In Depth](https://ponyfoo.com/articles/tagged/es6-in-depth) (series of articles, _highly_ recommended)
 * [ES6 Katas](http://es6katas.org/)
