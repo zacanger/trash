@@ -18,12 +18,7 @@
 *.tar
 *~
 .completer.hist
-.config/nvim/bundle/*
-.config/nvim/session/*
-.config/ranger/bookmarks
-.config/ranger/history
 /.build/
-bin/x
 TAGS
 __pycache__/
 _build/
@@ -35,5 +30,4 @@ data
 db
 node_modules
 tags
-x/
-
+todo*
