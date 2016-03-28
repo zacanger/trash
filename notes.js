@@ -1,29 +1,11 @@
 // topics still to do:
 // promises
-// generators
-// iterators
 // async/await
 // decorators
 // observables
 // proxies (meta-programming)
 // improved unicode support (str, regex)
 // TCO: http://stackoverflow.com/questions/310974/what-is-tail-call-optimization
-
-
-
-
-// jspm:
-// npm i -g jspm
-// cd foo
-// jspm init
-// jspm install npm:lodash-node
-// jspm install github:components/jquery
-// jspm install foo (from JSPM's actual registry)
-// in browser:
-// <script src="jspm_packages/system.js"></script>
-// <script src="config.js"></script>
-// <script>System.baseURL='/'
-// System.import('lib/main.js')</script>
 
 
 
@@ -589,6 +571,18 @@ let myObj = {foo : 2, bar : 4}
 for (let [key, value] of iterEntries(myObj)) {
   console.log(key, value)
 }
+
+function* dataConsumer() {
+  console.log('started')
+  console.log(`1. ${yield}`)
+  console.log(`2. ${yield}`)
+  return result
+}
+let newObj = dataConsumer()
+newObj.next()
+newObj.next('a')
+newObj.next('b')
+
 // foo 2
 // bar 4
 
@@ -712,3 +706,63 @@ for (let [key, value] of iterEntries(myObj)) {
 // }
 // var genAsync = runTimeoutFuncAsync();
 // genAsync.next(); // kick off the tasks
+
+
+
+
+// async
+'use strict'
+const
+  fs       = require('fs')
+, fileName = process.argv[2]
+
+readFile(fileName, chain(splitLines, numberLines, printLines))
+
+function readFile(fileName, target) {
+  let readStream = fs.createReadStream(fileName, {encoding : 'utf8', bufferSize: 1024})
+  readStream.on('data', buffer => {
+    let str = buffer.toString('utf8')
+    target.next(str)
+  })
+  readStream.on('end', () => {
+    target.return()
+  })
+}
+
+function* splitLines(target) {
+  let previous = ''
+  try {
+    while (true) {
+      previous += yield
+      let eolIndex
+      while ((eolIndex = previous.indexOf('\n')) >= 0) {
+        let line = previous.slice(0, eolIndex)
+        target.next(line)
+        previous = previous.slice(eolIndex + 1)
+      }
+    }
+  } finally {
+    if (previous.length > 0) {
+      target.next(previous)
+    }
+    target.return()
+  }
+}
+
+function* numberLines(target) {
+  try {
+    for (let lineNo = 0; ; lineNo++) {
+      let line = yield
+      target.next(`$lineNo} : $line`)
+    }
+  } finally {
+    target.return()
+  }
+}
+
+function* printLines() {
+  while (true) {
+    let line = yield
+    console.log(line)
+  }
+}
