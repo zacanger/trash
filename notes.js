@@ -126,6 +126,26 @@ const obj = {
   }
 } // z is friends with e (etc)
 
+// another example of lexical binding
+function SomeComponent() {
+  var that   = this
+  var button = document.getElementById('btn')
+  button.addEventListener('click', function() {
+    console.log('clicked!')
+    that.handleClick()
+  })
+}
+SomeComponent.prototype.handleClick = function() {
+  // etc
+}
+// vs
+function NewComponent() {
+  let button = document.getElementById('btn')
+  button.addEventListener('click', () => {
+    console.log('clicked!')
+    this.handleClick()
+  })
+}
 
 
 
@@ -139,19 +159,51 @@ let stuff = `here's a multi-line string
 doing things the new way.
 much nicer, i think.`
 
+var htmlSkeleton = '\
+  <!doctype html>\n\
+  <html lang="en">\n\
+    <head>\n\
+      <meta charset="utf-8"
+'
+// or
+var htmlSkel =
+  '<!doctype html>\n' +
+  '<html lang="en">\n' +
+  ' <head>\n' +
+// etc...
+// vs
+const hSkel = `
+  <!doctype html>
+  <html lang="en">
+    <head>
+      <meta charset="utf-8">
+`
+// etc
 
 
 
-// function parameters:
+
+// named parameters:
 function us({a: x, b: y}){
    console.log(x, y)
 }
 us({a : 'me', b : 'you'})
 
+function selectEntries(options) {
+  var start = options.start || 0
+  var end   = options.end   || -1
+  var step  = options.step  || 1
+  // stuff
+}
+// vs
+function selectEntries({start = 0, end=-1, step=1}){
+  // stuf`^f
+}
 
 
 
 // defaults:
+// only triggered by `undefined` (not any falsey value)
 function add(x, y) {
   if ((typeof x == 'undefined') || (typeof y == 'undefined')) {
     console.error('invalid arguments')
@@ -251,7 +303,6 @@ function laptopInfo({brand}, {overheats}, {ram}, {cores}){
 
 // rest:
 var nums = [1,2,3,4,5]
-
 function vals(list){
   var first  = nums[0]
     , second = nums[1]
@@ -261,18 +312,21 @@ function vals(list){
 
 // vs
 const nums = [1,2,3,4,5]
-
 function vals([first, second, ...rest]){
   console.log(first, second, rest)
 }
-
 function logThings(...stuff){
   console.log(stuff)
 }
-
 logThings('thing one', 'thing two', false, 2)
 
-
+// or
+function format() {
+  var pattern = arguments[0]
+  var args    = [].slice.call(arguments, 1)
+}
+// vs
+function format(pattern, ...args){}
 
 
 // spread:
@@ -292,33 +346,68 @@ let fn = (a, b, c) => {
 }
 fun(...arr)
 
+// or
+var arr1 = [1, 2]
+  , arr2 = [3, 4]
+arr1.push.apply(arr1, arr2)
+// vs
+arr1.push(...arr2)
+
 
 
 
 // MODULES! http://www.2ality.com/2014/09/es6-modules-final.html
+// browser: <script type="module">
 
 // a module:
 export function add(list){
   return [...list].reduce((acc, x) => acc + x, 0)
 }
-
 export function square(val){
   return val * val
 }
-
 const Math = {add, square}
-
 export default Math
-
 // using that module:
 import Math          from 'math' // because it's the default
 import {add, square} from 'math' // because we can
-
 let
   total = Math.add(1,2,3,4,5)
 , twice = square(16)
 
-// browser: <script type="module">
+
+// old way
+var sqrt = Math.sqrt
+function square(x) {
+  return x * x
+}
+function diag(x, y) {
+  return sqrt(square(x) + square(y))
+}
+module.exports = {
+  sqrt   : sqrt
+, square : square
+, diag   : diag
+}
+// importing it
+var square = require('./file').square
+  , diag   = require('./file').diag
+console.log(square(8))
+console.log(diag(2, 4))
+
+// vs
+
+export const sqrt = Math.sqrt
+export function square(x) {
+  return x * x
+}
+export function diag(x, y) {
+  return sqrt(square(x) + square(y))
+}
+// and importing
+import {square, diag} from './file'
+
+
 
 
 // classes:
@@ -378,7 +467,32 @@ let jetta = new Car()
 jetta.drive(20)
 console.log(jetta)
 
+// or
+function Person(name){
+  this.name = name
+}
+Person.prototype.describe = function(){
+  return 'Person, called' + this.name + '.'
+}
+// vs
+class Person {
+  constructor(name) {
+    this.name = name
+  }
+  describe() {
+    return 'Person, called ' + this.name + '.'
+  }
+}
 
+// an error-handling example
+function NewError() {
+  var superInst = Error.apply(null, arguments)
+  copyOwnPropertiesFrom(this, superInst)
+}
+NewError.prototype = Object.create(Error.prototype)
+NewError.prototype.constructor = NewError
+// vs
+class NewError extends Error {}
 
 
 // sets
@@ -527,6 +641,9 @@ function clone(originalObject) {
 [1, 4, 9].find(x => x % 2 === 0) // => 4
 [1, 4, 9].findIndex(x => x % 2 === 0) // => 1
 [1, 3, 9].findIndex(x => x % 2 === 0) // => -1
+// es2016:
+[1, 2, 3, 4].includes('a') // => false
+[1, 2, 3, 4].includes(3) // => true
 
 
 
@@ -710,7 +827,7 @@ newObj.next('b')
 
 
 
-// async
+// async generator fun
 'use strict'
 const
   fs       = require('fs')
@@ -766,3 +883,25 @@ function* printLines() {
     console.log(line)
   }
 }
+
+
+
+
+// exponents!
+x ** y // same as Math.pow(x, y)
+num **= 2 // same as num = num ** 2
+
+
+
+
+// proposed : string padding:
+'8'.padStart(4, '0') // '0008'
+'4'.padEnd(2, '3') // '43'
+'x'.padEnd(4) / 'x   '
+
+
+
+
+// proposed : trailing commas in objects, arrays, parameters.
+// don't use : will break things still.
+
