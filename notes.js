@@ -5,8 +5,27 @@
 // async/await
 // decorators
 // observables
-// array methods
-// object methods
+// proxies (meta-programming)
+// improved unicode support (str, regex)
+// TCO: http://stackoverflow.com/questions/310974/what-is-tail-call-optimization
+
+
+
+
+// jspm:
+// npm i -g jspm
+// cd foo
+// jspm init
+// jspm install npm:lodash-node
+// jspm install github:components/jquery
+// jspm install foo (from JSPM's actual registry)
+// in browser:
+// <script src="jspm_packages/system.js"></script>
+// <script src="config.js"></script>
+// <script>System.baseURL='/'
+// System.import('lib/main.js')</script>
+
+
 
 
 
@@ -317,7 +336,7 @@ let
   total = Math.add(1,2,3,4,5)
 , twice = square(16)
 
-
+// browser: <script type="module">
 
 
 // classes:
@@ -496,6 +515,83 @@ for (let ch of str) {
 
 
 
+// object.assign()
+Object.assign(target, source1, source2)
+// merges source1 and source2 into target
+// returns target
+let someObj = {foo : 4}
+Object.assign(someObj, {bar : 8})
+// someObj => {foo : 4, bar : 8}
+
+// cloning objects
+function clone(originalObject) {
+  return Object.assign({}, originalObject)
+}
+
+
+
+
+// string methods
+'foo'.repeat(4)
+// 'foofoofoofoo'
+'foo'.startsWith('bar') // => false
+'bar'.endsWith('ar') // => true
+'hello'.includes('ll') // => true
+
+
+
+
+// array methods
+[1, 4, 9].find(x => x % 2 === 0) // => 4
+[1, 4, 9].findIndex(x => x % 2 === 0) // => 1
+[1, 3, 9].findIndex(x => x % 2 === 0) // => -1
+
+
+
+
+// for...of
+// goodbye, for-in, .forEach!
+let arr = ['foo', 'bar']
+for (let el of arr) {
+  console.log(el)
+}
+for (let [index, elem] of arr.entries()) {
+  console.log(index, elem)
+}
+
+
+
+
+// generators:
+// suspend with `yield` (it's like return, but you can resume after it)
+// start and resume with `next()`
+function* generatorThing() {
+  yield 0
+  yield 1
+  yield 2
+  yield 3
+}
+let genObj = generatorFunction()
+genObj.next() // {value : 0, done : false}
+genObj.next() // {value : 1, done : false}
+genObj.next() // {value : 2, done : false}
+genObj.next() // {value : 3, done : false}
+genObj.next() // {value : undefined, done : true}
+
+function* iterEntries(obj) {
+  let keys = Object.keys(obj)
+  for (let i = 0; i < keys.length; i++) {
+    let key = keys[i]
+    yield [ley, obj[key]]
+  }
+}
+let myObj = {foo : 2, bar : 4}
+for (let [key, value] of iterEntries(myObj)) {
+  console.log(key, value)
+}
+// foo 2
+// bar 4
+
 // generators
 // let makeIt = function* (obj) {
 //     for (let i in obj) {
@@ -519,8 +615,6 @@ for (let ch of str) {
 // for (let n of names) {
 //     console.log(n);
 // }
-
-
 
 
 
@@ -618,37 +712,3 @@ for (let ch of str) {
 // }
 // var genAsync = runTimeoutFuncAsync();
 // genAsync.next(); // kick off the tasks
-
-
-
-
-// object.assign()
-Object.assign(target, source1, source2)
-// merges source1 and source2 into target
-// returns target
-let someObj = {foo : 4}
-Object.assign(someObj, {bar : 8})
-// someObj => {foo : 4, bar : 8}
-
-// cloning objects
-function clone(originalObject) {
-  return Object.assign({}, originalObject)
-}
-
-
-
-
-// string methods
-'foo'.repeat(4)
-// 'foofoofoofoo'
-'foo'.startsWith('bar') // => false
-'bar'.endsWith('ar') // => true
-'hello'.includes('ll') // => true
-
-
-
-
-// array methods
-[1, 4, 9].find(x => x % 2 === 0) // => 4
-[1, 4, 9].findIndex(x => x % 2 === 0) // => 1
-[1, 3, 9].findIndex(x => x % 2 === 0) // => -1
