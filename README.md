@@ -20,6 +20,5 @@ mini-lecture on es6 for dm9.
 * [Mozilla's Blog Series on ES6](https://hacks.mozilla.org/category/es6-in-depth/) (may be somewhat out of date)
 * [ES2015 (and 2016, and 2017) Support Table](https://kangax.github.io/compat-table/es6/)
 * [How to Use ES6 for Universal JavaScript Apps](https://medium.com/javascript-scene/how-to-use-es6-for-isomorphic-javascript-apps-2a9c3abe5ea2)
-* [ES6 Examples](https://github.com/hemanth/paws-on-es6)
 * [A good starter project in ES6](https://github.com/r-walsh/es6-profiles) from the Dallas campus, similar to projects we've done here.
 
