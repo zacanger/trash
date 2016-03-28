@@ -48,9 +48,6 @@ asdf() // woahhhh
 
 
 
-
-
-
 // arrow functions
 var numbers = [1,2,3,4,5]
 numbers.map(function(x) {
@@ -103,8 +100,6 @@ fs.readFile('./package.json', 'utf-8', (err, data) => {
 
 
 
-
-
 // arrow functions bind 'this' when defined, rather than when called!
 // new kind of methods!
 var obj = {
@@ -133,13 +128,9 @@ const obj = {
 
 
 
-
-
-
 // template strings
 const greetz = 'hello'
 console.log(`${greetz}, world`)
-
 
 // multiline strings (using one backtick)
 var thing = 'this is a multi-line string\ndoing things the old way.\nkinda gross, huh?'
@@ -150,14 +141,11 @@ much nicer, i think.`
 
 
 
-
 // function parameters:
 function us({a: x, b: y}){
    console.log(x, y)
 }
 us({a : 'me', b : 'you'})
-
-
 
 
 
@@ -175,10 +163,6 @@ function add(x, y) {
 function add(x = 0, y = 0) { return x + y }
 add(2, 2)
 add()
-
-
-
-
 
 
 
@@ -244,8 +228,6 @@ console.log(q, r)
 
 
 
-
-
 // putting some things together:
 const eliteBook = {
   brand     : 'hp'
@@ -262,11 +244,6 @@ const toshy = {
 function laptopInfo({brand}, {overheats}, {ram}, {cores}){
   console.log(`my ${brand} laptop has ${ram} of RAM, a ${cores} CPU, and it overheats ${overheats}.`)
 }
-
-
-
-
-
 
 
 
@@ -297,11 +274,6 @@ logThings('thing one', 'thing two', false, 2)
 
 
 
-
-
-
-
-
 // spread:
 var a = [1,2,3]
   , b = [4,5,6]
@@ -318,6 +290,8 @@ let fn = (a, b, c) => {
   console.log(a + b + c)
 }
 fun(...arr)
+
+
 
 
 // MODULES! http://www.2ality.com/2014/09/es6-modules-final.html
@@ -342,9 +316,6 @@ import {add, square} from 'math' // because we can
 let
   total = Math.add(1,2,3,4,5)
 , twice = square(16)
-
-
-
 
 
 
@@ -383,7 +354,7 @@ me.skilled()
 
 
 // old way
-var Car - function(odometer = 0){
+var Car = function(odometer = 0){
   this.odometer = odometer
 }
 Car.prototype.drive = function(distance){
@@ -409,8 +380,6 @@ console.log(jetta)
 
 
 
-
-
 // sets
 let s = new Set()
 s.add(1)
@@ -431,9 +400,6 @@ let arr = [...set]
 let newArr = [1, 1, 2, 1, 4, 2, 4, 6, 9, false, NaN]
 let newSet = [...new Set(newArr)]
 // also new: WeakSet. see other example code for this.
-
-
-
 
 
 
@@ -491,15 +457,6 @@ for (let [key, value] of map) {
 
 
 
-
-
-
-
-
-
-
-
-
 // tag functions
 // let [a, b] = [13, 17];
 // let myTagFunction = function (words, ...values) {
@@ -509,27 +466,27 @@ for (let [key, value] of map) {
 
 
 // iterators
-let it = ['a', 'b', 'c', 'd'][Symbol.iterator]();
-console.log(it.next().value);
-console.log(it.next().value);
-console.log(it.next().value);
-console.log(it.next().value);
-console.log(it.next().value);
-let anotherIt = 'Provo'[Symbol.iterator]();
-console.log(anotherIt.next().value);
-console.log(anotherIt.next().value);
-console.log(anotherIt.next().value);
-console.log(anotherIt.next().value);
-console.log(anotherIt.next().value);
-console.log(anotherIt.next().value);
+let it = ['a', 'b', 'c', 'd'][Symbol.iterator]()
+console.log(it.next().value)
+console.log(it.next().value)
+console.log(it.next().value)
+console.log(it.next().value)
+console.log(it.next().value)
+let anotherIt = 'Provo'[Symbol.iterator]()
+console.log(anotherIt.next().value)
+console.log(anotherIt.next().value)
+console.log(anotherIt.next().value)
+console.log(anotherIt.next().value)
+console.log(anotherIt.next().value)
+console.log(anotherIt.next().value)
 
-let obj = [7, 14, 21];
+let obj = [7, 14, 21]
 for (let v of obj) {
-  console.log(v);
+  console.log(v)
 }
-let str = 'javascript';
+let str = 'javascript'
 for (let ch of str) {
-  console.log(ch);
+  console.log(ch)
 }
 
 
