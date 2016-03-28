@@ -381,6 +381,8 @@ console.log(jetta)
 
 
 // sets
+// collections of values
+// no duplicates
 let s = new Set()
 s.add(1)
 s.add(1)
@@ -405,6 +407,8 @@ let newSet = [...new Set(newArr)]
 
 
 // maps
+// arbitary values : arbitary values
+// a _dictionary_ rather than object in the es5 sense
 let m = new Map()
 let [x, y] = [{id : 1}, {id : 2}]
 m.set(x, 'foo')
@@ -614,3 +618,37 @@ for (let ch of str) {
 // }
 // var genAsync = runTimeoutFuncAsync();
 // genAsync.next(); // kick off the tasks
+
+
+
+
+// object.assign()
+Object.assign(target, source1, source2)
+// merges source1 and source2 into target
+// returns target
+let someObj = {foo : 4}
+Object.assign(someObj, {bar : 8})
+// someObj => {foo : 4, bar : 8}
+
+// cloning objects
+function clone(originalObject) {
+  return Object.assign({}, originalObject)
+}
+
+
+
+
+// string methods
+'foo'.repeat(4)
+// 'foofoofoofoo'
+'foo'.startsWith('bar') // => false
+'bar'.endsWith('ar') // => true
+'hello'.includes('ll') // => true
+
+
+
+
+// array methods
+[1, 4, 9].find(x => x % 2 === 0) // => 4
+[1, 4, 9].findIndex(x => x % 2 === 0) // => 1
+[1, 3, 9].findIndex(x => x % 2 === 0) // => -1
