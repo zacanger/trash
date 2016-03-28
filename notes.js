@@ -927,3 +927,12 @@ let NegativeIndices = (array) => {
 // array = NegativeIndices [4, 420, 42]
 // array[-1] is 42
 
+
+
+
+// binary and octal literals!
+// lots of nice new methods for strings, arrays, objects, math, etc!
+// other things!
+// stuff!
+// fun times!
+
