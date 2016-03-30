@@ -20,6 +20,7 @@ mini-lecture on es6 for dm9.
 ## links
 * es6 stuff
 	* [The official Technical Committee 39 GitHub](https://github.com/tc39)
+  * [list of all tc39 members](https://github.com/zacanger/es6-and-builds/blob/master/tc39-members.json)
 	* [ES6 in 350 Bullet Points](https://ponyfoo.com/articles/es6)
 	* [How To Learn ES6](https://medium.com/javascript-scene/how-to-learn-es6-47d9a1ac2620) — everything Eric Elliot writes is worth reading. In Depth. At least twice.
 	* [Getting Started With ES6](http://www.2ality.com/2015/08/getting-started-es6.html) and every other article this guy has ever written.
