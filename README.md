@@ -5,6 +5,8 @@ mini-lecture on es6 for dm9.
 
 ## some super useful links you should definitely check out:
 
+--------
+
 * [The official Technical Committee 39 GitHub](https://github.com/tc39)
 * [ES6 in 350 Bullet Points](https://ponyfoo.com/articles/es6)
 * [How To Learn ES6](https://medium.com/javascript-scene/how-to-learn-es6-47d9a1ac2620) — everything Eric Elliot writes is worth reading. In Depth. At least twice.
@@ -22,6 +24,7 @@ mini-lecture on es6 for dm9.
 * [How to Use ES6 for Universal JavaScript Apps](https://medium.com/javascript-scene/how-to-use-es6-for-isomorphic-javascript-apps-2a9c3abe5ea2)
 * [A good starter project in ES6](https://github.com/r-walsh/es6-profiles) from the Dallas campus, similar to projects we've done here.
 
+--------
 
 * [babel's online repl](https://babeljs.io/repl/)
 * [browserify handbook](https://github.com/substack/browserify-handbook)
