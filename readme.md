@@ -1,2 +1,14 @@
-for 16th & 17th feb
-
+* `npm i -g thinking-in-react` is a workshopper (interactive somewhat gamified tutorial in the terminal)
+  * (and workshoppers are really great. react is neat, workshoppers are great, so this is swell.)
+* [lifecycle demo](http://plnkr.co/edit/JrdxRs?p=preview)
+* [official react jsfiddle](http://jsfiddle.net/reactjs/69z2wepo/)
+* [unofficial react jsbin](http://jsbin.com/yafixat/edit?js,output)
+* [so many great demos](https://github.com/BinaryMuse/react-primer)
+* [live links to the above demos](http://binarymuse.github.io/react-primer/build/):
+  * [components and properties](http://binarymuse.github.io/react-primer/build/index.html?1)
+  * [jsx](http://binarymuse.github.io/react-primer/build/index.html?2)
+  * [state](http://binarymuse.github.io/react-primer/build/index.html?3)
+  * [composition, proptypes, & event handlers](http://binarymuse.github.io/react-primer/build/index.html?4)
+  * [mixins](http://binarymuse.github.io/react-primer/build/index.html?5)
+  * [top-down data flow & shouldComponentUpdate](http://binarymuse.github.io/react-primer/build/index.html?6)
+  * [this.props.children](http://binarymuse.github.io/react-primer/build/index.html?2)
