@@ -2,6 +2,8 @@
 
 <https://github.com/zacanger/mdkb>
 
+see it live [here](http://162.243.49.187/)
+
 ## to use:
 * `npm i`
 * `cd content`
