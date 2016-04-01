@@ -1,5 +1,7 @@
 # markdown knowledgebase
 
+<https://github.com/zacanger/mdkb>
+
 ## to use:
 * `npm i`
 * `cd content`
