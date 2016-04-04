@@ -1,25 +1,27 @@
-var express      = require('express')
-  , app          = express()
-  , config       = require('./config')
-  , hoganExpress = require('hogan-express')
-  , path         = require('path')
-  , mdkb         = require('../app/mdkb')
+'use strict'
 
-app.use('/assets', express.static('public/assets'))
-app.use('/content/UPLOADS', express.static('content/UPLOADS'))
+const
+  express      = require('express')
+, app          = express()
+, config       = require('./config')
+, hoganExpress = require('hogan-express')
+, path         = require('path')
+, mdkb         = require('../app/mdkb')
 
-// use hogan-express to render the templates
-app.set('view engine', 'html')
-app.set('layout', 'layout')
-app.set('partials', {'navigation' : 'partials/navigation'})
+app
+.use('/assets', express.static('public/assets'))
+.use('/content/UPLOADS', express.static('content/UPLOADS'))
 
-// app.enable('view cache')
-app.set('views', path.join(config.theme, 'templates'))
-app.engine('html', hoganExpress)
+.set('view engine', 'html')
+.set('layout', 'layout')
+.set('partials', {'navigation' : 'partials/navigation'})
 
-// handle the page requests
-app.get('*', function(req, res){
-  var page
+// .enable('view cache')
+.set('views', path.join(config.theme, 'templates'))
+.engine('html', hoganExpress)
+
+.get('*', (req, res) => {
+  let page
   if (req.query.search) { // do the search logic
     page = mdkb.searchPages(req.query.search)
   } else if (req.params[0]) { // render docs page
@@ -31,8 +33,7 @@ app.get('*', function(req, res){
 })
 
 // start the server
-var server = app.listen(config.port, function () {
-  var info = server.address()
+const server = app.listen(config.port, () => {
+  const info = server.address()
   console.log('listening on http://%s:%s', 'localhost', info.port)
 })
-

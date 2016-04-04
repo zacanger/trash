@@ -7,7 +7,8 @@ html, body, .markdown-body {
   background: #101010!important;
   color: #ededed!important;
 }
-/*** HEADER ***/
+
+/*  header */
 .navbar-default {
   background: #202020;
   border-color: #4a4f58;
@@ -22,7 +23,7 @@ html, body, .markdown-body {
   min-width: 270px;
 }
 
-/*** SIDEBAR ***/
+/* sidebar */
 .nav-sidebar {
   background: #202020;
   color: #d2d2d2;
@@ -82,7 +83,7 @@ html, body, .markdown-body {
   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAALElEQVQoz2NgGGSg4EzBTPwKOgr+F6ThVzKTsJK7Bf/JN4GgG4C+6GAYigAASNYUTGaVYwsAAAAASUVORK5CYII=);
 }
 
-/*** General content ***/
+/* content */
 .main-content {
   padding-top: 20px;
   padding-bottom: 50vh;
@@ -112,4 +113,3 @@ html, body, .markdown-body {
   text-transform: uppercase;
 }
 [autofocus] { outline: none; }
-

@@ -1,6 +1,6 @@
 {
   "name": "mkdb",
-  "version": "0.1.6",
+  "version": "0.2.0",
   "description": "markdown + knowledge = this.",
   "main": "server/index.js",
   "scripts": {
@@ -33,4 +33,3 @@
     "underscore.string": "^3.2.2"
   }
 }
-
