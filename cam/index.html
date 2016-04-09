@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -9,18 +9,28 @@
     </style>
     <script type="text/javascript">
       var gui = require('nw.gui')
-      if(process.platform == 'darwin'){
-        var menu = new gui.Menu({type: 'menubar'})
+
+      if (process.platform == 'darwin') {
+        var menu = new gui.Menu({type : 'menubar'})
         menu.createMacBuiltin && menu.createMacBuiltin(window.document.title)
         gui.Window.get().menu = menu
       }
-      navigator.webkitGetUserMedia({video: true},
-        function(stream){document.getElementById('camera').src = URL.createObjectURL(stream)},
-        function(){alert('could not connect stream')})
+
+      navigator.webkitGetUserMedia(
+        {video : true}
+      , function(stream) {
+          document.getElementById('cam').src = URL.createObjectURL(stream)
+        }
+      , function() {
+          alert('could not connect to stream')
+        }
+      )
       gui.Window.get().show()
+
    </script>
   </head>
   <body>
-    <video id="camera" autoplay></video>
+    <video id="cam" autoplay></video>
   </body>
 </html>
+
