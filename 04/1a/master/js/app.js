@@ -1,4 +1,4 @@
-var app = angular.module('miniRouting', ['ui.router']);
+var app = angular.module('miniRouting', ['ui.router'])
 
 app.config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
@@ -16,8 +16,9 @@ app.config(function($stateProvider, $urlRouterProvider) {
       templateUrl: 'js/products/p.html',
       controller: 'ptrl',
       url: '/products/:id'
-    });
+    })
 
   $urlRouterProvider
-    .otherwise('/');
-});
+    .otherwise('/')
+})
+
