@@ -1,7 +1,6 @@
 var mongoose = require('mongoose')
   , crypto   = require('crypto')
   , jwt      = require('jsonwebtoken')
-  , SECRET   = 'asdfghjkl' // #ignoreline
 
 var UserSchema = new mongoose.Schema({
     username: {type: String, lowercase: true, unique: true}

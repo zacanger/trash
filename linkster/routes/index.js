@@ -6,7 +6,6 @@ var express   = require('express')
   , User      = mongoose.model('User')
   , passport  = require('passport')
   , jwt       = require('express-jwt')
-  , auth      = jwt({secret: 'asdfghjkl', userProperty: 'payload'}) // #ignoreline
 
 // params
 router.param('post', function(req, res, next, id){
