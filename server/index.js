@@ -32,8 +32,8 @@ app
   res.render(page.template, page)
 })
 
-// start the server
 const server = app.listen(config.port, () => {
   const info = server.address()
   console.log('listening on http://%s:%s', 'localhost', info.port)
 })
+
