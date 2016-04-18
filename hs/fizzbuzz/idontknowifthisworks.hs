@@ -2,7 +2,7 @@ module Main where
 
   main :: IO ()
   main = do
-    mapM_ (putStrLn) [fizzBuzz x | x < [..100]]
+    mapM_ (putStrLn) [fizzBuzz x | x < [0..100]]
 
     fizz :: Int -> String
     fizz x = if x `mod` 3 == 0 then "fizz" else ""
