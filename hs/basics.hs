@@ -1,5 +1,7 @@
 {-
 running through learnxiny
+and the sample from haskell book
+and a couple of other things
 this is a multiline comment
 -}
 
@@ -54,6 +56,12 @@ fst ("things", 4) -- "things"
 snd ("things", 4) -- 4
 
 -- FUNCTIONS. THIS IS THE IMPORTANT BIT, OBVIOUSLY.
+-- fns always take 1 arg, produce 1 result.
+-- when multiple args passed, actually applying to nested fns (currying).
+-- format is:
+-- fnName param1 param2ifmoreparamsetc = expression
+-- (in ghci, needs keyword `let` beforehand)
+-- fnName must not start with capital letter. = is for the actual declaration.
 add x y = x + y
 -- this works in source. with the repl, need the let keyword. for example:
 -- let mult q r = q * r
@@ -193,6 +201,8 @@ main'' = do
 -- needs the keyword let before things
 -- :q, :t (type) (let foo = 4 ; :t foo : foo :: Num a => a)
 -- :t (:) is (:) :: a -> [a] -> [a]
+-- :l is :load
+-- :m is :module (like unload, i guess, to return to Prelude>)
 -- so you can inspect punctuation functions with parens, eg
 -- (+), ($).
 -- :i is info(?)
