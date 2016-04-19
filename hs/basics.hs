@@ -210,6 +210,14 @@ main'' = do
 -- all IO types can be run directly, i think.
 
 -- vars
--- vars usually start at a (a, b, c, etc.)
+-- TYPE variables usually start at a (a, b, c, etc.)
 -- sometimes you'll append integers (a1, a2, etc.)
-
+-- fns are usually labeled starting with _f_, then _g_, etc. (wat).
+-- but sometimes with ints appended.
+-- also with ' (a single apostrophe. this is what i personally
+-- have seen the most, thus far).
+-- this would be pronounced "f prine" (for `f'`), apparently (wat).
+-- args usually seem to start at `x`.
+-- a list of things that are named x might be called `xs` (that is, 'exes',
+-- as in, the plural of `x`).
+-- see e.g. `(x:xs)` (x, at the head of a list, then the rest of the xs).
