@@ -1,6 +1,9 @@
 -- i did not write these. found around.
 
 -- gh:ryoia
+-- i like this one. it's a lot like how i thought it was supposed to be
+-- which means i can read it, except it's cleaner so i can see a simple way
+-- to improve on my own super limited hs
 module FizzBuzz where
 
 divBy :: Int -> Int -> Bool
@@ -15,6 +18,17 @@ fizzBuzz x
 
 
 -- the below are from haskellquiz
+
+-- a FizzBuzz (and FizzBuzzBaz) solution by Aaron Contorer.
+-- This implementation is designed for extensibility,
+-- as the list of tags can be easily edited, loaded from a file, etc.
+-- Number range is set >100 so as to demonstrate the FizzBuzzBaz case.
+fizzBuzz i = if null desc then show i else desc where
+  desc = concat [label | (j,label) <- tags, 0 == rem i j]
+  tags = [ (3,"Fizz"), (5,"Buzz"), (7,"Baz") ]
+
+main = mapM_ (putStrLn . fizzBuzz) [1..120]
+
 
 -- don't know if this works, but looks not nice.
 module Main where
