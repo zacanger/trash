@@ -209,3 +209,7 @@ main'' = do
 -- so :i (*) for example
 -- all IO types can be run directly, i think.
 
+-- vars
+-- vars usually start at a (a, b, c, etc.)
+-- sometimes you'll append integers (a1, a2, etc.)
+
