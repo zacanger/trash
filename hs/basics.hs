@@ -221,3 +221,46 @@ main'' = do
 -- a list of things that are named x might be called `xs` (that is, 'exes',
 -- as in, the plural of `x`).
 -- see e.g. `(x:xs)` (x, at the head of a list, then the rest of the xs).
+
+-- this is me writing a function all on my own whaaaaattt?!
+piMult a b = pi * (a * b)
+
+-- some fns can be either prefix OR infix, like mod
+-- for example:
+divBy :: Int -> Int -> Bool
+divBy d x = x `mod` d == 0
+-- could also be
+divBy d x = mod x d == 0
+
+-- in ghci :i will show the association of infix operators
+-- for example, infixl means left-associative
+-- so, since * is infixl
+2 * 4 * 8 --is evaluated as
+(2 * 4) * 8
+
+-- in source, order of declarations is irrelevant
+-- in the repl, obviously, it does kinda matter though
+
+-- module names are capitalized
+-- start a module (file) with something like
+module Asdfghjkl where
+  -- this is how we'll import this module elsewhere
+  m = "foo"
+  n = " bar"
+
+  o p q = p ++ q
+
+  o m n
+
+-- whitespace significant
+-- LINE THINGS UP YAY I LIKE THIS
+-- both of the following would be valid:
+let r = 4
+    s = 8
+
+let
+  t = 16
+  u = 32
+
+-- all declarations must start at the same column
+
