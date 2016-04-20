@@ -264,3 +264,23 @@ let
 
 -- all declarations must start at the same column
 
+-- values : final, irreducable expressions
+
+-- where, let
+module SomeMod where
+
+printInc n = print plusTwo
+  where plusTwo = n + 2
+
+module SomeOther where
+
+printInc2 n = let plusTwo = n + 2
+               in print plusTwo
+
+-- let, followed by in, makes a let expression
+
+-- freaking math, man
+let a = b in c -- is the same as
+(\a -> c) b
+c where a = b
+
