@@ -112,6 +112,11 @@ baz 4 -- 20
 even (fib 7) -- false
 even $ fib 7 -- same thing
 even . fib $ 7 -- also false
+-- so
+fn $ a = fn a
+(2*) $ 2 - 2 == (2*) (2 - 2)
+-- so, it kinda says 'evaluate the stuff on my right FIRST'
+-- it's a **weak infixr**
 
 -- TYPES! i mean, type signatures. or something. this matters a lot, i believe.
 -- because it's haskell. which is strongly typed. which is important.
