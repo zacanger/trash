@@ -1,9 +1,7 @@
 // xor(true, true) // => false
 // xor(1, '')      // => true
 
-function xor(x, y){
-  return(!x != !y)
-}
+const xor = (a, b) => !a != !b
+export default xor
 
-module.exports = xor
 
