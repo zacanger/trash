@@ -299,3 +299,12 @@ c where a = b
 -- infix is used in maths and logic. means the operator is between the operands
 -- operators are functions that, by default, are infix. these use symbols.
 
+-- char: single quotes. str: double quotes.
+-- str will show as type [Char] in the repl
+-- print "foo" => "foo"
+-- putStr "foo" => foo
+-- putStrLn "foo" => foo\n
+-- print :: Show a => a -> IO ()
+-- putStr (and putStrLn) :: String -> IO ()
+
+
