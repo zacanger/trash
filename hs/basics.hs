@@ -307,4 +307,22 @@ c where a = b
 -- print :: Show a => a -> IO ()
 -- putStr (and putStrLn) :: String -> IO ()
 
+-- strings and things
+module PrintStuff where
+
+greetz :: String
+greetz = "yo, sup"
+
+yo  :: String
+yo  = "yo, "
+
+sup :: String
+sup = "sup"
+
+main :: IO ()
+main = do
+  putStrLn greetz
+  putStrLn greetzTwo
+--    where greetzTwo = concat [yo, sup]
+    where greetzTwo = yo ++ sup
 
