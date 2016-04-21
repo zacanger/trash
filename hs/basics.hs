@@ -326,3 +326,25 @@ main = do
 --    where greetzTwo = concat [yo, sup]
     where greetzTwo = yo ++ sup
 
+-- type signatures
+-- (++) :: [a] -> [a] -> [a]
+-- this means that ++ takes an argument of [a] (a list of elements of unknown (yet) type)
+-- then acts with another [a] (must be same type; a === a)
+-- returns type [a]
+-- [a] is polymorphic. so it could be [Char] (that is, Str) or [Int] (or whatever??)
+-- concatenation needs lists of the same type
+
+-- cons:
+-- :
+-- works like
+'z' : "ac"
+'z' : ""
+head "zac" -- 'z'
+tail "zac" -- 'ac'
+take 2 "zac" -- "za"
+take 0 "zac" -- ""
+drop 9 "zac" -- ""
+drop 1 "zac" -- "ac"
+"zac" !! 0 -- 'z'
+"zac" !! 2 -- 'c'
+
