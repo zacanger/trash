@@ -289,3 +289,13 @@ let a = b in c -- is the same as
 (\a -> c) b
 c where a = b
 
+-- VOCAB
+-- argument is obvs (also called paramater sometimes i guess?)
+-- expression is combination of symbols that can be evaluated
+-- redex is reducible expression (most of them)
+-- usually the term value for an irreducable expression
+-- function is also obvious, but the book says:
+-- a list of ordered pairs of inputs and outputs
+-- infix is used in maths and logic. means the operator is between the operands
+-- operators are functions that, by default, are infix. these use symbols.
+
