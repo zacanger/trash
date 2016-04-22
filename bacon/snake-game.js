@@ -183,3 +183,4 @@ repeated(newGame, inputs.restart).onValue(function(e){
   drawApple([e.apple])
   setScore(e.score)
 })
+
