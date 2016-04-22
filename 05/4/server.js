@@ -1,25 +1,27 @@
-var express     = require('express')
-  , bodyparser  = require('body-parser')
-  , app         = express()
-  , port        = 9999
-  , usersCtrl   = require('./usersCtrl')
-  , filmsCtrl   = require('./filmsCtrl')
+'use strict'
 
-app.use(bodyparser())
+const
+  express     = require('express')
+, bodyparser  = require('body-parser')
+, app         = express()
+, port        = 9999
+, usersCtrl   = require('./usersCtrl')
+, filmsCtrl   = require('./filmsCtrl')
 
-app.listen(port, function(){
-  console.log('up and active on ' + port + '!')
-})
+app
+.use(bodyparser())
 
-app.get('/users', usersCtrl.index)
-app.get('/users/:id', usersCtrl.show)
-app.post('/users', usersCtrl.build)
-app.put('/users/:id', usersCtrl.update)
-app.delete('/users/:id', usersCtrl.byebye)
+.get('/users', usersCtrl.index)
+.get('/users/:id', usersCtrl.show)
+.post('/users', usersCtrl.build)
+.put('/users/:id', usersCtrl.update)
+.delete('/users/:id', usersCtrl.byebye)
 
-app.get('/films', filmsCtrl.index)
-app.get('/films/:id', filmsCtrl.show)
-app.post('/films', filmsCtrl.build)
-app.put('/films/:id', filmsCtrl.update)
-app.delete('/films/:id', filmsCtrl.byebye)
+.get('/films', filmsCtrl.index)
+.get('/films/:id', filmsCtrl.show)
+.post('/films', filmsCtrl.build)
+.put('/films/:id', filmsCtrl.update)
+.delete('/films/:id', filmsCtrl.byebye)
+
+.listen(port, () => console.log(`listening on ${port}!`))
 
