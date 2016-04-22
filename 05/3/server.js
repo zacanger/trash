@@ -1,27 +1,31 @@
-var express    = require('express')
- ,  bodyparser = require('body-parser')
- ,  midware    = require('./ctrl/midware.js')
- ,  mainCtrl   = require('./ctrl/main.js')
- ,  port       = 9999
- ,  app        = express()
+'use strict'
 
-app.use(bodyparser.json())
-app.use(midware.addHeaders)
+const
+  express    = require('express')
+, bodyparser = require('body-parser')
+, midware    = require('./ctrl/midware.js')
+, mainCtrl   = require('./ctrl/main.js')
+, port       = 9999
+, app        = express()
 
-app.get('/name', mainCtrl.getName)
-app.get('/location', mainCtrl.getLocation)
-app.get('/occupations', mainCtrl.getOccupations)
-app.get('/occupations/latest', mainCtrl.latestOccupation)
-app.get('/hobbies', mainCtrl.getHobbies)
-app.get('/hobbies/:type', mainCtrl.getHobbiesByType)
-app.get('/skillz', mainCtrl.getSkillz)
+app
+.use(bodyparser.json())
+.use(midware.addHeaders)
 
-app.put('/name', mainCtrl.changeName)
-app.put('/location', mainCtrl.changeLocation)
-app.post('/occupations', mainCtrl.addOccupation)
-app.post('/hobbies', mainCtrl.addHobby)
-app.post('/skillz', midware.generateId, mainCtrl.addSkill)
+.get('/name', mainCtrl.getName)
+.get('/location', mainCtrl.getLocation)
+.get('/occupations', mainCtrl.getOccupations)
+.get('/occupations/latest', mainCtrl.latestOccupation)
+.get('/hobbies', mainCtrl.getHobbies)
+.get('/hobbies/:type', mainCtrl.getHobbiesByType)
+.get('/skillz', mainCtrl.getSkillz)
 
-app.listen(port, function () {
-  console.log('howdy, imma hang out on ' + port)
-})
+.put('/name', mainCtrl.changeName)
+.put('/location', mainCtrl.changeLocation)
+.post('/occupations', mainCtrl.addOccupation)
+.post('/hobbies', mainCtrl.addHobby)
+.post('/skillz', midware.generateId, mainCtrl.addSkill)
+
+.listen(port, () => console.log(`howdy, imma hang out on ${port}`))
+
+
