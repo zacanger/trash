@@ -26,11 +26,11 @@ module.exports = {
     extensions : ['', '.ts', '.js', '.json', '.css', '.html']
   }
  , module : {
-    loaders : [
+    loaders : [{
       test    : /\.ts$/
     , loader  : 'ts'
     , exclude : /node_modules/
-    ]
+    }]
   }
 , plugins : [
     new CommonsChunkPlugin({name:'angular2',filename:'angular2.js',minChunks:Infinity})
