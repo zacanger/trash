@@ -1,6 +1,8 @@
-var path     = require('path')
-  , webpack  = require('webpack')
-  , CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin
+'use strict'
+
+const
+  webpack            = require('webpack')
+, CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin
 
 module.exports = {
   devtool : 'cheap-eval-source-map'
@@ -15,7 +17,7 @@ module.exports = {
     ]
   , 'app' : './app/app'
   }
-, output: {
+, output : {
       path              : __dirname + '/build'
     , publicPath        : 'build/'
     , filename          : '[name].js'
@@ -33,8 +35,8 @@ module.exports = {
     }]
   }
 , plugins : [
-    new CommonsChunkPlugin({name:'angular2',filename:'angular2.js',minChunks:Infinity})
-  , new CommonsChunkPlugin({name:'common',  filename:'common.js'})
+    new CommonsChunkPlugin({name :'angular2', filename :'angular2.js', minChunks : Infinity})
+  , new CommonsChunkPlugin({name :'common',   filename :'common.js'})
   ]
 }
 
