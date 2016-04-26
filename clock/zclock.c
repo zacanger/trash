@@ -1,8 +1,6 @@
 /*
- * clock
- *  (c) 2005, 2008, Christopher J. McKenzie, under the
- *	terms of the GNU Public License, incorporated
- *      herein by reference.
+ * zclock
+ * originally: aclock, (c) 2008 Christopher J. McKenzie, GPL
  */
 
 #define DESCRIPTION\
