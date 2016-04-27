@@ -10,7 +10,7 @@ see it live [here](http://mdkb.zacanger.com)
 * `touch foo.md`
 * then put stuff in there.
 * `npm start`
-* `content` can contain a `gfx` subdirectory; this isn't indexed. it's for static files and stuff (images, for example).
+* `content` can contain a `static` subdirectory; this isn't indexed. it's for static files and stuff (images, for example).
 
 --------
 

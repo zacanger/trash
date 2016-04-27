@@ -53,7 +53,7 @@ function getPageContent(filePath) {
 function searchPages(query) {
   let
     content = path.join(config.contentFolder, '**/*.md')
-  , ignored = path.join(config.contentFolder, 'gfx/**/*.*')
+  , ignored = path.join(config.contentFolder, 'static/**/*.*')
   , files   = glob.sync(content, {ignore : ignored})
 
   let idx = lunr(function() {
@@ -150,7 +150,7 @@ function isNotHiddenItem(el) {
     return false // hidden files/dirs
   }
 
-  if (path.basename(el) == 'gfx') {
+  if (path.basename(el) == 'static') {
     return false
   }
 
