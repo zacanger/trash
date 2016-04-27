@@ -2,7 +2,7 @@
 
 <https://github.com/zacanger/mdkb>
 
-see it live [here](http://162.243.49.187/)
+see it live [here](http://mdkb.zacanger.com)
 
 ## to use:
 * `npm i`
@@ -10,10 +10,11 @@ see it live [here](http://162.243.49.187/)
 * `touch foo.md`
 * then put stuff in there.
 * `npm start`
-* `content` can contain an `UPLOADS` subdirectory; this isn't indexed. it's for static files and stuff.
+* `content` can contain a `gfx` subdirectory; this isn't indexed. it's for static files and stuff (images, for example).
 
 --------
 
 ## credits:
 * Mihai Ionut Vilcu (see LICENSE.md)
 * gh:zacanger
+

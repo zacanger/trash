@@ -10,7 +10,7 @@ const
 
 app
 .use('/assets', express.static('public/assets'))
-.use('/content/UPLOADS', express.static('content/UPLOADS'))
+.use('/content/gfx', express.static('content/gfx'))
 
 .set('view engine', 'html')
 .set('layout', 'layout')
