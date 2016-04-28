@@ -1,25 +1,28 @@
-adminApp.controller('NavCtrl', function($scope, $state){
-  $scope.active = $state
-  $scope.isActive = function(viewLocation){
-    var active = (viewLocation === $state.current.name)
+adminApp
+
+.controller('NavCtrl', ($scope, $state) => {
+  $scope.active   = $state
+  $scope.isActive = viewLocation => {
+    const active = (viewLocation === $state.current.name)
     return active
   }
 })
 
-adminApp.controller('AllPostsCtrl', function($scope, postList){
-  $scope.posts = postList
+.controller('AllPostsCtrl', ($scope, postList) => {
+  $scope.posts      = postList
   $scope.activePost = false
-  $scope.setActive = function(post){
+  $scope.setActive  = post => {
     $scope.activePost = post
   }
 })
 
-adminApp.controller('AddPostCtrl', function($scope, $state, Posts){
-  $scope.post = {}
-  $scope.addPost = function(newPost){
-    Posts.add(newPost).then(function(res){
+.controller('AddPostCtrl', ($scope, $state, Posts) => {
+  $scope.post    = {}
+  $scope.addPost = newPost => {
+    Posts.add(newPost).then(res => {
       console.log(res)
     })
     $state.go('allPosts')
   }
 })
+

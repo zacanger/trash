@@ -1,26 +1,27 @@
-var postsModule = angular.module('ayuba.posts', [])
+const postsModule = angular.module('ayuba.posts', [])
 
-postsModule.service('Posts', function($http){
+postsModule.service('Posts', $http => {
   return {
-    all: function(){
-      return $http.get('/api/posts').then(function(postList){
+    all(){
+      return $http.get('/api/posts').then(postList => {
         return postList.data
       })
-    },
-    add: function(newPost){
+    }
+  , add(newPost){
       return $http({
-        method: 'post',
-        url: '/api/posts',
-        data: newPost
-      }).then(function(res){
+        method : 'post'
+      , url    : '/api/posts'
+      , data   : newPost
+      }).then(res => {
         return res.data
-      }).catch(function(err){
+      }).catch(err => {
         console.error('sorry! something went wrong.')
         console.error(err)
         return err
       })
-    },
-    remove: function(){},
-    update: function(){}
+    }
+  , remove(){}
+  , update(){}
   }
 })
+

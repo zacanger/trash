@@ -1,29 +1,31 @@
-'use strict'
+angular.module('btford.markdown', ['ngSanitize'])
 
-angular.module('btford.markdown', ['ngSanitize']).provider('markdownConverter', function(){
-  var opts = {}
+.provider('markdownConverter', () => {
+  let opts = {}
   return {
-    config: function(newOpts){
+    config(newOpts){
       opts = newOpts
-    },
-    $get: function(){
+    }
+  , $get(){
       return new showdown.Converter(opts)
     }
   }
 })
-.directive('btfMarkdown', ['$sanitize', 'markdownConverter', function($sanitize, markdownConverter){
+
+.directive('btfMarkdown', ['$sanitize', 'markdownConverter', ($sanitize, markdownConverter) => {
   return {
-    restrict: 'AE',
-    link: function(scope, element, attrs){
+    restrict : 'AE'
+  , link(scope, element, attrs){
       if (attrs.btfMarkdown) {
-        scope.$watch(attrs.btfMarkdown, function(newVal){
-          var html = newVal ? $sanitize(markdownConverter.makeHtml(newVal)) : ''
+        scope.$watch(attrs.btfMarkdown, newVal => {
+          const html = newVal ? $sanitize(markdownConverter.makeHtml(newVal)) : ''
           element.html(html)
         })
       } else {
-        var html = $sanitize(markdownConverter.makeHtml(element.text()))
+        const html = $sanitize(markdownConverter.makeHtml(element.text()))
         element.html(html)
       }
     }
   }
 }])
+
