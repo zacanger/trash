@@ -1,9 +1,10 @@
-var express = require('express')
-  , path = require('path')
-  , User = require('./models/user')
-  , rootPath = path.normalize(__dirname + '/../')
-  , apiRouter = express.Router()
-  , router = express.Router()
+const
+  express   = require('express')
+, path      = require('path')
+, User      = require('./models/user')
+, rootPath  = path.normalize(__dirname + '/../')
+, apiRouter = express.Router()
+, router    = express.Router()
 
 module.exports = function(app, passport){
   app.use('/api', apiRouter)
@@ -53,3 +54,4 @@ function isAdmin(req, res, next){
     res.redirect('/admin')
   }
 }
+
