@@ -8,7 +8,7 @@ spec.describe('basic test', () => {
 
 spec.describe('basic pending test', () => {
   spec.xit('would return true, if it actually ran', () => {
-    spec.assert (1 === 1)
+    spec.assert(1 === 1)
   })
 })
 
