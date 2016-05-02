@@ -6,7 +6,7 @@ const
 , config       = require('./config')
 , hoganExpress = require('hogan-express')
 , path         = require('path')
-, mdkb         = require('../app/mdkb')
+, mdkb         = require('./mdkb')
 
 app
 .use('/assets', express.static('public/assets'))

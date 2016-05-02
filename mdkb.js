@@ -1,7 +1,7 @@
 'use strict'
 
 const
-  config      = require('../server/config')
+  config      = require('./config')
 , glob        = require('glob')
 , path        = require('path')
 , fs          = require('fs')
@@ -33,7 +33,7 @@ function getPage(id) {
 
   return {
     template    : 'page'
-  , page_title  : 'My First Page'
+  , page_title  : 'Page'
   , pageId      : id
   , content     : getPageContent(filePath)
   , hasNavItems : true

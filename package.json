@@ -1,27 +1,29 @@
 {
   "name": "mkdb",
-  "version": "0.2.1",
   "description": "markdown + knowledge = this.",
-  "main": "server/index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server"
-  },
-  "keywords": [
-    "docs",
-    "viewer",
-    "markdown"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/zacanger/mkdb.git"
-  },
+  "version": "0.2.2",
   "author": {
     "name": "Zac Anger",
     "email": "zac@zacanger.com",
     "url": "http://zacanger.com"
   },
   "license": "WTFPL",
+  "main": "index.js",
+  "scripts": {
+    "start": "forever start -a -l f.log -o o.log -e e.log index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "homepage": "http://mdkb.zacanger.com/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zacanger/mkdb.git"
+  },
+  "bugs": "https://github.com/zacanger/mdkb/issues",
+  "keywords": [
+    "docs",
+    "markdown",
+    "viewer"
+  ],
   "dependencies": {
     "express": "^4.13.3",
     "glob": "^5.0.15",
@@ -31,5 +33,9 @@
     "markdown-it-checkbox": "^1.1.0",
     "markdown-it-toc": "^1.1.0",
     "underscore.string": "^3.2.2"
+  },
+  "devDependencies": {
+    "forever": "^0.15.1"
   }
 }
+
