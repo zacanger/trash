@@ -34,6 +34,6 @@ app
 
 const server = app.listen(config.port, () => {
   const info = server.address()
-  console.log('listening on http://%s:%s', 'localhost', info.port)
+  console.log(`mdkb listening on ${info.port}`)
 })
 

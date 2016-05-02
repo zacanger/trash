@@ -33,7 +33,7 @@ function getPage(id) {
 
   return {
     template    : 'page'
-  , page_title  : 'Page'
+  , page_title  : 'mdkb'
   , pageId      : id
   , content     : getPageContent(filePath)
   , hasNavItems : true

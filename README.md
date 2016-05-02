@@ -1,20 +1,21 @@
-# markdown knowledgebase
+# [markdown knowledgebase](https://github.com/zacanger/mdkb)
 
-<https://github.com/zacanger/mdkb>
+See it live [here](http://mdkb.zacanger.com).
 
-see it live [here](http://mdkb.zacanger.com)
+The demo's docs are [here](https://github.com/zacanger/doc.git).
 
-## to use:
+## To use:
+
 * `npm i`
-* `cd content`
-* `touch foo.md`
-* then put stuff in there.
+* `echo "## This is some Markdown!" > content/somefile.md`
 * `npm start`
-* `content` can contain a `static` subdirectory; this isn't indexed. it's for static files and stuff (images, for example).
+* `content` can contain a `static` subdirectory.
+  * This isn't indexed. It's for static files and stuff (images, for example).
 
 --------
 
-## credits:
+## Credits:
+
 * Mihai Ionut Vilcu (see LICENSE.md)
 * gh:zacanger
 

@@ -1,6 +1,6 @@
 module.exports = {
   port           : process.env.PORT || 3000
-, theme          : __dirname + '/themes/default'
+, theme          : __dirname + '/'
 , contentFolder  : __dirname + '/content'
 , excerpt_length : 400
 , readme         : __dirname + '/README.md'
