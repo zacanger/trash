@@ -1,7 +1,7 @@
 {
   "name": "mkdb",
   "description": "markdown + knowledge = this.",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "author": {
     "name": "Zac Anger",
     "email": "zac@zacanger.com",
@@ -26,6 +26,7 @@
   ],
   "dependencies": {
     "express": "^4.13.3",
+    "forever": "^0.15.1",
     "glob": "^5.0.15",
     "hogan-express": "^0.5.2",
     "lunr": "^0.6.0",
@@ -34,8 +35,6 @@
     "markdown-it-toc": "^1.1.0",
     "underscore.string": "^3.2.2"
   },
-  "devDependencies": {
-    "forever": "^0.15.1"
-  }
+  "devDependencies": {}
 }
 
