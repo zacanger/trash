@@ -41,7 +41,7 @@ module.exports = React.createClass({
     if (this.state.loading) {
       loading = (
         <div className="items-loading">
-          <div className="LoadingSpinner-dark"></div>
+          <div className="LoadingSpinner-dark" />
         </div>
       )
     } else {
@@ -89,3 +89,4 @@ module.exports = React.createClass({
     )
   }
 })
+

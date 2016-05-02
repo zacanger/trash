@@ -1,7 +1,3 @@
-'use strict'
-
-require('babel-register')({
-  presets : ['es2017', 'react']
-})
-
+require('babel-register')({presets : ['es2017', 'react']})
 require('./server')
+

@@ -4,22 +4,23 @@ import Folder   from './Folder'
 import folders  from './sampleFolderStructure'
 
 const App = React.createClass({
-  getInitialState: function(){
+  getInitialState(){
     return {
-      isOpen: {}
+      isOpen : {}
     }
-  },
-  handleToggle (id) {
-    let oldVal = this.state.isOpen[id]
-    let newState = this.state.isOpen
+  }
+, handleToggle(id){
+    let
+      oldVal   = this.state.isOpen[id]
+    , newState = this.state.isOpen
     newState[id] = oldVal ? false : true
     this.setState({
-      isOpen: newState
+      isOpen : newState
     })
-  },
-  render: function(){
+  }
+, render(){
     return (
-      <Folder folderDetails={folders.folder} handleToggle={this.handleToggle} isOpen={this.state.isOpen}/>
+      <Folder folderDetails={folders.folder} handleToggle={this.handleToggle} isOpen={this.state.isOpen} />
     )
   }
 })

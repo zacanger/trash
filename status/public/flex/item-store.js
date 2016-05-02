@@ -8,8 +8,9 @@ const
 , EVENT_CHANGE  = 'items'
 , emitter       = new EventEmitter()
 
-let items
-let listeningForSocket = false
+let
+  listeningForSocket = false
+, items
 
 const ItemStore = {
   getItems(type){
@@ -78,3 +79,4 @@ AppDispatcher.register(payload => {
   }
   return true
 })
+

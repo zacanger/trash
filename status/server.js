@@ -1,12 +1,12 @@
 'use strict'
 
-const PORT = process.env.PORT || 3000
-
 import {join}      from 'path'
 import express     from 'express'
 import ReactEngine from 'react-engine'
 import items       from './items.json'
 import routes      from './public/routes.jsx'
+
+const PORT = process.env.PORT || 3000
 
 let app = express()
 
@@ -26,9 +26,9 @@ app
 .use(express.static(join(__dirname, '/public')))
 
 .get('/api/items', (req, res) => {
-  setTimeout(function () {
+  setTimeout(() => {
     res.json(items)
-    setTimeout(function () {
+    setTimeout(() => {
       emitStatus(items)
     }, 1000)
   }, 1000)

@@ -14,8 +14,9 @@ const options = {
 
 document.addEventListener('DOMContentLoaded', function onLoad() {
   ReactEngineClient.boot(options)
-  var socket = io.connect(location.origin)
+  let socket = io.connect(location.origin)
   socket.on('status', data => {
     ActionCreator.serviceStatusUpdate(data)
   })
 })
+
