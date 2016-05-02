@@ -1,19 +1,16 @@
-import React from 'react'
+import React  from 'react'
+import Search from './Search'
 
-const Main = React.createClass({
-  render(){
-    return (
-      <div>
-        <nav>
-          <button>
-            Menu
-          </button>
-        </nav>
-        <div>{this.props.children}</div>
-      </div>
-    )
-  }
-})
+const Main = ({children, history}) => {
+  return (
+    <div>
+      <nav>
+        <Search history={history} />
+      </nav>
+      <div>{children}</div>
+    </div>
+  )
+}
 
 export default Main
 
