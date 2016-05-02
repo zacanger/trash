@@ -24,7 +24,7 @@ export default class Search extends React.Component {
   }
 }
 
-Search.PropTypes = {
+Search.propTypes = {
   history : React.PropTypes.object.isRequired
 }
 

@@ -1,15 +1,26 @@
 import React from 'react'
 
-const User = React.createClass({
-  render(){
-    return (
-      <div>
-        <span>{this.props.username}</span>
-        <p>{this.props.user.name}</p>
-      </div>
-    )
-  }
-})
+const User = ({bio}) => {
+  return (
+    <div>
+      {bio.avatar_url   && <li><img src={bio.avatar_url} /></li>}
+      {bio.name         && <li>{bio.name}</li>}
+      {bio.login        && <li>{bio.login}</li>}
+      {bio.email        && <li>{bio.email}</li>}
+      {bio.location     && <li>{bio.location}</li>}
+      {bio.company      && <li>{bio.company}</li>}
+      {bio.followers    && <li>{bio.followers}</li>}
+      {bio.following    && <li>{bio.following}</li>}
+      {bio.public_repos && <li>{bio.public_repos}</li>}
+      {bio.blog         && <li><a href={bio.blog}>{bio.blog}</a></li>}
+    </div>
+  )
+}
+
+UserProfile.propTypes = {
+  username : React.PropTypes.string.isRequired
+, bio      : React.PropTypes.object.isRequired
+}
 
 export default User
 

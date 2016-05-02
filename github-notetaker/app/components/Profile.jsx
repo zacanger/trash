@@ -8,7 +8,7 @@ const Profile = React.createClass({
   getInitialState(){
     return {
       notes : []
-    , user  : {}
+    , bio   : {}
     , repos : []
     }
   }
