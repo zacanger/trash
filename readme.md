@@ -1,6 +1,3 @@
-This repo holds three sorta-working attempts at turning `markvi` into
-a blogging platform for the desktop--and one working one (`the-real-one`).
-
 I wound up ceasing work on both `markvi` and this app. If you need a desktop
 Markdown editor, I can very highly recomment [Haroopad](http://pad.haroopress.com/).
 
