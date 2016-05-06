@@ -17,9 +17,7 @@ postSchema.pre('save', next => {
   next()
 })
 
-function taglimit(val){
-  return val.length <= 8
-}
+const taglimit = val => val.length <= 8
 
 module.exports = mongoose.model('Post', postSchema)
 
