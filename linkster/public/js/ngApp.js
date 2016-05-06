@@ -1,30 +1,29 @@
 var app = angular.module('linkster', ['ui.router'])
 
-
 // routing
 app.config(['$stateProvider', '$urlRouterProvider',
   function($stateProvider, $urlRouterProvider){
     $stateProvider
-      .state('home', {
-        url: '/home'
-      , templateUrl: '/home.html'
-      , controller: 'mainCtrl'
-      , resolve: {
-          postPromise: ['posts', function(posts){
-            return posts.getAll()
-          }]
-        }
-      })
-      .state('posts', {
-        url: '/posts/{id}'
-      , templateUrl: '/posts.html'
-      , controller: 'postCtrl'
-      , resolve: {
-          post: ['$stateParams', 'posts', function($stateParams, posts){
-            return posts.get($stateParams.id)
-          }]
-        }
-      })
+    .state('home', {
+      url: '/home'
+    , templateUrl: '/home.html'
+    , controller: 'mainCtrl'
+    , resolve: {
+        postPromise: ['posts', function(posts){
+          return posts.getAll()
+        }]
+      }
+    })
+    .state('posts', {
+      url: '/posts/{id}'
+    , templateUrl: '/posts.html'
+    , controller: 'postCtrl'
+    , resolve: {
+        post: ['$stateParams', 'posts', function($stateParams, posts){
+          return posts.get($stateParams.id)
+        }]
+      }
+    })
     .state('login', {
       url: '/login'
     , templateUrl: '/login.html'
@@ -45,10 +44,8 @@ app.config(['$stateProvider', '$urlRouterProvider',
         }
       }]
     })
-
-    $urlRouterProvider
-      .otherwise('home')
-  }])
+    $urlRouterProvider.otherwise('home')
+}])
 
 
 // factories
@@ -152,48 +149,46 @@ app.factory('auth', ['$http', '$window', function($http, $window){
 
 
 // controllers
-
 app.controller('mainCtrl', ['$scope', 'posts', 'auth',
   function($scope, posts, auth){
-    $scope.isLoggedIn = auth.isLoggedIn
-    $scope.addPost = function(){
-      if (!$scope.title || $scope.title === '') {return}
-      post.create({
-        title: $scope.title
-      , link: $scope.link
-      })
-      $scope.title = ''
-      , $scope.link = ''
-    }
-
-    $scope.incrementUpvotes = function(post){
-      posts.upvote(post)
-    }
-    $scope.posts = posts.posts
+  $scope.isLoggedIn = auth.isLoggedIn
+  $scope.addPost = function(){
+    if (!$scope.title || $scope.title === '') {return}
+    post.create({
+      title: $scope.title
+    , link: $scope.link
+    })
+    $scope.title = ''
+    , $scope.link = ''
   }
-])
+
+  $scope.incrementUpvotes = function(post){
+    posts.upvote(post)
+  }
+  $scope.posts = posts.posts
+}])
 
 app.controller('postCtrl', ['$scope', 'posts', 'post', 'auth',
   function($scope, posts, post, auth){
-    $scope.isLoggedIn = auth.isLoggedIn
-    $scope.post = post
-    $scope.addComment = function(){
-      if ($scope.body === '') {return}
-      posts.addComment(post._id, {
-        body: $scope.body
-      , author: 'user'
-      }).success(function(comment){
-        $scope.post.comments.push(comment)
-      })
-      $scope.body = ''
-    }
-    $scope.incrementUpvotes = function(comment){
-      posts.upvoteComment(post, comment)
-    }
+  $scope.isLoggedIn = auth.isLoggedIn
+  $scope.post = post
+  $scope.addComment = function(){
+    if ($scope.body === '') {return}
+    posts.addComment(post._id, {
+      body: $scope.body
+    , author: 'user'
+    }).success(function(comment){
+      $scope.post.comments.push(comment)
+    })
+    $scope.body = ''
   }
-])
+  $scope.incrementUpvotes = function(comment){
+    posts.upvoteComment(post, comment)
+  }
+}])
 
-app.controller('authCtrl', ['$scope', '$state', 'auth', function($scope, state, auth){
+app.controller('authCtrl', ['$scope', '$state', 'auth',
+  function($scope, state, auth){
   $scope.user = []
   $scope.register = function(){
     auth.register($scope.user).error(function(error){
@@ -211,8 +206,10 @@ app.controller('authCtrl', ['$scope', '$state', 'auth', function($scope, state, 
   }
 }])
 
-app.controller('navCtrl', ['$scope', '$auth', function($scope, auth){
+app.controller('navCtrl', ['$scope', '$auth',
+  function($scope, auth){
   $scope.isLoggedIn = auth.isLoggedIn
   $scope.currentUser = auth.currentUser
   $scope.logOut = auth.logOut
 }])
+

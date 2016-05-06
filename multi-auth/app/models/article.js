@@ -22,10 +22,6 @@ const
 ArticleSchema.path('title').required(true, 'title please')
 ArticleSchema.path('body').required(true, 'words please')
 
-// ArticleSchema.pre('remove', function(next){
-//   next()
-// })
-
 ArticleSchema.methods = {
   uploadAndSave (images) {
     const err = this.validateSync()

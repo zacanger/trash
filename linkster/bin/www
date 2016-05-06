@@ -1,12 +1,13 @@
 #!/usr/bin/env node
 
-var app   = require('../app')
-  , http  = require('http')
-  , port  = normalizePort(process.env.PORT || '4444')
+const
+  app    = require('../app')
+, http   = require('http')
+, port   = normalizePort(process.env.PORT || '4444')
+, server = http.createServer(app)
 
 app.set('port', port)
 
-var server = http.createServer(app)
 server.listen(port)
 server.on('error', onError)
 server.on('listening', onListening)
@@ -48,5 +49,6 @@ function onListening(){
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port
-  console.log('localhostin up at ' + bind)
+  console.log(`check localhost at ${bind}`)
 }
+
