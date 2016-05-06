@@ -1,5 +1,7 @@
 -- i did not write these. found around.
 
+[max(show x)(concat[n|(f,n)<-[(3,"Fizz"),(5,"Buzz")],mod x f==0])|x<-[1..100]]
+
 -- gh:ryoia
 -- i like this one. it's a lot like how i thought it was supposed to be
 -- which means i can read it, except it's cleaner so i can see a simple way
