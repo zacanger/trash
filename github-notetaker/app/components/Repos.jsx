@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Repos = ({repos}) => {
+export default function Repos({repos}){
   return (
     <div>
       <h3>repos</h3>
@@ -22,6 +22,4 @@ Repos.propTypes = {
   username : React.PropTypes.string.isRequired
 , repos    : React.PropTypes.array.isRequired
 }
-
-export default Repos
 

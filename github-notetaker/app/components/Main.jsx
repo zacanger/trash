@@ -1,7 +1,7 @@
 import React  from 'react'
 import Search from './Search'
 
-const Main = ({children, history}) => {
+export default function Main({children, history}){
   return (
     <div>
       <nav>
@@ -11,6 +11,4 @@ const Main = ({children, history}) => {
     </div>
   )
 }
-
-export default Main
 

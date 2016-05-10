@@ -2,7 +2,7 @@ import React    from 'react'
 import NoteList from './NoteList'
 import NewNote  from './NewNote'
 
-const Notes = ({username, notes, newNote}) => {
+export default function Notes({username, notes, newNote}){
   return (
     <div>
       <h3>notes about {username}</h3>
@@ -16,6 +16,4 @@ Notes.propTypes = {
 , notes    : React.PropTypes.array.isRequired
 , newNote  : React.PropTypes.func.isRequired
 }
-
-export default Notes
 

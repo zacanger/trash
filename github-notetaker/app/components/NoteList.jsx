@@ -1,6 +1,6 @@
 import React from 'react'
 
-const NoteList = ({notes}) => {
+export default function NoteList({notes}){
   return (
     <ul>
       {notes.map((note, idx) => {
@@ -15,6 +15,4 @@ const NoteList = ({notes}) => {
 NoteList.propTypes = {
   notes : React.PropTypes.array.isRequired
 }
-
-export default NoteList
 

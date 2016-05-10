@@ -1,6 +1,6 @@
 import React from 'react'
 
-const User = ({bio}) => {
+export default function User({bio}){
   return (
     <div>
       {bio.avatar_url   && <li><img src={bio.avatar_url} /></li>}
@@ -21,6 +21,4 @@ UserProfile.propTypes = {
   username : React.PropTypes.string.isRequired
 , bio      : React.PropTypes.object.isRequired
 }
-
-export default User
 
