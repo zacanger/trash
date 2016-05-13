@@ -1,6 +1,7 @@
 * To get started learning React, I _highly_ recomment [this course](http://survivejs.com)
 * [This is another very good beginner's course](http://reactjsprogram.teachable.com/courses/reactjsfundamentals).
-* [guide for developers moving from angular to react](http://angulartoreact.com/)
+* [a short guide on transitioning from angular to react](https://reactjsnews.com/an-angular-developers-first-react-app)
+  * [and additional materials on the same](http://angulartoreact.com/)
 * You'll need to get comfortable with ES2016, ASAP. [Here's a repo](https://github.com/zacanger/es6-and-builds) I put
   together for that.
 
