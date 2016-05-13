@@ -76,7 +76,7 @@ app
 , resave            : true
 , saveUninitialized : true
 }))
-.use(passport.initialize())
+.use(passport.initialize()) // this must be before .use(passport.session())
 .use(passport.session())
 
 function isLoggedIn(req, res, next){

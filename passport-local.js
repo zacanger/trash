@@ -38,7 +38,7 @@ app
 , resave            : true
 , saveUninitialized : true
 }))
-.use(passport.initialize())
+.use(passport.initialize()) // this must come before the line below
 .use(passport.session())
 
 function isLoggedIn(req, res, next){
