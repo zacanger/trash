@@ -25,7 +25,7 @@ app
 , resave            : false,
 , saveUninitialized : false
 }))
-.use(passport.initialize())
+.use(passport.initialize()) // these two lines must go in this order
 .use(passport.session())
 .use(express.static(__dirname + '/public'))
 
