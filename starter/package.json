@@ -1,0 +1,52 @@
+{
+  "name": "zacanger-react-starter-kit",
+  "version": "0.1.0",
+  "description": "a sensible little react starter project",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "prepublish": "npm run build",
+    "build": "NODE_ENV=production npm run clean && webpack --config webpack.config.prod.js",
+    "clean": "if [ -f public/bundle.js ] ; then rm public/bundle.js ; fi",
+    "dev": "webpack-dev-server --config webpack.config.js --hot --inline",
+    "lint": "eslint -c .eslintrc src/**",
+    "start": "node index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zacanger/react-tidbits.git"
+  },
+  "keywords": [
+    "",
+    ""
+  ],
+  "author": {
+    "name": "Zac Anger",
+    "email": "zac@zacanger.com",
+    "url": "http://zacanger.com"
+  },
+  "homepage": "https://github.com/zacanger/react-tidbits#readme",
+  "bugs": "https://github.com/zacanger/react-tidbits/issues",
+  "license": "WTFPL",
+  "dependencies": {
+    "history": "^2.1.1",
+    "react": "^15.0.2",
+    "react-dom": "^15.0.2",
+    "react-router": "^2.4.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.8.0",
+    "babel-eslint": "^6.0.4",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2017": "^1.3.2",
+    "babel-preset-react": "^6.5.0",
+    "css-loader": "^0.23.1",
+    "eslint": "^2.10.1",
+    "eslint-plugin-babel": "^3.2.0",
+    "eslint-plugin-react": "^5.1.1",
+    "react-hot-loader": "^1.3.0",
+    "style-loader": "^0.13.1",
+    "webpack": "^1.13.0",
+    "webpack-dev-server": "^1.14.1"
+  }
+}

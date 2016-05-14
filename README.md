@@ -4,6 +4,7 @@
   * [and additional materials on the same](http://angulartoreact.com/)
 * You'll need to get comfortable with ES2016, ASAP. [Here's a repo](https://github.com/zacanger/es6-and-builds) I put
   together for that.
+* I have some React-related cheatsheets over [here](https://github.com/zacanger/doc.git)
 
 * You may want to take a moment to get your editor comfortable with JSX.
   * For Atom, `apm install react language-babel`.
