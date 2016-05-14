@@ -4,8 +4,8 @@ import ReactDOM from 'react-dom'
 export class App extends React.Component {
   render() {
     return (
-      <div className="commentBox">
-        Hello React!
+      <div className="foo">
+        Hello!
       </div>
     )
   }
@@ -13,5 +13,6 @@ export class App extends React.Component {
 
 ReactDOM.render(
   <App />,
-  document.getElementById('app-container')
+  document.getElementById('root')
 )
+
