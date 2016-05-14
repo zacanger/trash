@@ -1,0 +1,26 @@
+*  {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: 'Lato', sans-serif;
+  color: #eee;
+  text-align: center;
+}
+
+body {
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+#app {
+  width: 100vw;
+  height: 100vh;
+}
