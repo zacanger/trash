@@ -1,21 +1,26 @@
 import React, {PropTypes} from 'react'
-import store from '../store/Customers'
+import store              from '../store/Customers'
 
 class CustomerList extends React.Component {
+
   constructor(props) {
     super(props)
     this.state = {
-      customers: props.store.getCustomers(),
+      customers : props.store.getCustomers()
     }
+
   }
   componentDidMount() {
     this.unsubscribe = this.props.store.subscribe(() => this.updateStateWithCustomers())
+
   }
   componentWillUnmount() {
     this.unsubscribe()
+
   }
   updateStateWithCustomers() {
     this.setState({customers: this.props.store.getCustomers()})
+
   }
   render() {
     const {customers} = this.state
@@ -28,14 +33,14 @@ class CustomerList extends React.Component {
 }
 
 CustomerList.defaultProps = {
-  store,
+  store
 }
 
 CustomerList.propTypes = {
-  store: PropTypes.shape({
-    getCustomers: PropTypes.func,
-    subscribe: PropTypes.func,
-  }).isRequired,
+  store : PropTypes.shape({
+    getCustomers : PropTypes.func
+  , subscribe    : PropTypes.func
+  }).isRequired
 }
 
 function ListOfCustomers({customers}) {
@@ -50,7 +55,7 @@ function ListOfCustomers({customers}) {
 }
 
 ListOfCustomers.propTypes = {
-  customers: PropTypes.array,
+  customers : PropTypes.array
 }
 
 function NoCustomers() {
@@ -66,7 +71,8 @@ function Customer({name}) {
 }
 
 Customer.propTypes = {
-  name: PropTypes.string,
+  name : PropTypes.string
 }
 
 export default CustomerList
+
