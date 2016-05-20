@@ -13,5 +13,5 @@ test('something, i guess', (t) => {
   })
 })
 
-// run with node quuz/this-file.js
+// run with node this-file.js
 
