@@ -1,5 +1,6 @@
 // general-ish utility for async, eager thunks
 // adapted from kyle simpson's blog
+// obvs don't really need this manual work if we have promises
 
 const makeThunk = (fn, ...args) => {
   let
