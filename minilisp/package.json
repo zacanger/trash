@@ -24,7 +24,7 @@
   "bugs": "https://github.com/zacanger/foo/issues",
   "license": "WTFPL",
   "dependencies": {
-    "lodash": "^4.12.0"
+    "underscore": "^1.8.3"
   },
   "devDependencies": {}
 }
