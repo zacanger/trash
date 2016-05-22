@@ -80,3 +80,15 @@ module Main where
       loop n s = cycle $ replicate (n-1) "" ++ [s]
       join s t n = putStrLn . head $ filter (not . null) [s ++ t, show n]
 
+
+fizzbuzz :: Int -> String
+fizzbuzz n = case (rem n 3 == 0, rem n 5 == 0) of
+  (True, True) -> "FizzBuzz"
+  (False, True) -> "Buzz"
+  (True, False) -> "Fizz"
+  (False, False) -> show n
+
+main :: IO ()
+main = do
+  mapM_ (putStrLn.fizzbuzz) [1..100]
+

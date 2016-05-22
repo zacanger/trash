@@ -1,3 +1,5 @@
+-- compile : ghc filename.hs ; should build executable at filename
+
 {-
 running through learnxiny
 and the sample from haskell book
