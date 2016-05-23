@@ -25,5 +25,9 @@ just trying some things out
   * `journalctl -u <unit> -f` (like `tail -f`)
 
 * default type is simple (`Type=simple`) under `[Service]`
-  * i guess we'd  want this to be `Type=forking` instead
+  * there's also forking, oneshot, dbus, notify, and idle
+  * with simple, the process listed under ExecStart is the
+    main process for that service
+  * with forking, it becomes a child proc, and the parent exits
+    after startup.
 
