@@ -13,3 +13,17 @@ just trying some things out
   * `systemctl daemon-reload`
   * `systemctl restart testserver.service`
   * then maybe check it with `status` to be sure
+
+* `systemd-analyze verify <unit>` can check for problems with a config
+
+* **IMPORTANT**
+  * systemd does not check for things in `$PATH`
+  * MUST specify full path, eg `/bin/sh`
+
+* log-checking (as root/with sudo):
+  * `journalctl -u <unit>`
+  * `journalctl -u <unit> -f` (like `tail -f`)
+
+* default type is simple (`Type=simple`) under `[Service]`
+  * i guess we'd  want this to be `Type=forking` instead
+
