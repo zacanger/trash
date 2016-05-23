@@ -1,23 +1,27 @@
-const _ = require('lodash')
+const _ = require('underscore')
 
 module.exports = {
-  openP    : '('
-, closeP   : ')'
-, add      : '+'
-, del      : '-'
-, mult     : '*'
-, div      : '/'
-, quot     : '\''
-, coreFunc : ['prnt', 'def']
-, funcMap  : {
-    '+'    : 'core.add'
-  , '-'    : 'core.del'
-  , '*'    : 'core.mult'
-  , '/'    : 'core.div'
-  , 'prnt' : 'core.prnt'
+  openParens    : '('
+, closeParens   : ')'
+, openBrackets  : '['
+, closeBrackets : ']'
+, plus          : '+'
+, minus         : '-'
+, times         : '*'
+, divide        : '/'
+, quote         : '"'
+, isALetter     : _.partial(_.contains, '_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
+, isANumber     : _.partial(_.contains, '0123456789')
+, isAToken      : _.partial(_.contains, '[]()*+-/')
+, functionMap   : {
+    '+'   : 'add'
+  , '-'   : 'subtract'
+  , '*'   : 'multiply'
+  , '/'   : 'divide'
+  , print : 'print'
+  , ct    : 'ct'
+  , gt    : 'gt'
   }
-, isChar   : _.partial(_.contains, 'ABCDEFGHIJKLMNOPQRXTUVWXYZabcdefghijklmnopqrstuvwxyz')
-, isNum    : _.partial(_.contains, '0123456789')
-, isToken  : _.partial(_.contains, '()+-*/')
+, coreFunctions : ['print', 'defn', 'ct', 'gt']
 }
 
