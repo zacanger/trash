@@ -1,10 +1,11 @@
-const
-  http = require('http')
-, port = process.env.PORT || 3000
-, host = process.env.HOST || '127.0.0.1'
+#!/usr/bin/env node
 
-http.createServer((req, res) => {
-  res.writeHead(200, {'Content-Type' : 'text/plain'})
-  res.end('testing')
-}).listen(port, host, () => console.log(`running at ${host}:${port}`))
+const
+  express = require('express')
+, port    = 9000
+, app     = express()
+
+app
+.use(express.static(__dirname + '/pub'))
+.listen(port, () => console.log(`blog on ${port}`))
 
