@@ -1,0 +1,19 @@
+;; once docker is installed, there should already be
+;; a systemd service for it. so you can just systemctl start docker
+;; and systemctl enable docker and that SHOULD be it
+
+[Unit]
+Description=This is our Node service
+Requires=docker.service
+After=docker.service
+
+[Service]
+Restart=always
+ExecStartPre=/usr/bin/docker kill ournodecontainer
+ExecStartPre=/usr/bin/docker rm ournodecontainer
+ExecStart=/usr/bin/docker run --name=ournodecontainer ournode/container
+ExecStop=/usr/bin/docker stop ournodecontainer
+
+[Install]
+WantedBy=multi-user.target
+
