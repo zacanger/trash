@@ -1,40 +1,43 @@
-import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
-import Codemirror from '../node_modules/codemirror'
+import React, {Component} from 'react'
+import ReactDOM           from 'react-dom'
+import Codemirror         from '../node_modules/codemirror'
 
 require('../node_modules/codemirror/mode/javascript/javascript')
 
-var defaults = {
-  javascript: 'var foo = \'bar\'\nfunction(){\n  return foo\n}'
-}
+const defaults = {javascript : 'var foo = \'bar\'\nfunction(){\n  return foo\n}'}
 
-var App = Reacet.createClass({
+const App = React.createClass({
   getInitialState () {
     return {
       code     : defaults.javascript
     , readOnly : true
     , mode     : 'javascript'
     }
-  },
-  updateCode: (newCode) {
+  }
+
+, updateCode (newCode) {
     this.setState({
-      code: newCode
+      code : newCode
     })
-  },
-  toggleReadOnly () {
+  }
+
+, toggleReadOnly () {
     this.setState({
-      readOnly: !this.state.readOnly
+      readOnly : !this.state.readOnly
     }, () => this.refs.editor.focus())
-  },
-  interact(cm){
+  }
+
+, interact (cm) {
     console.log(cm.getValue())
-  },
-  render () {
-    var options = {
+  }
+
+, render () {
+    let options = {
       lineNumbers : true
-      , readOnly  : this.state.ReadOnly
-      , mode      : this.state.mode
+    , readOnly    : this.state.ReadOnly
+    , mode        : this.state.mode
     }
+
     return (
       <div>
         <Codemirror

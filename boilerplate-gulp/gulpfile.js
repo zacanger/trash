@@ -8,11 +8,11 @@ require('babel/register')({
   ],
 })
 
-var gulp    = require('gulp')
-  , eslint  = require('gulp-eslint')
-  , plumber = require('gulp-plumber')
-  , mocha   = require('gulp-mocha')
-  , tasks   = require('gulp-task-listing')
+const
+  gulp    = require('gulp')
+, eslint  = require('gulp-eslint')
+, plumber = require('gulp-plumber')
+, mocha   = require('gulp-mocha')
 
 function lint(){
   return gulp.src('src/**/*.jsx')
@@ -26,7 +26,6 @@ function test(){
   .pipe(mocha())
 }
 
-gulp.task('help', tasklist)
 gulp.task('lint', lint)
 gulp.task('test', ['lint'], test)
 gulp.task('default', ['test'])
