@@ -67,6 +67,7 @@ module.exports = minilisp = {
 
 const balancedParens = input => {
   let s = []
+  let matchp = s.pop()
   for (let i = 0; i < input.length; i++) {
     let c = input[i]
     switch (c.value) {
@@ -76,15 +77,12 @@ const balancedParens = input => {
         s.push(c.value)
         break
       case ')':
-        let matchp = s.pop()
         if (matchp !== '(') {return false}
         break
       case '}':
-        let matchp = s.pop()
         if (matchp !== '{') {return false}
         break
       case ']':
-        let matchp = s.pop()
         if (matchp !== '[') {return false}
         break
     }

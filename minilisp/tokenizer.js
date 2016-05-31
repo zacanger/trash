@@ -24,7 +24,7 @@ module.exports = function tokenizer(text) {
         tokenStream.advance()
         token += tokenStream.currentToken()
       }
-      result.push({ type : 'number' value : token })
+      result.push({ type : 'number', value : token })
     } else if (token === constants.quote) {
       while (constants.isALetter(tokenStream.nextToken())) {
         tokenStream.advance()
@@ -36,6 +36,7 @@ module.exports = function tokenizer(text) {
     }
     tokenStream.advance()
   }
+
   return result
 }
 
@@ -54,10 +55,7 @@ TokenStream.prototype.advance = () => {
 }
 
 TokenStream.prototype.currentToken = () => this.text[this.index]
-
-TokenStream.prototype.isDone = () => this.done
-
-TokenStream.prototype.nextToken = () => this.text[this.index + 1]
-
-TokenStream.prototype.prevToken = () => this.text[this.index - 1]
+TokenStream.prototype.isDone       = () => this.done
+TokenStream.prototype.nextToken    = () => this.text[this.index + 1]
+TokenStream.prototype.prevToken    = () => this.text[this.index - 1]
 

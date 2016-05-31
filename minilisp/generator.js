@@ -18,9 +18,11 @@ module.exports = interpreter = (roots, env) => {
 }
 
 const interpretNode = (node, controller) => {
+
   let
     type  = node.get('type')
   , value = node.get('value')
+
   if (type === 'function') {
     if (value === 'defn') {
       // writeCustomFunction(node, controller)
@@ -46,6 +48,7 @@ const interpretNode = (node, controller) => {
       }
     }
   }
+
   return node
 }
 
@@ -106,4 +109,5 @@ const writeCustomFunction = (node, controller) => {
   controller.result += 'return ' + customController.result + ';'
   controller.result += '\n}\n'
 }
+
 
