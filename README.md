@@ -56,4 +56,5 @@ This repo doesn't address learning ES2015. I have another repo for that purpose,
   * [Awesome Redux](https://github.com/xgrommx/awesome-redux)
   * [React Components List](http://dvemac.github.io/react-component-list/)
   * [Built With React](http://builtwithreact.io/)
+  * [Twitter list of React influencers](https://twitter.com/oguzbilgic/lists/react-influencers)
 
