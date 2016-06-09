@@ -110,4 +110,3 @@ const writeCustomFunction = (node, controller) => {
   controller.result += '\n}\n'
 }
 
-
