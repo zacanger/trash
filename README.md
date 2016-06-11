@@ -37,6 +37,7 @@ mini-lecture on es6 for dm9.
   * [How to Use ES6 for Universal JavaScript Apps](https://medium.com/javascript-scene/how-to-use-es6-for-isomorphic-javascript-apps-2a9c3abe5ea2)
   * [A good starter project in ES6](https://github.com/r-walsh/es6-profiles) from the Dallas campus, similar to projects we've done here.
   * [babel's online repl](https://babeljs.io/repl/)
+  * [Good reading on classes in JS](https://github.com/joshburgess/not-awesome-es6-classes)
 * build systems
   * [browserify handbook](https://github.com/substack/browserify-handbook)
   * [gulp plugin directory](http://gulpjs.com/plugins/)
