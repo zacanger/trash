@@ -3,12 +3,17 @@
 I put this repo together for folks looking to learn React, primarily at
 DevMountain but really for anyone else too.
 
-## [THIS IS THE FIRST THING YOU SHOULD READ](https://facebook.github.io/react/docs/thinking-in-react.html)
-
 This repo doesn't address learning ES2015. I have another repo for that purpose,
 [here](https://github.com/zacanger/es6-and-builds).
 
-## Editors
+## READ THIS FIRST
+
+[This. Read this.](https://facebook.github.io/react/docs/thinking-in-react.html)
+
+--------
+
+### Editors
+
 You may want to take a moment to get your editor comfortable with JSX.
 * For vim, use your plugin manager to get
   [this](https://github.com/mxw/vim-jsx) and don't forget to set `let
@@ -17,13 +22,19 @@ You may want to take a moment to get your editor comfortable with JSX.
 * For Sublime Text, search for `Babel` in Package Control.
 * For VS Code, `tsd install react-global` or `typings install --ambient react-global`
 
+--------
+
 ### JSX Gotchas
+
 * Don't try to comment your JSX.
 * Don't try `if` statements in your JSX.
 * All tags must be closed (including void tags like `hr` and `img`).
   * But, all tags can be _self_ closing (eg `<div />`), which is nice.
 
+--------
+
 ### Learn Things
+
 * To get started learning React, I _highly_ recommend [this course](http://survivejs.com).
 * [This is another very good beginner's course](http://reactjsprogram.teachable.com/courses/reactjsfundamentals).
 * [a short guide on transitioning from angular to
@@ -34,12 +45,18 @@ You may want to take a moment to get your editor comfortable with JSX.
 * Webpack is awesome, but it's a huge pain. Really. A giant pain.
   [So consider using this.](https://github.com/HenrikJoreteg/hjs-webpack)
 
+--------
+
 ### DevTools Extensions
+
 * [Show Me The React](https://chrome.google.com/webstore/detail/show-me-the-react/iaebolhfcmodobkanmaahdhnlplncbnd)
 * [Official React DevTools Extension](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi)
 * [Official Tools Addon for Firefox](https://addons.mozilla.org/en-US/firefox/addon/react-devtools/)
 
+--------
+
 ### Some Additional React Resources
+
 * `npm i -g thinking-in-react` is a workshopper (interactive somewhat gamified tutorial in the terminal)
 * [lifecycle demo](http://plnkr.co/edit/JrdxRs?p=preview)
 * [official react jsfiddle](http://jsfiddle.net/reactjs/69z2wepo/)
