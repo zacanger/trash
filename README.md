@@ -1,5 +1,38 @@
 examples, sorta-kinda slides, and a whole bunch of other stuff for a
-mini-lecture on es6 for dm9.
+mini-lecture on es6 for dm9 (kept sort of updated for 10 and 11 as well).
+
+very simple es5.1 vs es2015 example (with react; es5 from omniscient's docs):
+
+```javascript
+// es5
+var App = component(function (props) {
+  var change = function () {
+    props.cursor.update(function () { return 'Hello'; });
+  }
+  return <button onClick={change}>{props.cursor.deref()}</button>
+})
+var structure = immstruct({message: 'Foo'})
+function render () {
+  React.render(<App cursor={structure.cursor('message')} />, document.body)
+}
+structure.on('swap', render)
+render()
+
+// and in es6
+const App = component(props => {
+  const change = () => {
+    props.cursor.update(() => 'Hello')
+  }
+  return <button onClick={change}>{props.cursor.deref()}</button
+})
+const structor = immstruct({message : 'Foo'})
+const render = () => ReactDOM.render(
+  <App cursor={structure.cursor('message')} />
+, document.body
+)
+structure.on('swap', render)
+render()
+```
 
 `cd` into the example subdirectories, run `npm i`, and play around!
 
