@@ -40,6 +40,8 @@ You may want to take a moment to get your editor comfortable with JSX.
 * [a short guide on transitioning from angular to
   react](https://reactjsnews.com/an-angular-developers-first-react-app).
   * [and additional materials on the same](http://angulartoreact.com/).
+* [This](https://www.gorkahernandez.com/blog/build-wikipedia-viewer-react-way) is a good **short** first-time React
+  project.
 * I have some React-related cheatsheets over
   [here](https://github.com/zacanger/doc.git).
 * Webpack is awesome, but it's a huge pain. Really. A giant pain.
