@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>tweetcode</title>
   <link rel="stylesheet" type="text/css" href="./css.css">
-  <script type="text/javascript" src="./js.js"></script>
+  <link rel="stylesheet" href="http://codemirror.net/lib/codemirror.css">
 </head>
 <body>
   <canvas
@@ -13,8 +13,49 @@
     height="800"
     hidden="true">
   </canvas>
-  <textarea id="text" onChange="change()"></textarea>
+  <textarea name="editable" rows="20" cols="60 "id="text" onChange="change()">
+// usage:
+// create empty span, wrap with whatever element needed
+// span needs an id
+// call the function: `typer(id, text, time)`
+// <h2><span id="hspan"></span></h1>
+// <p><span="pspan"></span></p>
+// (include the script here, and assume opening and closing script tags)
+// typer('hspan', 'this is a heading, slowly', 1000)
+// typer('pspan', 'this is a paragraph and stuff, much quicker this time, huh?', 100)
+
+function typer(el, txt, speed){
+  var txtBox    = document.getElementById(el)
+    , cursorTxt = document.createTextNode('_')
+    , cursorEl  = document.createElement('span')
+    , count     = 0
+    , opacity   = 0
+  cursorEl.appendChild(cursorTxt)
+  txtBox.parentNode.insertBefore(cursorEl, txtBox.nextSibling)
+  var timerId = setInterval(function(){
+    txtBox.innerHTML += txt[count]
+    count++
+    if(count >= txt.length){
+      clearInterval(timerId)
+    }
+  }, speed)
+  setInterval(function(){
+    if(opacity === 0){
+      cursorEl.style.opacity = 1
+      opacity = 1
+    } else {
+      cursorEl.style.opacity = 0
+      opacity = 0
+    }
+  }, 300)
+}
+  </textarea>
   <div><img id="newImg"></div>
+  <button onclick="go()">go</button>
+  <script src="http://codemirror.net/lib/codemirror.js"></script>
+  <script src="http://codemirror.net/addon/edit/matchbrackets.js"></script>
+  <script src="http://codemirror.net/addon/edit/continuecomment.js"></script>
+  <script src="http://codemirror.net/mode/javascript/javascript.js"></script>
+  <script type="text/javascript" src="./js.js"></script>
 </body>
 </html>
-

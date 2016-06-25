@@ -44,7 +44,7 @@ function change(){
   , context = canvas.getContext('2d')
   , arr     = multilineText(context, text.value, 600)
 
-  context.font      = '12pt Fira Code'
+  context.font      = '8pt Fira Code'
   context.clearRect(0, 0, canvas.width, canvas.height)
   context.fillStyle = 'rgb(30,30,30)'
   context.fillRect(0, 0, 600, 800)
@@ -59,3 +59,13 @@ function change(){
 
 }
 
+var cm = CodeMirror.fromTextArea(document.getElementById('text'), {
+  mode        : 'javascript'
+, theme       : 'default'
+, lineNumbers : true
+})
+cm.setSize(600, 800)
+function go(){
+  cm.save()
+  change()
+}
