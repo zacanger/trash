@@ -1,6 +1,5 @@
-var http = require('http')
-  , port = 4444
+#!/usr/bin/env node
 
-http.createServer(function(req, res){
-    res.end('something')
-}).listen(port)
+require('http').createServer((req, res) => {
+  res.end('foo')
+}).listen(8080)
