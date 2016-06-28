@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>tweetcode</title>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.16.0/codemirror.min.css">
   <link rel="stylesheet" type="text/css" href="./css.css">
-  <link rel="stylesheet" href="http://codemirror.net/lib/codemirror.css">
 </head>
 <body>
   <canvas
@@ -13,7 +13,7 @@
     height="800"
     hidden="true">
   </canvas>
-  <textarea name="editable" rows="20" cols="60 "id="text" onChange="change()">
+  <textarea name="editable" rows="20" cols="60 "id="text" onchange="change()">
 // usage:
 // create empty span, wrap with whatever element needed
 // span needs an id
@@ -52,10 +52,11 @@ function typer(el, txt, speed){
   </textarea>
   <div><img id="newImg"></div>
   <button onclick="go()">go</button>
-  <script src="http://codemirror.net/lib/codemirror.js"></script>
-  <script src="http://codemirror.net/addon/edit/matchbrackets.js"></script>
-  <script src="http://codemirror.net/addon/edit/continuecomment.js"></script>
-  <script src="http://codemirror.net/mode/javascript/javascript.js"></script>
+
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.16.0/codemirror.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.16.0/addon/edit/matchbrackets.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.16.0/addon/comment/continuecomment.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.16.0/mode/javascript/javascript.min.js"></script>
   <script type="text/javascript" src="./js.js"></script>
 </body>
 </html>
