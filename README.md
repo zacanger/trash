@@ -38,11 +38,11 @@ You may want to take a moment to get your editor comfortable with JSX.
 * To get started learning React, I _highly_ recommend [this course](http://survivejs.com).
 * [This is another very good beginner's course](http://reactjsprogram.teachable.com/courses/reactjsfundamentals).
 * [How-To for Beignners](https://github.com/petehunt/react-howto).
-* [a short guide on transitioning from angular to
-  react](https://reactjsnews.com/an-angular-developers-first-react-app).
+* [a short guide on transitioning from angular to react](https://reactjsnews.com/an-angular-developers-first-react-app).
   * [and additional materials on the same](http://angulartoreact.com/).
 * [This](https://www.gorkahernandez.com/blog/build-wikipedia-viewer-react-way) is a good **short** first-time React
   project.
+* [Here's a book](https://www.fullstackreact.com), plus an awesome very in-depth [Yelp clone tutorial](https://www.fullstackreact.com/articles/react-tutorial-cloning-yelp).
 * I have some React-related cheatsheets over
   [here](https://github.com/zacanger/doc.git).
 * Webpack is awesome, but it's a huge pain. Really. A giant pain.
