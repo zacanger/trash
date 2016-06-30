@@ -46,7 +46,8 @@ You may want to take a moment to get your editor comfortable with JSX.
 * I have some React-related cheatsheets over
   [here](https://github.com/zacanger/doc.git).
 * Webpack is awesome, but it's a huge pain. Really. A giant pain.
-  [So consider using this.](https://github.com/HenrikJoreteg/hjs-webpack)
+  [So consider using this](https://github.com/HenrikJoreteg/hjs-webpack).
+* A [Build Your Own (React) Starter Kit](http://andrewhfarmer.com/build-your-own-starter/#0-intro).
 
 --------
 
