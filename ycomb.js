@@ -10,3 +10,4 @@ function Y(X){
   })
 }
 
+const a = b => (p => b(x => (p(p)(x)))(p => b(x => (p(p)(x)))))
