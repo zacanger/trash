@@ -3,7 +3,8 @@
 I put this repo together for folks looking to learn React, primarily at
 DevMountain but really for anyone else too.
 
-This repo doesn't address learning ES2015. I have another repo for that purpose,
+This repo doesn't address learning ES2015 (aka ES6; current JavaScript which you
+should be using). I have another repo for that purpose,
 [here](https://github.com/zacanger/es6-and-builds).
 
 ## READ THIS FIRST
@@ -21,6 +22,8 @@ You may want to take a moment to get your editor comfortable with JSX.
 * For Atom, `apm install react language-babel`.
 * For Sublime Text, search for `Babel` in Package Control.
 * For VS Code, `tsd install react-global` or `typings install --ambient react-global`
+* In general, switch from using JSHint to ESLint. JSHint doesn't do JSX very
+  well. I recommend using the `standard` eslintrc.
 
 --------
 
@@ -62,6 +65,7 @@ You may want to take a moment to get your editor comfortable with JSX.
 ### Some Additional React Resources
 
 * `npm i -g thinking-in-react` is a workshopper (interactive somewhat gamified tutorial in the terminal)
+* `npm i -g mern-cli` will get you a MERN (Mongo/Express/React/Node) stack generator
 * [lifecycle demo](http://plnkr.co/edit/JrdxRs?p=preview)
 * [official react jsfiddle](http://jsfiddle.net/reactjs/69z2wepo/)
 * [unofficial react jsbin](http://jsbin.com/yafixat/edit?js,output)
@@ -81,4 +85,3 @@ You may want to take a moment to get your editor comfortable with JSX.
 * [React Components List](http://dvemac.github.io/react-component-list/)
 * [Built With React](http://builtwithreact.io/)
 * [Twitter list of React influencers](https://twitter.com/oguzbilgic/lists/react-influencers)
-
