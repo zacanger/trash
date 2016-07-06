@@ -10,7 +10,7 @@ const
 
 env.PATH = path.resolve('./node_modules/.bin') + SEPARATOR + env.PATH
 
-function execute(cmd){
+const execute = cmd => {
   let output = execSync(cmd, {
     cwd : process.cwd()
   , env : env
@@ -18,4 +18,3 @@ function execute(cmd){
 }
 
 // and now you can do something like `execute('standard-format -w .')`
-

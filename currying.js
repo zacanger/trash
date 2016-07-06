@@ -10,4 +10,3 @@ function mult() {
   }
 }
 var twice = mult(2)
-
