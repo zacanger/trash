@@ -6,4 +6,3 @@
 // }
 
 export default const nco = (variable, defaultValue) => (variable === null || typeof variable === 'undefined') ? defaultValue : variable
-

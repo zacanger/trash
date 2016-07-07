@@ -13,4 +13,3 @@ const
   foo      = require('this-file')
 , bar      = foo('some.html')
 , whatever = `<html>${bar}</html>`
-

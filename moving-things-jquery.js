@@ -4,7 +4,7 @@ $document.ready(function(){
 })
 
 function checkSize(){
-  if (".someClass").css("color") != "thing"){
-    $("#initial").detach().appendTo("#eventual")
+  if ('.someClass').css('color') != 'thing'){
+    $('#initial').detach().appendTo('#eventual')
   }
 }

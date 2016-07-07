@@ -65,4 +65,3 @@ $.post = function(url, data, onSuccess, onError){
   xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8')
   xhr.send(JSON.stringify(data))
 }
-

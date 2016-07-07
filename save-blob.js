@@ -1,4 +1,4 @@
-const saveData = (function () {
+const saveData = (() => {
   let a = document.createElement('a')
   document.body.appendChild(a)
   a.style = 'display: none'
@@ -20,4 +20,3 @@ let
 , fileName = 'sup.json'
 
 saveData(data, fileName)
-

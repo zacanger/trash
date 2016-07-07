@@ -10,4 +10,3 @@ $(document).keydown(function (e) {
     $('body').addClass('konami')
   }
 })
-

@@ -3,4 +3,3 @@ if (navigator.userAgent.indexOf('Mac OS X') != -1) {
 } else {
   $('body').addClass('pc')
 }
-

@@ -17,4 +17,3 @@ var grr = dirt(middleFinger)
 grr()
 
 // increments AFTER A SECOND every time
-

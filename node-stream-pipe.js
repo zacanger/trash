@@ -1,15 +1,17 @@
-var child  = require('child_process')
-  , fooRep = child.spawn('node')
+const
+  child  = require('child_process')
+, fooRep = child.spawn('node')
+, out    = process.stdout
+, sin    = process.stdin
 
-fooRep.stdout.pipe(process.stdout, {end: false})
-process.stdin.resume()
-process.stdin.pipe(fooRep.stdin, {end:false})
+fooRep.stdout.pipe(out, {end : false})
+sin.resume()
+sin.pipe(fooRep.stdin, {end : false})
 
-fooRep.stdin.on('end', function(){
-  process.stdout.write('ended stream')
+fooRep.stdin.on('end', () => {
+  out.write('ended stream')
 })
 
-fooRep.on('exit', function(code){
+fooRep.on('exit', (code) => {
   process.exit(code)
 })
-

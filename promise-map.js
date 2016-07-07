@@ -7,4 +7,3 @@ Promise.prototype.map = function(f){
   return promise
 }
 // this just blew my mind a little bit.
-
