@@ -1,3 +1,8 @@
+# semi-abandoned!
+
+you should use the original instead, it's active and has cool new features like
+git integration and things. [check it out here](https://github.com/ionutvmi/markdown-docs).
+
 # [markdown knowledgebase](https://github.com/zacanger/mdkb)
 
 See it live [here](http://mdkb.zacanger.com).
