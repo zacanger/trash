@@ -51,6 +51,7 @@ You may want to take a moment to get your editor comfortable with JSX.
 * Webpack is awesome, but it's a huge pain. Really. A giant pain.
   [So consider using this](https://github.com/HenrikJoreteg/hjs-webpack).
 * A [Build Your Own (React) Starter Kit](http://andrewhfarmer.com/build-your-own-starter/#0-intro).
+* [Full Stack Redux Tutorial](http://teropa.info/blog/2015/09/10/full-stack-redux-tutorial.html).
 
 --------
 
