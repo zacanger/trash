@@ -7,7 +7,7 @@ export default class Search extends React.Component {
     this.state = {searchTerm : ''}
   }
   handleInputChange(event){
-    this.setState({searchTerm : even.target.value})
+    this.setState({searchTerm : event.target.value})
   }
   handleSubmit(event){
     event.preventDefault()
@@ -22,7 +22,7 @@ export default class Search extends React.Component {
   render(){
     return(
       <div className="search-box-container">
-        <form>
+        <form onSubmit={this.handleSubmit.bind(this)}>
           <input
             className="search-box-text"
             type="text"

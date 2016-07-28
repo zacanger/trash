@@ -1,8 +1,13 @@
 {
   "name": "wikipedia",
-  "version": "0.1.0",
   "description": "wikipedia reader in react",
-  "main": "",
+  "version": "0.1.0",
+  "author": {
+    "name": "Zac Anger",
+    "email": "zac@zacanger.com",
+    "url": "http://zacanger.com"
+  },
+  "license": "WTFPL",
   "scripts": {
     "build": "webpack",
     "start": "webpack-dev-server --hot --inline --open --port 9999"
@@ -15,12 +20,6 @@
     "",
     ""
   ],
-  "author": {
-    "name": "Zac Anger",
-    "email": "zac@zacanger.com",
-    "url": "http://zacanger.com"
-  },
-  "license": "WTFPL",
   "dependencies": {
     "react": "^0.14.7",
     "react-dom": "^0.14.7",

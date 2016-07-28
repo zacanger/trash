@@ -35,7 +35,7 @@ export default class WikiReader extends React.Component {
     return(
       <div className="wrapper">
         <Search onSearch={this.handleSearch.bind(this)} />
-        <Results result={this.state.results} />
+        <Results results={this.state.results} />
       </div>
     )
   }
