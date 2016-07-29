@@ -66,6 +66,7 @@ You may want to take a moment to get your editor comfortable with JSX.
 ### Some Additional React Resources
 
 * `npm i -g thinking-in-react` is a workshopper (interactive somewhat gamified tutorial in the terminal)
+* `npm i -g learnyoureact` is another one of these.
 * `npm i -g mern-cli` will get you a MERN (Mongo/Express/React/Node) stack generator
 * [lifecycle demo](http://plnkr.co/edit/JrdxRs?p=preview)
 * [official react jsfiddle](http://jsfiddle.net/reactjs/69z2wepo/)
