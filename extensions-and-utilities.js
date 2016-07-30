@@ -4,6 +4,11 @@
 
 // these extend globals, so
 
+// make console.error actually throw instead of just logging
+console.error = err => {
+  throw new Error(err)
+}
+
 // returns true if val is NaN
 Number.isNaN = Number.isNaN || this.isNaN
 
@@ -336,3 +341,57 @@ export const writeFileSync = (file, data, indent) => {
   }
   fs.writeFileSync(file, JSON.stringify(data, null, indent), 'utf8')
 }
+
+// rot13
+export function rot13(s) {
+  return (s ? s : this).split('').map((_) => {
+    if (!_.match(/[A-Za-z]/)) {
+      return _
+    }
+    const c = Math.floor(_.charCodeAt(0) / 97)
+    const k = (_.toLowerCase().charCodeAt(0) - 83) % 26 || 26
+    return String.fromCharCode(k + ((c == 0) ? 64 : 96))
+  }).join('')
+}
+
+// generates short uid
+export const shortUid = () =>
+  ('0000' + (Math.random()*Math.pow(36,4) << 0).toString(36)).slice(-4)
+
+// normalize text
+export const normText = text =>
+  text.toLowerCase().match(/[a-z0-9]([a-z0-9.]*[a-z0-9])?/ig).join(' ')
+
+// credit: texas toland
+export const pipe = (x, ...fs) =>
+  fs.reduce((y, f) =>
+    f(y), x)
+// more verbosely
+// const pipe = (initialValue, ...fns) =>
+// fns.reduce((state, fn) => fn(state), initialValue)
+
+// convert camelCase to lisp-case
+export const camelCaseToLispCase = str => (
+  str.replace(/[A-Z]/g, match => (
+    '-' + match.toLowerCase())).toLowerCase()
+)
+
+// convert camelCase to snake_case
+export const cameCaseToSnakeCase = str => (
+  str.replace(/[A-Z]/g, match => (
+    '_' + match.toLowerCase())).toLowerCase()
+)
+
+// convert lisp-case to camelCase
+export const lispCaseToCamelCase = str => (
+  str.toLowerCase().replace(/-[a-z]/g, match => (
+    match.slice(1).toUpperCase()
+  ))
+)
+
+// convert snake_case to camelCase
+export const snakeCaseToCamelCase = str => (
+  str.replace (/(\_\w)/g, match => (
+    match[1].toUpperCase())
+  )
+)
