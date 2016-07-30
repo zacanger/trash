@@ -142,6 +142,41 @@ Function.isFunction = v =>
 
 // these don't go extending stuff
 
+// deepcopy obj
+export const deepCopy = o => {
+  let newObj
+  if (!o || typeof o !== 'object') {
+    return o
+  }
+  if (Array.isArray(o)) {
+    return o.map(it => deepCopy(it))
+  }
+  newObj = {}
+  Object.keys(o).forEach(prop => newObj[prop] = deepCopy(o[prop]))
+  return newObj
+}
+
+// shallow copy (top level)
+export const shallowCopy = o => {
+  let newObj
+  if (!o || typeof o !== 'object') {
+    return o
+  }
+  if (Array.isArray(o)) {
+    return o.slice(0)
+  }
+  newObj = {}
+  Object.keys(o).forEach(prop => {
+    newObj[prop] = o[prop]
+  })
+  return newObj
+}
+
+// copy obj, either shallow or deep
+export const copy = (o, shallow) => {
+  let copyfn = shallow ? shallowCopy : deepCopy
+  return copyfn(o)
+}
 // returns true if val is primitive
 export const isPrimitive = v => {
   if (v === null) {
@@ -205,6 +240,47 @@ export const base64Encode = str =>
 export const base64Decode = str =>
   new Buffer(str, 'base64').toString('utf8')
 
+// capitalizes first char
+export const capitalize = str =>
+  str.charAt(0).toUpperCase() + str.slice(1)
+
+// colour utilities
+const hex = /^#?[a-f0-9]{3}|[a-f0-9]{6}$/i
+
+// takes string colour, returns bool
+export const isHexBased = color =>
+hex.text(color)
+
+// takes string colour, returns bool
+export const isValidHex = color =>
+  isHexBased(trimSpaces(color))
+
+// takes string colour, returns either string or null
+export const normalizeColor = color => {
+  let nextColor = trimSpaces(color)
+  if (!isHexBased(color)) {
+    return null
+  }
+  nextColor = trimHash(nextColor)
+  if (nextColor.length === 3) {
+    nextColor = nextColor.replace(/./g, d => d + d)
+  }
+  return nextColor.toUpperCase()
+}
+
+// takes string colour, returns string
+export const trimHash = color =>
+  typeof color === 'string' ? color.replace('#', '') : color
+
+// takes string colour, returns string
+export const trimSpaces = color =>
+  typeof color === 'string' ? color.replace(/\s/g, '') : color
+
+
+// json utils (mostly node ones)
+
+const fs = require('fs')
+
 // checks if is json
 export const isJson = str => {
   try {
@@ -215,6 +291,48 @@ export const isJson = str => {
   return true
 }
 
-// capitalizes first char
-export const capitalize = str =>
-  str.charAt(0).toUpperCase() + str.slice(1)
+// read json file, parse it, call cb with obj or err
+const readFile = (file, cb) => {
+  fs.readFile(file, 'utf8', (err, json) => {
+    if (err) {
+      cb(err)
+      return
+    }
+    let data
+    try {
+      data = JSON.parse(json)
+    } catch (e) {
+      cb(e)
+      return
+    }
+    cb(null, data)
+  })
+}
+
+// same as above, but sync
+const readFileSync = file =>
+  JSON.parse(fs.readFileSync(file, 'utf8'))
+
+// write with data
+const writeFile = (file, data, indent, cb) => {
+  if (typeof cb !== 'function') {
+    cb = indent
+    indent = 0
+  }
+  let json
+  try {
+    json = JSON.stringify(data, null, indent)
+  } catch (e) {
+    cb(e)
+    return
+  }
+  fs.writeFile(file, json, 'utf8', cb)
+}
+
+// write json with data, sync
+export const writeFileSync = (file, data, indent) => {
+  if (typeof indent !== 'number') {
+    indent = 0
+  }
+  fs.writeFileSync(file, JSON.stringify(data, null, indent), 'utf8')
+}
