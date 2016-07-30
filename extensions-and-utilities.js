@@ -1,6 +1,9 @@
 // forked/yoinked/modified from gh:nervgh/yum.js,
 // gh:shapeshed/stringbean (cleaned up & modernized)
 // and also a fair few of my own.
+const
+  fs   = require('fs')
+, util = require('util')
 
 // these extend globals, so
 
@@ -284,7 +287,6 @@ export const trimSpaces = color =>
 
 // json utils (mostly node ones)
 
-const fs = require('fs')
 
 // checks if is json
 export const isJson = str => {
@@ -363,8 +365,8 @@ export const normText = text =>
   text.toLowerCase().match(/[a-z0-9]([a-z0-9.]*[a-z0-9])?/ig).join(' ')
 
 // credit: texas toland
-export const pipe = (x, ...fs) =>
-  fs.reduce((y, f) =>
+export const pipe = (x, ...s) =>
+  s.reduce((y, f) =>
     f(y), x)
 // more verbosely
 // const pipe = (initialValue, ...fns) =>
@@ -395,3 +397,123 @@ export const snakeCaseToCamelCase = str => (
     match[1].toUpperCase())
   )
 )
+
+// use instead of `console.error()`; logs to file and stdout both
+const
+  fn   = process.argv[2] || process.env.ERR_FILE || 'err.log'
+, file = fs.createWriteStream(`${__dirname}/${fn}`, {flags : 'w'})
+, sout = process.stdout
+, err  = d => {
+  file.write(util.format(d) + '\n')
+  sout.write(util.format(d) + '\n')
+}
+
+// gh:artificerentertainment
+export const nco = (variable, defaultValue) =>
+  (variable === null || typeof variable === 'undefined') ? defaultValue : variable
+
+export const niceDate = `[${Date(Date.now() * 1000).match(/(\d{2}:\d{2}:\d{2})/)[1]}]`
+
+// usage: // isType(1, 'number', 'string') ; isType([], 'array') ; etc.
+export const isType = a => {
+  let types = Array.prototype.slice.call(arguments, 1)
+
+  for (let i = 0, len = types.length; i < len; i++) {
+    let type = String(types[i]).toLowerCase()
+
+    if ((type == 'null' && a === null)        ||
+        (type == typeof a)                    ||
+        (type == 'object' && a === Object(a)) ||
+        (type == 'array' && Array.isArray && Array.isArray(a)) ||
+        Object.prototype.toString.call(a).slice(8, -1).toLowerCase() == type) {
+      return true
+    }
+  }
+  return false
+}
+
+export const xor = (a, b) =>
+  !a != !b
+
+export const lesser = (a, b) =>
+  (a < b) ? a : b
+
+// cred : gh:texastoland
+// {key, ...clone} = source
+export const cloneWithout = (source, ...keys) =>
+  exports.copyWithout({}, source, ...keys)
+// {key, ...copy} = {...target, ...source}
+export const copyWithout = (target, source, ...keys) => {
+  const copy = Object.assign(target, source)
+  for (const key of keys) {
+    delete copy[key]
+  }
+  return copy
+}
+
+// left-pad (yes, really)
+export const leftpad = (str, len, pd = ' ') =>
+  Array(len > str.length ? 1+len-str.length : 0).join(pd) + str
+
+// positive/negative nums with type checking
+export const isPositive = (x) =>
+  +x === x && x > 0
+export const isNegative = (x) =>
+  +x === x && x < 0
+
+// transpose a 2-dimensional matrix like [[1,2,3],[4,5,6],[7,8,9]]
+export const transpose = m =>
+  m.map((r, ri) =>
+    r.map((c, ci) => m[ci][ri]))
+
+// transpose a flat matrix like [1,2,3,4,5,6,7,8,9]
+export const transposeFlat = (m, l = Math.sqrt(m.length)|0) => m.map((c, i) =>
+  m[(i%l)*l + i/l|0])
+
+// reverse digits with correct sign handling
+export const revNum = (n) =>
+  Math.sign(n)*(''+Math.abs(n)).split('').reverse().join('')||0
+
+// is num power of two
+export const Po2 = (n) =>
+  1 << (n.toString(2).length - 1) === n
+
+// not sure which of these is better
+export const userHome = process.env[(process.platform === 'win32')
+  ? 'USERPROFILE'
+  : 'HOME'
+]
+export const userHomeTwo = process.env.HOME
+  || process.env.HOMEPATH
+  || process.env.USERPROFILE
+
+
+// adapted from facebook utility scripts
+// run fn n times
+// return 0 on success
+// return code of last failed if no more tries left
+export function tryExecNTimes (funcToRetry, retriesLeft, onEveryError) {
+  const exitCode = funcToRetry()
+  if (exitCode === 0) {
+    return exitCode
+  } else {
+    if (onEveryError) {
+      onEveryError()
+    }
+    retriesLeft--
+    echo(`Command failed, ${retriesLeft} retries left`)
+    if (retriesLeft === 0) {
+      return exitCode
+    } else {
+      return tryExecNTimes(funcToRetry, retriesLeft, onEveryError)
+    }
+  }
+}
+
+// check if a terminal supports colour
+const isWin = () => process.platform === 'win32'
+const isColour = () => {
+  const termColour = /^screen|^xterm|^vt100|color|ansi|cygwin|linux/i
+  return !!process.env.COLORTERM || termColour.test(process.env.TERM)
+}
+export isWin() || isColour()
