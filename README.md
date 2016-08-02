@@ -34,6 +34,20 @@ structure.on('swap', render)
 render()
 ```
 
+another example:
+
+```javascript
+// es5
+function someFunc(param) {
+  return {
+    param : param
+  }
+}
+// es6
+const someFunc = param => ({ param })
+// whaaaat
+```
+
 `cd` into the example subdirectories, run `npm i`, and play around!
 
 ## notes:
@@ -86,4 +100,3 @@ render()
   * [makefile](https://github.com/zacanger/examples/blob/master/example-javascript-makefile)
   * [gruntfile for es6](https://github.com/zacanger/examples/blob/master/gruntfile-es6.js)
   * [very basic gruntfile example](https://github.com/zacanger/examples/blob/master/example-gruntfile.js)
-
