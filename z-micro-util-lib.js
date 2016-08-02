@@ -8,12 +8,7 @@
 const
   fs   = require('fs')
 , util = require('util')
-
-// these extend globals, so
-
-export const throwError = err => {
-  throw new Error(err)
-}
+, os   = require('os')
 
 // returns true if val is NaN
 export const isNaN = Number.isNaN || this.isNaN
@@ -539,3 +534,26 @@ export const getWidth = () =>
 export const getHeight = () =>
   global.innerHeight ||
   global.document.documentElement.clientHeight
+
+
+// logging things
+
+export const throwError = err => {
+  throw new Error(err)
+}
+
+export const logWithTimestamp = function () {
+  const date = new Date()
+  const timestamp = date.getDate() + '/' + date.getMonth() + ' ' + date.getHours() + ':' +
+  date.getMinutes() + ':' + date.getSeconds() + '.' + date.getMilliseconds()
+  const message = Array.prototype.slice.call(arguments)
+  message.unshift('--')
+  message.unshift(timestamp)
+  console.log.apply(console, message)
+}
+
+export const withInfo = (str = '') =>
+  `${str}:${os.hostname()}:${process.pid}`
+
+export const logWithInfo = (str = '') =>
+  console.log(withInfo(str))
