@@ -526,3 +526,16 @@ export const sleep = ms => {
   const start = new Date().getTime()
   while ((new Date().getTime() - start) < ms){}
 }
+
+
+// some dom things
+export const scrollTop = () =>
+  global.scrollTo(0, 0)
+
+export const getWidth = () =>
+  global.innerWidth ||
+  global.document.documentElement.clientWidth
+
+export const getHeight = () =>
+  global.innerHeight ||
+  global.document.documentElement.clientHeight
