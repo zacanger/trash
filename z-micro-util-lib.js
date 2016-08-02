@@ -1,3 +1,7 @@
+// a little kinda lib thingy idk
+// just a bunch of utils really
+// some stuff that's basically polyfills-ish
+// needs node (there's fs stuff, etc.)
 // forked/yoinked/modified from gh:nervgh/yum.js,
 // gh:shapeshed/stringbean (cleaned up & modernized)
 // and also a fair few of my own.
@@ -7,37 +11,36 @@ const
 
 // these extend globals, so
 
-// make console.error actually throw instead of just logging
-console.error = err => {
+export const throwError = err => {
   throw new Error(err)
 }
 
 // returns true if val is NaN
-Number.isNaN = Number.isNaN || this.isNaN
+export const isNaN = Number.isNaN || this.isNaN
 
 // returns true if val is num
-Number.isNumber = v =>
-  typeof v === 'number' && this.isNaN(v)
+export const isNumber = v =>
+  typeof v === 'number' && isNaN(v)
 
 // returns true if num is int
-Number.isInteger = Number.isInteger || function (n) {
+export const isInteger = Number.isInteger || function (n) {
   return (n | 0) === n
 }
 
 // returns true if num is float
-Number.isFloat = n =>
+export const isFloat = n =>
   (n | 0) !== n
 
 // returns true if num is odd
-Number.isOdd = n =>
+export const isOdd = n =>
   (n & 1) !== 0
 
 // returns true if num is even
-Number.isEven = n =>
+export const isEven = n =>
   (n & 1) === 0
 
 // returns greatest common divisor
-Math.gcd = () => {
+export const greatestCommonDivisor = () => {
   let i = arguments.length
   let a = arguments[--i]
   while(a && i) {
@@ -52,25 +55,25 @@ Math.gcd = () => {
 }
 
 // returns least common multiple
-Math.lcm = () => {
+export const leastCommonMultiple = () => {
   let i = arguments.length
   let a = arguments[--i]
   while(a && i) {
     let b = arguments[--i]
-    a = a * b / Math.gcd(a, b)
+    a = a * b / greatestCommonDivisor(a, b)
   }
   return a
 }
 
 // returns true if val is obj
-Object.isObject = v =>
-  Object.toString.call(v) === '[object Object]'
+export const isObject = v =>
+  objToString.call(v) === '[object Object]'
 
 // toString
-Object.toString = Object.prototype.toString
+export const objToString = Object.prototype.toString
 
 // compares params by val
-Object.isEqual = (a, b) => {
+export const isEqualObj = (a, b) => {
   if (a === b) {
     return true
   }
@@ -78,18 +81,18 @@ Object.isEqual = (a, b) => {
 }
 
 // clones object
-Object.clone = (obj) => {
+export const objClone = (obj) => {
   // Number, String, Boolean, Function, null, undefined
   if (null === obj || 'object' !== typeof obj) {
     return obj
   }
 
   // Date and RegExp
-  if (Date.isDate(obj) || RegExp.isRegExp(obj)) {
+  if (isDate(obj) || isRegExp(obj)) {
     return new obj.constructor(obj)
   // Array and Object
   } else {
-    let copy = Array.isArray(obj) ? [] : Object.create(Object.getPrototypeOf(obj))
+    let copy = isArray(obj) ? [] : Object.create(Object.getPrototypeOf(obj))
     for (let key in obj) {
       if (obj.hasOwnProperty(key)) {
         copy[key] = this.clone(obj[key])
@@ -100,7 +103,7 @@ Object.clone = (obj) => {
 }
 
 // copy vals of all enumerable own properties from source obj to target obj
-Object.assign = Object.assign || function (target, source) {
+export const objAssign = Object.assign || function (target, source) {
   for (let key in source) {
     if (source.hasOwnProperty(key)) {
       target[key] = source[key]
@@ -110,10 +113,10 @@ Object.assign = Object.assign || function (target, source) {
 }
 
 // inherits target by source
-Object.inherit = (target, source) => {
+export const objInherit = (target, source) => {
   target.super_ = source
   target.prototype = Object.create(target.super_.prototype)
-  let descriptor = Object.clone(target.super_.descriptor) || {}
+  let descriptor = objClone(target.super_.descriptor) || {}
   descriptor.constructor = {
     value        : target
   , enumerable   : false
@@ -124,28 +127,28 @@ Object.inherit = (target, source) => {
 }
 
 // returns true if val is bool
-Boolean.isBoolean = v =>
+export const isBoolean = v =>
   typeof v === 'boolean'
 
 // returns true if val is str
-String.isString = v =>
+export const isString = v =>
   typeof v === 'string'
 
 // returns true if val is date
-Date.isDate = v =>
-  Object.toString.call(v) === '[object Date]'
+export const isDate = v =>
+  objToString.call(v) === '[object Date]'
 
 // returns true if val is regex
-RegExp.isRegExp = v =>
-  Object.toString.call(v) === '[object RegExp]'
+export const isRegExp = v =>
+  objToString.call(v) === '[object RegExp]'
 
 // returns true if val is arr
-Array.isArray = Array.isArray || function (v) {
-  return Object.toString.call(v) === '[object Array]'
+export const isArray = Array.isArray || function (v) {
+  return objToString.call(v) === '[object Array]'
 }
 
 // returns true if val is fn
-Function.isFunction = v =>
+export const isFunction = v =>
   typeof v === 'function'
 
 // these don't go extending stuff
@@ -156,7 +159,7 @@ export const deepCopy = o => {
   if (!o || typeof o !== 'object') {
     return o
   }
-  if (Array.isArray(o)) {
+  if (isArray(o)) {
     return o.map(it => deepCopy(it))
   }
   newObj = {}
@@ -170,7 +173,7 @@ export const shallowCopy = o => {
   if (!o || typeof o !== 'object') {
     return o
   }
-  if (Array.isArray(o)) {
+  if (isArray(o)) {
     return o.slice(0)
   }
   newObj = {}
@@ -208,7 +211,7 @@ export const isDefined = v =>
 
 // returns true if val is DOM el
 export const isElement = v =>
-  Object.toString.call(v).slice(8, 12) === 'HTML'
+  objToString.call(v).slice(8, 12) === 'HTML'
 
 // escapes html
 export const escapeHTML = str =>
@@ -299,7 +302,7 @@ export const isJson = str => {
 }
 
 // read json file, parse it, call cb with obj or err
-const readFile = (file, cb) => {
+export const readJson = (file, cb) => {
   fs.readFile(file, 'utf8', (err, json) => {
     if (err) {
       cb(err)
@@ -317,11 +320,11 @@ const readFile = (file, cb) => {
 }
 
 // same as above, but sync
-const readFileSync = file =>
+export const readJsonSync = file =>
   JSON.parse(fs.readFileSync(file, 'utf8'))
 
 // write with data
-const writeFile = (file, data, indent, cb) => {
+export const writejson = (file, data, indent, cb) => {
   if (typeof cb !== 'function') {
     cb = indent
     indent = 0
@@ -337,7 +340,7 @@ const writeFile = (file, data, indent, cb) => {
 }
 
 // write json with data, sync
-export const writeFileSync = (file, data, indent) => {
+export const writeJsonSync = (file, data, indent) => {
   if (typeof indent !== 'number') {
     indent = 0
   }
@@ -424,7 +427,7 @@ export const isType = a => {
     if ((type == 'null' && a === null)        ||
         (type == typeof a)                    ||
         (type == 'object' && a === Object(a)) ||
-        (type == 'array' && Array.isArray && Array.isArray(a)) ||
+        (type == 'array' && isArray && isArray(a)) ||
         Object.prototype.toString.call(a).slice(8, -1).toLowerCase() == type) {
       return true
     }
@@ -444,7 +447,7 @@ export const cloneWithout = (source, ...keys) =>
   exports.copyWithout({}, source, ...keys)
 // {key, ...copy} = {...target, ...source}
 export const copyWithout = (target, source, ...keys) => {
-  const copy = Object.assign(target, source)
+  const copy = objAssign(target, source)
   for (const key of keys) {
     delete copy[key]
   }
@@ -517,3 +520,9 @@ const isColour = () => {
   return !!process.env.COLORTERM || termColour.test(process.env.TERM)
 }
 export isWin() || isColour()
+
+// i know this is pointless but i think it's cute
+export const sleep = ms => {
+  const start = new Date().getTime()
+  while ((new Date().getTime() - start) < ms){}
+}
