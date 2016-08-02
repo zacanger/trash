@@ -557,3 +557,21 @@ export const withInfo = (str = '') =>
 
 export const logWithInfo = (str = '') =>
   console.log(withInfo(str))
+
+
+// this is a tiny router. hence the name.
+export const tinyRouter = (pathname, response) => {
+  let html, filePath
+  if (pathname !== '/favicon.ico'){
+    try {
+      filePath = './' + pathname
+      console.log('loading ' + filePath)
+      html = fs.readFileSync(filePath)
+      response.write(html)
+      response.end()
+    } catch (err) {
+      console.log('unable to load ' + filePath)
+      response.end()
+    }
+  }
+}
