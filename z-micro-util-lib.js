@@ -628,3 +628,9 @@ export function once (fn) {
   f.called = false
   return f
 }
+
+// you should never rely on something like this to validate an email.
+// email validation is basically impossible, so find some stable library
+// to do it for you.
+export const isValidEmail = email =>
+  /^([\w-\.]*(\+[a-z0-9-]+)?@([\w-]+\.)+[\w-]{2,10})?$/.test(email)
