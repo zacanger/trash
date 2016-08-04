@@ -356,7 +356,12 @@ export function rot13(s) {
 
 // generates short uid
 export const shortUid = () =>
-  ('0000' + (Math.random()*Math.pow(36,4) << 0).toString(36)).slice(-4)
+  ('0000' + (Math.random() * Math.pow(36, 4) << 0).toString(36)).slice(-4)
+
+// i don't know why
+export const otherShortUid = () =>
+  (Math.random().toString(36) + '00000000000000000').slice(2, 10)
+
 
 // normalize text
 export const normText = text =>
