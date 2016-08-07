@@ -9,4 +9,3 @@ int main(){
   printf("%f\n",4.0*p/n/n);
   return 0;
 }
-

@@ -5,4 +5,3 @@ main(){
   printf("\n");
   printf("world");
 }
-

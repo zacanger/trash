@@ -33,19 +33,19 @@ int main(int argc, char *argv[]) {
   char opt;
   while ((opt = getopt(argc, argv, "hsf:i:")) != -1) {
     switch (opt) {
-      case 'h':
-        printf("clock [-h|-s|-f FORMAT|-i INTERVAL]\n");
-        exit(EXIT_SUCCESS);
-        break;
-      case 's':
-        snoop = true;
-        break;
-      case 'f':
-        format = optarg;
-        break;
-      case 'i':
-        interval = atoi(optarg);
-        break;
+    case 'h':
+      printf("clock [-h|-s|-f FORMAT|-i INTERVAL]\n");
+      exit(EXIT_SUCCESS);
+      break;
+    case 's':
+      snoop = true;
+      break;
+    case 'f':
+      format = optarg;
+      break;
+    case 'i':
+      interval = atoi(optarg);
+      break;
     }
   }
 
@@ -63,4 +63,3 @@ int main(int argc, char *argv[]) {
   }
   return exit_code;
 }
-

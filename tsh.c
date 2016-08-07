@@ -270,4 +270,3 @@ int main(int argc, char **argv) {
   tsh_loop();
   return EXIT_SUCCESS;
 }
-

@@ -6,4 +6,3 @@ int main(){
   reboot(LINUX_REBOOT_CMD_POWER_OFF);
   perror("reboot");
 }
-

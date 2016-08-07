@@ -68,25 +68,25 @@ int main(int argc, char *argv[]) {
   char opt;
   while ((opt = getopt(argc, argv, "hsf:i:p:n:")) != -1) {
     switch (opt) {
-      case 'h':
-        printf("battery [-h|-s|-f FORMAT|-i INTERVAL|-p PATH|-n INDEX]\n");
-        exit(EXIT_SUCCESS);
-        break;
-      case 's':
-        snoop = true;
-        break;
-      case 'f':
-        format = optarg;
-        break;
-      case 'p':
-        path = optarg;
-        break;
-      case 'i':
-        interval = atoi(optarg);
-        break;
-      case 'n':
-        index = atoi(optarg);
-        break;
+    case 'h':
+      printf("battery [-h|-s|-f FORMAT|-i INTERVAL|-p PATH|-n INDEX]\n");
+      exit(EXIT_SUCCESS);
+      break;
+    case 's':
+      snoop = true;
+      break;
+    case 'f':
+      format = optarg;
+      break;
+    case 'p':
+      path = optarg;
+      break;
+    case 'i':
+      interval = atoi(optarg);
+      break;
+    case 'n':
+      index = atoi(optarg);
+      break;
     }
   }
 
@@ -105,4 +105,3 @@ int main(int argc, char *argv[]) {
 
   return exit_code;
 }
-

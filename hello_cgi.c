@@ -7,4 +7,3 @@ main(int argc, char** argv) {
   fputs("Content-type: text/plain\n\nHello.\n", stdout);
   exit(0);
 }
-
