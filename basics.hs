@@ -359,4 +359,3 @@ drop 1 "zac" -- "ac"
 -- Just x -- this means that x is a thing!
 -- bool is implemented basically as: Bool = True | false
 -- maybe a = Nothing | Just a
-

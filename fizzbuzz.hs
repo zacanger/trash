@@ -1,3 +1,4 @@
+#!/usr/bin/env runhaskell
 module Main where
 
 main :: IO ()
@@ -11,4 +12,3 @@ fizzBuzz n | n `mod` 15 == 0 = "FizzBuzz"
            | n `mod` 5  == 0 = "Fizz"
            | n `mod` 3  == 0 = "Buzz"
            | otherwise       = show n
-
