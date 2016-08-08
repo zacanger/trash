@@ -639,3 +639,6 @@ export function once (fn) {
 // to do it for you.
 export const isValidEmail = email =>
   /^([\w-\.]*(\+[a-z0-9-]+)?@([\w-]+\.)+[\w-]{2,10})?$/.test(email)
+
+export const transparentGif = () =>
+  'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
