@@ -87,3 +87,5 @@ You may want to take a moment to get your editor comfortable with JSX.
 * [React Components List](http://dvemac.github.io/react-component-list/)
 * [Built With React](http://builtwithreact.io/)
 * [Twitter list of React influencers](https://twitter.com/oguzbilgic/lists/react-influencers)
+* [Official create-react-app generator](https://github.com/facebookincubator/create-react-app)
+* [List of other good React app generators](https://github.com/facebookincubator/create-react-app#alternatives)
