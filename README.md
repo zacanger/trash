@@ -89,3 +89,4 @@ You may want to take a moment to get your editor comfortable with JSX.
 * [Twitter list of React influencers](https://twitter.com/oguzbilgic/lists/react-influencers)
 * [Official create-react-app generator](https://github.com/facebookincubator/create-react-app)
 * [List of other good React app generators](https://github.com/facebookincubator/create-react-app#alternatives)
+* [Workshop/challenges](https://github.com/jesstelford/react-workshop)
