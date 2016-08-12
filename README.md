@@ -61,6 +61,7 @@ You may want to take a moment to get your editor comfortable with JSX.
 * [Show Me The React](https://chrome.google.com/webstore/detail/show-me-the-react/iaebolhfcmodobkanmaahdhnlplncbnd)
 * [Official React DevTools Extension](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi)
 * [Official Tools Addon for Firefox](https://addons.mozilla.org/en-US/firefox/addon/react-devtools/)
+* [Redux DevTool Extensions](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd)
 
 --------
 
@@ -91,3 +92,4 @@ You may want to take a moment to get your editor comfortable with JSX.
 * [Official create-react-app generator](https://github.com/facebookincubator/create-react-app)
 * [List of other good React app generators](https://github.com/facebookincubator/create-react-app#alternatives)
 * [Workshop/challenges](https://github.com/jesstelford/react-workshop)
+* [A blog with a bunch of short React lessons](https://medium.com/@learnreact/)
