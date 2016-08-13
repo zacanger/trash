@@ -643,3 +643,27 @@ export const isValidEmail = email =>
 
 export const transparentGif = () =>
   'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
+
+export const memoizeSimple = fn => {
+  let
+    cachedArg
+  , cachedRes
+  return arg => {
+    if (cachedArg === arg) {
+      return cachedRes
+    }
+    cachedArg = arg
+    cachedRes = fn(arg)
+    return cachedRes
+  }
+}
+
+export const memoizeWithCache = fn => (arg, memoCache) => {
+  if (memoCache.arg === arg) {
+    return memoCache.res
+  }
+  const res = fn(arg)
+  memoCache.arg = arg
+  memoCache.res = res
+  return res
+}
