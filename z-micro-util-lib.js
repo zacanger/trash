@@ -667,3 +667,20 @@ export const memoizeWithCache = fn => (arg, memoCache) => {
   memoCache.res = res
   return res
 }
+
+// export function memoize = function(fn) {
+// const cache = {}
+// const fnVal = function(val) {
+// return val
+// }
+// return function() {
+// const key = fnVal.apply(this, arguments)
+// if (key in cache) {
+// return cache[key]
+// } else {
+// const v = fn.apply(this, arguments)
+// cache[key] = v
+// return v
+// }
+// }
+// }
