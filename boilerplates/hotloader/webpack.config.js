@@ -1,13 +1,13 @@
 const
-  path    = require('path')
-, webpack = require('webpack')
+  { join } = require('path')
+, webpack  = require('webpack')
 
 module.exports = {
   devtool : 'cheap-module-eval'
 , entry : [
     'webpack-dev-server/client?http://localhost:4444'
   , 'webpack/hot/only-dev-server'
-  , './src/index.jsx'
+  , './src/index.js'
   ]
 , output : {
     path       : './'
@@ -19,9 +19,9 @@ module.exports = {
   ]
 , module : {
     loaders : [{
-      test    : /\.jsx$/
+      test    : /\.js$/
     , loaders : ['react-hot', 'babel']
-    , include : path.join(__dirname, 'src')
+    , include : join(__dirname, 'src')
     }]
   }
 }

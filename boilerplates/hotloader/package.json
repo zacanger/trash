@@ -1,22 +1,26 @@
 {
   "name": "react-boilerplate",
-  "version": "0.1.0",
   "description": "react boiler",
+  "version": "0.1.0",
+  "author": "zacanger",
+  "license": "WTFPL",
   "scripts": {
-    "start": "webpack-dev-server --quiet",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "start": "webpack-dev-server --quiet"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/zacanger/devmtn.git"
   },
   "keywords": [
-    "react",
     "boilerplate",
+    "react",
     "webpack"
   ],
-  "author": "zacanger",
-  "license": "WTFPL",
+  "dependencies": {
+    "react": "^0.14.0",
+    "react-dom": "^0.14.0"
+  },
   "devDependencies": {
     "babel-core": "^6.0.20",
     "babel-eslint": "^4.1.3",
@@ -28,10 +32,5 @@
     "react-hot-loader": "^1.3.0",
     "webpack": "^1.12.2",
     "webpack-dev-server": "^1.12.1"
-  },
-  "dependencies": {
-    "react": "^0.14.0",
-    "react-dom": "^0.14.0"
   }
 }
-

@@ -1,9 +1,13 @@
 import React, { Component } from 'react'
+import Greetings from './Greetings'
 
+// class component example
 export default class App extends Component {
   render() {
     return (
-      <h1>Hello, world.</h1>
+      <div>
+        <Greetings name="zac" />
+      </div>
     )
   }
 }

@@ -1,7 +1,7 @@
-import React    from 'react'
-import ReactDOM from 'react-dom'
+import React, { Component } from 'react'
+import { render } from 'react-dom'
 
-export class App extends React.Component {
+export class App extends Component {
   render() {
     return (
       <div className="foo">
@@ -11,8 +11,6 @@ export class App extends React.Component {
   }
 }
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('root')
-)
+const root = document.getElementById('root')
 
+render(<App />, root)
