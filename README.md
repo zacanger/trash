@@ -71,10 +71,10 @@ You may want to take a moment to get your editor comfortable with JSX.
 * `npm i -g learnyoureact` is another one of these.
 * `npm i -g mern-cli` will get you a MERN (Mongo/Express/React/Node) stack generator
 * [lifecycle demo](http://plnkr.co/edit/JrdxRs?p=preview)
-* [official react jsfiddle](http://jsfiddle.net/reactjs/69z2wepo/)
+* [official react jsfiddle](http://jsfiddle.net/reactjs/69z2wepo)
 * [unofficial react jsbin](http://jsbin.com/yafixat/edit?js,output)
 * [so many great demos](https://github.com/BinaryMuse/react-primer)
-* [live links to the above demos](http://binarymuse.github.io/react-primer/build/):
+* [live links to the above demos](http://binarymuse.github.io/react-primer/build):
   * [components and properties](http://binarymuse.github.io/react-primer/build/index.html?1)
   * [jsx](http://binarymuse.github.io/react-primer/build/index.html?2)
   * [state](http://binarymuse.github.io/react-primer/build/index.html?3)
@@ -86,10 +86,12 @@ You may want to take a moment to get your editor comfortable with JSX.
 * [Awesome React Native](https://github.com/jondot/awesome-react-native)
 * [React Modules](https://js.coach/react)
 * [Awesome Redux](https://github.com/xgrommx/awesome-redux)
-* [React Components List](http://dvemac.github.io/react-component-list/)
-* [Built With React](http://builtwithreact.io/)
+* [React Components List](http://dvemac.github.io/react-component-list)
+* [Built With React](http://builtwithreact.io)
 * [Twitter list of React influencers](https://twitter.com/oguzbilgic/lists/react-influencers)
 * [Official create-react-app generator](https://github.com/facebookincubator/create-react-app)
 * [List of other good React app generators](https://github.com/facebookincubator/create-react-app#alternatives)
 * [Workshop/challenges](https://github.com/jesstelford/react-workshop)
-* [A blog with a bunch of short React lessons](https://medium.com/@learnreact/)
+* [A blog with a bunch of short React lessons](https://medium.com/@learnreact)
+* [Redux Ecosystem Links](https://github.com/markerikson/redux-ecosystem-links)
+* [React/Redux Links](https://github.com/markerikson/react-redux-links)
