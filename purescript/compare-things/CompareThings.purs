@@ -10,11 +10,11 @@ data Stuff
 derive instance stuffEq :: Eq Stuff
 derive instance stuffOrd :: Ord Stuff
 
-{--instance stuffEq :: Eq Stuff where--}
-  {--eq A A = true--}
-  {--eq B B = true--}
-  {--eq C C = true--}
-  {--eq _ _ = false--}
+{- instance stuffEq :: Eq Stuff where -}
+  {- eq A A = true -}
+  {- eq B B = true -}
+  {- eq C C = true -}
+  {- eq _ _ = false -}
 
 compare :: Stuff -> Stuff -> Ordering
 compare a b =
@@ -36,10 +36,10 @@ compareTwo B C = LT
 compareTwo C C = EQ
 compareTwo C _ = GT
 
-{--lessThan :: Stuff -> Stuff -> Boolean--}
-{--lessThan a b = a < b--}
+{- lessThan :: Stuff -> Stuff -> Boolean -}
+{- lessThan a b = a < b -}
 
-{--
+{-
   compiled js will _always_ be fns that take 1 arg-so, always partial application
   js modules must always be in filename of same name as ps file
   should be exports.foo = function(){} (no es2015)
@@ -47,7 +47,7 @@ compareTwo C _ = GT
   >>= -- also monadic bind
   parseInt = toMaybe <<< parseIntImpl -- this is the same as
   parseInt a = toMaybe $ parseIntImpl a
---}
+-}
 
 newFn :: Int -> Int -> Int -> Int
 newFn a b c = a + b + c
