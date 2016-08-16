@@ -43,9 +43,6 @@ compareTwo C _ = GT
   compiled js will _always_ be fns that take 1 arg-so, always partial application
   js modules must always be in filename of same name as ps file
   should be exports.foo = function(){} (no es2015)
-  what is a tilde?
-  what is a polymorphic type variable?
-  'closed' row?
   =<< -- bind
   >>= -- also monadic bind
   parseInt = toMaybe <<< parseIntImpl -- this is the same as
