@@ -362,6 +362,10 @@ export const shortUid = () =>
 export const otherShortUid = () =>
   (Math.random().toString(36) + '00000000000000000').slice(2, 10)
 
+export const randomHex32 = (hexN = '') =>
+  hexN.length < 32
+    ? randomHex32(hexN + (Math.random() + Math.random()).toString(16).slice(2))
+    : hexN.slice(0, 32)
 
 // normalize text
 export const normText = text =>
