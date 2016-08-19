@@ -493,6 +493,7 @@ export const userHome = process.env[(process.platform === 'win32')
 export const userHomeTwo = process.env.HOME
   || process.env.HOMEPATH
   || process.env.USERPROFILE
+export const userHomeThree = os.homedir()
 
 
 // adapted from facebook utility scripts
@@ -647,8 +648,7 @@ export const isEmailSimple = email =>
 export const isEmail = email =>
   /^([\w-\.]*(\+[a-z0-9-]+)?@([\w-]+\.)+[\w-]{2,10})?$/.test(email)
 
-export const transparentGif = () =>
-  'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
+export const transparentGif = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
 
 export const memoizeSimple = fn => {
   let
