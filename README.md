@@ -53,6 +53,8 @@ You may want to take a moment to get your editor comfortable with JSX.
 * A [Build Your Own (React) Starter Kit](http://andrewhfarmer.com/build-your-own-starter/#0-intro).
 * [Full Stack Redux Tutorial](http://teropa.info/blog/2015/09/10/full-stack-redux-tutorial.html).
 * [A good bunch of tips](https://camjackson.net/post/9-things-every-reactjs-beginner-should-know) for React beginners.
+* [TodoMVC tutorial](https://www.theodo.fr/blog/2016/03/getting-started-with-react-redux-and-immutable-a-test-driven-tutorial-part-1)
+  with React, Redux, Immutable, and unit testing.
 
 --------
 
