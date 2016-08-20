@@ -79,4 +79,3 @@ void hold () {
   sleep(delay);
   printf("\033[2J\033[1;H\033[1;30m");
 }
-
