@@ -108,10 +108,10 @@ unwordsList = unwords . map showVal
 -- point-free
 
 eval :: LispVal -> ThrowsError LispVal
-eval val@(String _) = val
-eval val@(Number _) = val
-eval val@(Bool _)   = val
-eval (List [Atom "quote", val]) = val
+eval val@(String _) = return val
+eval val@(Number _) = return val
+eval val@(Bool _)   = return val
+eval (List [Atom "quote", val]) = return val
 eval (List [Atom "if", pred, conseq, alt]) =
                      do result <- eval pred
                         case result of
@@ -121,7 +121,7 @@ eval (List (Atom func : args))  = mapM eval args >>= apply func
 eval badForm = throwError $ BadSpecialForm "Unrecognized special form" badForm
 
 apply :: String -> [LispVal] -> ThrowsError LispVal
-apply func args - maybe (throwError $ NotFunction "Unrecognized primitive function args" func)
+apply func args = maybe (throwError $ NotFunction "Unrecognized primitive function args" func)
                         ($ args)
                         (lookup func primitives)
 
@@ -158,14 +158,14 @@ primitives = [
 numericBinop :: (Integer -> Integer -> Integer) -> [LispVal] -> ThrowsError LispVal
 numericBinop op           []  = throwError $ NumArgs 2 []
 numericBinop op singleVal@[_] = throwError $ NumArgs 2 singleVal
-numericBinop params           = mapM unpackNum params >>= return . Number . foldl1 op
+numericBinop op params        = mapM unpackNum params >>= return . Number . foldl1 op
 
 boolBinop :: (LispVal -> ThrowsError a) -> (a -> a -> Bool) -> [LispVal] -> ThrowsError LispVal
 boolBinop unpacker op args = if length args /= 2
-                                then throwError $ NumArts 2 args
+                                then throwError $ NumArgs 2 args
                                 else do left  <- unpacker $ args !! 0
                                         right <- unpacker $ args !! 1
-                                        return $ Bool $ let `op` right
+                                        return $ Bool $ left `op` right
 
 numBoolBinop  = boolBinop unpackNum
 strBoolBinop  = boolBinop unpackStr
@@ -224,16 +224,16 @@ unpackEquals a b (AnyUnpacker unpacker) =
         `catchError` (const $ return False)
 
 eqv :: [LispVal] -> ThrowsError LispVal
-eqv [(Bool arg1), (Bool arg2)]             = return $ Bool $ arg1 == arg2
-eqv [(Number arg1), (Number arg2)]         = return $ Bool $ arg1 == arg2
-eqv [(String arg1), (String arg2)]         = return $ Bool $ arg1 == arg2
-eqv [(Atom arg1), (Atom arg2)]             = return $ Bool $ arg1 == arg2
-eqv [(DottedList xs s), (DottedList ys y)] = eqv [List $ xs ++ [x], List $ ys ++ [y]]
-eqv [(List arg1), (List arg2)]             = return $ Bool $ (length arg1 == length arg2) &&
-                                                             (all eqvPair $ zip arg1 arg2)
+eqv [(Bool a), (Bool b)]                   = return $ Bool $ a == b
+eqv [(Number a), (Number b)]               = return $ Bool $ a == b
+eqv [(String a), (String b)]               = return $ Bool $ a == b
+eqv [(Atom a), (Atom b)]                   = return $ Bool $ a == b
+eqv [(DottedList xs x), (DottedList ys y)] = eqv [List $ xs ++ [x], List $ ys ++ [y]]
+eqv [(List a), (List b)]                   = return $ Bool $ (length a == length b) &&
+                                                             (all eqvPair $ zip a b)
     where eqvPair (x1, x2) = case eqv [x1, x2] of
-        Left err -> False
-        Right (Bool val) -> val
+                                Left err -> False
+                                Right (Bool val) -> val
 eqv [_, _]                                 = return $ Bool False
 eqv badArgList                             = throwError $ NumArgs 2 badArgList
 
@@ -260,7 +260,7 @@ data LispError = NumArgs Integer [LispVal]
 showError :: LispError -> String
 showError (UnboundVar message varname)  = message ++ ": " ++ varname
 showError (BadSpecialForm message form) = message ++ ": " ++ show form
-showError (NotFunction message func)    = message ++ ": " show func
+showError (NotFunction message func)    = message ++ ": " ++ show func
 showError (NumArgs expected found)      = "Expected " ++ show expected ++ " args; found values " ++ unwordsList found
 showError (TypeMismatch expected found) = "Invalid type: expected " ++ expected
 showError (Parser parseErr)             = "Parse error at " ++ show parseErr
@@ -269,7 +269,7 @@ instance Show LispError where show = showError
 
 instance Error LispError where
   noMsg = Default "An error has occurred."
-  stringMsg = Default
+  strMsg = Default
 
 type ThrowsError = Either LispError
 
@@ -305,6 +305,6 @@ until_ pred prompt action = do
      else action result >> until_ pred prompt action
 
 runRepl :: IO ()
-runRepl = until_ (== "quit") (readPrompt "z> ") evalAndPrint
+runRepl = until_ (== ":q") (readPrompt "z> ") evalAndPrint
 
 -- https://en.wikibooks.org/wiki/Write_Yourself_a_Scheme_in_48_Hours/Adding_Variables_and_Assignment
