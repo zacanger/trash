@@ -1,11 +1,17 @@
 import Text.ParserCombinators.Parsec hiding (spaces)
 import System.Environment
 import Control.Monad
+import Control.Monad.Error
 
 -- ghc --make -o foo main.hs
 
 main :: IO ()
 main = getArgs >>= print . eval . readExpr . head
+
+readExpr :: String -> ThrowsError LispVal
+readExpr input = case parse parseExpr "lisp" input of
+                   Left err  -> throwError $ Parser err
+                   Right val -> return val
 
 --
 -- parsing
@@ -73,11 +79,6 @@ parseQuoted = do
   x <- parseExpr
   return $ List [Atom "quote", x]
 
-readExpr :: String -> LispVal
-readExpr input = case parse parseExpr "lisp" input of
-                   Left err  -> String $ "No match: " ++ show err
-                   Right val -> val
-
 --
 -- evaluation
 --
@@ -97,17 +98,20 @@ unwordsList :: [LispVal] -> String
 unwordsList = unwords . map showVal
 -- point-free
 
-eval :: LispVal -> LispVal
+eval :: LispVal -> ThrowsError LispVal
 eval val@(String _) = val
 eval val@(Number _) = val
-eval val@(Bool _) = val
+eval val@(Bool _)   = val
 eval (List [Atom "quote", val]) = val
-eval (List (Atom func : args)) = apply func $ map eval args
+eval (List (Atom func : args))  = mapM eval args >>= apply func
+eval badForm = throwError $ BadSpecialForm "Unrecognized special form" badForm
 
-apply :: String -> [LispVal] -> LispVal
-apply func args = maybe (Bool False) ($ args) $ lookup func primitives
+apply :: String -> [LispVal] -> ThrowsError LispVal
+apply func args - maybe (throwError $ NotFunction "Unrecognized primitive function args" func)
+                        ($ args)
+                        (lookup func primitives)
 
-primitives :: [(String, [LispVal] -> LispVal)]
+primitives :: [(String, [LispVal] -> ThrowsError LispVal)]
 primitives = [
     ("+", numericBinop (+))
   , ("-", numericBinop (-))
@@ -118,12 +122,14 @@ primitives = [
   , ("remainder", numericBinop rem)
   ]
 
-numericBinop :: (Integer -> Integer -> Integer) -> [LispVal] -> LispVal
-numericBinop op params = Number $ foldl1 op $ map unpackNum params
+numericBinop :: (Integer -> Integer -> Integer) -> [LispVal] -> ThrowsError LispVal
+numericBinop op           []  = throwError $ NumArgs 2 []
+numericBinop op singleVal@[_] = throwError $ NumArgs 2 singleVal
+numericBinop params           = mapM unpackNum params >>= return . Number . foldl1 op
 
 -- sort-of type coercion!
-unpackNum :: LispVal -> Integer
-unpackNum (Number n) = n
+unpackNum :: LispVal -> ThrowsError Integer
+unpackNum (Number n) = return n
 unpackNum (String n) = let parsed = reads n :: [(Integer, String)] in
                            if null parsed
                               then 0
@@ -132,4 +138,36 @@ unpackNum (List [n]) = unpackNum n
 unpackNum _ = 0
 -- reads returns a list of pairs: (parsed value, remaining string)
 
--- start here: https://en.wikibooks.org/wiki/Write_Yourself_a_Scheme_in_48_Hours/Error_Checking_and_Exceptions
+--
+-- errors
+--
+
+data LispError = NumArgs Integer [LispVal]
+               | TypeMismatch String LispVal
+               | Parser ParseError
+               | BadSpecialForm String LispVal
+               | NotFunction String String
+               | UnboundVar String String
+               | Default String
+
+showError :: LispError -> String
+showError (UnboundVar message varname)  = message ++ ": " ++ varname
+showError (BadSpecialForm message form) = message ++ ": " ++ show form
+showError (NotFunction message func)    = message ++ ": " show func
+showError (NumArgs expected found)      = "Expected " ++ show expected ++ " args; found values " ++ unwordsList found
+showError (TypeMismatch expected found) = "Invalid type: expected " ++ expected
+showError (Parser parseErr)             = "Parse error at " ++ show parseErr
+
+instance Show LispError where show = showError
+
+instance Error LispError where
+  noMsg = Default "An error has occurred."
+  stringMsg = Default
+
+type ThrowsError = Either LispError
+
+-- convert errors to strings
+trapError action = catchError action (return . show)
+
+extractValue :: ThrowsError a -> a
+extractValue (Right val) = val
