@@ -41,10 +41,35 @@ parseAtom = do -- an atom is:
 parseNumber :: Parser LispVal
 parseNumber = liftM (Number . read) $ many1 digit
 
+parseExpr :: Parser LispVal
+parseExpr = parseAtom
+  <|> parseString
+  <|> parseNumber
+  <|> parseQuoted
+  <|> do char '('
+         x <- try parseList <|> parseDottedList
+         char ')'
+         return x
+
+parseList :: Parser LispVal
+parseList = liftM List $ sepBy parseExpr spaces
+
+parseDottedList :: Parser LispVal
+parseDottedList = do
+  head <- endBy parseExpr spaces
+  tail <- char '.' >> spaces >> parseExpr
+  return $ DottedList head tail
+
+parseQuoted :: Parser LispVal
+parseQuoted = do
+  char '\''
+  x <- parseExpr
+  return $ List [Atom "quote", x]
+
 readExpr :: String -> String
-readExpr input = case parse (spaces >> symbol ) "lisp" input of
+readExpr input = case parse parseExpr "lisp" input of
                    Left err -> "No match: " ++ show err
-                   Right val -> "Found value"
+                   Right _  -> "Found value"
 
 main :: IO ()
 main = do
