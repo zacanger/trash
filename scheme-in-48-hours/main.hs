@@ -2,7 +2,14 @@ import Text.ParserCombinators.Parsec hiding (spaces)
 import System.Environment
 import Control.Monad
 
--- ghc --make -o foo parser.hs
+-- ghc --make -o foo main.hs
+
+main :: IO ()
+main = getArgs >>= print . eval . readExpr . head
+
+--
+-- parsing
+--
 
 symbol :: Parser Char
 symbol = oneOf "!#$%&|*+-/:<=>?@^_~"
@@ -66,12 +73,33 @@ parseQuoted = do
   x <- parseExpr
   return $ List [Atom "quote", x]
 
-readExpr :: String -> String
+readExpr :: String -> LispVal
 readExpr input = case parse parseExpr "lisp" input of
-                   Left err -> "No match: " ++ show err
-                   Right _  -> "Found value"
+                   Left err  -> String $ "No match: " ++ show err
+                   Right val -> val
 
-main :: IO ()
-main = do
-  (expr:_) <- getArgs
-  putStrLn (readExpr expr)
+--
+-- evaluation
+--
+instance Show LispVal where show = showVal
+
+showVal :: LispVal -> String
+showVal (String contents) = "\"" ++ contents ++ "\""
+showVal (Atom name) = name
+showVal (Number contents) = show contents
+showVal (Bool True) = "#t"
+showVal (Bool False) = "#f" -- convert these lists to strings:
+showVal (List contents) = "(" ++ unwordsList contents ++ ")"
+showVal (DottedList head tail) = "(" ++ unwordsList head ++ " . " ++ showVal tail ++ ")"
+
+-- unwords is from Prelude; sticks together words with spaces
+unwordsList :: [LispVal] -> String
+unwordsList = unwords . map showVal
+-- point-free
+
+eval :: LispVal -> LispVal
+eval val@(String _) = val
+eval val@(Number _) = val
+eval val@(Bool _) = val
+eval (List [Atom "quote", val]) = val
+eval (List (Atom func : args)) = apply func $ map eval args
