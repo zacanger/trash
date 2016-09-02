@@ -65,6 +65,7 @@ bundle.js
 coverage
 data
 db
+lang
 lib-cov
 logs
 node_modules
