@@ -5,7 +5,7 @@
 
 (define (flip func)       (lambda (arg1 arg2) (func arg2 arg1)))
 (define (curry func arg1) (lambda (arg) (apply func (cons arg1 (list arg)))))
-(define (compose f g )    (lambda (arg) (f apply g arg)))
+(define (compose f g)     (lambda (arg) (f apply g arg)))
 
 (define zero?              (curry = 0))
 (define positive?          (curry < 0))
@@ -51,4 +51,4 @@
 (define (assoc obj alist)    (fold (mem-helper (curry equal? obj) car) #f alist))
 
 (define (map func lst)       (foldr (lambda (x y) (cons (func x) y)) '() lst))
-(define (filter pred list)   (foldr (lambda (x y) (if (pred x) (cons x y) y)) '() lst))
+(define (filter pred lst)   (foldr (lambda (x y) (if (pred x) (cons x y) y)) '() lst))
