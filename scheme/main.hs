@@ -146,18 +146,6 @@ eval env (List (Atom "cond" : (h@(List [test, expr]) : clauses))) = do
     pred -> throwError $ TypeMismatch "boolean" pred
 eval env (l@(List (Atom "cond": []))) = throwError $ BadSpecialForm "One of the conditions must be true" l
 eval env (List (Atom "cond": a)) = throwError $ TypeMismatch "list" (head a)
-eval env form@(List (Atom "case" : key : clauses)) =
-  if null clauses
-  then throwError $ BadSpecialForm "no true clause in case expression: " form
-  else case head clauses of
-    List (Atom "else" : exprs) -> liftM last (mapM (eval env) exprs)
-    List (List datums : exprs) -> do
-      result   <- eval env key
-      equality <-  liftThrows (mapM (\x -> eqv [result, x]) datums)
-      if Bool True `elem` equality
-        then liftM last (mapM (eval env) exprs)
-        else eval env $ List (Atom "case" : key : tail clauses)
-    _  -> throwError $ BadSpecialForm "ill-formed case expression: " form
 eval env (List [Atom "set!", Atom var, form])   = eval env form >>= setVar env var
 eval env (List [Atom "define", Atom var, form]) = eval env form >>= defineVar env var
 eval env (List (Atom "define" : List (Atom var : params) : body)) =
