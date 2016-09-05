@@ -1,22 +1,27 @@
 {-# LANGUAGE ExistentialQuantification #-}
 
--- https://en.wikibooks.org/wiki/Write_Yourself_a_Scheme_in_48_Hours/Towards_a_Standard_Library
-import Text.ParserCombinators.Parsec hiding (spaces)
-import System.Environment
+module Scheme (LispVal (..), LispError (..), readExpr, eval, runIOThrows, primitiveBindings, liftThrows) where
+
 import Control.Monad
 import Control.Monad.Error
-import System.IO
+import Data.Array
+import Data.Char
+import Data.Complex
 import Data.IORef
-
--- ghc --make -o foo main.hs
--- -fglasgow-exts or -XExistentialQuantification
+import Data.Maybe
+import Data.Ratio
+import Numeric
+import System.Environment
+import System.IO
+import Text.ParserCombinators.Parsec hiding (spaces)
 
 main :: IO ()
 main = do
   args <- getArgs
   if null args
      then runRepl
-     else runOne $ args
+     else runOne args
+     -- else runOne $ args
 
 readOrThrow :: Parser a -> String -> ThrowsError a
 readOrThrow parser input = case parse parser "lisp" input of
@@ -31,7 +36,7 @@ readExprList = readOrThrow (endBy parseExpr spaces)
 --
 
 symbol :: Parser Char
-symbol = oneOf "!#$%&|*+-/:<=>?@^_~"
+symbol = oneOf "!$%&|*+-/:<=>?@^_~"
 
 spaces :: Parser ()
 spaces = skipMany1 space
@@ -47,30 +52,88 @@ data LispVal = Atom String
                     , body :: [LispVal], closure :: Env }
              | IOFunc ([LispVal] -> IOThrowsError LispVal)
              | Port Handle
+             | Char Char
+             | Rational Rational
+             | Float Double
+             | Vector (Array Int LispVal)
+             | Complex (Complex Double)
 
 -- use >> if you're not returning a val
 -- use >>= if you're passing a val immediately
 -- use `do` otherwise
 
+spaces1 :: Parser ()
+spaces1 = skipMany1 space
+
+parseEverything :: Parser LispVal
+parseEverything = do
+  char '(' >> spaces
+  head <- sepEndBy parseExpr spaces1
+  do
+    char '.' >> spaces1
+    tail <- parseExpr
+    spaces >> char ')'
+    return $ DottedList head tail
+    <|> (spaces >> char ')' >> return (List head))
+
+parseChar :: Parser LispVal
+parseChar = do
+  string "#\\"
+  a <- many1 letter
+  return $ case map toLower a of
+             "newline" -> Char '\n'
+             "space"   -> Char ' '
+             [b]       -> Char b
+
+escapedChar :: Parser Char
+escapedChar = char '\\' >> oneOf "\"nrt\\" >>= \c ->
+  return $ case c of
+             '\\' -> '\\'
+             'n'  -> '\n'
+             'r'  -> '\r'
+             't'  -> '\t'
+          -- 'b' -> '\b'
+
 parseString :: Parser LispVal
 parseString = do
   char '"'
-  x <- many (noneOf "\"")
+  a <- many (noneOf "\"" <|> escapedChar)
   char '"'
-  return $ String x
+  return $ String a
 
 parseAtom :: Parser LispVal
 parseAtom = do -- an atom is:
   first <- letter <|> symbol -- one of these
   rest <- many (letter <|> digit <|> symbol) -- followed by any number of these
   let atom = first:rest -- cons; could also be [first] ++ rest
-  return $ case atom of
-             "#t" -> Bool True
-             "#f" -> Bool False
-             _    -> Atom atom -- 'default'
+      return $ Atom atom
+                        -- return $ case atom of
+                        -- "#t" -> Bool True
+                        -- "#f" -> Bool False
+                        -- _    -> Atom atom -- 'default'
+
+parseBool :: Parser LispVal
+parseBool = do
+  char '#'
+  (char 't' >> return (Bool True)) <|> (char 'f' >> return (Bool False))
 
 parseNumber :: Parser LispVal
-parseNumber = liftM (Number . read) $ many1 digit
+parseNumber = readPlainNumber <|> parseRadixNumber
+--parseNumber = liftM (Number . read) $ many1 digit
+
+toDecimal :: Integer -> String -> Integer
+toDecimal base s = foldl1 ((+) . (* base)) $ map toNumber a
+  where toNumber = toInteger . digitToInt
+
+readPlainNumber :: Parser LispVal
+readPlainNumber = do
+  a <- many1 digit
+  return $ Number . read $ a
+
+readNumberInBase :: String -> Integer -> Parser LispVal
+readNumberInBase digits base = do
+  a <- many (oneOf digits)
+  return $ Number $ toDecimal base a
 
 parseExpr :: Parser LispVal
 parseExpr = parseAtom
@@ -81,6 +144,44 @@ parseExpr = parseAtom
          x <- try parseList <|> parseDottedList
          char ')'
          return x
+
+parseRationalNumber :: Parser LispVal
+parseRationalNumber = do
+  numerator <- many digit
+  char '/'
+  denominator <- many digit
+  return $ Rational (read (numerator ++ "%" ++ denominator) :: Rational)
+
+parseRadixNumber :: Parser LispVal
+parseRadixNumber = char '#' >>
+  ((char 'd' >> readPlainNumber)
+    <|> (char 'b' >> readBinaryNumber)
+    <|> (char 'o' >> readOctalNumber)
+    <|> (char 'x' >> readHexNumber))
+
+readBinaryNumber = readNumberInBase "01" 2
+readOctalNumber  = readNumberInBase "01234567" 8
+readHexNumber    = readNumberInBase "0123456789abcdefABCDEF" 16
+
+parseComplexNumber :: Parser LispVal
+parseComplexNumber = do
+  realPart <- fmap toDouble $ try parseFloat <|> readPlainNumber
+  sign <- char '+' <|> char '-'
+  imaginaryPart <- fmap toDouble $ try parseFloat <|> readPlainNumber
+  let signedImaginaryPart = case sighn of
+      '+' -> imaginaryPart
+      '-' -> negate imaginaryPart
+  char 'i'
+  return $ Complex (realPart :+ signedImaginaryPart)
+    where toDouble (Float x)  = x
+          toDouble (Number x) = fromInteger x :: Double
+
+parseVector :: Parser LispVal
+parseVector = do
+  string "#("
+  els <- sepBy parseExpr spaces1
+  char ')'
+  return $ Vector (listArray (0, length els -1) els)
 
 parseList :: Parser LispVal
 parseList = liftM List $ sepBy parseExpr spaces
@@ -94,13 +195,48 @@ parseDottedList = do
 parseQuoted :: Parser LispVal
 parseQuoted = do
   char '\''
-  x <- parseExpr
-  return $ List [Atom "quote", x]
+  a <- parseExpr
+  return $ List [Atom "quote", a]
+
+parseQuasiQuoted :: Parser LispVal
+parseQuasiQuoted = do
+  char '`'
+  a <- parseExpr
+  return $ List [Atom "quasiquote", a]
+
+parseUnQuote :: Parser LispVal
+parseUnQuote = do
+  char ','
+  a <- parseExpr
+  return $ List [Atom "unquote", a]
+
+parseFloat :: Parser LispVal
+parseFloat = do
+  whole <- many1 digit
+  char '.'
+  decimal <- many1 digit
+  return $ Float (read (whole ++ "." ++ decimal))
+
 
 --
 -- evaluation
 --
 instance Show LispVal where show = showVal
+instance Eq LispVal where a == b = a `eq` b
+
+eq :: LispVal -> LispVal -> Bool
+eq (Atom a) (Atom b)                 = a == b
+eq (List a) (List b)                 = a == b
+eq (Char a) (Char b)                 = a == b
+eq (Bool a) (Bool b)                 = a == b
+eq (Number a) (Number b)             = a == b
+eq (Float a) (Float b)               = a == b
+eq (Complex a) (Complex b)           = a == b
+eq (Rational a) (Rational b)         = a == b
+eq (String a) (String b)             = a == b
+eq (Vector a) (Vector b)             = a == b
+eq (DottedList a b) (DottedList c d) = a == c && b == d
+eq _ _                               = False
 
 showVal :: LispVal -> String
 showVal (String contents)      = "\"" ++ contents ++ "\""
@@ -223,7 +359,7 @@ numericBinop op params        = mapM unpackNum params >>= return . Number . fold
 boolBinop :: (LispVal -> ThrowsError a) -> (a -> a -> Bool) -> [LispVal] -> ThrowsError LispVal
 boolBinop unpacker op args = if length args /= 2
                                 then throwError $ NumArgs 2 args
-                                else do left  <- unpacker $ args !! 0
+                                else do left  <- unpacker $ head args
                                         right <- unpacker $ args !! 1
                                         return $ Bool $ left `op` right
 
@@ -298,12 +434,21 @@ eqv [_, _]                                 = return $ Bool False
 eqv badArgList                             = throwError $ NumArgs 2 badArgList
 
 equal :: [LispVal] -> ThrowsError LispVal
+equal [l1@(List a), l2@(List b)] = eqvList equal [lq, l2]
+equal [DottedList xs x, DottedList ys y] = equal [List $ xs ++ [x], List $ ys ++ [y]]
 equal [a, b] = do
       primitiveEquals <- liftM or $ mapM (unpackEquals a b)
                          [AnyUnpacker unpackNum, AnyUnpacker unpackStr, AnyUnpacker unpackBool]
       eqvEquals <- eqv [a, b]
-      return $ Bool $ (primitiveEquals || let (Bool x) = eqvEquals in x)
+      return $ Bool (primitiveEquals || let (Bool x) = eqvEquals in x)
 equal badArgList = throwError $ NumArgs 2 badArgList
+
+eqvList :: ([LispVal] -> ThrowsError LispVal) -> [LispVal] -> ThrowsError LispVal
+eqvList eqvFunc [List a, List b] = return $ Bool $ (length a == length b) &&
+  all eqvPair (zip a b)
+    where eqvPair (x, y) = case eqvFunc [x, y] of
+          Left err         -> False
+          Right (Bool val) -> val
 
 --
 -- errors
@@ -328,8 +473,18 @@ showError (Parser parseErr)             = "Parse error at " ++ show parseErr
 instance Show LispError where show = showError
 
 instance Error LispError where
-  noMsg = Default "An error has occurred."
+  noMsg  = Default "An error has occurred."
   strMsg = Default
+
+instance Eq LispError where a == b = a `eqError` b
+
+eqError (NumArgs a b) (NumArgs c d)               = (a == c) && (b == d)
+eqError (TypeMismatch a b) (TypeMismatch c d)     = (a == c) && (b == d)
+eqError (BadSpecialForm a b) (BadSpecialForm c d) = (a == c) && (b == d)
+eqError (NotFunction a b) (NotFunction c d)       = (a == c) && (b == d)
+eqError (UnboundVar a b) (UnboundVar c d)         = (a == c) && (b == d)
+eqError (Default a) (Default b)                   = a == b
+eqError a b                                       = False
 
 type ThrowsError = Either LispError
 
@@ -350,7 +505,8 @@ readPrompt :: String -> IO String
 readPrompt prompt = flushStr prompt >> getLine
 
 evalString :: Env -> String -> IO String
-evalString env expr = runIOThrows $ liftM show $ (liftThrows $ readExpr expr) >>= eval env
+evalString env expr = runIOThrows $ liftM show $ liftThrows (readExpr expr) >>= eval env
+-- evalString env expr = runIOThrows $ liftM show $ (liftThrows $ readExpr expr) >>= eval env
 
 evalAndPrint :: Env -> String -> IO ()
 evalAndPrint env expr = evalString env expr >>= putStrLn
@@ -360,14 +516,16 @@ evalAndPrint env expr = evalString env expr >>= putStrLn
 until_ :: Monad m => (a -> Bool) -> m a -> (a -> m ()) -> m ()
 until_ pred prompt action = do
   result <- prompt
-  if pred result
-     then return ()
-     else action result >> until_ pred prompt action
+  unless (pred result) $ action result >> until_ pred prompt action
+  -- if pred result
+  -- then return ()
+  -- else action result >> until_ pred prompt action
 
 runOne :: [String] -> IO ()
 runOne args = do
   env <- primitiveBindings >>= flip bindVars [("args", List $ map String $ drop 1 args)]
-  (runIOThrows $ liftM show $ eval env (List [Atom "load", String (args !! 0)]))
+  runIOThrows (liftM show $ eval env (List [Atom "load", String (head args)]))
+  -- (runIOThrows $ liftM show $ eval env (List [Atom "load", String (args !! 0)]))
     >>= hPutStrLn stderr
 
 runRepl :: IO ()
@@ -389,10 +547,12 @@ liftThrows (Left err)  = throwError err
 liftThrows (Right val) = return val
 
 runIOThrows :: IOThrowsError String -> IO String
-runIOThrows action = runErrorT (trapError action) >>= return .extractValue
+runIOThrows actoin = liftM extractValue (runErrorT (trapError action))
+-- runIOThrows action = runErrorT (trapError action) >>= return .extractValue
 
 isBound :: Env -> String -> IO Bool
-isBound envRef var = readIORef envRef >>= return . maybe False (const True) . lookup var
+isBound envRef var = liftM (isJust . lookup var) (readIORef envRef)
+-- isBound envRef var = readIORef envRef >>= return . maybe False (const True) . lookup var
 
 getVar :: Env -> String -> IOThrowsError LispVal
 getVar envRef var = do env <- liftIO $ readIORef envRef
@@ -457,24 +617,25 @@ makePort :: IOMode -> [LispVal] -> IOThrowsError LispVal
 makePort mode [String filename] = liftM Port $ liftIO $ openFile filename mode
 
 closePort :: [LispVal] -> IOThrowsError LispVal
-closePort [Port port] = liftIO $ hClose port >> (return $ Bool True)
+closePort [Port port] = liftIO $ hClose port >> return (Bool True)
 closePort _           = return $ Bool False
 
 readProc :: [LispVal] -> IOThrowsError LispVal
 readProc []          = readProc [Port stdin]
-readProc [Port port] = (liftIO $ hGetLine port) >>= liftThrows . readExpr
+readProc [Port port] = liftIO (hGetLine port) >>= liftThrows . readExpr
 
 writeProc :: [LispVal] -> IOThrowsError LispVal
 writeProc [obj]            = writeProc [obj, Port stdout]
-writeProc [obj, Port port] = liftIO $ hPrint port obj >> (return $ Bool True)
+writeProc [obj, Port port] = liftIO $ hPrint port obj >> return (Bool True)
 
 readContents :: [LispVal] -> IOThrowsError LispVal
 readContents [String filename] = liftM String $ liftIO $ readFile filename
 
 load :: String -> IOThrowsError [LispVal]
-load filename = (liftIO $ readFile filename) >>= liftThrows . readExprList
+load filename = liftIO (readFile filename) >>= liftThrows . readExprList
 
 readAll :: [LispVal] -> IOThrowsError LispVal
 readAll [String filename] = liftM List $ load filename
 
-
+listOp :: ([LispVal] -> ThrowsError LispVal) -> [LispVal] -> ThrowsError LispVal
+listOp op = op
