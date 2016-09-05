@@ -1,6 +1,6 @@
 {-# LANGUAGE ExistentialQuantification #-}
 
-module Scheme (LispVal (..), LispError (..), readExpr, eval, runIOThrows, primitiveBindings, liftThrows) where
+-- module Scheme (LispVal (..), LispError (..), readExpr, eval, runIOThrows, primitiveBindings, liftThrows) where
 
 import Control.Monad
 import Control.Monad.Error
@@ -21,7 +21,6 @@ main = do
   if null args
      then runRepl
      else runOne args
-     -- else runOne $ args
 
 readOrThrow :: Parser a -> String -> ThrowsError a
 readOrThrow parser input = case parse parser "lisp" input of
