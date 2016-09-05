@@ -51,4 +51,4 @@
 (define (assoc obj alist)    (fold (mem-helper (curry equal? obj) car) #f alist))
 
 (define (map func lst)       (foldr (lambda (x y) (cons (func x) y)) '() lst))
-(define (filter pred lst)   (foldr (lambda (x y) (if (pred x) (cons x y) y)) '() lst))
+(define (filter pred lst)    (foldr (lambda (x y) (if (pred x) (cons x y) y)) '() lst))
