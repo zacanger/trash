@@ -257,8 +257,12 @@ showVal :: LispVal -> String
 showVal (String contents)      = "\"" ++ contents ++ "\""
 showVal (Atom name)            = name
 showVal (Number contents)      = show contents
+showVal (Complex c)            = show c
+showVal (Float f)              = show f
+showVal (Rational r)           = show r
 showVal (Bool True)            = "#t"
 showVal (Bool False)           = "#f" -- convert these lists to strings:
+showVal (Vector v)             = "(" ++ unwordsList (els v) ++ ")"
 showVal (List contents)        = "(" ++ unwordsList contents ++ ")"
 showVal (DottedList head tail) = "(" ++ unwordsList head ++ " . " ++ showVal tail ++ ")"
 showVal (PrimitiveFunc _)      = "<primitive>"
@@ -319,15 +323,15 @@ eval env badForm      = throwError $ BadSpecialForm "Unrecognized special form" 
 apply :: LispVal -> [LispVal] -> IOThrowsError LispVal
 apply (PrimitiveFunc func) args = liftThrows $ func args
 apply (Func params varargs body closure) args =
-  if num params /= num args && varargs == Nothing
+  if num params /= num args && isNothing varargs
      then throwError $ NumArgs (num params) args
-     else (liftIO $ bindVars closure $ zip params args) >>= bindVarArgs varargs >>= evalBody
-       where remainingArgs = drop (length params) args
-             num = toInteger . length
-             evalBody env = liftM last $ mapM (eval env) body
+     else liftIO (bindVars closure $ zip params args) >>= bindVarArgs varargs >>= evalBody
+       where remainingArgs       = drop (length params) args
+             num                 = toInteger . length
+             evalBody env        = liftM last $ mapM (eval env) body
              bindVarArgs arg env = case arg of
-                                     Just argName -> liftIO $ bindVars env [(argName, List $ remainingArgs)]
-                                     Nothing -> return env
+                 Just argName -> liftIO $ bindVars env [(argName, List remainingArgs)]
+                 Nothing      -> return env
 apply (IOFunc func) args = func args
 apply a bs = return $ List (a:bs)
 
@@ -364,6 +368,13 @@ primitives = [
   , ("eq?", eqv)
   , ("eqv?", eqv)
   , ("equal?", equal)
+  , ("symbol?", unaryOp symbolp)
+  , ("string?", unaryOp stringp)
+  , ("number?", unaryOp numberp)
+  , ("bool?", unaryOp boolp)
+  , ("list?", unaryOp listp)
+  , ("symbol->string", unaryOp symbolToString)
+  , ("string->symbol", unaryOp stringToSymbol)
   ]
 
 numericBinop :: (Integer -> Integer -> Integer) -> [LispVal] -> ThrowsError LispVal
@@ -385,6 +396,23 @@ boolBinop unpacker op args = if length args /= 2
 numBoolBinop  = boolBinop unpackNum
 strBoolBinop  = boolBinop unpackStr
 boolBoolBinop = boolBinop unpackBool
+
+symbolp, numberp, stringp, boolp, listp, stringToSymbol, symbolToString :: LispVal -> ThrowsError LispVal
+symbolp (Atom _)          = return $ Bool True
+symbolp _                 = return $Bool False
+numberp (Number _)        = return $ Bool True
+numberp _                 = return $Bool False
+stringp (String _)        = return $ Bool True
+stringp _                 = return $Bool False
+boolp (Bool _)            = return $ Bool True
+boolp _                   = return $Bool False
+listp (List _)            = return $ Bool True
+listp (DottedList _)      = return $ Bool True
+listp _                   = return $Bool False
+stringToSymbol (String a) = return $ Atom a
+stringToSymbol a          = throwError $ TypeMismatch "string" a
+symbolToString (Atom a)   = return $ String a
+symbolToString a          = throwError $ TypeMismatch "symbol" a
 
 -- sort-of type coercion!
 unpackNum :: LispVal -> ThrowsError Integer
