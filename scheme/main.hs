@@ -100,16 +100,18 @@ parseString = do
   char '"'
   return $ String a
 
+-- an atom is a letter or symbol followed by any number of letters, symbols, or digits
+-- first:rest is just cons, could be [first] ++ rest
+-- return $ case atom of
+-- "#t" -> Bool True
+-- "#f" -> Bool False
+-- _    -> Atom atom -- 'default'
 parseAtom :: Parser LispVal
-parseAtom = do -- an atom is:
-  first <- letter <|> symbol -- one of these
-  rest <- many (letter <|> digit <|> symbol) -- followed by any number of these
-  let atom = first:rest -- cons; could also be [first] ++ rest
-      return $ Atom atom
-                        -- return $ case atom of
-                        -- "#t" -> Bool True
-                        -- "#f" -> Bool False
-                        -- _    -> Atom atom -- 'default'
+parseAtom = do
+  first <- letter <|> symbol
+  rest <- many (letter <|> digit <|> symbol)
+  let atom = first:rest
+  return $ Atom atom
 
 parseBool :: Parser LispVal
 parseBool = do
@@ -135,14 +137,28 @@ readNumberInBase digits base = do
   return $ Number $ toDecimal base a
 
 parseExpr :: Parser LispVal
-parseExpr = parseAtom
-  <|> parseString
-  <|> parseNumber
-  <|> parseQuoted
-  <|> do char '('
-         x <- try parseList <|> parseDottedList
-         char ')'
-         return x
+parseExpr = try parseBool
+         <|> parseString
+         <|> parseVector
+         <|> parseAtom
+         <|> parseChar
+         <|> try parseComplexNumber
+         <|> try parseFloat
+         <|> try parseRationalNumber
+         <|> parseNumber
+         <|> parseQuoted
+         <|> parseQuasiQuoted
+         <|> parseUnQuote
+         <|> parseEverything
+
+-- parseExpr = parseAtom
+-- <|> parseString
+-- <|> parseNumber
+-- <|> parseQuoted
+-- <|> do char '('
+-- x <- try parseList <|> parseDottedList
+-- char ')'
+-- return x
 
 parseRationalNumber :: Parser LispVal
 parseRationalNumber = do
@@ -167,7 +183,7 @@ parseComplexNumber = do
   realPart <- fmap toDouble $ try parseFloat <|> readPlainNumber
   sign <- char '+' <|> char '-'
   imaginaryPart <- fmap toDouble $ try parseFloat <|> readPlainNumber
-  let signedImaginaryPart = case sighn of
+  let signedImaginaryPart = case sign of
       '+' -> imaginaryPart
       '-' -> negate imaginaryPart
   char 'i'
@@ -353,7 +369,11 @@ primitives = [
 numericBinop :: (Integer -> Integer -> Integer) -> [LispVal] -> ThrowsError LispVal
 numericBinop op           []  = throwError $ NumArgs 2 []
 numericBinop op singleVal@[_] = throwError $ NumArgs 2 singleVal
-numericBinop op params        = mapM unpackNum params >>= return . Number . foldl1 op
+numericBinop op params        = liftM (Number . foldl1 op) (mapM unpackNum params)
+-- numericBinop op params        = mapM unpackNum params >>= return . Number . foldl1 op
+
+unaryOp :: (LispVal -> ThrowsError LispVal) -> [LispVal] -> ThrowsError LispVal
+unaryOp f [v] = f v
 
 boolBinop :: (LispVal -> ThrowsError a) -> (a -> a -> Bool) -> [LispVal] -> ThrowsError LispVal
 boolBinop unpacker op args = if length args /= 2
@@ -372,7 +392,7 @@ unpackNum (Number n) = return n
 unpackNum (String n) = let parsed = reads n in
                            if null parsed
                               then throwError $ TypeMismatch "number" $ String n
-                              else return $ fst $ parsed !! 0
+                              else return $ fst $ head parsed
 unpackNum (List [n]) = unpackNum n
 unpackNum notNum     = throwError $ TypeMismatch "number" notNum
 -- `reads` returns a list of pairs: (parsed value, remaining string)
@@ -416,7 +436,7 @@ unpackEquals a b (AnyUnpacker unpacker) =
              do unpackedA <- unpacker a
                 unpackedB <- unpacker b
                 return $ unpackedA == unpackedB
-        `catchError` (const $ return False)
+        `catchError` const (return False)
 
 eqv :: [LispVal] -> ThrowsError LispVal
 eqv [(Bool a), (Bool b)]                   = return $ Bool $ a == b
@@ -466,8 +486,9 @@ showError (UnboundVar message varname)  = message ++ ": " ++ varname
 showError (BadSpecialForm message form) = message ++ ": " ++ show form
 showError (NotFunction message func)    = message ++ ": " ++ show func
 showError (NumArgs expected found)      = "Expected " ++ show expected ++ " args; found values " ++ unwordsList found
-showError (TypeMismatch expected found) = "Invalid type: expected " ++ expected
+showError (TypeMismatch expected found) = "Invalid type: expected " ++ expected ++ ", found " ++ show found
 showError (Parser parseErr)             = "Parse error at " ++ show parseErr
+showError (Default message)             = "Error: " ++ message
 
 instance Show LispError where show = showError
 
