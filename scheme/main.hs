@@ -123,7 +123,7 @@ parseNumber = readPlainNumber <|> parseRadixNumber
 --parseNumber = liftM (Number . read) $ many1 digit
 
 toDecimal :: Integer -> String -> Integer
-toDecimal base s = foldl1 ((+) . (* base)) $ map toNumber a
+toDecimal base a = foldl1 ((+) . (* base)) $ map toNumber a
   where toNumber = toInteger . digitToInt
 
 readPlainNumber :: Parser LispVal
@@ -184,8 +184,8 @@ parseComplexNumber = do
   sign <- char '+' <|> char '-'
   imaginaryPart <- fmap toDouble $ try parseFloat <|> readPlainNumber
   let signedImaginaryPart = case sign of
-      '+' -> imaginaryPart
-      '-' -> negate imaginaryPart
+                             '+' -> imaginaryPart
+                             '-' -> negate imaginaryPart
   char 'i'
   return $ Complex (realPart :+ signedImaginaryPart)
     where toDouble (Float x)  = x
@@ -194,9 +194,9 @@ parseComplexNumber = do
 parseVector :: Parser LispVal
 parseVector = do
   string "#("
-  els <- sepBy parseExpr spaces1
+  elems <- sepBy parseExpr spaces1
   char ')'
-  return $ Vector (listArray (0, length els -1) els)
+  return $ Vector (listArray (0, length elems -1) elems)
 
 parseList :: Parser LispVal
 parseList = liftM List $ sepBy parseExpr spaces
@@ -262,7 +262,7 @@ showVal (Float f)              = show f
 showVal (Rational r)           = show r
 showVal (Bool True)            = "#t"
 showVal (Bool False)           = "#f" -- convert these lists to strings:
-showVal (Vector v)             = "(" ++ unwordsList (els v) ++ ")"
+showVal (Vector v)             = "(" ++ unwordsList (elems v) ++ ")"
 showVal (List contents)        = "(" ++ unwordsList contents ++ ")"
 showVal (DottedList head tail) = "(" ++ unwordsList head ++ " . " ++ showVal tail ++ ")"
 showVal (PrimitiveFunc _)      = "<primitive>"
@@ -302,7 +302,7 @@ eval env (List (Atom "cond" : (h@(List [test, expr]) : clauses))) = do
     pred -> throwError $ TypeMismatch "boolean" pred
 eval env (l@(List (Atom "cond": []))) = throwError $ BadSpecialForm "One of the conditions must be true" l
 eval env (List (Atom "cond": a)) = throwError $ TypeMismatch "list" (head a)
-eval enf form@(List (Atom "case" : key : clauses)) =
+eval env form@(List (Atom "case" : key : clauses)) =
   if null clauses
      then throwError $ BadSpecialForm "No true clause in case expression: " form
      else case head clauses of
@@ -330,7 +330,7 @@ eval env (List (function : args)) = do
    func    <- eval env function
    argVals <- mapM (eval env) args
    apply func argVals
-eval env (List els)   = return $ List els
+eval env (List elems) = return $ List elems
 eval env badForm      = throwError $ BadSpecialForm "Unrecognized special form" badForm
 
 apply :: LispVal -> [LispVal] -> IOThrowsError LispVal
@@ -420,7 +420,7 @@ stringp _                 = return $Bool False
 boolp (Bool _)            = return $ Bool True
 boolp _                   = return $Bool False
 listp (List _)            = return $ Bool True
-listp (DottedList _)      = return $ Bool True
+listp (DottedList _ _)    = return $ Bool True
 listp _                   = return $Bool False
 stringToSymbol (String a) = return $ Atom a
 stringToSymbol a          = throwError $ TypeMismatch "string" a
@@ -490,7 +490,7 @@ eqv [_, _]                             = return $ Bool False
 eqv badArgList                         = throwError $ NumArgs 2 badArgList
 
 equal :: [LispVal] -> ThrowsError LispVal
-equal [l1@(List a), l2@(List b)] = eqvList equal [lq, l2]
+equal [l1@(List a), l2@(List b)] = eqvList equal [l1, l2]
 equal [DottedList xs x, DottedList ys y] = equal [List $ xs ++ [x], List $ ys ++ [y]]
 equal [a, b] = do
       primitiveEquals <- liftM or $ mapM (unpackEquals a b)
@@ -503,8 +503,8 @@ eqvList :: ([LispVal] -> ThrowsError LispVal) -> [LispVal] -> ThrowsError LispVa
 eqvList eqvFunc [List a, List b] = return $ Bool $ (length a == length b) &&
   all eqvPair (zip a b)
     where eqvPair (x, y) = case eqvFunc [x, y] of
-          Left err         -> False
-          Right (Bool val) -> val
+                                 Left err         -> False
+                                 Right (Bool val) -> val
 
 --
 -- errors
@@ -582,7 +582,6 @@ runOne :: [String] -> IO ()
 runOne args = do
   env <- primitiveBindings >>= flip bindVars [("args", List $ map String $ drop 1 args)]
   runIOThrows (liftM show $ eval env (List [Atom "load", String (head args)]))
-  -- (runIOThrows $ liftM show $ eval env (List [Atom "load", String (args !! 0)]))
     >>= hPutStrLn stderr
 
 runRepl :: IO ()
@@ -604,7 +603,7 @@ liftThrows (Left err)  = throwError err
 liftThrows (Right val) = return val
 
 runIOThrows :: IOThrowsError String -> IO String
-runIOThrows actoin = liftM extractValue (runErrorT (trapError action))
+runIOThrows action = liftM extractValue (runErrorT (trapError action))
 -- runIOThrows action = runErrorT (trapError action) >>= return .extractValue
 
 isBound :: Env -> String -> IO Bool
