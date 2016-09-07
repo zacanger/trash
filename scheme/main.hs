@@ -13,7 +13,7 @@ import Data.Ratio
 import Numeric
 import System.Environment
 import System.IO
-import Text.ParserCombinators.Parsec hiding (spaces)
+import Text.ParserCombinators.Parsec hiding (spaces1)
 
 main :: IO ()
 main = do
@@ -37,8 +37,8 @@ readExprList = readOrThrow (endBy parseExpr spaces)
 symbol :: Parser Char
 symbol = oneOf "!$%&|*+-/:<=>?@^_~"
 
-spaces :: Parser ()
-spaces = skipMany1 space
+spaces1 :: Parser ()
+spaces1 = skipMany1 space
 
 data LispVal = Atom String
              | List [LispVal]
@@ -61,11 +61,8 @@ data LispVal = Atom String
 -- use >>= if you're passing a val immediately
 -- use `do` otherwise
 
-spaces1 :: Parser ()
-spaces1 = skipMany1 space
-
-parseEverything :: Parser LispVal
-parseEverything = do
+parseLists :: Parser LispVal
+parseLists = do
   char '(' >> spaces
   head <- sepEndBy parseExpr spaces1
   do
@@ -149,7 +146,7 @@ parseExpr = try parseBool
          <|> parseQuoted
          <|> parseQuasiQuoted
          <|> parseUnQuote
-         <|> parseEverything
+         <|> parseLists
 
 -- parseExpr = parseAtom
 -- <|> parseString
@@ -197,15 +194,6 @@ parseVector = do
   elems <- sepBy parseExpr spaces1
   char ')'
   return $ Vector (listArray (0, length elems -1) elems)
-
-parseList :: Parser LispVal
-parseList = liftM List $ sepBy parseExpr spaces
-
-parseDottedList :: Parser LispVal
-parseDottedList = do
-  head <- endBy parseExpr spaces
-  tail <- char '.' >> spaces >> parseExpr
-  return $ DottedList head tail
 
 parseQuoted :: Parser LispVal
 parseQuoted = do
