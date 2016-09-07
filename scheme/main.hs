@@ -467,18 +467,14 @@ unpackEquals a b (AnyUnpacker unpacker) =
         `catchError` const (return False)
 
 eqv :: [LispVal] -> ThrowsError LispVal
-eqv [(Bool a), (Bool b)]                   = return $ Bool $ a == b
-eqv [(Number a), (Number b)]               = return $ Bool $ a == b
-eqv [(String a), (String b)]               = return $ Bool $ a == b
-eqv [(Atom a), (Atom b)]                   = return $ Bool $ a == b
-eqv [(DottedList xs x), (DottedList ys y)] = eqv [List $ xs ++ [x], List $ ys ++ [y]]
-eqv [(List a), (List b)]                   = return $ Bool $ (length a == length b) &&
-                                                             (all eqvPair $ zip a b)
-    where eqvPair (x1, x2) = case eqv [x1, x2] of
-                                Left err -> False
-                                Right (Bool val) -> val
-eqv [_, _]                                 = return $ Bool False
-eqv badArgList                             = throwError $ NumArgs 2 badArgList
+eqv [Bool a, Bool b]                   = return $ Bool $ a == b
+eqv [Number a,Number b]                = return $ Bool $ a == b
+eqv [String a, String b]               = return $ Bool $ a == b
+eqv [Atom a, Atom b]                   = return $ Bool $ a == b
+eqv [DottedList xs x, DottedList ys y] = eqv [List $ xs ++ [x], List $ ys ++ [y]]
+eqv [l1@(List a), l2@(List b)]         = eqvList eqv [l1, l2]
+eqv [_, _]                             = return $ Bool False
+eqv badArgList                         = throwError $ NumArgs 2 badArgList
 
 equal :: [LispVal] -> ThrowsError LispVal
 equal [l1@(List a), l2@(List b)] = eqvList equal [lq, l2]
