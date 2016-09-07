@@ -279,6 +279,7 @@ unwordsList :: [LispVal] -> String
 unwordsList = unwords . map showVal
 -- point-free
 
+-- this thing is SO UGLY. WHY IS IT so UGLY?
 eval :: Env -> LispVal -> IOThrowsError LispVal
 eval env val@(String _) = return val
 eval env val@(Number _) = return val
@@ -301,10 +302,22 @@ eval env (List (Atom "cond" : (h@(List [test, expr]) : clauses))) = do
     pred -> throwError $ TypeMismatch "boolean" pred
 eval env (l@(List (Atom "cond": []))) = throwError $ BadSpecialForm "One of the conditions must be true" l
 eval env (List (Atom "cond": a)) = throwError $ TypeMismatch "list" (head a)
+eval enf form@(List (Atom "case" : key : clauses)) =
+  if null clauses
+     then throwError $ BadSpecialForm "No true clause in case expression: " form
+     else case head clauses of
+            List (Atom "else" : exprs) -> liftM last (mapM (eval env) exprs)
+            List (List datums : exprs) -> do
+              result   <- eval env key
+              equality <- liftThrows (mapM (\a -> eqv [result, a]) datums)
+              if Bool True `elem` equality
+                 then liftM last (mapM (eval env) exprs)
+                 else eval env $ List (Atom "case" : key : tail clauses)
+            _ -> throwError $ BadSpecialForm "Malformed case expression: " form
 eval env (List [Atom "set!", Atom var, form])   = eval env form >>= setVar env var
 eval env (List [Atom "define", Atom var, form]) = eval env form >>= defineVar env var
 eval env (List (Atom "define" : List (Atom var : params) : body)) =
-  makeNormalFunc env params body >>= defineVar env var
+   makeNormalFunc env params body >>= defineVar env var
 eval env (List (Atom "define" : DottedList (Atom var : params) varargs : body)) =
    makeVarArgs varargs env params body >>= defineVar env var
 eval env (List (Atom "lambda" : List params : body)) =
@@ -317,7 +330,7 @@ eval env (List (function : args)) = do
    func    <- eval env function
    argVals <- mapM (eval env) args
    apply func argVals
-eval env (List elems) = return $ List elems
+eval env (List els)   = return $ List els
 eval env badForm      = throwError $ BadSpecialForm "Unrecognized special form" badForm
 
 apply :: LispVal -> [LispVal] -> IOThrowsError LispVal
