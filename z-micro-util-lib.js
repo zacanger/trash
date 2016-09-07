@@ -9,6 +9,7 @@ const
   fs   = require('fs')
 , util = require('util')
 , os   = require('os')
+, { execFile } = require('child_process')
 
 // returns true if val is NaN
 export const isNaN = Number.isNaN
@@ -141,6 +142,9 @@ export const isRegExp = v =>
 export const isArray = Array.isArray || function (v) {
   return objToString.call(v) === '[object Array]'
 }
+
+export const isArrayLike = v =>
+  v && isNumber(v.length)
 
 // returns true if val is fn
 export const isFunction = v =>
@@ -769,4 +773,14 @@ export const curry = fn => {
     return (...args) => acc(...args.concat(args))
   }
   return acc
+}
+
+export const open = (args, opts, cb) => {
+  args = [args]
+  const cmd = process.platform === 'win32'
+  ? 'cmd'
+  : process.platform === 'darwin'
+    ? 'open'
+    : 'xdg-open'
+  return execFile(cmd, args, opts, cb)
 }
