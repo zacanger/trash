@@ -725,6 +725,9 @@ export const noSwitch = (conds = {}) => c => {
 export const newlinesToSpaces = str =>
   str.replace(/\s+/g, ' ').trim()
 
+export const newlineRemove = str =>
+  str.replace(/(\r\n|\n|\r)/gm, '')
+
 export const removeAllWhitespace = str =>
   str.replace(/^\s+|\s+$/, '')
 
@@ -783,4 +786,107 @@ export const open = (args, opts, cb) => {
     ? 'open'
     : 'xdg-open'
   return execFile(cmd, args, opts, cb)
+}
+
+
+// options:
+// bold, italic, underline, inverse,
+// white, grey, black, blue, cyan, green, magenta, red, yellow
+// usage:
+// const c = require('./color')
+// console.log(c.bold(c.blue('foo')))
+const colorize = (color, text) => {
+  const codes = util.inspect.colors[color]
+  return `\x1b[${codes[0]}m${text}\x1b[${codes[1]}m`
+}
+const colors = () => {
+  const val = {}
+  Object.keys(util.inspect.colors).forEach(color => {
+    val[color] = text => colorize(color, text)
+  })
+  return val
+}
+export const clr = colors()
+
+
+// usage :
+// lighten
+// var NewColor = LightenDarkenColor('#F06D06', 20)
+// darken
+// var NewColor = LightenDarkenColor('#F06D06', -20)
+
+export const LightenDarkenColor = (col, amt) => {
+  let
+    usePound = false
+  , num      = parseInt(col, 16)
+  , r        = (num >> 16) + amt
+  , b        = ((num >> 8) & 0x00FF) + amt
+  , g        = (num & 0x0000FF) + amt
+
+  if (col[0] == '#') {
+    col = col.slice(1)
+    usePound = true
+  }
+  if (r > 255) {
+    r = 255
+  } else if (r < 0) {
+    r = 0
+  }
+  if (b > 255) {
+    b = 255
+  } else if (b < 0) {
+    b = 0
+  }
+  if (g > 255) {
+    g = 255
+  } else if (g < 0) {
+    g = 0
+  }
+  return (usePound ? '#' : '') + (g | (b << 8) | (r << 16)).toString(16)
+}
+
+// takes input in format #rrggbb (hex)
+export const complimentaryCols = s =>
+  '#' + (1e5+(8**8+~('0x'+s.slice(1))).toString(16)).slice(-6)
+// or
+// c=>c.replace(/\w/g,x=>(15-`0x${x}`).toString(16))
+
+export const objectFromEntries = entries => {
+  const res = {}
+  const len = entries.length
+  for (let i = 0; i < len; ++i) {
+    const ent = entries[i]
+    const key = ent[0]
+    const val = ent[1]
+    res[key] = val
+  }
+  return res
+}
+
+
+// credit: gh:spicydonuts
+export const findWhere = (fn, array) => {
+  let found = null
+  array.some((item, i) => {
+    if (fn(item, i)) {
+      found = item
+      return true
+    }
+    return false
+  })
+  return found
+}
+
+// credit: gh:spicydonuts
+export const dropWhere = (fn, array) => {
+  const keepers = []
+  array.forEach((item, i) => {
+    if (!fn(item, i)) {
+      keepers.push(item)
+    }
+  })
+  if (array.length === keepers.length) {
+    return array
+  }
+  return keepers
 }
