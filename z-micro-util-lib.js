@@ -39,9 +39,9 @@ export const isEven = n =>
 export function greatestCommonDivisor () {
   let i = arguments.length
   let a = arguments[--i]
-  while(a && i) {
+  while (a && i) {
     let b = arguments[--i]
-    while(b) {
+    while (b) {
       var c = a % b
       a = b
       b = c
@@ -54,7 +54,7 @@ export function greatestCommonDivisor () {
 export function leastCommonMultiple () {
   let i = arguments.length
   let a = arguments[--i]
-  while(a && i) {
+  while (a && i) {
     let b = arguments[--i]
     a = a * b / greatestCommonDivisor(a, b)
   }
@@ -79,7 +79,7 @@ export const isEqualObj = (a, b) => {
 // clones object
 export const objClone = (obj) => {
   // Number, String, Boolean, Function, null, undefined
-  if (null === obj || 'object' !== typeof obj) {
+  if (obj === null || typeof obj !== 'object') {
     return obj
   }
 
@@ -228,19 +228,19 @@ export const unescapeHTML = str =>
 
 // removes non-alphabetic chars
 export const removeAlpha = str =>
-  str.replace(/[^A-Za-z ]+/g, "")
+  str.replace(/[^A-Za-z ]+/g, '')
 
 // removes non-alpha-numeric chars
 export const removeNonAlphanumeric = str =>
-  str.replace(/[^A-Za-z0-9 ]+/g, "")
+  str.replace(/[^A-Za-z0-9 ]+/g, '')
 
 // removes non-numeric chars
 export const removeNonNumeric = str =>
-  str.replace(/[^0-9-.]/g, "")
+  str.replace(/[^0-9-.]/g, '')
 
 // removes numeric chars
 export const removeNumeric = str =>
-  str.replace(/[0-9]/g, "")
+  str.replace(/[0-9]/g, '')
 
 // base64 encodes
 export const base64Encode = str =>
@@ -299,7 +299,7 @@ export const randomCol = () => {
 export const isJson = str => {
   try {
     JSON.parse(str)
-  } catch(e) {
+  } catch (e) {
     return false
   }
   return true
@@ -352,14 +352,14 @@ export const writeJsonSync = (file, data, indent) => {
 }
 
 // rot13
-export function rot13(s) {
+export function rot13 (s) {
   return (s ? s : this).split('').map((_) => {
     if (!_.match(/[A-Za-z]/)) {
       return _
     }
     const c = Math.floor(_.charCodeAt(0) / 97)
     const k = (_.toLowerCase().charCodeAt(0) - 83) % 26 || 26
-    return String.fromCharCode(k + ((c == 0) ? 64 : 96))
+    return String.fromCharCode(k + ((c === 0) ? 64 : 96))
   }).join('')
 }
 
@@ -381,9 +381,9 @@ export const normText = text =>
   text.toLowerCase().match(/[a-z0-9]([a-z0-9.]*[a-z0-9])?/ig).join(' ')
 
 // credit: texas toland
-export const pipe = (x, ...s) =>
-  s.reduce((y, f) =>
-    f(y), x)
+// export const pipe = (x, ...s) =>
+// s.reduce((y, f) =>
+// f(y), x)
 // more verbosely
 // const pipe = (initialValue, ...fns) =>
 // fns.reduce((state, fn) => fn(state), initialValue)
@@ -409,7 +409,7 @@ export const lispCaseToCamelCase = str => (
 
 // convert snake_case to camelCase
 export const snakeCaseToCamelCase = str => (
-  str.replace (/(\_\w)/g, match => (
+  str.replace(/(\_\w)/g, match => (
     match[1].toUpperCase())
   )
 )
@@ -449,7 +449,7 @@ export function isType (a) {
 }
 
 export const xor = (a, b) =>
-  !a != !b
+  !a !== !b
 
 export const lesser = (a, b) =>
   (a < b) ? a : b
@@ -469,7 +469,7 @@ export const copyWithout = (target, source, ...keys) => {
 
 // left-pad (yes, really)
 export const leftpad = (str, len, pd = ' ') =>
-  Array(len > str.length ? 1+len-str.length : 0).join(pd) + str
+  Array(len > str.length ? 1 + len - str.length : 0).join(pd) + str
 
 // positive/negative nums with type checking
 export const isPositive = (x) =>
@@ -483,12 +483,12 @@ export const transpose = m =>
     r.map((c, ci) => m[ci][ri]))
 
 // transpose a flat matrix like [1,2,3,4,5,6,7,8,9]
-export const transposeFlat = (m, l = Math.sqrt(m.length)|0) => m.map((c, i) =>
-  m[(i%l)*l + i/l|0])
+export const transposeFlat = (m, l = Math.sqrt(m.length) | 0) => m.map((c, i) =>
+  m[(i % l) * l + i / l | 0 ])
 
 // reverse digits with correct sign handling
 export const revNum = (n) =>
-  Math.sign(n)*(''+Math.abs(n)).split('').reverse().join('')||0
+  Math.sign(n) * ('' + Math.abs(n)).split('').reverse().join('') || 0
 
 // is num power of two
 export const Po2 = (n) =>
@@ -504,7 +504,6 @@ export const userHomeTwo = process.env.HOME
   || process.env.USERPROFILE
 export const userHomeThree = os.homedir()
 
-
 // adapted from facebook utility scripts
 // run fn n times
 // return 0 on success
@@ -518,7 +517,7 @@ export function tryExecNTimes (funcToRetry, retriesLeft, onEveryError) {
       onEveryError()
     }
     retriesLeft--
-    echo(`Command failed, ${retriesLeft} retries left`)
+    console.log(`Command failed, ${retriesLeft} retries left`)
     if (retriesLeft === 0) {
       return exitCode
     } else {
@@ -533,14 +532,13 @@ const isColour = () => {
   const termColour = /^screen|^xterm|^vt100|color|ansi|cygwin|linux/i
   return !!process.env.COLORTERM || termColour.test(process.env.TERM)
 }
-export isWin() || isColour()
+export const hasColour = isWin() || isColour()
 
 // i know this is pointless but i think it's cute
 export const sleep = ms => {
   const start = new Date().getTime()
-  while ((new Date().getTime() - start) < ms){}
+  while ((new Date().getTime() - start) < ms) {}
 }
-
 
 // some dom things
 export const scrollTop = () =>
@@ -554,9 +552,10 @@ export const getHeight = () =>
   global.innerHeight ||
   global.document.documentElement.clientHeight
 
+export const getScrollBarWidth = () =>
+  global.innerWidth - global.document.documentElement.clientWidth
 
 // logging things
-
 export const throwError = err => {
   throw new Error(err)
 }
@@ -580,7 +579,7 @@ export const logWithInfo = (str = '') =>
 // this is a tiny router. hence the name.
 export const tinyRouter = (pathname, response) => {
   let html, filePath
-  if (pathname !== '/favicon.ico'){
+  if (pathname !== '/favicon.ico') {
     try {
       filePath = './' + pathname
       console.log('loading ' + filePath)
@@ -593,7 +592,6 @@ export const tinyRouter = (pathname, response) => {
     }
   }
 }
-
 
 // invokes until function returns truthily
 // examples:
@@ -626,7 +624,6 @@ export const invoker = (limit, interval) => (fn, cb) => {
   _fn()
 }
 
-
 // run only once
 // usage:
 // function foo (cb) {
@@ -635,17 +632,17 @@ export const invoker = (limit, interval) => (fn, cb) => {
 // // do things
 // }
 // }
-export function once (fn) {
-  let f = function () {
-    if (f.called) {
-      return f.value
-    }
-    f.called = true
-    return f.value = fn.apply(this, arguments)
-  }
-  f.called = false
-  return f
-}
+// export function once (fn) {
+// let f = function () {
+// if (f.called) {
+// return f.value
+// }
+// f.called = true
+// return f.value = fn.apply(this, arguments)
+// }
+// f.called = false
+// return f
+// }
 
 // you should never rely on something like this to validate an email.
 // email validation is basically impossible, so find some stable library
@@ -654,9 +651,8 @@ export function once (fn) {
 //   /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)
 // export const isEmail = email =>
 //   /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)
-
-export const isEmail = email =>
-  /^([\w-\.]*(\+[a-z0-9-]+)?@([\w-]+\.)+[\w-]{2,10})?$/.test(email)
+// export const isEmail = email =>
+//   /^([\w-\.]*(\+[a-z0-9-]+)?@([\w-]+\.)+[\w-]{2,10})?$/.test(email)
 
 export const transparentGif = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
 export const brokenImg = 'data:;base64,iVBORwOKGO=='
@@ -768,15 +764,14 @@ export const minify = str =>
 export const isMobileOrTablet = device =>
   /(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test(device) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(device.substr(0, 4))
 
-
-export const curry = fn => {
-  const length = fn.length
-  const acc = (...args) => {
-    if (args.length === length) return fn(...args)
-    return (...args) => acc(...args.concat(args))
-  }
-  return acc
-}
+// export const curry = fn => {
+// const length = fn.length
+// const acc = (...args) => {
+// if (args.length === length) return fn(...args)
+// return (...args) => acc(...args.concat(args))
+// }
+// return acc
+// }
 
 export const open = (args, opts, cb) => {
   args = [args]
@@ -787,7 +782,6 @@ export const open = (args, opts, cb) => {
     : 'xdg-open'
   return execFile(cmd, args, opts, cb)
 }
-
 
 // options:
 // bold, italic, underline, inverse,
@@ -808,13 +802,11 @@ const colors = () => {
 }
 export const clr = colors()
 
-
 // usage :
 // lighten
 // var NewColor = LightenDarkenColor('#F06D06', 20)
 // darken
 // var NewColor = LightenDarkenColor('#F06D06', -20)
-
 export const LightenDarkenColor = (col, amt) => {
   let
     usePound = false
@@ -823,7 +815,7 @@ export const LightenDarkenColor = (col, amt) => {
   , b        = ((num >> 8) & 0x00FF) + amt
   , g        = (num & 0x0000FF) + amt
 
-  if (col[0] == '#') {
+  if (col[0] === '#') {
     col = col.slice(1)
     usePound = true
   }
@@ -847,7 +839,7 @@ export const LightenDarkenColor = (col, amt) => {
 
 // takes input in format #rrggbb (hex)
 export const complimentaryCols = s =>
-  '#' + (1e5+(8**8+~('0x'+s.slice(1))).toString(16)).slice(-6)
+  '#' + (1e5 + (8 ** 8 + ~('0x' + s.slice(1))).toString(16)).slice(-6)
 // or
 // c=>c.replace(/\w/g,x=>(15-`0x${x}`).toString(16))
 
@@ -862,7 +854,6 @@ export const objectFromEntries = entries => {
   }
   return res
 }
-
 
 // credit: gh:spicydonuts
 export const findWhere = (fn, array) => {
@@ -892,5 +883,102 @@ export const dropWhere = (fn, array) => {
 }
 
 // close-to-complete email validation
-export const validateEmail = email =>
+export const isEmail = email =>
   /^([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22))*\x40([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d))*$/.test(email)
+
+export const curry = function (fn) {
+  const originalArguments = getFunctionArguments(fn) || []
+
+  const makeCurriedFunc = function () {
+    const givenArguments = arguments || []
+    if (givenArguments.length < originalArguments.length) {
+      return function (...rest) {
+        return makeCurriedFunc(...givenArguments, ...rest)
+      }
+    } else {
+      return fn(...givenArguments)
+    }
+  }
+
+  return function () {
+    return makeCurriedFunc(...arguments)
+  }
+}
+
+export const getFunctionArguments = function (fn) {
+  if (typeof fn !== 'function') {
+    throw new Error('Not a function')
+  }
+
+  const functionAsString = fn.toString()
+
+  const args = functionAsString
+    .match(/\(.*?\)/)[0]     // match everything between brackets
+    .replace(/[()]/gi, '')   // remove brackets
+    .replace(/\s/gi, '')     // remove all whitespace
+    .split(',')              // split on the commas
+
+  return args.filter(x => x) // remove possible empty string from the result
+}
+
+// returns true if all items pass predicate fn
+export const all = curry((predicate, list) =>
+  !!list.reduce && (typeof predicate === 'function') && list.reduce((result, current) =>
+    !result ? false : !!predicate(current)
+  , true)
+)
+
+// r->l composition
+export const compose = (...fns) =>
+  pipe(...reverse(fns))
+
+export const identity = x => x
+
+export const memoize = (fn) => {
+  const results = new Map()
+  return (...args) => {
+    const key = args.toString()
+    if (!results.get(key)) {
+      results.set(key, fn(...args))
+    }
+    return results.get(key)
+  }
+}
+
+// returns true if current obj has prop that equals given val
+export const propEq = curry((prop, value, data) =>
+  data[prop] !== undefined && data[prop] === value
+)
+
+// reduces data to single val
+export const reduce = curry((fn, initialValue, data) => {
+  let reducedValue = initialValue
+  for (let i = 0; i < data.length; i++) {
+    reducedValue = fn(reducedValue, data[i])
+  }
+  return reducedValue
+})
+
+// reverses array
+export const reverse = (items) => {
+  let result = []
+  for (let i = items.length - 1; i >= 0; i--) {
+    result.push(items[i])
+  }
+  return result
+}
+
+// l->r composition
+export const pipe = (...fns) =>
+  data => reduce((v, fn) => fn(v), data)(fns)
+
+// only calls fn once; subsequent calls just return first val
+export const once = (fn) => {
+  let returnValue
+  return (...args) => {
+    if (!returnValue) {
+      returnValue = fn(...args)
+    }
+    return returnValue
+  }
+}
