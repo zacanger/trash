@@ -38,6 +38,18 @@ You may want to take a moment to get your editor comfortable with JSX.
 
 ### Learn Things
 
+Before you start in on tutorials, keep in mind that React is still young, and changes quickly.
+Make sure any resources you're using are relatively recent (I'd say within 6 months or so). That
+includes the stuff below, because I don't have time to check if all of these are kept up to date.
+Easy wasy to tell if the thing you're reading is outdated:
+
+* `React.createClass()`: we use ES2015 classes now.
+* No mention of pure components (functions).
+* Using JSPM, Duo, or some other funky build tool or package manager (stick with NPM and Webpack or Browserify).
+* Using ES5.1. Just don't. There's no reason to. If you see a `var`, close the tab and find a different tutorial.
+
+#### Tutorials
+
 * To get started learning React, I _highly_ recommend [this course](http://survivejs.com).
 * [This is another very good beginner's course](http://reactjsprogram.teachable.com/courses/reactjsfundamentals).
 * [How-To for Beignners](https://github.com/petehunt/react-howto).
@@ -97,3 +109,45 @@ You may want to take a moment to get your editor comfortable with JSX.
 * [A blog with a bunch of short React lessons](https://medium.com/@learnreact)
 * [Redux Ecosystem Links](https://github.com/markerikson/redux-ecosystem-links)
 * [React/Redux Links](https://github.com/markerikson/react-redux-links)
+
+--------
+
+### Tips
+
+Instead of using ternary operators in your JSX, use the `&&` operator:
+```jsx
+{isLoggedIn ? <UserInfo /> : ''}
+// vs
+{isLoggedIn && <UserInfo />}
+```
+
+Rather than doing a bunch of manual binding of your methods in classes, use arrow functions.
+```jsx
+_handleEvent (e) {}
+this.handleEvent = this._handleEvent.bind(this)
+// vs
+handleEvent = e => {}
+```
+
+Just use Webpack. If someone tells you to use JSPM, walk away. Browserify is awesome, but Webpack
+makes working with React so much easier. Gulp and Grunt are great task runners, but not so great
+for working with React specifically. Yes, Webpack's docs will make you want to cry sometimes, and
+its source code is really hairy and it seems really difficult to get changes into its plugins and
+things. It's still worth using. Use [hjs-webpack](https://github.com/HenrikJoreteg/hjs-webpack) to
+get an easy and very complete setup, if you want. Or use
+[create-react-app](https://www.npmjs.com/package/create-react-app), and when you're ready for more
+control, run `npm run eject`.
+
+Writing React is writing JavaScript. This might come as a bit of a blow after doing something like
+Angular, but it turns out to be really convenient, especially if you're using JS elsewhere (a Node
+server, JS to handle API calls, a JS ORM, etc.). Still, you might miss some handy directives or
+whatever the equivalent is in whatever framework you're coming from. Just think about what those
+things are really doing, and you'll be able to reimplement them in React. For example, `ng-repeat`:
+
+```html
+<div ng-repeat="thing in things">{{thing.foo}} &middot; {{thing.bar}}</div>
+```
+
+```jsx
+things.map(thing => <div>{thing.foo} &middot; {thing.bar}</div>)
+```
