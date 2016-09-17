@@ -162,7 +162,9 @@ export const deepCopy = o => {
     return o.map(it => deepCopy(it))
   }
   newObj = {}
-  Object.keys(o).forEach(prop => newObj[prop] = deepCopy(o[prop]))
+  Object.keys(o).forEach(prop => {
+    newObj[prop] = deepCopy(o[prop])
+  })
   return newObj
 }
 
@@ -353,7 +355,7 @@ export const writeJsonSync = (file, data, indent) => {
 
 // rot13
 export function rot13 (s) {
-  return (s ? s : this).split('').map((_) => {
+  return (s || this).split('').map((_) => {
     if (!_.match(/[A-Za-z]/)) {
       return _
     }
@@ -409,19 +411,17 @@ export const lispCaseToCamelCase = str => (
 
 // convert snake_case to camelCase
 export const snakeCaseToCamelCase = str => (
-  str.replace(/(\_\w)/g, match => (
+  str.replace(/(_\w)/g, match => (
     match[1].toUpperCase())
   )
 )
 
 // use instead of `console.error()`; logs to file and stdout both
-const
-  fn   = process.argv[2] || process.env.ERR_FILE || 'err.log'
-, file = fs.createWriteStream(`${__dirname}/${fn}`, {flags : 'w'})
-, sout = process.stdout
-, err  = d => {
+const fn = process.argv[2] || process.env.ERR_FILE || 'err.log'
+const file = fs.createWriteStream(`${__dirname}/${fn}`, { flags : 'w' })
+export const err = d => {
   file.write(util.format(d) + '\n')
-  sout.write(util.format(d) + '\n')
+  process.stdout.write(util.format(d) + '\n')
 }
 
 // gh:artificerentertainment
@@ -437,11 +437,11 @@ export function isType (a) {
   for (let i = 0, len = types.length; i < len; i++) {
     let type = String(types[i]).toLowerCase()
 
-    if ((type == 'null' && a === null)        ||
-        (type == typeof a)                    ||
-        (type == 'object' && a === Object(a)) ||
-        (type == 'array' && isArray && isArray(a)) ||
-        Object.prototype.toString.call(a).slice(8, -1).toLowerCase() == type) {
+    if ((type === 'null' && a === null)        ||
+        (type === typeof a)                    ||
+        (type === 'object' && a === Object(a)) ||
+        (type === 'array' && isArray && isArray(a)) ||
+        Object.prototype.toString.call(a).slice(8, -1).toLowerCase() === type) {
       return true
     }
   }
@@ -484,7 +484,8 @@ export const transpose = m =>
 
 // transpose a flat matrix like [1,2,3,4,5,6,7,8,9]
 export const transposeFlat = (m, l = Math.sqrt(m.length) | 0) => m.map((c, i) =>
-  m[(i % l) * l + i / l | 0 ])
+  m[(i % l) * l + i / l | 0]
+)
 
 // reverse digits with correct sign handling
 export const revNum = (n) =>
@@ -495,14 +496,11 @@ export const Po2 = (n) =>
   1 << (n.toString(2).length - 1) === n
 
 // not sure which of these is better
-export const userHome = process.env[(process.platform === 'win32')
-  ? 'USERPROFILE'
-  : 'HOME'
-]
-export const userHomeTwo = process.env.HOME
-  || process.env.HOMEPATH
-  || process.env.USERPROFILE
-export const userHomeThree = os.homedir()
+export const userHome = process.env[(process.platform === 'win32') ? 'USERPROFILE' : 'HOME']
+// export const userHome = process.env.HOME ||
+//   process.env.HOMEPATH ||
+//   process.env.USERPROFILE
+// export const userHome = os.homedir()
 
 // adapted from facebook utility scripts
 // run fn n times
@@ -931,6 +929,10 @@ export const all = curry((predicate, list) =>
 // r->l composition
 export const compose = (...fns) =>
   pipe(...reverse(fns))
+
+// export const compose = (f, g) =>
+//   x =>
+//     f(g(x))
 
 export const identity = x => x
 
