@@ -88,7 +88,7 @@ escapedChar = char '\\' >> oneOf "\"nrt\\" >>= \c ->
              'n'  -> '\n'
              'r'  -> '\r'
              't'  -> '\t'
-          -- 'b' -> '\b'
+             'b'  -> '\b'
 
 parseString :: Parser LispVal
 parseString = do
@@ -147,15 +147,6 @@ parseExpr = try parseBool
          <|> parseQuasiQuoted
          <|> parseUnQuote
          <|> parseLists
-
--- parseExpr = parseAtom
--- <|> parseString
--- <|> parseNumber
--- <|> parseQuoted
--- <|> do char '('
--- x <- try parseList <|> parseDottedList
--- char ')'
--- return x
 
 parseRationalNumber :: Parser LispVal
 parseRationalNumber = do
@@ -382,7 +373,6 @@ numericBinop :: (Integer -> Integer -> Integer) -> [LispVal] -> ThrowsError Lisp
 numericBinop op           []  = throwError $ NumArgs 2 []
 numericBinop op singleVal@[_] = throwError $ NumArgs 2 singleVal
 numericBinop op params        = liftM (Number . foldl1 op) (mapM unpackNum params)
--- numericBinop op params        = mapM unpackNum params >>= return . Number . foldl1 op
 
 unaryOp :: (LispVal -> ThrowsError LispVal) -> [LispVal] -> ThrowsError LispVal
 unaryOp f [v] = f v
@@ -415,7 +405,6 @@ stringToSymbol a          = throwError $ TypeMismatch "string" a
 symbolToString (Atom a)   = return $ String a
 symbolToString a          = throwError $ TypeMismatch "symbol" a
 
--- sort-of type coercion!
 unpackNum :: LispVal -> ThrowsError Integer
 unpackNum (Number n) = return n
 unpackNum (String n) = let parsed = reads n in
@@ -497,7 +486,6 @@ eqvList eqvFunc [List a, List b] = return $ Bool $ (length a == length b) &&
 --
 -- errors
 --
-
 data LispError = NumArgs Integer [LispVal]
                | TypeMismatch String LispVal
                | Parser ParseError
@@ -542,7 +530,6 @@ extractValue (Right val) = val
 --
 -- repl
 --
-
 flushStr :: String -> IO ()
 flushStr str = putStr str >> hFlush stdout
 
@@ -551,7 +538,6 @@ readPrompt prompt = flushStr prompt >> getLine
 
 evalString :: Env -> String -> IO String
 evalString env expr = runIOThrows $ liftM show $ liftThrows (readExpr expr) >>= eval env
--- evalString env expr = runIOThrows $ liftM show $ (liftThrows $ readExpr expr) >>= eval env
 
 evalAndPrint :: Env -> String -> IO ()
 evalAndPrint env expr = evalString env expr >>= putStrLn
@@ -562,9 +548,6 @@ until_ :: Monad m => (a -> Bool) -> m a -> (a -> m ()) -> m ()
 until_ pred prompt action = do
   result <- prompt
   unless (pred result) $ action result >> until_ pred prompt action
-  -- if pred result
-  -- then return ()
-  -- else action result >> until_ pred prompt action
 
 runOne :: [String] -> IO ()
 runOne args = do
@@ -578,7 +561,6 @@ runRepl = primitiveBindings >>= until_ (== ":q") (readPrompt "z> ") . evalAndPri
 --
 -- vars
 --
-
 type Env = IORef [(String, IORef LispVal)]
 
 nullEnv :: IO Env
@@ -592,11 +574,9 @@ liftThrows (Right val) = return val
 
 runIOThrows :: IOThrowsError String -> IO String
 runIOThrows action = liftM extractValue (runErrorT (trapError action))
--- runIOThrows action = runErrorT (trapError action) >>= return .extractValue
 
 isBound :: Env -> String -> IO Bool
 isBound envRef var = liftM (isJust . lookup var) (readIORef envRef)
--- isBound envRef var = readIORef envRef >>= return . maybe False (const True) . lookup var
 
 getVar :: Env -> String -> IOThrowsError LispVal
 getVar envRef var = do env <- liftIO $ readIORef envRef
@@ -631,7 +611,6 @@ bindVars envRef bindings = readIORef envRef >>= extendEnv bindings >>= newIORef
 --
 -- functions
 --
-
 makeFunc varargs env params body = return $ Func (map showVal params) varargs body env
 makeNormalFunc = makeFunc Nothing
 makeVarArgs = makeFunc . Just . showVal
@@ -639,7 +618,6 @@ makeVarArgs = makeFunc . Just . showVal
 --
 -- IO primitives
 --
-
 ioPrimitives :: [(String, [LispVal] -> IOThrowsError LispVal)]
 ioPrimitives = [
     ("apply", applyProc)
