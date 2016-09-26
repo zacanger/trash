@@ -33,7 +33,6 @@ readExprList = readOrThrow (endBy parseExpr spaces)
 --
 -- parsing
 --
-
 symbol :: Parser Char
 symbol = oneOf "!$%&|*+-/:<=>?@^_~"
 
@@ -117,7 +116,6 @@ parseBool = do
 
 parseNumber :: Parser LispVal
 parseNumber = readPlainNumber <|> parseRadixNumber
---parseNumber = liftM (Number . read) $ many1 digit
 
 toDecimal :: Integer -> String -> Integer
 toDecimal base a = foldl1 ((+) . (* base)) $ map toNumber a
