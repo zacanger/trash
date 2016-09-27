@@ -2,7 +2,7 @@
 
 const newProxiedObj = tar => {
   return new Proxy(tar, {
-    get(tar, prop) {
+    get (tar, prop) {
       if (prop in tar) {
         return tar[prop]
       } else {
@@ -24,4 +24,3 @@ console.trace(moi.locale)
 Object.preventExtensions(me)
 let z = newProxiedObj(me)
 z.locale = 'ut' // err
-
