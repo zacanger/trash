@@ -1,6 +1,7 @@
 (ns zac-tries-clojurescript.core
  (:require [reagent.core :as r]
-           [zac-tries-clojurescript.something :as s]))
+           [zac-tries-clojurescript.something :as s]
+           [zac-tries-clojurescript.grid :as g]))
 
 ;; components
 
