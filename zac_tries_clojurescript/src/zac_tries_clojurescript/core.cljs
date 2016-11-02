@@ -1,5 +1,6 @@
 (ns zac-tries-clojurescript.core
- (:require [reagent.core :as r]))
+ (:require [reagent.core :as r]
+           [zac-tries-clojurescript.something :as s]))
 
 ;; components
 
@@ -36,6 +37,7 @@
 ;; page
 (defn app []
   [:div
+   [s/a-thing] ; i feel like this isn't correct
    [:h1 "This is a test."]
    [:h3.blink "Hi, I'm blinking."]
    [columns
