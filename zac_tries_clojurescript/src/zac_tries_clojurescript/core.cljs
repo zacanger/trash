@@ -37,11 +37,10 @@
 ;; page
 (defn app []
   [:div
-   [s/a-thing] ; i feel like this isn't correct
    [:h1 "This is a test."]
    [:h3.blink "Hi, I'm blinking."]
    [columns
-    [:div
+    [:div [s/a-thing]
      [:span.row "sup"]
      [greetz "clojurescript"]]
     [links-list]]])

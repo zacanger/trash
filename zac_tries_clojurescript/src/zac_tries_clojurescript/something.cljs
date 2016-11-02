@@ -2,4 +2,4 @@
   (:require [reagent.core :as r]))
 
 (defn a-thing []
-  [:div "hi"])
+  [:h3 "i am coming from another file"])
