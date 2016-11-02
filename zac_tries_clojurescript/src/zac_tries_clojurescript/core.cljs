@@ -6,7 +6,7 @@
 
 ; grid (column) thing
 (defn col [el]
-  [:div.split el])
+  [:div.col el])
 
 (defn greetz [name]
   [:span.row "howdy, " name])
