@@ -9,6 +9,12 @@
 (defn col [el]
   [:div.col el])
 
+(defn wat [words]
+  [g/row
+   [g/third words]
+   [g/third "wut"]
+   [g/third "why are these not columns?"]])
+
 (defn greetz [name]
   [:span.row "howdy, " name])
 
@@ -40,6 +46,7 @@
   [:div
    [:h1 "This is a test."]
    [:h3.blink "Hi, I'm blinking."]
+   [wat "wat"]
    [columns
     [:div [s/a-thing]
      [:span.row "sup"]
