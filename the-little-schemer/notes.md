@@ -1,4 +1,4 @@
-* page 78
+* page 106
 * car and cdr only work on non-empty lists
 * cdr list will always return list
 * cons s-expr list
