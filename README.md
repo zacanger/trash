@@ -65,6 +65,9 @@ Easy wasy to tell if the thing you're reading is outdated:
 * A [Build Your Own (React) Starter Kit](http://andrewhfarmer.com/build-your-own-starter/#0-intro).
 * [Full Stack Redux Tutorial](http://teropa.info/blog/2015/09/10/full-stack-redux-tutorial.html).
 * [A good bunch of tips](https://camjackson.net/post/9-things-every-reactjs-beginner-should-know) for React beginners.
+* [React Sans Tooling](https://www.youtube.com/watch?v=PEQYb7K2QEc) is a talk on React without all the stuff around
+  React.
+* [Learn Raw React](http://jamesknelson.com/learn-raw-react-no-jsx-flux-es6-webpack) is in the same vein.
 * [TodoMVC tutorial](https://www.theodo.fr/blog/2016/03/getting-started-with-react-redux-and-immutable-a-test-driven-tutorial-part-1)
   with React, Redux, Immutable, and unit testing.
 
