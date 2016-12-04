@@ -1,1 +1,1 @@
-learning some clojure(script)
+learning some lisps
