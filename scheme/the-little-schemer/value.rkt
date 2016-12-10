@@ -1,14 +1,14 @@
-;; i feel like this is gross and not correct
 (define value
   (λ (a)
      (cond
        ((atom? a) a)
-       ((eq? (car a) '+))
-       (+ (value (cdr a))
-          (value (cdr (cdr a)))))
-     ((eq? (car a) '*))
-     (* value (cdr a))
-     (value (cdr (cdr a))))
-  (else
-    (^ (value (cdr a))
-       (value (cdr (cdr a))))))
+       (eq? (operator a) '+))
+     (+ (value (1st-sub-exp a))
+        (value (2nd-sub-exp a))))
+  (eq? (operator a) 'x))
+(x (value (1st-sub-exp a))
+   (value (2nd-sub-exp)))
+(else
+  (^ (value (1st-sub-exp a))
+     (value (2nd-sub-exp a))))
+
