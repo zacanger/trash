@@ -7,7 +7,7 @@ class PyBrowser(QtGui.QWidget):
 
     def __init__(self):
         QtGui.QWidget.__init__(self)
-        self.setWindowTitle('zbrowzr')
+        self.setWindowTitle('zeebrowz')
 
         v_box = QtGui.QVBoxLayout(self)
         # navigation bar
@@ -28,7 +28,7 @@ class PyBrowser(QtGui.QWidget):
         h_bar.addWidget(self.okUrl)
         # page frame
         self.web = QtWebKit.QWebView()
-        self.web.load(QtCore.QUrl('http://zacanger.com/search'))
+        self.web.load(QtCore.QUrl('https://ddg.gg/'))
         # status bar
         self.status = QtGui.QStatusBar()
         self.prog = QtGui.QProgressBar()
