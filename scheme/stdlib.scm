@@ -52,3 +52,12 @@
 
 (define (map func lst)       (foldr (lambda (x y) (cons (func x) y)) '() lst))
 (define (filter pred lst)    (foldr (lambda (x y) (if (pred x) (cons x y) y)) '() lst))
+
+(define (list-tail lst k)
+  (if (zero? k)
+      lst
+      (list-tail (cdr lst) (- k 1))))
+
+(define (list-ref lst k) (car (list-tail lst k)))
+
+(define (append . lists) (foldr (lambda (x y) (foldr cons y x)) '() lists))
