@@ -1,5 +1,5 @@
-class StateManager {
-  newState(changed) {
+export default class StateManager {
+  newState (changed) {
     if (typeof changed !== 'object' || changed === null) {
       throw new TypeError(`State must be an object. Instead got ${typeof state} : ${state}`)
     }
@@ -11,12 +11,13 @@ class StateManager {
 
     return nextState
   }
+
   makeReadOnly (cloned, obj, prop) {
     Object.defineProperty(cloned, prop, {
-      set(val) {
+      set (val) {
         throw new Error(`Cannot assign value '${val}' to read only property '${prop}'.`)
       },
-      get() {
+      get () {
         return obj[prop]
       },
       enumerable: true
@@ -25,7 +26,7 @@ class StateManager {
 }
 
 /*
- * const initialState = {stuff}
+ * const initialState = { stuff }
  * const state = new StateManager().newState(initialState)
- * const secondState = firstState.newState({morestuff})
+ * const secondState = firstState.newState({ morestuff })
  */
