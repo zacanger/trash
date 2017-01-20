@@ -1,0 +1,53 @@
+{
+  "name": "hmr-boilerplate",
+  "description": "Basic React boilerplate with HMR.",
+  "version": "0.0.1",
+  "author": {
+    "name": "Zac Anger",
+    "email": "zac@zacanger.com",
+    "url": "http://zacanger.com"
+  },
+  "license": "WTFPL",
+  "main": "./public/bundle.js",
+  "scripts": {
+    "build": "NODE_ENV=production npm run clean && webpack -p --config webpack.config.prod.js",
+    "clean": "if [ -f public/bundle.js ] ; then rm public/bundle.js ; fi",
+    "lint": "eslint -c .eslintrc.json src/",
+    "start": "webpack-dev-server --config webpack.config.js --hot --inline"
+  },
+  "homepage": "https://github.com/zacanger/react-bits",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:zacanger/react-bits.git"
+  },
+  "bugs": "https://github.com/zacanger/react-bits/issues",
+  "keywords": [
+    "boilerplate",
+    "react"
+  ],
+  "dependencies": {
+    "babel-plugin-transform-class-properties": "6.22.0",
+    "react": "15.4.2",
+    "react-dom": "15.4.2"
+  },
+  "devDependencies": {
+    "babel-core": "6.22.1",
+    "babel-eslint": "7.1.1",
+    "babel-loader": "6.2.10",
+    "babel-plugin-transform-es2015-modules-commonjs": "6.22.0",
+    "babel-preset-latest": "6.22.0",
+    "babel-preset-react": "6.22.0",
+    "css-loader": "0.26.1",
+    "eslint": "3.13.1",
+    "eslint-config-standard": "6.2.1",
+    "eslint-config-standard-jsx": "3.2.0",
+    "eslint-config-standard-react": "4.2.0",
+    "eslint-plugin-babel": "4.0.1",
+    "eslint-plugin-promise": "3.4.0",
+    "eslint-plugin-react": "6.9.0",
+    "eslint-plugin-standard": "2.0.1",
+    "style-loader": "0.13.1",
+    "webpack": "1.14.0",
+    "webpack-dev-server": "1.16.2"
+  }
+}
