@@ -8,7 +8,7 @@
 #define TT_SEARCH_WRAP_AROUND     TRUE
 #define TT_AUDIBLE_BELL           FALSE
 #define TT_VISIBLE_BELL           FALSE
-#define TT_FONT                   "Hack 10"
+#define TT_FONT                   "Hasklig 10"
 #define TT_X_WINDOW_SIZE          800
 #define TT_Y_WINDOW_SIZE          450
 
@@ -70,4 +70,3 @@
 #define URLPATH         "(?:/" SPECIAL_CHARS "*)?"
 
 const char * const url_regex = SCHEME USERINFO HOST PORT URLPATH "(?<!\\.)";
-

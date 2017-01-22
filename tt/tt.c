@@ -12,8 +12,7 @@ static gboolean url_select_mode = FALSE;
 static int child_pid = 0; // needs to be global for signal_handler to work
 
 // xdg-open; arg: text
-  static void
-xdg_open(const char* text) {
+static void xdg_open(const char* text) {
   GError* error = NULL;
   char* command = g_strconcat("xdg-open ", text, NULL);
   g_spawn_command_line_async(command, &error);
@@ -25,14 +24,12 @@ xdg_open(const char* text) {
 }
 
 // get data from gtkclipboard
-  static void
-xdg_open_selection_cb(GtkClipboard* clipboard, const char* string, gpointer data) {
+static void xdg_open_selection_cb(GtkClipboard* clipboard, const char* string, gpointer data) {
   xdg_open(string);
 }
 
 // selected text => xdg-open
-  static void
-xdg_open_selection(GtkWidget* terminal) {
+static void xdg_open_selection(GtkWidget* terminal) {
   GdkDisplay* display = gtk_widget_get_display(terminal);;
   GtkClipboard* clipboard = gtk_clipboard_get_for_display(display, GDK_SELECTION_PRIMARY);
   vte_terminal_copy_primary(VTE_TERMINAL (terminal));
@@ -40,27 +37,23 @@ xdg_open_selection(GtkWidget* terminal) {
 }
 
 // window urgency hint @ beep
-  static void
-window_urgency_hint_cb(VteTerminal* vte) {
+static void window_urgency_hint_cb(VteTerminal* vte) {
   gtk_window_set_urgency_hint(GTK_WINDOW (gtk_widget_get_toplevel(GTK_WIDGET (vte))), TRUE);
 }
 
 // unset on focus
-  gboolean
-window_focus_cb(GtkWindow* window) {
+gboolean window_focus_cb(GtkWindow* window) {
   gtk_window_set_urgency_hint(window, FALSE);
   return FALSE;
 }
 
 // dynamic window title
-  static void
-window_title_cb(VteTerminal* vte) {
+static void window_title_cb(VteTerminal* vte) {
   gtk_window_set_title(GTK_WINDOW (gtk_widget_get_toplevel(GTK_WIDGET (vte))), vte_terminal_get_window_title(vte));
 }
 
 // key press responses
-  static gboolean
-key_press_cb(VteTerminal* vte, GdkEventKey* event) {
+static gboolean key_press_cb(VteTerminal* vte, GdkEventKey* event) {
   if (url_select_mode) {
     switch (gdk_keyval_to_upper(event->keyval)) {
       case TT_KEY_URL_NEXT:
@@ -98,16 +91,14 @@ key_press_cb(VteTerminal* vte, GdkEventKey* event) {
 }
 
 // block mouse in url-select mode
-  static gboolean
-button_press_cb(VteTerminal* vte, GdkEventButton* event) {
+static gboolean button_press_cb(VteTerminal* vte, GdkEventButton* event) {
   if (url_select_mode) {
     return TRUE;
   }
   return FALSE;
 }
 
-  static void
-vte_config(VteTerminal* vte) {
+static void vte_config(VteTerminal* vte) {
   GdkColor color_fg, color_bg;
   GdkColor color_palette[16];
   GRegex* regex = g_regex_new(url_regex, G_REGEX_CASELESS, G_REGEX_MATCH_NOTEMPTY, NULL);
@@ -145,8 +136,12 @@ vte_config(VteTerminal* vte) {
   vte_terminal_set_colors(vte, &color_fg, &color_bg, &color_palette, 16);
 }
 
-  static void
-vte_spawn(VteTerminal* vte, char* working_directory, char* command, char** environment) {
+static void vte_spawn(
+                      VteTerminal* vte,
+                      char* working_directory,
+                      char* command,
+                      char** environment
+                      ) {
   GError* error = NULL;
   char** command_argv = NULL;
 
@@ -190,15 +185,21 @@ vte_spawn(VteTerminal* vte, char* working_directory, char* command, char** envir
 }
 
 // exit tt; exit status of child proc
-  static void
-vte_exit_cb(VteTerminal* vte) {
+static void vte_exit_cb(VteTerminal* vte) {
   int status = vte_terminal_get_child_exit_status(vte);
   gtk_main_quit();
   exit(WIFEXITED(status) ? WEXITSTATUS(status) : EXIT_FAILURE);
 }
 
-  static void
-parse_arguments(int argc, char* argv[], char** command, char** directory, gboolean* keep, char** name, char** title) {
+static void parse_arguments(
+                            int argc,
+                            char* argv[],
+                            char** command,
+                            char** directory,
+                            gboolean* keep,
+                            char** name,
+                            char** title
+                            ) {
   gboolean version = FALSE;   // version(?)
   const GOptionEntry entries[] = {
     {"version",   'v', 0, G_OPTION_ARG_NONE,    &version,   "show version; exit", 0},
@@ -230,16 +231,14 @@ parse_arguments(int argc, char* argv[], char** command, char** directory, gboole
 }
 
 // signal handler
-  static void
-signal_handler(int signal) {
+static void signal_handler(int signal) {
   if (child_pid != 0) {
     kill(child_pid, SIGHUP);
   }
   exit(signal);
 }
 
-  int
-main (int argc, char* argv[]) {
+int main (int argc, char* argv[]) {
   GtkWidget* window;
   GtkWidget* box;
   GdkPixbuf* icon;
