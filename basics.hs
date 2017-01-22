@@ -1,5 +1,8 @@
 -- compile : ghc filename.hs ; should build executable at filename
 
+import Data.List
+import System.IO
+
 {-
 running through learnxiny
 and the sample from haskell book
@@ -359,3 +362,64 @@ drop 1 "zac" -- "ac"
 -- Just x -- this means that x is a thing!
 -- bool is implemented basically as: Bool = True | false
 -- maybe a = Nothing | Just a
+
+-- Int - -2^63 through 2^63
+maxInt = maxBound :: Int
+minInt = minBound :: Int
+
+-- Integer - unbounded
+-- Use Double over Float for precision
+-- Chars are unicode
+
+sumOfNums l = sum l
+-- avgOfNums l = div (sum l) (length l) -- maybe?
+
+-- covert Int to Float
+nine = 9 :: Int
+sqrtNine = sqrt (fromIntegral nine)
+-- sqrt has t Floating a => a -> a
+
+-- truncate 1.11111 is the same as 1.11111 | 0 in js
+
+-- && and || work fine
+-- not works fine
+
+-- null [1] -- check empty list
+-- reverse is list reverse
+-- head, init, tail, last
+
+-- list contains
+4 `elem` [1..5] -- True
+
+-- generate a list of ten twos
+take 10 $ repeat 2
+replicate 10 2
+take 10 $ cycle [2]
+
+listTimesTwo = [x * 2 | x <- [1..10]]
+
+-- filters!
+byNineAndThirteen = [x | x <- [1..500], x `mod` 13 == 0, x `mod` 9 == 0]
+
+sumOfLists = zipWith (+) [1..5] [6..10]
+
+evenUpTo20 = takeWhile (<= 20) [2,4..]
+
+multOfList = foldl (*) 1 [2..8]
+multOfListR = foldR -- etc
+
+powerOfThree = [3^n | n <- [1..10]]
+-- so i think this works kinda like
+-- power of three of n where n is -- etc.
+-- in other word, for n in-range 1..10 do n^3
+
+-- lists are so badass
+multTable = [[a * b | a <- [1..10]] | b <- [1..10]]
+
+-- tuples don't have to be same type. need to remember this.
+
+-- fst, snd are tuple operators
+-- zip takes lists to tuples
+
+-- fun fact, i still don't know what a factorial is
+factorial a = a * factorial $ a - 1
