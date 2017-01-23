@@ -168,12 +168,16 @@ static void vte_spawn(
   vte_terminal_set_pty_object(vte, pty);
 
   // default shell (or command)
-  g_spawn_async(working_directory, command_argv, environment,
-      (G_SPAWN_DO_NOT_REAP_CHILD | G_SPAWN_SEARCH_PATH | G_SPAWN_LEAVE_DESCRIPTORS_OPEN),  // flags from GSpawnFlags
-      (GSpawnChildSetupFunc)vte_pty_child_setup, // an extra child setup function to run in the child just before exec()
-      pty,          // user data for child_setup
-      &child_pid,   // a location to store the child PID
-      &error);      // return location for a GError
+  g_spawn_async(
+                working_directory,
+                command_argv,
+                environment,
+                (G_SPAWN_DO_NOT_REAP_CHILD | G_SPAWN_SEARCH_PATH | G_SPAWN_LEAVE_DESCRIPTORS_OPEN),  // flags from GSpawnFlags
+                (GSpawnChildSetupFunc)vte_pty_child_setup, // an extra child setup function to run in the child just before exec()
+                pty,          // user data for child_setup
+                &child_pid,   // a location to store the child PID
+                &error
+              );      // return location for a GError
 
   if (error) {
     g_printerr("%s\n", error->message);
@@ -340,4 +344,3 @@ int main (int argc, char* argv[]) {
 
   return EXIT_SUCCESS;
 }
-
