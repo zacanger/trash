@@ -475,6 +475,11 @@ unpackNum (List [n]) = unpackNum n
 unpackNum notNum     = throwError $ TypeMismatch "number" notNum
 -- `reads` returns a list of pairs: (parsed value, remaining string)
 
+-- unpackNum :: LispVal -> ThrowsError Integer
+-- unpackNum (Number n) = return n
+-- unpackNum (List [n]) = unpackNum n
+-- unpackNum notNum = throwError $ TypeMismatch "number" notNum
+
 unpackStr :: LispVal -> ThrowsError String
 unpackStr (String s) = return s
 unpackStr (Number s) = return $ show s
@@ -625,6 +630,8 @@ runOne args = do
 runRepl :: IO ()
 runRepl = primitiveBindings >>= until_ (== ":q") (readPrompt "z> ") . evalAndPrint
 -- TODO: make :q a function so i can alias it, eg (q)
+
+
 
 --
 -- vars
