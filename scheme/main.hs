@@ -493,9 +493,10 @@ car [badArg]              = throwError $ TypeMismatch "pair" badArg
 car badArgList            = throwError $ NumArgs 1 badArgList
 
 cdr :: [LispVal] -> ThrowsError LispVal
-cdr [List (x:xs)]         = return $ List xs
-cdr [DottedList [_] x]    = return x
-cdr [DottedList (_:xs) x] = return $ DottedList xs x
+cdr [List (_:xs)]         = return $ List xs
+cdr [DottedList [_] y]    = return y
+-- cdr [DottedList [x] y] = return x
+cdr [DottedList (_:xs) y] = return $ DottedList xs y
 cdr [badArg]              = throwError $ TypeMismatch "pair" badArg
 cdr badArgList            = throwError $ NumArgs 1 badArgList
 
