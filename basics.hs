@@ -423,3 +423,16 @@ multTable = [[a * b | a <- [1..10]] | b <- [1..10]]
 
 -- fun fact, i still don't know what a factorial is
 factorial a = a * factorial $ a - 1
+
+getListItems :: [Int] -> String
+getListItems []       = "empty list"
+getListItems (x:[])   = "list starts with " ++ show x
+getListItems (x:y:[]) = "list contains " ++ show x ++ " and " ++ show y
+getListItems (x:xs)   = "list starts with " ++ show x " and has " show xs
+
+getFirstItem :: String -> String
+getFirstItem [] = "empty string"
+getFirstItem all@(x:xs) = "first letter in " ++ all " is " ++ show x
+
+fib = 1 : 1 : [a + b | (a, b) <- zip fib (tail fib)]
+fib200 = fib !! 200
