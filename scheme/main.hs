@@ -348,7 +348,9 @@ apply (PrimitiveFunc func) args = liftThrows $ func args
 apply (Func params varargs body closure) args =
   if num params /= num args && isNothing varargs
      then throwError $ NumArgs (num params) args
-     else liftIO (bindVars closure $ zip params args) >>= bindVarArgs varargs >>= evalBody
+     else liftIO (bindVars closure $ zip params args) >>=
+            bindVarArgs varargs >>=
+            evalBody
        where remainingArgs       = drop (length params) args
              num                 = toInteger . length
              evalBody env        = liftM last $ mapM (eval env) body
@@ -518,7 +520,7 @@ unpackEquals a b (AnyUnpacker unpacker) = do
 
 eqv :: [LispVal] -> ThrowsError LispVal
 eqv [Bool a, Bool b]                   = return $ Bool $ a == b
-eqv [Number a,Number b]                = return $ Bool $ a == b
+eqv [Number a, Number b]               = return $ Bool $ a == b
 eqv [String a, String b]               = return $ Bool $ a == b
 eqv [Atom a, Atom b]                   = return $ Bool $ a == b
 eqv [DottedList xs x, DottedList ys y] = eqv [List $ xs ++ [x], List $ ys ++ [y]]
@@ -527,14 +529,17 @@ eqv [_, _]                             = return $ Bool False
 eqv badArgList                         = throwError $ NumArgs 2 badArgList
 
 equal :: [LispVal] -> ThrowsError LispVal
-equal [l1@(List a), l2@(List b)] = eqvList equal [l1, l2]
-equal [DottedList xs x, DottedList ys y] = equal [List $ xs ++ [x], List $ ys ++ [y]]
+equal [l1@(List a), l2@(List b)] =
+  eqvList equal [l1, l2]
+equal [DottedList xs x, DottedList ys y] =
+  equal [List $ xs ++ [x], List $ ys ++ [y]]
 equal [a, b] = do
       primitiveEquals <- liftM or $ mapM (unpackEquals a b)
                          [AnyUnpacker unpackNum, AnyUnpacker unpackStr, AnyUnpacker unpackBool]
       eqvEquals <- eqv [a, b]
       return $ Bool (primitiveEquals || let (Bool x) = eqvEquals in x)
-equal badArgList = throwError $ NumArgs 2 badArgList
+equal badArgList =
+  throwError $ NumArgs 2 badArgList
 
 eqvList :: ([LispVal] -> ThrowsError LispVal) -> [LispVal] -> ThrowsError LispVal
 eqvList eqvFunc [List a, List b] = return $ Bool $ (length a == length b) &&
