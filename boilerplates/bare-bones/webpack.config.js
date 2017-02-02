@@ -5,16 +5,18 @@ module.exports = {
     filename: 'bundle.js'
   },
   resolve: {
-    extensions: ['', '.js']
+    extensions: ['.js']
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'babel',
-        query: {
-          presets: ['react', 'latest']
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['react', ['latest', { es2015: { modules: false } }]]
+          }
         }
       }
     ]
