@@ -10,10 +10,10 @@
   "license": "WTFPL",
   "main": "./public/bundle.js",
   "scripts": {
-    "build": "NODE_ENV=production npm run clean && webpack -p --config webpack.config.prod.js",
+    "build": "NODE_ENV=production npm run clean && webpack -p",
     "clean": "if [ -f public/bundle.js ] ; then rm public/bundle.js ; fi",
     "lint": "eslint -c .eslintrc.json src/",
-    "start": "webpack-dev-server --config webpack.config.js --hot --inline"
+    "start": "webpack-dev-server --hot --inline"
   },
   "homepage": "https://github.com/zacanger/react-bits",
   "repository": {
@@ -38,7 +38,7 @@
     "babel-preset-latest": "6.22.0",
     "babel-preset-react": "6.22.0",
     "css-loader": "0.26.1",
-    "eslint": "3.13.1",
+    "eslint": "3.14.1",
     "eslint-config-standard": "6.2.1",
     "eslint-config-standard-jsx": "3.2.0",
     "eslint-config-standard-react": "4.2.0",
@@ -47,7 +47,7 @@
     "eslint-plugin-react": "6.9.0",
     "eslint-plugin-standard": "2.0.1",
     "style-loader": "0.13.1",
-    "webpack": "1.14.0",
-    "webpack-dev-server": "1.16.2"
+    "webpack": "2.2.1",
+    "webpack-dev-server": "2.2.1"
   }
 }

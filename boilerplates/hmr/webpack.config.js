@@ -1,30 +1,36 @@
 const { resolve } = require('path')
 const webpack = require('webpack')
+const isProd = process.env.NODE_ENV === 'production'
+const pub = resolve(__dirname, 'public')
+const src = resolve(__dirname, 'src')
 
 module.exports = {
-  devtool: 'cheap-eval-source-map'
+  devtool: isProd ? 'source-map' : 'cheap-eval-source-map'
 , context: resolve(__dirname)
-, debug: true
-, entry: [
+, entry: isProd ? './src/index.js' : [
     'webpack-dev-server/client?http://127.0.0.1:8080'
   , 'webpack/hot/only-dev-server'
   , './src/index.js'
   ]
-, output: {
+
+, output: isProd ? {
+    filenamne: 'bundle.js'
+  , path: pub
+  } : {
     filename: 'bundle.js'
-  , path: './public'
+  , path: pub
   , publicPath: 'http://127.0.0.1:8080/'
   }
 , module: {
-    loaders: [{
+    rules: [{
       test: /\.js$/
-    , include: resolve(__dirname, 'src')
-    , loaders: ['babel']
+    , include: src
+    , use: 'babel-loader'
     }
   , {
       test: /\.css$/
-    , include: resolve(__dirname, 'src')
-    , loader: 'style!css'
+    , include: src
+    , use: [ 'style-loader', 'css-loader' ]
     }
   ]}
 , devServer: {
@@ -35,10 +41,21 @@ module.exports = {
       colors: true
     }
   }
-, plugins: [
+, plugins: isProd ? [
+    new webpack.DefinePlugin({
+      'process.env': { NODE_ENV: JSON.stringify('production') }
+    })
+  , new webpack.optimize.UglifyJsPlugin()
+  ] : [
     new webpack.HotModuleReplacementPlugin()
+  , new webpack.LoaderOptionsPlugin({ debug: true })
   ]
 , resolve: {
-    extensions : ['', '.js', '.css']
+    extensions : ['.js', '.css']
+  }
+, node: {
+    fs: 'empty'
+  , net: 'empty'
+  , tls: 'empty'
   }
 }
