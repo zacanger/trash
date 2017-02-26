@@ -14,7 +14,7 @@ module.exports = {
   ]
 
 , output: isProd ? {
-    filenamne: 'bundle.js'
+    filename: 'bundle.js'
   , path: pub
   } : {
     filename: 'bundle.js'
