@@ -4,6 +4,6 @@ import * as ReactDOM from 'react-dom'
 import Hello from './components/hello'
 
 ReactDOM.render(
-  <Hello />
+  <Hello name="you" />
 , document.getElementById('root')
 )
