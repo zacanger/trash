@@ -108,3 +108,9 @@ toFizz = do
              [True,False] -> "fizz"
              [False,True] -> "buzz"
              [False,False] -> p
+
+m >~ str = ZipList . cycle $ replicate (m - 1) empty ++ [pure str]
+fizzbuzzS = getZipList $ fromMaybe . show <$> ZipList [1..] <*> 3 >~ "fizz" <> 5 >~ "buzz"
+
+let (m ~> str) x = str <$ guard (x `mod` m == 0)
+    in map (fromMaybe . show <*> 3 ~> "fizz" <> 5 ~> "buzz")
