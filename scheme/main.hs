@@ -2,6 +2,7 @@
 
 -- module Scheme (LispVal (..), LispError (..), readExpr, eval, runIOThrows, primitiveBindings, liftThrows) where
 
+-- import Control.Arrow
 import Control.Monad
 import Control.Monad.Error
 import Data.Array
@@ -26,9 +27,11 @@ readOrThrow :: Parser a -> String -> ThrowsError a
 readOrThrow parser input = case parse parser "lisp" input of
                              Left err  -> throwError $ Parser err
                              Right val -> return val
+-- readOrThrow parser input = left Parser $ parse parser "lisp"
 
---readExpr :: String -> ThrowsError LispVal
+readExpr :: String -> ThrowsError LispVal
 readExpr = readOrThrow parseExpr
+
 readExprList = readOrThrow (endBy parseExpr spaces)
 
 --
@@ -97,6 +100,7 @@ parseString :: Parser LispVal
 parseString = do
   char '"'
 -- a <- many (escapedChars <|> (noneOf ['\\', '"']))
+-- a <- many ( (char '\\' >> oneOf "\\n\"rt") <|> noneOf "\"" )
   a <- many (noneOf "\"" <|> escapedChar)
   char '"'
   return $ String a
@@ -191,11 +195,14 @@ parseComplexNumber = do
           toDouble (Number x) = fromInteger x :: Double
 
 parseVector :: Parser LispVal
-parseVector = do
-  string "#("
-  elems <- sepBy parseExpr spaces1
-  char ')'
-  return $ Vector (listArray (0, length elems - 1) elems)
+parseVector = listArr <$> (string "#(" *> sepBy parseExpr spaces1 <* char ')')
+  where
+    listArr l = Vector $ listArray (0, length l - 1) l
+-- parseVector = do
+  -- string "#("
+  -- elems <- sepBy parseExpr spaces1
+  -- char ')'
+  -- return $ Vector (listArray (0, length elems - 1) elems)
 
 parseQuoted :: Parser LispVal
 parseQuoted = do
@@ -290,7 +297,8 @@ eval env (Atom id) =
   getVar env id
 eval env (List [Atom "load", String filename]) =
   load filename >>= liftM last . mapM (eval env)
-eval env (List [Atom "quote", val]) = return val
+eval env (List [Atom "quote", val])
+  = return val
 eval env (List [Atom "if", pred, conseq, alt ]) = do
   result <- eval env pred
   case result of
@@ -407,6 +415,7 @@ primitives = [
   , ("substring", substring)
   , ("string-ref", charAt)
   , ("string-length", stringLength)
+  , ("string-ref", stringRef)
   , ("string", createString)
   , ("make-string", makeString)
   , ("string-ci=?", strBoolBinop (ciHelp (==)))
@@ -656,16 +665,17 @@ isBound envRef var = liftM (isJust . lookup var) (readIORef envRef)
 getVar :: Env -> String -> IOThrowsError LispVal
 getVar envRef var = do
   env <- liftIO $ readIORef envRef
-  maybe (throwError $ UnboundVar "getting unbound var" var)
+  maybe (throwError $ UnboundVar "getting unbound var " var)
         (liftIO . readIORef)
         (lookup var env)
 
 setVar :: Env -> String -> LispVal -> IOThrowsError LispVal
 setVar envRef var value = do
   env <- liftIO $ readIORef envRef
-  maybe (throwError $ UnboundVar "setting unbound var" var)
-        (liftIO . (flip writeIORef value))
-        (lookup var env)
+  maybe
+    (throwError $ UnboundVar "setting unbound var " var)
+    (liftIO . (flip writeIORef value))
+    (lookup var env)
   return value
 
 defineVar :: Env -> String -> LispVal -> IOThrowsError LispVal
@@ -761,6 +771,15 @@ createString xs
 stringLength :: [LispVal] -> ThrowsError LispVal
 stringLength [String s] = (return . Number . fromIntegral . length) s
 stringLength badArgs    = throwError $ TypeMismatch "string" $ List badArgs
+
+stringRef :: [LispVal] -> ThrowsError LispVal
+stringRef [(String s), (Number k)]
+    | length s < k' + 1 = throwError $ Default "Out of bound error"
+    | otherwise         = Right $ String $ [s !! k']
+    where k' = fromIntegral k
+stringRef [(String s), notNum] = throwError $ TypeMismatch "number" notNum
+stringRef [notString, _]       = throwError $ TypeMismatch "string" notString
+stringRef badArgList           = throwError $ NumArgs 2 badArgList
 
 charAt :: [LispVal] -> ThrowsError LispVal
 charAt [String s, Number n] = (return . Char) (s !! (fromIntegral n))
