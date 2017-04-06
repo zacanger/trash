@@ -6,3 +6,5 @@ wasn't sure at first if the extra exercises should be in the actual thing,
 so there are a bunch in their own dir.
 
 needs parsec (`cabal install parsec`).
+
+[see here](https://github.com/zacanger/zkeem) for further development.
