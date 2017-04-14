@@ -1,6 +1,5 @@
 (ns md-editor.core
     (:require [reagent.core :as rg]
-              [markdown.core :refer [md->html]]
               [re-frame.core :as rf]))
 
 (def debug?
@@ -31,7 +30,7 @@
 (defn res [t]
   [:div.preview
    {:dangerouslySetInnerHTML
-    {:__html (md->html t)}}])
+    {:__html (.md js/window t)}}])
 
 (defn ed []
   [:div.text

@@ -2,8 +2,7 @@
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [org.clojure/clojurescript "1.9.229"]
                  [reagent "0.6.0"]
-                 [re-frame "0.9.2"]
-                 [markdown-clj "0.9.99"]]
+                 [re-frame "0.9.2"]]
 
   :plugins [[lein-cljsbuild "1.1.4"]]
 
@@ -33,7 +32,7 @@
                     :external-config      {:devtools/config {:features-to-install :all}}}}
 
     {:id           "min"
-     :source-paths ["src/cljs"]
+     :source-paths ["src"]
      :compiler     {:main            md-editor.core
                     :output-to       "resources/public/js/compiled/app.js"
                     :optimizations   :advanced
