@@ -1,6 +1,6 @@
 {-# LANGUAGE ExistentialQuantification #-}
 
--- module Scheme (LispVal (..), LispError (..), readExpr, eval, runIOThrows, primitiveBindings, liftThrows) where
+-- module Zkeem (LispVal (..), LispError (..), readExpr, eval, runIOThrows, primitiveBindings, liftThrows) where
 
 -- import Control.Arrow
 import Control.Monad
