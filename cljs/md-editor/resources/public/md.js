@@ -2,7 +2,7 @@
 // https://gist.github.com/zacanger/3684625b95624b63dc06c337b1908d5c
 
 window.md = (s) =>
-  s
+  typeof s === 'string' ? s : s.tail[1]
     .replace(/\*(.*?)\*/g, '<strong>$1</strong>') // strong
     .replace(/_(.*?)_/g, '<em>$1</em>') // em
     .replace(/~(.*?)~/g, '<del>$1</del>') // strike

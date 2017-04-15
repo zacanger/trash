@@ -22,10 +22,15 @@
   (fn [old new]
       (assoc old :edited new)))
 
+; (rf/reg-sub
+  ; :edited
+  ; (fn [db _]
+      ; (:edited db)))
+
 (rf/reg-sub
   :edited
   (fn [db _]
-      (:edited db)))
+      (-> db :edited)))
 
 (defn res [t]
   [:div.preview
