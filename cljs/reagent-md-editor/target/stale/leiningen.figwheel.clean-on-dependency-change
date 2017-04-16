@@ -1,1 +1,0 @@
-([binaryage/devtools "0.8.2" :scope "test"] [clojure-complete/clojure-complete "0.2.4" :exclusions ([org.clojure/clojure])] [org.clojure/clojure "1.8.0"] [org.clojure/clojurescript "1.9.229"] [org.clojure/tools.nrepl "0.2.12" :exclusions ([org.clojure/clojure])] [reagent/reagent "0.6.0"])
