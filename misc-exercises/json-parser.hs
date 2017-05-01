@@ -89,23 +89,23 @@ parseFractionalPart = char '.' >> parseNatChars
 parseExponentPart = do
   oneOf "eE"
   sign <- many parseSign
-  str <- parseNatChars
+  str  <- parseNatChars
   return (read (sign ++ str) :: Double)
 
 caseMaybe m f a = case m of
  (Just b) -> f a b
- _ -> a
+ _        -> a
 
-raise n e = n * (10**e)
+raise n e    = n * (10**e)
 raiseInt n e = n * (10^(round e))
 
 parseNum = do
-  sign <- fmap maybeToList $ optionMaybe parseSign
-  natpart <- parseNatChars
+  sign     <- fmap maybeToList $ optionMaybe parseSign
+  natpart  <- parseNatChars
   fracpart <- optionMaybe parseFractionalPart
-  expo <- optionMaybe parseExponentPart
+  expo     <- optionMaybe parseExponentPart
   let isFractional = maybe False (<0) expo || isJust fracpart
-  let fracpart' = fromMaybe "0" fracpart
+  let fracpart'    = fromMaybe "0" fracpart
   return $ JKeyNum $ case isFractional of
     True -> JNumFraction
         $ caseMaybe expo raise

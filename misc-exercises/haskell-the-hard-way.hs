@@ -202,9 +202,9 @@ main w0 =
           x
 
 askUser w0 =
-  let (_, w1) = putStrLn "enter a list of nums" in
+  let (_, w1)  = putStrLn "enter a list of nums" in
   let (ns, w2) = getLine w1 in
-  let (l, w3) = case getListFromString ns of
+  let (l, w3)  = case getListFromString ns of
     Just l  -> (l, w2)
     Nothing -> askUser w2
   in
