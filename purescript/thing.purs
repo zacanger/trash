@@ -25,3 +25,6 @@ avg a b = (a + b) / 2.0
 
 avgList :: Array Int -> Int
 avgList l = div (sum l) (length l)
+
+avL :: List Number -> Number
+avL xs = sum xs / toNumber (length xs)
