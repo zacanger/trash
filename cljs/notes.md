@@ -19,5 +19,9 @@
 
 * CLOJURE DOES NOT HAVE CAR/CDR?!
   * `first`/`rest`
-
 * just swap an atom. there's your state management. done.
+* there's a `js->clj` also
+  * use with `:keywordize-keys` to turn string keys into keywords
+* also a `#js` reader, but it's shallow
+* `js* "foo()"` -- eval
+* `:optimizations :advanced` does DCE and mangling
