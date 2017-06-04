@@ -25,3 +25,12 @@
 * also a `#js` reader, but it's shallow
 * `js* "foo()"` -- eval
 * `:optimizations :advanced` does DCE and mangling
+
+```
+cljs.user=> (type (list* `(1 2)))
+cljs.core/Cons
+cljs.user=> (type `(1 2))
+cljs.core/LazySeq
+cljs.user=> (type (list 1 2))
+cljs.core/List
+```
