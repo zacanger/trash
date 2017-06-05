@@ -74,6 +74,7 @@
 
 (define (length lst)       (fold (lambda (x y) (+ x 1)) 0 lst))
 (define (reverse lst)      (fold (flip cons) '() lst))
+(define count length)
 
 (define (mem-helper pred op) (lambda (acc next) (if (and (not acc) (pred (op next))) next acc)))
 (define (memq obj lst)       (fold (mem-helper (curry eq? obj) id) #f lst))
@@ -95,3 +96,11 @@
 
 (define (append . lists) (foldr (lambda (x y) (foldr cons y x)) '() lists))
 ; (define (append lst . lsts) (foldr (flip (curry foldr cons)) lst lsts))
+
+(define (list-last lst)
+  (if (null? (cdr lst))
+    (car lst)
+    (list-last (cdr lst))))
+(define (last . lst) (list-last lst))
+
+(define (vector-copy v) (if (vector? v) v (error "vector-copy takes one vector")))
