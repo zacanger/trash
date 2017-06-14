@@ -1,7 +1,7 @@
 const { compose } = require('zeelib')
 
 const IO = function (f) {
-  this.__value = f
+  this.unsafePerformIO = f
 }
 
 IO.of = function (a) {
@@ -9,5 +9,5 @@ IO.of = function (a) {
 }
 
 IO.prototype.map = function (f) {
-  return new IO(compose(f, this.__value))
+  return new IO(_.compose(f, this.unsafePerformIO))
 }
