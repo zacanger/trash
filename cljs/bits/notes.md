@@ -34,3 +34,19 @@ cljs.core/LazySeq
 cljs.user=> (type (list 1 2))
 cljs.core/List
 ```
+
+* defn is a macro (def fn)
+
+```clojure
+#(+ 2 %)
+;; same as
+(fn [a] (+ 2 a))
+
+#(* 2 (+ %1 %2))
+;; same as
+(fn [a b] (+ 2 (+ a b)))
+
+(js/console.log "hello")
+;; same as
+(.log js/console "hello")
+```
