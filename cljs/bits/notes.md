@@ -79,3 +79,7 @@ Nested loops
 ;; }
 (for [x (range 2) y (range 3)] [x y])
 ```
+
+```clojure
+(instance? js/Object (clj->js {})) ;; => true
+```
