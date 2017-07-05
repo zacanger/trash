@@ -13,5 +13,5 @@
 (map :value (take-while identity (iterate :child data)))
 ; same as
 (map :value (keep identity (take 10 (iterate :child data))))
-; except we needed a keep here, because iterate is infinite
+; except we needed a take here, because iterate is infinite
 ; whereas the take-while terminated on the first nil
