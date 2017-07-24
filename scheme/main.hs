@@ -32,6 +32,7 @@ readOrThrow parser input = case parse parser "lisp" input of
 readExpr :: String -> ThrowsError LispVal
 readExpr = readOrThrow parseExpr
 
+readExprList :: String -> ThrowsError [LispVal]
 readExprList = readOrThrow (endBy parseExpr spaces)
 
 --
