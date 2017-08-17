@@ -42,4 +42,3 @@ spec.summary()
 // const spec = require('./runner')
 // require('./testfile')
 // spec.summary()
-
