@@ -1,24 +1,78 @@
+#!/usr/bin/env node
+
+const fs = require('fs')
+const arg = process.argv[2]
+const repl = require('repl')
+
+const add = (...args) => args.reduce((a, c) => a + c, 0)
+const sub = (...args) => args.reduce((a, c) => a - c)
+const mul = (...args) => args.reduce((a, c) => a * c, 1)
+const div = (...args) => args.reduce((a, c) => a / c)
+const atom = (v) => v === null || ![ 'object', 'function' ].includes(typeof v)
+const car = (a) => a[0]
+const cdr = (a) => a.slice(1)
+
+const print = (a) => {
+  console.log(a)
+  return a
+}
+
+const eq = (a, b) =>
+  a === b
+    ? true
+    : (a === undefined || b === undefined)
+      ? false
+      : JSON.stringify(a) === JSON.stringify(b)
+
+const cons = (el, arr) => {
+  const l = arr.length
+  const b = Array(l + 1)
+  b[0] = el
+  for (let i = 0; i < l; ++i) {
+    b[i + 1] = arr[i]
+  }
+  return b
+}
+
 const library = {
-  first: (x) => x[0],
-  rest: (x) => x.slice(1),
-  print: (x) => {
-    console.log(x)
-    return x
+  atom,
+  car,
+  cdr,
+  cons,
+  eq,
+  print,
+  '*': mul,
+  '/': div,
+  '+': add,
+  '-': sub
+}
+
+class Context {
+  constructor (scope, parent) {
+    this.scope = scope
+    this.parent = parent
+  }
+  get (identifier) {
+    return identifier in this.scope
+      ? this.scope[identifier]
+      : this.parent !== undefined
+        ? this.parent.get(identifier)
+        : undefined
   }
 }
 
-const Context = function (scope, parent) {
-  this.scope = scope
-  this.parent = parent
-
-  this.get = function (identifier) {
-    if (identifier in this.scope) {
-      return this.scope[identifier]
-    } else if (this.parent !== undefined) {
-      return this.parent.get(identifier)
-    }
-  }
-}
+const interpret = (input, context) =>
+  input === null
+    ? undefined
+    : context === undefined
+      ? interpret(input, new Context(library))
+      : Array.isArray(input)
+        ? interpretList(input, context) // eslint-disable-line no-use-before-define
+        : input.type === 'identifier'
+          ? context.get(input.value)
+          : [ 'number', 'string' ].includes(input.type)
+            ? input.value
+            : undefined
 
 const special = {
   let: (input, context) => {
@@ -45,81 +99,85 @@ const special = {
     interpret(input[1], context)
       ? interpret(input[2], context)
       : interpret(input[3], context)
-
 }
 
 const interpretList = (input, context) => {
   if (input.length > 0 && input[0].value in special) {
     return special[input[0].value](input, context)
-  } else {
-    const list = input.map((x) => interpret(x, context))
-    if (list[0] instanceof Function) {
-      return list[0].apply(undefined, list.slice(1))
-    } else {
-      return list
-    }
   }
+  const list = input.map((x) => interpret(x, context))
+  if (typeof list[0] === 'function') {
+    return list[0].apply(undefined, list.slice(1))
+  }
+  return list
 }
 
-const interpret = function (input, context) {
-  if (context === undefined) {
-    return interpret(input, new Context(library))
-  } else if (Array.isArray(input)) {
-    return interpretList(input, context)
-  } else if (input.type === 'identifier') {
-    return context.get(input.value)
-  } else if (input.type === 'number' || input.type === 'string') {
-    return input.value
-  }
-}
+const gc = (a, b) => ({ type: a, value: b })
 
-const categorize = (input) => {
-  if (!isNaN(parseFloat(input))) {
-    return { type: 'number', value: parseFloat(input) }
-  } else if (input[0] === '"' && input.slice(-1) === '"') {
-    return { type: 'string', value: input.slice(1, -1) }
-  } else {
-    return { type: 'identifier', value: input }
-  }
-}
+const categorize = (input) =>
+  !isNaN(parseFloat(input))
+    ? gc('number', parseFloat(input))
+    : input[0] === '"' && input.slice(-1) === '"'
+      ? gc('string', input.slice(1, -1))
+      : gc('identifier', input)
 
 const parenthesize = (input, list) => {
   if (list === undefined) {
     return parenthesize(input, [])
-  } else {
-    const token = input.shift()
-    if (token === undefined) {
-      return list.pop()
-    } else if (token === '(') {
-      list.push(parenthesize(input, []))
-      return parenthesize(input, list)
-    } else if (token === ')') {
-      return list
-    } else {
-      return parenthesize(input, list.concat(categorize(token)))
-    }
   }
+  const token = input.shift()
+  if (token === undefined) {
+    return list.pop()
+  }
+  if (token === '(') {
+    list.push(parenthesize(input, []))
+    return parenthesize(input, list)
+  }
+  if (token === ')') {
+    return list
+  }
+  return parenthesize(input, list.concat(categorize(token)))
 }
 
 const tokenize = (input) =>
-  input.split('"')
-    .map((x, i) => {
-      if (i % 2 === 0) { // not in string
-        return x.replace(/\(/g, ' ( ').replace(/\)/g, ' ) ')
-      } else { // in string
-        return x.replace(/ /g, '!whitespace!')
-      }
-    })
+  input
+    .split('"')
+    .map((a, i) =>
+      i % 2 === 0 // not in string
+        ? a.replace(/\(/g, ' ( ').replace(/\)/g, ' ) ')
+        : a.replace(/ /g, '!whitespace!'))
     .join('"')
     .trim()
     .split(/\s+/)
-    .map((x) =>
-      x.replace(/!whitespace!/g, ' '))
+    .map((a) => a.replace(/!whitespace!/g, ' '))
 
 const parse = (input) =>
-  parenthesize(tokenize(input))
+  input.charAt(0) === ';'
+    ? null
+    : parenthesize(tokenize(input))
 
-exports.littleLisp = {
-  parse,
-  interpret
+if (!module.parent) {
+  if (arg) {
+    const c = fs.readFileSync(arg).toString()
+    console.log(interpret(parse(c)))
+  } else {
+    repl.start({
+      prompt: 'lsp> ',
+      eval: (cmd, _context, _filename, callback) => {
+        if (cmd === '(q)\n') {
+          console.log('goodbye!')
+          process.exit(0)
+        }
+        if (cmd !== '(\n)') {
+          cmd = cmd.slice(1, -2) // rm parens and newline added by repl
+          const ret = interpret(parse(cmd))
+          callback(null, ret)
+        } else {
+          callback(null)
+        }
+      }
+    })
+  }
 }
+
+module.exports = { parse, interpret }
