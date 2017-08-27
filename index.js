@@ -4,13 +4,17 @@ const fs = require('fs')
 const arg = process.argv[2]
 const repl = require('repl')
 
-const add = (...args) => args.reduce((a, c) => a + c, 0)
-const sub = (...args) => args.reduce((a, c) => a - c)
-const mul = (...args) => args.reduce((a, c) => a * c, 1)
-const div = (...args) => args.reduce((a, c) => a / c)
+const add = (...ns) => ns.reduce((a, c) => a + c, 0)
+const sub = (...ns) => ns.reduce((a, c) => a - c)
+const mul = (...ns) => ns.reduce((a, c) => a * c, 1)
+const div = (...ns) => ns.reduce((a, c) => a / c)
 const atom = (v) => v === null || ![ 'object', 'function' ].includes(typeof v)
+const list = (...args) => [ ...args ]
+const pair = (a, b) => [ a, b ]
 const car = (a) => a[0]
 const cdr = (a) => a.slice(1)
+const cons = (el, arr) => [].concat(el, arr)
+const apply = (f, ...args) => f(...args)
 
 const print = (a) => {
   console.log(a)
@@ -24,22 +28,15 @@ const eq = (a, b) =>
       ? false
       : JSON.stringify(a) === JSON.stringify(b)
 
-const cons = (el, arr) => {
-  const l = arr.length
-  const b = Array(l + 1)
-  b[0] = el
-  for (let i = 0; i < l; ++i) {
-    b[i + 1] = arr[i]
-  }
-  return b
-}
-
 const library = {
+  apply,
   atom,
   car,
   cdr,
   cons,
   eq,
+  list,
+  pair,
   print,
   '*': mul,
   '/': div,

@@ -70,6 +70,10 @@ tap.test('lsp', ({ same, end }) => {
   same(ip('; (eq 1 1)'), undefined, 'ignores lines beginning with ;')
   same(ip('; (eq 1 1)\neq(1 2)'), false, 'handles newlines after comments')
 
+  same(ip('(list 1 2 3)'), [ 1, 2, 3 ], 'list')
+  same(ip('(pair 1 2)'), [ 1, 2 ], 'pair')
+  same(ip('(cons 1 (2))'), [ 1, 2 ], 'cons')
+
   // basic maths
   same(ip('(+ 1 1)'), 2, '+ with two args')
   same(ip('(+ 1 1 1)'), 3, '+ with three args')

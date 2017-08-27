@@ -1,2 +1,1 @@
-; ((lambda (a) a) 2)
-((lambda (b) b) 1)
+(def id (lambda (a) a))
