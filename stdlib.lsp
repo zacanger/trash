@@ -35,8 +35,6 @@
 (def (flip func)    (lambda (a b) (func b a)))
 (def (curry func a) (lambda (b) (apply func (cons a (list b)))))
 (def (compose f g)  (lambda (a) (f apply g a)))
-; (def (curry func arg1)  (lambda (arg) (func arg1 arg)))
-; (def (compose f g)      (lambda (arg) (f (g arg))))
 
 (def zero?              (curry = 0))
 (def positive?          (curry < 0))
@@ -95,12 +93,9 @@
 (def (list-ref lst k) (car (list-tail lst k)))
 
 (def (append . lists) (foldr (lambda (x y) (foldr cons y x)) '() lists))
-; (def (append lst . lsts) (foldr (flip (curry foldr cons)) lst lsts))
 
 (def (list-last lst)
   (if (null? (cdr lst))
     (car lst)
     (list-last (cdr lst))))
 (def (last . lst) (list-last lst))
-
-(def (vector-copy v) (if (vector? v) v (error "vector-copy takes one vector")))
