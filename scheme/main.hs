@@ -1,8 +1,5 @@
 {-# LANGUAGE ExistentialQuantification #-}
 
--- module Scheme (LispVal (..), LispError (..), readExpr, eval, runIOThrows, primitiveBindings, liftThrows) where
-
--- import Control.Arrow
 import Control.Monad
 import Control.Monad.Error
 import Data.Array
@@ -27,7 +24,6 @@ readOrThrow :: Parser a -> String -> ThrowsError a
 readOrThrow parser input = case parse parser "lisp" input of
                              Left err  -> throwError $ Parser err
                              Right val -> return val
--- readOrThrow parser input = left Parser $ parse parser "lisp"
 
 readExpr :: String -> ThrowsError LispVal
 readExpr = readOrThrow parseExpr
@@ -100,24 +96,14 @@ escapedChar = char '\\' >> oneOf "\"nrt\\" >>= \c ->
 parseString :: Parser LispVal
 parseString = do
   char '"'
--- a <- many (escapedChars <|> (noneOf ['\\', '"']))
--- a <- many ( (char '\\' >> oneOf "\\n\"rt") <|> noneOf "\"" )
   a <- many (noneOf "\"" <|> escapedChar)
   char '"'
   return $ String a
--- (return . String) a
 
--- an atom is a letter or symbol followed by any number of letters, symbols, or digits
--- first:rest is just cons, could be [first] ++ rest
--- return $ case atom of
--- "#t" -> Bool True
--- "#f" -> Bool False
--- _    -> Atom atom -- 'default'
 parseAtom :: Parser LispVal
 parseAtom = do
   first <- letter <|> symbol
   rest <- many (letter <|> digit <|> symbol)
-  -- (return . Atom) (first:rest) -- or
   let atom = first:rest
   return $ Atom atom
 
@@ -125,11 +111,6 @@ parseBool :: Parser LispVal
 parseBool = do
   char '#'
   (char 't' >> return (Bool True)) <|> (char 'f' >> return (Bool False))
--- parseBool = do char '#'
---                c <- oneOf "tf"
---                return $ case c of
---                       't' -> Bool True
---                       'f' -> Bool False
 
 parseNumber :: Parser LispVal
 parseNumber = readPlainNumber <|> parseRadixNumber
@@ -199,11 +180,6 @@ parseVector :: Parser LispVal
 parseVector = listArr <$> (string "#(" *> sepBy parseExpr spaces1 <* char ')')
   where
     listArr l = Vector $ listArray (0, length l - 1) l
--- parseVector = do
-  -- string "#("
-  -- elems <- sepBy parseExpr spaces1
-  -- char ')'
-  -- return $ Vector (listArray (0, length elems - 1) elems)
 
 parseQuoted :: Parser LispVal
 parseQuoted = do
@@ -279,10 +255,8 @@ showVal (Func {params = args, vararg = varargs, body = body, closure = env}) =
 showVal (Port _)               = "<IO port>"
 showVal (IOFunc _)             = "<IO primitive>"
 
--- unwords is from Prelude; sticks together words with spaces
 unwordsList :: [LispVal] -> String
 unwordsList = unwords . map showVal
--- point-free
 
 -- this thing is SO UGLY. WHY IS IT so UGLY?
 eval :: Env -> LispVal -> IOThrowsError LispVal
@@ -430,13 +404,9 @@ numericBinop :: (Integer -> Integer -> Integer) -> [LispVal] -> ThrowsError Lisp
 numericBinop op           []  = throwError $ NumArgs 2 []
 numericBinop op singleVal@[_] = throwError $ NumArgs 2 singleVal
 numericBinop op params        = liftM (Number . foldl1 op) (mapM unpackNum params)
--- numericBinop op single@[_] = throwError $ NumArgs 2 single
--- numericBinop op params = mapM unpackNum params >>= return . Number . foldl1 op
 
 unaryOp :: (LispVal -> ThrowsError LispVal) -> [LispVal] -> ThrowsError LispVal
 unaryOp f [v] = f v
--- unaryOp :: (LispVal -> LispVal) -> [LispVal] -> ThrowsError LispVal
--- unaryOp func [arg] = return $ func arg
 
 boolBinop :: (LispVal -> ThrowsError a) -> (a -> a -> Bool) -> [LispVal] -> ThrowsError LispVal
 boolBinop unpacker op args = if length args /= 2
@@ -444,11 +414,6 @@ boolBinop unpacker op args = if length args /= 2
                                 else do left  <- unpacker $ head args
                                         right <- unpacker $ args !! 1
                                         return $ Bool $ left `op` right
--- boolBinop unpacker op [x,y] = do
---     left <- unpacker x
---     right <- unpacker y
---     return $ Bool $ left `op` right
--- boolBinop _ _ args = throwError $ NumArgs 2 args
 
 numBoolBinop  = boolBinop unpackNum
 strBoolBinop  = boolBinop unpackStr
@@ -485,7 +450,6 @@ unpackNum (String n) = let parsed = reads n in
                               else return $ fst $ head parsed
 unpackNum (List [n]) = unpackNum n
 unpackNum notNum     = throwError $ TypeMismatch "number" notNum
--- `reads` returns a list of pairs: (parsed value, remaining string)
 
 unpackStr :: LispVal -> ThrowsError String
 unpackStr (String s) = return s
@@ -617,29 +581,23 @@ readPrompt prompt = flushStr prompt >> getLine
 
 evalString :: Env -> String -> IO String
 evalString env expr = runIOThrows $ liftM show $ liftThrows (readExpr expr) >>= eval env
--- evalString env expr = runIOThrows $ liftM show $ (liftThrows $ readExpr expr) >>= eval env
 
 evalAndPrint :: Env -> String -> IO ()
 evalAndPrint env expr = evalString env expr >>= putStrLn
 
--- this is our own sort of `interact`
--- kinda like `sequence . repeat . interact` except we can exit the loop
 until_ :: Monad m => (a -> Bool) -> m a -> (a -> m ()) -> m ()
 until_ pred prompt action = do
   result <- prompt
-  -- if pred result then return () else action result >> until_ pred prompt action -- or
   unless (pred result) $ action result >> until_ pred prompt action
 
 runOne :: [String] -> IO ()
 runOne args = do
   env <- primitiveBindings >>= flip bindVars [("args", List $ map String $ drop 1 args)]
   runIOThrows (liftM show $ eval env (List [Atom "load", String (head args)]))
-  -- (runIOThrows $ liftM show $ eval env (List [Atom "load", String (args !! 0)])) -- or this
     >>= hPutStrLn stderr
 
 runRepl :: IO ()
 runRepl = primitiveBindings >>= until_ (== ":q") (readPrompt "z> ") . evalAndPrint
--- TODO: make :q a function so i can alias it, eg (q)
 
 --
 -- vars
@@ -661,7 +619,6 @@ runIOThrows action = liftM extractValue (runErrorT (trapError action))
 
 isBound :: Env -> String -> IO Bool
 isBound envRef var = liftM (isJust . lookup var) (readIORef envRef)
--- isBound envRef var = readIORef envRef >>= return . maybe False (const True) . lookup var
 
 getVar :: Env -> String -> IOThrowsError LispVal
 getVar envRef var = do
@@ -755,7 +712,6 @@ listOp op = op
 --
 -- string things
 --
-
 makeString :: [LispVal] -> ThrowsError LispVal
 makeString [Number k, Char c] = return $ String $ replicate (fromIntegral k)  c
 makeString badArgs            = throwError $ TypeMismatch "int char" $ List badArgs
