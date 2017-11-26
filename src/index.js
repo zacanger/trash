@@ -58,6 +58,14 @@ app.post('/upload', (req, res) => {
 })
 
 app.get('/list/:page?', (req, res) => {
+  if (!(
+    req.query &&
+    req.query.pass &&
+    req.query.pass === process.env.LIST_PASS
+  )) {
+    res.redirect('/')
+    return
+  }
   glob('*.*', { cwd: imagePath }, (err, files) => {
     if (err) throw err
     let page = typeof req.params.page !== 'undefined' ? parseInt(req.params.page, 10) : 0
