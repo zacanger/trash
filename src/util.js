@@ -37,7 +37,7 @@ const listenLog = (app) => {
   })
 }
 
-const handleError = (res, page, err) => {
+const handleError = (res, err) => {
   console.trace(err)
   res.send(errorPage(err))
 }
