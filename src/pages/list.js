@@ -1,3 +1,4 @@
+const { legal } = require('../config')
 const layout = require('./layout')
 const pagination = require('./pagination')
 const filesize = require('filesize')
@@ -33,5 +34,6 @@ module.exports = ({ paginationInfo, pages, files }) =>
       <div>
         ${pagination(paginationInfo, pages)}
       </div>
+      <p><small>${legal}</small></p>
     </div>
   `)

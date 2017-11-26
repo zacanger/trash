@@ -1,7 +1,7 @@
 const fs = require('fs')
 const { createHash } = require('crypto')
 const uniqueSlug = require('unique-slug')
-const config = require('../config')
+const config = require('./config')
 const { errorPage } = require('./pages')
 
 const getSlug = (s) =>

@@ -1,5 +1,5 @@
 const layout = require('./layout')
-const { disclaimer, name } = require('../../config')
+const { legal, name } = require('../config')
 
 module.exports = () =>
   layout(`
@@ -14,6 +14,6 @@ module.exports = () =>
           </div>
         </form>
       </div>
-      <p><small>${disclaimer}</small></p>
+      <p><small>${legal}</small></p>
     </div>
   `)
