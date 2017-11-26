@@ -10,6 +10,7 @@ module.exports = (body) => `
   </head>
   <body>
     ${body}
+    <footer><small>${config.legal}</small></footer>
   </body>
 </html>
 `
