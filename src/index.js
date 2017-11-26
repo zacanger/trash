@@ -63,8 +63,7 @@ app.get('/list/:page?', (req, res) => {
     req.query.pass &&
     req.query.pass === process.env.LIST_PASS
   )) {
-    res.redirect('/')
-    return
+    return handleError(res, 'Password required in querystring to view the list page.')
   }
   glob('*.*', { cwd: imagePath }, (err, files) => {
     if (err) throw err
