@@ -57,12 +57,14 @@ app.post('/upload', (req, res) => {
   })
 })
 
+const handleAuthQuery = (req) =>
+  !!process.env.LIST_PASS &&
+  req.query &&
+  req.query.pass &&
+  req.query.pass === process.env.LIST_PASS
+
 app.get('/list/:page?', (req, res) => {
-  if (!(
-    req.query &&
-    req.query.pass &&
-    req.query.pass === process.env.LIST_PASS
-  )) {
+  if (!handleAuthQuery(req)) {
     return handleError(res, 'Password required in querystring to view the list page.')
   }
   glob('*.*', { cwd: imagePath }, (err, files) => {
