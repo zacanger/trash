@@ -99,7 +99,6 @@ lib-cov
 logs
 node_modules
 npm-debug.log*
-output
 pids
 pom.xml
 pom.xml.asc
