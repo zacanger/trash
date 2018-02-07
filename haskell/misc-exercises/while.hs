@@ -11,3 +11,9 @@ while = \cond body ->
     if testResult
        then (body >> while cond body)
        else (return ()))
+
+while cond body = loop
+  where loop = do
+    res <- cond
+    if res then do {body; loop}
+           else return ()''
