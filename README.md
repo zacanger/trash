@@ -1,3 +1,22 @@
+zt
+-------
+
+Modifications
+-------
+
+This fork has several modifications.
+
+Patches:
+
+* Scrollback and scrollback mouse patches: https://st.suckless.org/patches/scrollback/
+* Vertcenter patch: https://st.suckless.org/patches/vertcenter/
+* Alpha patch (with some work): https://st.suckless.org/patches/alpha/
+
+Other changes:
+
+* Colors are friendlier by default.
+
+
 st - simple terminal
 --------------------
 st is a simple terminal emulator for X which sucks less.
@@ -32,20 +51,3 @@ Credits
 -------
 Based on Aurélien APTEL <aurelien dot aptel at gmail dot com> bt source code.
 
-
-### zt
-
-Modifications
--------
-
-This fork has several modifications.
-
-Patches:
-
-* Scrollback and scrollback mouse patches: https://st.suckless.org/patches/scrollback/
-* Vertcenter patch: https://st.suckless.org/patches/vertcenter/
-* Alpha patch (with some work): https://st.suckless.org/patches/alpha/
-
-Other changes:
-
-* Colors are friendlier by default.
