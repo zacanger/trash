@@ -17,7 +17,7 @@
 #include <unistd.h>
 #include <wchar.h>
 
-#include "st.h"
+#include "zt.h"
 #include "win.h"
 
 #if   defined(__linux)

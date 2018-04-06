@@ -36,8 +36,14 @@ Based on Aurélien APTEL <aurelien dot aptel at gmail dot com> bt source code.
 Modifications
 -------
 
-This fork has a few patches applied:
+This fork has several modifications.
+
+Patches:
 
 * Scrollback and scrollback mouse patches: https://st.suckless.org/patches/scrollback/
 * Vertcenter patch: https://st.suckless.org/patches/vertcenter/
 * Alpha patch (with some work): https://st.suckless.org/patches/alpha/
+
+Other changes:
+
+* Colors are friendlier by default.
