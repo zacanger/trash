@@ -1,7 +1,7 @@
 zt
 -------
 
-![screenshot](http://zacanger.com/assets/desktop-scrot.png)
+![screenshot](http://zacanger.com/assets/zt-scrot.png)
 
 Modifications
 -------
