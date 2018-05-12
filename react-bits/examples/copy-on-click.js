@@ -1,3 +1,5 @@
+// adapted from code in npm's site's source
+// thanks, devtools
 import React, { PureComponent } from 'react'
 import { node } from 'prop-types'
 
