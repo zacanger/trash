@@ -18,7 +18,7 @@ int main(int argc, char *argv[]) {
   QTermWidget *console = new QTermWidget();
 
   QFont font = QApplication::font();
-  font.setFamily("Fira Code");
+  font.setFamily("Hasklig");
   font.setPointSize(10);
 
   console->setTerminalFont(font);
