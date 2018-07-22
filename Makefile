@@ -1,7 +1,7 @@
 PC=$(shell pkg-config --cflags --libs Qt5Widgets qtermwidget5)
 
 mt:
-	g++ $(PC) -fPIC -o mt minimal-term.cpp
+	g++ $(PC) -fPIC -o mt main.cpp
 
 install:
 	mkdir -p /usr/local/bin

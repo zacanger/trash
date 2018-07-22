@@ -15,34 +15,34 @@ int main(int argc, char *argv[]) {
   QMainWindow *mainWindow = new QMainWindow();
   setenv("TERM", "xterm-256color", 1);
 
-  QTermWidget *console = new QTermWidget();
+  QTermWidget *mt = new QTermWidget();
 
   QFont font = QApplication::font();
   font.setFamily("Hasklig");
   font.setPointSize(10);
 
-  console->setTerminalFont(font);
-  console->setColorScheme("Z");
-  console->setTerminalOpacity(0.5);
+  mt->setTerminalFont(font);
+  mt->setColorScheme("Z");
+  // mt->setTerminalOpacity(0.5);
 
-  QObject::connect(console, &QTermWidget::urlActivated, mainWindow, activateUrl);
+  QObject::connect(mt, &QTermWidget::urlActivated, mainWindow, activateUrl);
 
   QObject::connect(
-      console,
+      mt,
       &QTermWidget::termKeyPressed,
       mainWindow,
       [=](const QKeyEvent *key) -> void {
         if (key->matches(QKeySequence::Copy)) {
-          console->copyClipboard();
+          mt->copyClipboard();
         } else if (key->matches(QKeySequence::Paste)) {
-          console->pasteClipboard();
+          mt->pasteClipboard();
         }
       }
   );
 
-  QObject::connect(console, SIGNAL(finished()), mainWindow, SLOT(close()));
+  QObject::connect(mt, SIGNAL(finished()), mainWindow, SLOT(close()));
 
-  mainWindow->setCentralWidget(console);
+  mainWindow->setCentralWidget(mt);
 
   mainWindow->show();
   return app.exec();
