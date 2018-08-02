@@ -4,11 +4,13 @@
 #include <QMainWindow>
 #include "qtermwidget.h"
 
+/*
 void activateUrl(const QUrl &url, bool fromContextMenu) {
   if (QApplication::keyboardModifiers() & Qt::ControlModifier || fromContextMenu) {
     QDesktopServices::openUrl(url);
   }
 }
+*/
 
 int main(int argc, char *argv[]) {
   QApplication app(argc, argv);
@@ -25,8 +27,9 @@ int main(int argc, char *argv[]) {
   mt->setColorScheme("Z");
   // mt->setTerminalOpacity(0.5);
 
-  QObject::connect(mt, &QTermWidget::urlActivated, mainWindow, activateUrl);
+  // QObject::connect(mt, &QTermWidget::urlActivated, mainWindow, activateUrl);
 
+  // handle copy and paste
   QObject::connect(
       mt,
       &QTermWidget::termKeyPressed,
