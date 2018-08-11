@@ -25,6 +25,7 @@ int main(int argc, char *argv[]) {
 
   mt->setTerminalFont(font);
   mt->setColorScheme("Z");
+  mt->setTerminalSizeHint(false);
   // mt->setTerminalOpacity(0.5);
 
   // QObject::connect(mt, &QTermWidget::urlActivated, mainWindow, activateUrl);

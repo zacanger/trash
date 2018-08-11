@@ -14,6 +14,5 @@ wanted something that's just... a terminal. Also I want to learn more QT.
 * Read colorschemes from some file under `~/.config`
 * Get opacity working
 * Settings/config?
-* Hide resize notification
 
 License: [MIT](./LICENSE.md)
