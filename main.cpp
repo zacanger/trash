@@ -31,6 +31,8 @@ int main(int argc, char *argv[]) {
   // QObject::connect(mt, &QTermWidget::urlActivated, mainWindow, activateUrl);
 
   // handle copy and paste
+  // disabled, interferes with visual block in vim
+  /*
   QObject::connect(
       mt,
       &QTermWidget::termKeyPressed,
@@ -43,6 +45,7 @@ int main(int argc, char *argv[]) {
         }
       }
   );
+  */
 
   QObject::connect(mt, SIGNAL(finished()), mainWindow, SLOT(close()));
 
