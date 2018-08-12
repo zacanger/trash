@@ -10,9 +10,7 @@ wanted something that's just... a terminal. Also I want to learn more QT.
 
 ### TODO:
 
-* PREFIX in Makefile
 * Read colorschemes from some file under `~/.config`
 * Get opacity working
-* Settings/config?
 
 License: [MIT](./LICENSE.md)

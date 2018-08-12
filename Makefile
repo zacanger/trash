@@ -1,14 +1,16 @@
 PC=$(shell pkg-config --cflags --libs Qt5Widgets qtermwidget5)
+PREFIX ?= /usr/local
+CONFIG_PREFIX ?= /usr/share
 
 mt:
 	g++ $(PC) -fPIC -o mt main.cpp
 
 install:
-	mkdir -p /usr/local/bin
-	cp -f mt /usr/local/bin/mt
-	chmod 755 /usr/local/bin/mt
-	mkdir -p /usr/share/qtermwidget5/color-schemes
-	cp -f Z.colorscheme /usr/share/qtermwidget5/color-schemes/Z.colorscheme
+	mkdir -p $(PREFIX)/bin
+	cp -f mt $(PREFIX)/bin/mt
+	chmod 755 $(PREFIX)/bin/mt
+	mkdir -p $(CONFIG_PREFIX)/qtermwidget5/color-schemes
+	cp -f Z.colorscheme $(CONFIG_PREFIX)/qtermwidget5/color-schemes/Z.colorscheme
 
 clean:
 	rm mt
