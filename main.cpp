@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
 
   QFont font = QApplication::font();
   font.setFamily("Hasklig");
-  font.setPointSize(10);
+  font.setPointSize(11);
 
   mt->setTerminalFont(font);
   mt->setColorScheme("Z");
