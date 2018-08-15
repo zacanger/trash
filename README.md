@@ -12,5 +12,7 @@ wanted something that's just... a terminal. Also I want to learn more QT.
 
 * Read colorschemes from some file under `~/.config`
 * Get opacity working
+* Disable HistoryScroll
+* Switch to QML port?
 
 License: [MIT](./LICENSE.md)
