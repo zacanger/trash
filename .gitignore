@@ -1,11 +1,6 @@
 ._*
 *~
 *.7z
-.alarm.mp3
-.apdisk
-.AppleDB
-.AppleDesktop
-.AppleDouble
 *.aux
 .bower-cache
 bower_components
@@ -26,9 +21,6 @@ cabal.sandbox.config
 .completer.hist
 coverage
 *.dat
-data
-db
-dist
 .DocumentRevisions-V100
 ._.DS_Store
 .DS_Store
@@ -65,7 +57,6 @@ output
 pids
 *.prof
 .psci*
-public/lib
 .pulp-cache
 __pycache__/
 *$py.class
@@ -79,8 +70,6 @@ _references.js
 src/.webpack.js
 *.swp
 *.tar
-.TemporaryItems
-Temporary Items
 *.tmp
 .Trashes
 .vimsession~
@@ -88,4 +77,3 @@ Temporary Items
 .VolumeIcon.icns
 .vscode
 x/
-
