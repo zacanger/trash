@@ -92,7 +92,6 @@ void die(const char *, ...);
 void redraw(void);
 void draw(void);
 
-void iso14755(const Arg *);
 void printscreen(const Arg *);
 void printsel(const Arg *);
 void sendbreak(const Arg *);
