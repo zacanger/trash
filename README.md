@@ -1,1 +1,1 @@
-<http://heterophobiaisnotreal.com>
+<https://heterophobiaisnotreal.com>
