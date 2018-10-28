@@ -25,6 +25,7 @@ export default class App extends React.Component {
       if ((now - then) / 36e5 <= 24) {
         return Promise.resolve(data.repos)
       }
+      return Promise.resolve([])
     } catch (_) {
       return Promise.resolve([])
     }
