@@ -3,14 +3,12 @@
   "version": "0.0.1",
   "scripts": {
     "build": "react-scripts build",
-    "dev": "react-scripts start",
     "eject": "react-scripts eject",
     "postbuild": "mv build docs",
-    "start": "node index.js"
+    "start": "react-scripts start"
   },
   "dependencies": {
     "cxs": "6.2.0",
-    "luvi": "3.1.0",
     "react": "16.5.0",
     "react-dom": "16.5.0",
     "react-scripts": "2.0.5"
