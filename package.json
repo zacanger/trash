@@ -5,6 +5,7 @@
     "build": "react-scripts build",
     "dev": "react-scripts start",
     "eject": "react-scripts eject",
+    "postbuild": "mv build docs",
     "start": "node index.js"
   },
   "dependencies": {
