@@ -1,9 +1,4 @@
-#!/usr/bin/env node
-
-const { createServer } = require('http')
-const port = process.argv[2] || process.env.PORT || 9999
-
-createServer((req, res) => {
+require('http').createServer((req, res) => {
   let body = []
   req.on('data', (a) => {
     body.push(a)
@@ -12,4 +7,6 @@ createServer((req, res) => {
     console.log(Buffer.concat(body).toString())
   })
   res.end('', 200)
-}).listen(port)
+}).listen(process.env.PORT || 9999, () => {
+  console.log('Listening')
+})
