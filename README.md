@@ -1,11 +1,9 @@
 # docker-example
 
---------
+`./build-and-run.sh`
 
-## Installation
+`docker ps` -- you'll see a container running. Copy the name or id.
 
-## Usage
+`curl localhost:9999 -d 'some stuff'`
 
-## License
-
-[MIT](./LICENSE.md)
+`docker logs [container name or id]`

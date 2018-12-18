@@ -1,6 +1,7 @@
 {
   "name": "docker-example",
   "description": "docker-example",
+  "private": true,
   "version": "0.0.1",
   "author": {
     "name": "Zac Anger",
