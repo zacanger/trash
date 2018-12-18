@@ -1,4 +1,4 @@
-# docker-example
+# docker-node-example
 
 `./build-and-run.sh`
 
