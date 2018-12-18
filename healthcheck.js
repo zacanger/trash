@@ -1,18 +1,8 @@
-#!/usr/bin/env node
-
-// This file is for internal Docker healthchecks.
-// This is written in Node rather than using `curl`
-// to avoid the extra dependency in prod images.
-
-const http = require('http')
-
-const opts = {
+const request = require('http').request({
   host: 'localhost',
   port: process.env.PORT || 9999,
-  timeout: 1000,
-}
-
-const request = http.request(opts, (res) => {
+  timeout: 1000
+}, (res) => {
   process.exit(res.statusCode === 200 ? 0 : 1)
 })
 
