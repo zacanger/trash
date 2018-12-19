@@ -1,7 +1,5 @@
-# vim: ft=dockerfile
 FROM mhart/alpine-node:10
 ENV appdir /app
-# hadolint ignore=DL3018
 RUN addgroup -g 1000 -S node && \
     adduser -u 1000 -S node -G node
 WORKDIR ${appdir}
