@@ -108,4 +108,4 @@ src/.webpack.js
 x/
 .nyc_output
 config.h
-zt
+st
