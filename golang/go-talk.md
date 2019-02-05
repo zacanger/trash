@@ -1,6 +1,10 @@
+# Rust
+
+
 # Go
 
 Go is super hip right now!
+
 
 # Go is Fast
 
@@ -8,6 +12,7 @@ Not as fast as Rust, but frequently faster than C.
 
 <https://benchmarksgame-team.pages.debian.net/benchmarksgame/faster/rust-go.html>
 <https://benchmarksgame-team.pages.debian.net/benchmarksgame/faster/rust.html>
+
 
 # Go is Easy
 
@@ -20,6 +25,7 @@ Not as fast as Rust, but frequently faster than C.
     I'm not even good at math
   * The borrow checker is possibly the coolest thing in programming
     language development since the early 90s
+
 
 # Example
 
@@ -41,6 +47,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 }
 ```
 
+
 # Go is Convenient
 
 * Built-in cross compilation for every platform that matters
@@ -56,12 +63,30 @@ func handler(w http.ResponseWriter, r *http.Request) {
   * K8S
   * Runs on Lambda
 
+
 # Go is Concurrent
 
 * Built in `chan` primitive (channels)
 * `goroutines` (get it, they're coroutines, but with a `g`)
 
-#### examples here?
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+  someStringsIGuess := make(chan string)
+
+  go func() {
+    someStringsIGuess <- "hello!"
+  }()
+
+  firstString := <- someStringsIGuess
+  fmt.Println(firstString)
+}
+```
+
 
 # We Should Not Rewrite Everything In Go
 
@@ -72,6 +97,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 * No exceptions, errors are first-class values
   * This isn't really a bad thing! But it's weird!
 * Is Go 2 ever going to be a thing?
+
 
 # Errors Example
 
@@ -87,6 +113,7 @@ if err != nil {
 // we did the thing!
 ```
 
+
 # We're Already Using Go
 
 * Docker
@@ -96,6 +123,9 @@ if err != nil {
 * Probably some AWS services
 * Who knows, maybe other things
 
+
 # The Last Slide
 
-Go is like JS (or Ruby, or Python). It's not the most beautiful, elegant language with the best APIs, but it's mostly kinda okay, and if you're building anything in this decade, you're already using it whether you like it or not.
+Go is like JS (or Ruby, or Python). It's not the most beautiful, elegant
+language with the best APIs, but it's mostly kinda okay, and if you're building
+anything in this decade, you're already using it whether you like it or not.
