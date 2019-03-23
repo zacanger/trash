@@ -1,5 +1,8 @@
 // Regular comment
-/// Documentation Comment, with **markdown** support!
+/// Documentation comment, with **markdown** support!
+/*
+ * block comment
+ */
 
 // implicit return when the thing doesn't have a semicolon
 fn foo(a: i32) -> i32 {
