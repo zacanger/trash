@@ -40,6 +40,9 @@ span,
 #siteNotice,
 .mw-body,
 #content,
+.header-container,
+.header-chrome,
+#searchInput
 div#content {
   background: #020100!important;
   color: #dee3c8!important;
