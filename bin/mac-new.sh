@@ -178,7 +178,7 @@ brew install gnu-which --with-default-names
 brew install grep --with-default-names
 brew cask install minikube
 brew cask install alacritty
-brew cask install google-cloud-sdk
+brew cask install mpv
 # The rest
 brew_packages=(
   aspcud
@@ -277,7 +277,6 @@ brew_packages=(
   most
   mpfr
   mplayer
-  mpv
   ncdu
   ncurses
   neovim
