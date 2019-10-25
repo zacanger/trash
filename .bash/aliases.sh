@@ -42,16 +42,12 @@ alias nu='npm i -g n && n lts && n prune && npm i -g npm npx npm-check-updates'
 alias d='cd'
 alias Cd='cd'
 alias CD='cd'
-alias cd..='cd ..'
 alias ..="cd .."
 alias ...="cd ../.."
-alias ....="cd ../../.."
 alias ,,='..'
 alias ,,,='...'
-alias ,,,,='....'
 alias cs='cd $OLDPWD'
 alias ..a='.. && a'
-alias ...a='... && a'
 
 # safety, etc.
 # gh:sindresorhus/trash,empty-trash
