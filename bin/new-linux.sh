@@ -107,7 +107,9 @@ ln -s $zconf_path/startup.py $conf_path/
 # Copy rather than link because config contains window height
 cp $zconf_path/pcmanfm/default/pcmanfm.conf $conf_path/pcmanfm/default/
 
-# Vim packages
+# Vim
+curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 nvim +PlugInstall +qa
 
 # Link fonts

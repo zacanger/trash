@@ -367,8 +367,10 @@ if [ -f $HOME/Dropbox/z/misc/pip.list ]; then
   done
 fi
 
-# Haskell editor helpers
-# stack install hdevtools
+# Vim
+curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+nvim +PlugInstall +qa
 
 # Update the Mac
 sudo softwareupdate -i -a
