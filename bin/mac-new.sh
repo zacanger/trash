@@ -123,6 +123,7 @@ defaults write com.apple.iTunes invertStoreLinks -bool true
 
 ## Dock
 
+defaults write com.apple.dock no-bouncing -bool true
 defaults write com.apple.Dock autohide -bool true
 defaults write com.apple.dock largesize -int 65
 defaults write com.apple.dock tilesize -int 10
