@@ -42,7 +42,11 @@ WITHOUTG="{
     \"\"
   ],
   \"dependencies\": {},
-  \"devDependencies\": {}
+  \"devDependencies\": {},
+  \"funding\": {
+    \"type\": \"ko-fi\",
+    \"url\": \"https://ko-fi.com/zacanger\"
+  }
 }"
 
 WITHG="{
@@ -77,7 +81,11 @@ WITHG="{
     \"\"
   ],
   \"dependencies\": {},
-  \"devDependencies\": {}
+  \"devDependencies\": {},
+  \"funding\": {
+    \"type\": \"ko-fi\",
+    \"url\": \"https://ko-fi.com/zacanger\"
+  }
 }"
 
 echo "# $DN
