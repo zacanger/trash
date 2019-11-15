@@ -3,7 +3,8 @@
 # First, disable SIP. Turn off and boot up while holding CMD+R,
 # then open Utilities > Terminal and run `csrutil disable`
 
-# Install Spectacle from the website
+# Install Rectangle and configure to start on login:
+# https://github.com/rxhanson/Rectangle
 
 # Take ownership of /usr/local. By default, all gems,
 # python packages, and npm packages go in here.
