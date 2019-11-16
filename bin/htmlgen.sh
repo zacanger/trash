@@ -2,8 +2,7 @@
 
 set -e
 
-printf '
-<!doctype html>
+printf '<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
