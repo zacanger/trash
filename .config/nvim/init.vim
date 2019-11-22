@@ -412,6 +412,9 @@ endif
 " pixie
 au BufNewFile,BufRead *.pxi set ft=clojure
 
+" cshtml
+au BufNewFile,BufRead *.cshtml set ft=html
+
 " alternate jenkinsfiles
 au BufNewFile,BufRead Promotionfile set ft=jenkinsfile
 
