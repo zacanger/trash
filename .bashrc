@@ -149,6 +149,8 @@ if [ -d $HOME/.bash ]; then
 fi
 
 if [[ `uname` == 'Darwin' ]]; then
+  # Macs yell at you if you don't use bash, because Macs are bad
+  export BASH_SILENCE_DEPRECATION_WARNING=1
   # On Linux, I manage multiple terminal sessions with the window manager
   # On Mac, that's painful, so start tmux on a new shell.
   [ -z "$TMUX" ] && { tmux attach || exec tmux new-session; }
