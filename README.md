@@ -1,6 +1,6 @@
 # `$HOME`
 
-Please feel free to use anything you like! 
+Please feel free to use anything you like!
 Unless otherwise noted, everything here is under the
 LGPL-3.0 license.
 
@@ -18,7 +18,7 @@ those paths scattered around.
 * I use nvim, but init.vim config probably works fine with
   Vim 8 (if renamed to .vimrc)
 * i3 on Linux, [Rectangle](https://github.com/rxhanson/Rectangle) on Mac.
-* Bash 4 and 5, Python 3 mostly, Node latest, Neovim.
+* Bash 4 and 5, Python 3, Node latest, Neovim.
 * The files called `*.list` (under `/misc`) are to keep
   track of what I need on a fresh computer.
   * `apt.list`: generated with `apt-mark showmanual`
