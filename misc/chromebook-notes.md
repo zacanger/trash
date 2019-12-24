@@ -1,6 +1,6 @@
 * reboot while holding escape and the 'refresh' looking button
 * set up developer mode (ctrl+d skips pauses/screens)
-  * the funky 'your shit is fucked' screen is not real, just ctrl+d
+  * the funky 'your stuff is bad' screen is not real, just ctrl+d
 * after reboot, enable debugging features i guess
 * after reboot again, switch to vt2 (the forward key is f2) and set up a password
 * go back and ctrl+alt+t, enter 'shell'
