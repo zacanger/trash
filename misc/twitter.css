@@ -1,6 +1,0 @@
-[aria-label="Share Tweet"],
-[aria-label="Timeline: Trending now"],
-[aria-label="Relevant people"],
-[aria-label$="Like"] {
-  display: none;
-}
