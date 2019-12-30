@@ -34,6 +34,7 @@ user_pref("browser.search.geoip.url", "");
 user_pref("browser.search.suggest.enabled", false);
 user_pref("browser.sessionhistory.max_entries", 10);
 user_pref("browser.sessionstore.max_tabs_undo", 10);
+user_pref("browser.sessionstore.warnOnQuit", true);
 user_pref("browser.startup.homepage", "about:blank");
 user_pref("browser.urlbar.searchSuggestionsChoice", false);
 user_pref("browser.urlbar.speculativeConnect.enabled", false);
