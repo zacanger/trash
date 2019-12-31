@@ -1,0 +1,9 @@
+{
+  "name": "twitter-scripts",
+  "version": "0.0.1",
+  "description": "",
+  "license": "MIT",
+  "dependencies": {
+    "twitter": "1.7.1"
+  }
+}
