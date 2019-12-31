@@ -1,16 +1,16 @@
-# EditorConfig helps developers define and maintain consistent
-# coding styles between different editors and IDEs
-# http://editorconfig.org
-
 root = true
 
 [*]
-indent_style = space
-indent_size = 2
-end_of_line = lf
+end_of_line = LF
 charset = utf-8
-trim_trailing_whitespace = true
+max_line_length = 80
+indent_style = space
 insert_final_newline = true
+trim_trailing_whitespace = true
+indent_size = 2
 
-[*.md]
+[*.{rs,py}]
+indent_size = 4
+
+[*.{md,go}]
 trim_trailing_whitespace = false
