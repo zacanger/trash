@@ -1,6 +1,6 @@
 Misc Twitter-related scripts
 
-* [Request you Twitter archive](https://twitter.com/settings/account)
+* [Request your Twitter archive](https://twitter.com/settings/account)
 * [Create an app on Twitter](https://apps.twitter.com/) the get your keys
 * Download or clone the repo
 * Rename `config-example.js` to `config.js` and set your keys and settings
