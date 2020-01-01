@@ -88,6 +88,11 @@ ln -s $z_path/.gnupg/gpg-agent.conf $HOME/.gnupg/
 mkdir -p $HOME/.cargo
 ln -s $z_path/.cargo/config $HOME/.cargo/
 
+# Haskell
+curl -sSL https://get.haskellstack.org/ | sh
+# Finish installing GHC
+stack ghci
+
 # .config
 $conf_path=$HOME/.config
 $zconf_path=$z_path/.config
