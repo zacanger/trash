@@ -90,6 +90,8 @@ ln -s $z_path/.cargo/config $HOME/.cargo/
 
 # Haskell
 curl -sSL https://get.haskellstack.org/ | sh
+mkdir -p $HOME/.ghc
+ln -s $z_path/.ghc/ghci.conf $HOME/.ghc/
 # Finish installing GHC
 stack ghci
 
