@@ -22,7 +22,7 @@ function deleteLike (likes, i) {
   let remaining = 0
 
   if (!likes[i]) return
-  client.post('favorites/destroy', {id: likes[i]}, function (err, t, res) {
+  client.post('favorites/destroy', { id: likes[i] }, function (err, t, res) {
     if (res.headers.status.includes('429')) {
       console.log(res.headers.status)
     }

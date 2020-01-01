@@ -1,9 +1,17 @@
 {
   "name": "twitter-scripts",
+  "description": "Misc scripts for Twitter things",
   "version": "0.0.1",
-  "description": "",
+  "author": "Zac Anger",
   "license": "MIT",
+  "scripts": {
+    "test": "sortpack && standard"
+  },
   "dependencies": {
     "twitter": "1.7.1"
+  },
+  "devDependencies": {
+    "sortpack": "2.0.4",
+    "standard": "14.3.1"
   }
 }

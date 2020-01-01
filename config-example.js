@@ -1,4 +1,4 @@
-let d = new Date()
+const d = new Date()
 d.setMonth(d.getMonth() - 1)
 
 module.exports = {

@@ -9,5 +9,5 @@ require('fs').writeFileSync('./messages.json',
       .map(a => a.dmConversation.messages)
       .flat()
       .map(a => a.messageCreate)
-      .filter(a => a)
+      .filter(a => a),
     null, 2))

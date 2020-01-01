@@ -1,8 +1,8 @@
 const map = require('./final')
 
 const sortable = []
-for (let m in map) {
-  sortable.push([ m, map[m] ])
+for (const m in map) {
+  sortable.push([m, map[m]])
 }
 
 sortable.sort((a, b) => new Date(a[1]) - new Date(b[1]))
