@@ -20,7 +20,11 @@ if [[ `uname` == 'Linux' ]]; then
 fi
 
 # see lesspipe(1)
-[ -x /usr/bin/lesspipe.sh ] && eval "$(SHELL=/bin/sh lesspipe.sh)"
+if [ -x /usr/bin/lesspipe.sh ]; then
+  eval "$(SHELL=/bin/sh lesspipe.sh)"
+elif hash lesspipe 2>/dev/null; then
+  eval "$(lesspipe)"
+fi
 
 export LESSOPEN="| $(which highlight) %s --out-format xterm256 --line-numbers --quiet --force --style solarized-light"
 export LESS=" -R"
