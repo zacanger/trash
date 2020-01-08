@@ -417,6 +417,7 @@ au BufNewFile,BufRead *.cshtml set ft=html
 
 " alternate jenkinsfiles
 au BufNewFile,BufRead Promotionfile set ft=jenkinsfile
+au BufNewFile,BufRead *.jenkinsfile set ft=jenkinsfile
 
 " babelrc
 au BufNewFile,BufRead .babelrc set ft=json
