@@ -3,6 +3,7 @@ Pillow
 PyYAML
 autopep8
 awscli
+bpython
 legit
 lxml
 mps
