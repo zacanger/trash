@@ -22,7 +22,7 @@ alias gitodo='git grep -EiI "FIXME|TODO"'
 alias aca='ac a'
 alias gp='git push'
 
-# development package managers
+# development
 alias np='npm publish'
 alias ni='npm i'
 alias ns='npm start -s'
@@ -112,6 +112,7 @@ if [[ `uname` == 'Darwin' ]]; then
 fi
 
 # all the rest
+alias py='bpython'
 alias grep='grep --color=auto'
 alias q='exit'
 alias ag='ag --path-to-ignore ~/.agignore'
