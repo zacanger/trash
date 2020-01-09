@@ -323,6 +323,7 @@ brew_packages=(
   source-highlight
   sqlite
   telnet
+  terraform
   the_silver_searcher
   tree
   unrar
