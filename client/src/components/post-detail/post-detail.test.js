@@ -1,10 +1,10 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import PostDetail from '../components/post-detail/component'
-import LoadingIndicatorBox from '../components/shared/loading-indicator/box'
-import PostDetailPost from '../components/post-detail/post'
-import PostDetailCommentSection from '../components/post-detail/comment-section'
-import Empty from '../components/shared/empty'
+import PostDetail from './component'
+import LoadingIndicatorBox from '../shared/loading-indicator/box'
+import PostDetailPost from './post'
+import PostDetailCommentSection from './comment-section'
+import Empty from '../shared/empty'
 
 it('renders without crashing', () => {
   shallow(<PostDetail fetchPost={(fn) => fn} />)

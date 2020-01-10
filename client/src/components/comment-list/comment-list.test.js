@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import CommentList from '../components/comment-list'
+import CommentList from '.'
 
 it('renders without crashing', () => {
   shallow(<CommentList />)

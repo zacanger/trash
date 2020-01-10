@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Home from '../components/home'
+import SignupForm from './component'
 
 it('renders without crashing', () => {
-  shallow(<Home />)
+  shallow(<SignupForm handleSubmit={(fn) => fn} />)
 })

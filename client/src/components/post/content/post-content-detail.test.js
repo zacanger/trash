@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow, mount } from 'enzyme'
 import { MemoryRouter } from 'react-router-dom'
 import moment from 'moment'
-import PostContentDetail from '../components/post/content/detail'
+import PostContentDetail from './detail'
 
 it('renders without crashing', () => {
   shallow(<PostContentDetail />)

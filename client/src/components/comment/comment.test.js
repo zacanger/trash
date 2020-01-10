@@ -1,8 +1,8 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Comment from '../components/comment'
-import CommentDetailContainer from '../components/comment/detail/container'
-import CommentContent from '../components/comment/content'
+import Comment from '.'
+import CommentDetailContainer from './detail/container'
+import CommentContent from './content'
 
 it('renders without crashing', () => {
   shallow(<Comment />)

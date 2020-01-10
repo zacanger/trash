@@ -1,9 +1,9 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Header from '../components/header/component'
-import HeaderLogo from '../components/header/logo'
-import HeaderDarkButtonContainer from '../components/header/dark-button/container'
-import HeaderUsername from '../components/header/username'
+import Header from './component'
+import HeaderLogo from './logo'
+import HeaderDarkButtonContainer from './dark-button/container'
+import HeaderUsername from './username'
 
 it('renders without crashing', () => {
   shallow(<Header />)

@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import CreatePostForm from '../components/create-post-form/component'
+import CreatePostForm from './component'
 
 it('renders without crashing', () => {
   const form = { values: {} }

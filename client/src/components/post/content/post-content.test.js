@@ -1,10 +1,10 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import PostContent from '../components/post/content'
-import PostContentTitle from '../components/post/content/title'
-import PostContentPreview from '../components/post/content/preview'
-import PostContentDetail from '../components/post/content/detail'
-import PostContentFullText from '../components/post/content/full-text'
+import PostContent from '.'
+import PostContentTitle from './title'
+import PostContentPreview from './preview'
+import PostContentDetail from './detail'
+import PostContentFullText from './full-text'
 
 it('renders without crashing', () => {
   shallow(<PostContent />)

@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import PostDetailInfoBar from '../components/post-detail/info-bar/component'
-import DeleteButton from '../components/shared/delete-button'
+import PostDetailInfoBar from './component'
+import DeleteButton from '../../shared/delete-button'
 
 it('renders without crashing', () => {
   shallow(<PostDetailInfoBar />)

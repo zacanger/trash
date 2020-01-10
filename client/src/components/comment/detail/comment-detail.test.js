@@ -1,8 +1,8 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import CommentDetail from '../components/comment/detail/component'
-import Author from '../components/shared/author'
-import CommentDetailTimestamp from '../components/comment/detail/timestamp'
+import CommentDetail from './component'
+import Author from '../../shared/author'
+import CommentDetailTimestamp from './timestamp'
 
 it('renders without crashing', () => {
   shallow(<CommentDetail author />)

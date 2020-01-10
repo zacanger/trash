@@ -1,8 +1,8 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Sidebar from '../components/sidebar/component'
-import SidebarCategoryList from '../components/sidebar/category-list'
-import SidebarCreatePostButton from '../components/sidebar/create-post-button'
+import Sidebar from './component'
+import SidebarCategoryList from './category-list'
+import SidebarCreatePostButton from './create-post-button'
 
 it('renders without crashing', () => {
   shallow(<Sidebar />)

@@ -1,8 +1,8 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Post from '../components/post'
-import PostVoteContainer from '../components/post/vote/container'
-import PostContent from '../components/post/content'
+import Post from '.'
+import PostVoteContainer from './vote/container'
+import PostContent from './content'
 
 it('renders without crashing', () => {
   shallow(<Post />)

@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Form from '../components/shared/form/form'
+import Form from '.'
 
 it('renders without crashing', () => {
   shallow(<Form />)

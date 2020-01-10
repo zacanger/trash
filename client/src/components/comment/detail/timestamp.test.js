@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import moment from 'moment'
-import CommentDetailTimestamp from '../components/comment/detail/timestamp'
+import CommentDetailTimestamp from './timestamp'
 
 it('renders without crashing', () => {
   shallow(<CommentDetailTimestamp />)

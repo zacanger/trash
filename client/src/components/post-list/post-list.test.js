@@ -1,9 +1,9 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import PostList from '../components/post-list/component'
-import PostListItem from '../components/post-list/item'
-import Empty from '../components/shared/empty'
-import LoadingIndicatorBox from '../components/shared/loading-indicator/box'
+import PostList from './component'
+import PostListItem from './item'
+import Empty from '../shared/empty'
+import LoadingIndicatorBox from '../shared/loading-indicator/box'
 
 it('renders without crashing', () => {
   shallow(<PostList fetchPosts={(fn) => fn} />)

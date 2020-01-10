@@ -1,8 +1,8 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import PostDetailCommentSection from '../components/post-detail/comment-section'
-import CommentList from '../components/comment-list'
-import Empty from '../components/shared/empty'
+import PostDetailCommentSection from './comment-section'
+import CommentList from '../comment-list'
+import Empty from '../shared/empty'
 
 it('renders without crashing', () => {
   shallow(<PostDetailCommentSection post />)

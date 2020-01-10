@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import CategoryMenu from '../components/category-menu/component'
-import CategoryMenuCreatePostButton from '../components/category-menu/create-post-button'
+import CategoryMenu from './component'
+import CategoryMenuCreatePostButton from './create-post-button'
 
 it('renders without crashing', () => {
   shallow(<CategoryMenu />)
