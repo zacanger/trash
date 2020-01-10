@@ -1,4 +1,4 @@
-# asperitas
+# thingy
 
 Initial code based on [Asperitas](https://github.com/d11z/asperitas).
 
