@@ -1,4 +1,3 @@
-import './style.css'
 import './config/moment'
 import React from 'react'
 import ReactDOM from 'react-dom'
@@ -14,4 +13,4 @@ ReactDOM.render(
   document.getElementById('root')
 )
 
-serviceWorker.unregister()
+serviceWorker.register()
