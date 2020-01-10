@@ -2,62 +2,14 @@
 
 Initial code based on [Asperitas](https://github.com/d11z/asperitas).
 
-`docker run -d -p 27017:27107`
-
-## Installation
-
-### Prerequisites
-
-* node
-* npm
-* mongodb
-
-1. Clone this repository
-
-2. Install server dependencies
-    ```bash
-    $ cd server
-    $ npm install
-    ```
-3. Install client dependencies
-    ```bash
-    $ cd client
-    $ npm install
-    ```
-
-## Run the app
-
-1. Start mongodb locally
-    ```bash
-    $ mongod
-    ```
-2. Start the server
-    ```bash
-    $ cd server
-    $ npm start
-    ```
-3. Start the client
-    ```bash
-    $ cd client
-    $ npm start
-    ```
-4. Browse to `http://localhost:3000/`
+`docker run -d -p 27017:27107 mongo`
+`cd server && npm ci && npm run dev`
+`cd client && npm ci && npm start`
 
 ## Testing
 
-### Server
-Make sure mongodb is running before testing the server.
-```bash
-$ cd server
-$ npm test
-```
+`docker run -d -p 27017:27107 mongo`
+`cd server && npm test`
+`cd client && npm test`
 
-### Client
-```bash
-$ cd client
-$ npm test
-```
-
-## License
-
-This project is made available under the **MIT License**.
+[License (MIT)](./LICENSE.md)
