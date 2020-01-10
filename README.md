@@ -1,6 +1,8 @@
 # asperitas
 
-Asperitas is a full stack reddit clone that I wrote to learn more about Node.js, React, and NoSQL databases. The name asperitas comes from a type of [cloud](https://en.wikipedia.org/wiki/Asperitas_(cloud)).
+Initial code based on [Asperitas](https://github.com/d11z/asperitas).
+
+`docker run -d -p 27017:27107`
 
 ## Installation
 

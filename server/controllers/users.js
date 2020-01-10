@@ -1,35 +1,35 @@
-const { body, validationResult } = require('express-validator/check');
-const { login, createAuthToken } = require('../auth');
-const User = require('../models/user');
+const { body, validationResult } = require('express-validator/check')
+const { login, createAuthToken } = require('../auth')
+const User = require('../models/user')
 
 exports.login = (req, res, next) => {
-  const result = validationResult(req);
+  const result = validationResult(req)
   if (!result.isEmpty()) {
-    const errors = result.array({ onlyFirstError: true });
-    return res.status(422).json({ errors });
+    const errors = result.array({ onlyFirstError: true })
+    return res.status(422).json({ errors })
   }
 
-  login(req, res, next);
-};
+  login(req, res, next)
+}
 
 exports.register = async (req, res, next) => {
-  const result = validationResult(req);
+  const result = validationResult(req)
   if (!result.isEmpty()) {
-    const errors = result.array({ onlyFirstError: true });
-    return res.status(422).json({ errors });
+    const errors = result.array({ onlyFirstError: true })
+    return res.status(422).json({ errors })
   }
 
   try {
-    const { username, password } = req.body;
-    const user = await User.create({ username, password });
-    const token = createAuthToken(user.toJSON());
-    res.status(201).json({ token });
+    const { username, password } = req.body
+    const user = await User.create({ username, password })
+    const token = createAuthToken(user.toJSON())
+    res.status(201).json({ token })
   } catch (err) {
-    next(err);
+    next(err)
   }
-};
+}
 
-exports.validate = method => {
+exports.validate = (method) => {
   const errors = [
     body('username')
       .exists()
@@ -41,7 +41,7 @@ exports.validate = method => {
       .isLength({ max: 32 })
       .withMessage('must be at most 32 characters long')
 
-      .custom(value => value.trim() === value)
+      .custom((value) => value.trim() === value)
       .withMessage('cannot start or end with whitespace')
 
       .matches(/^[a-zA-Z0-9_-]+$/)
@@ -58,17 +58,17 @@ exports.validate = method => {
       .withMessage('must be at least 8 characters long')
 
       .isLength({ max: 72 })
-      .withMessage('must be at most 72 characters long')
-  ];
+      .withMessage('must be at most 72 characters long'),
+  ]
 
   if (method === 'register') {
     errors.push(
-      body('username').custom(async username => {
-        const exists = await User.countDocuments({ username });
-        if (exists) throw new Error('already exists');
+      body('username').custom(async (username) => {
+        const exists = await User.countDocuments({ username })
+        if (exists) throw new Error('already exists')
       })
-    );
+    )
   }
 
-  return errors;
-};
+  return errors
+}

@@ -12,19 +12,19 @@ import {
   DELETE_COMMENT_SUCCESS,
   DELETE_COMMENT_ERROR,
   VOTE_SUCCESS,
-  VOTE_ERROR
-} from '../actions/posts';
+  VOTE_ERROR,
+} from '../actions/posts'
 import {
   LOGIN_ERROR,
   LOGIN_SUCCESS,
   SIGNUP_ERROR,
   SIGNUP_SUCCESS,
-  LOGOUT
-} from '../actions/auth';
-import { hideErrorClearTimeout, showErrorWithTimeout } from '../actions/error';
+  LOGOUT,
+} from '../actions/auth'
+import { hideErrorClearTimeout, showErrorWithTimeout } from '../actions/error'
 
-export default store => next => action => {
-  next(action);
+export default (store) => (next) => (action) => {
+  next(action)
   switch (action.type) {
     case FETCH_POSTS_SUCCESS:
     case FETCH_POST_SUCCESS:
@@ -36,8 +36,8 @@ export default store => next => action => {
     case LOGIN_SUCCESS:
     case SIGNUP_SUCCESS:
     case LOGOUT:
-      if (store.getState().error) store.dispatch(hideErrorClearTimeout());
-      break;
+      if (store.getState().error) store.dispatch(hideErrorClearTimeout())
+      break
 
     case FETCH_POSTS_ERROR:
     case FETCH_POST_ERROR:
@@ -48,10 +48,10 @@ export default store => next => action => {
     case VOTE_ERROR:
     case LOGIN_ERROR:
     case SIGNUP_ERROR:
-      store.dispatch(showErrorWithTimeout(action.error));
-      break;
+      store.dispatch(showErrorWithTimeout(action.error))
+      break
 
     default:
-      break;
+      break
   }
-};
+}

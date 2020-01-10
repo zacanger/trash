@@ -1,20 +1,20 @@
-import moment from 'moment';
+import moment from 'moment'
 
 moment.updateLocale('en', {
   relativeTime: {
     future: 'in %s',
     past: '%s ago',
-    s:  '%ds',
+    s: '%ds',
     ss: '%ds',
-    m:  '1m',
+    m: '1m',
     mm: '%dm',
-    h:  '1h',
+    h: '1h',
     hh: '%dh',
-    d:  '1d',
+    d: '1d',
     dd: '%dd',
-    M:  '1M',
+    M: '1M',
     MM: '%dM',
-    y:  '1y',
-    yy: '%dY'
-  }
-});
+    y: '1y',
+    yy: '%dY',
+  },
+})

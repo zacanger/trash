@@ -1,11 +1,11 @@
-import { createBrowserHistory } from 'history';
-import store from '../store';
-import { hideErrorClearTimeout } from '../actions/error';
+import { createBrowserHistory } from 'history'
+import store from '../store'
+import { hideErrorClearTimeout } from '../actions/error'
 
-const history = createBrowserHistory();
+const history = createBrowserHistory()
 
 history.listen(() => {
-  if (store.getState().error) store.dispatch(hideErrorClearTimeout());
-});
+  if (store.getState().error) store.dispatch(hideErrorClearTimeout())
+})
 
-export default history;
+export default history

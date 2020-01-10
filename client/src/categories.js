@@ -1,10 +1,3 @@
-const categories = [
-  'music',
-  'funny',
-  'videos',
-  'programming',
-  'news',
-  'fashion'
-];
+const categories = ['links', 'theory', 'other']
 
-export default categories;
+export default categories

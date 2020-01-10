@@ -4,12 +4,12 @@ import {
   CREATE_POST_ERROR,
   DELETE_POST_ERROR,
   CREATE_COMMENT_ERROR,
-  VOTE_ERROR
-} from '../actions/posts';
-import { LOGIN_ERROR, SIGNUP_ERROR } from '../actions/auth';
-import { HIDE_ERROR } from '../actions/error';
+  VOTE_ERROR,
+} from '../actions/posts'
+import { LOGIN_ERROR, SIGNUP_ERROR } from '../actions/auth'
+import { HIDE_ERROR } from '../actions/error'
 
-const initialState = null;
+const initialState = null
 
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -21,12 +21,12 @@ export default (state = initialState, action) => {
     case VOTE_ERROR:
     case LOGIN_ERROR:
     case SIGNUP_ERROR:
-      return action.error;
+      return action.error
 
     case HIDE_ERROR:
-      return null;
+      return null
 
     default:
-      return state;
+      return state
   }
-};
+}

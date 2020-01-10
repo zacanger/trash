@@ -1,25 +1,35 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# dependencies
-node_modules/
-/.pnp
-.pnp.js
-
-# testing
-/coverage
-
-# production
-/build
-
-# misc
+*.log
+*.out
+*.pyc
+*.swp
 .DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
+.eslintcache
 .idea
+.opt-in
+.opt-out
+.vscode
+/assets
+build
+client-coverage
+coverage
+coverage.zip
+cypress/screenshots
+cypress/videos
+keys
+node_modules
+ops/nginx-docker/web
+public
+server-coverage
+server/src/config/local*
+server/lib
+tmp
+/tags
+jsconfig.json
+junit.xml
+*.trx
+lighthouse.html
+server/src/route-data-cache.json
+/jane-core-automation
+/.cache
+server/webpack-assets.json.bak
+server/icons/static

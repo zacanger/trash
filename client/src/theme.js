@@ -2,8 +2,8 @@ const constants = {
   error: '#f5222d',
   vote: '#b6b6b6',
   upvote: '#f9920b',
-  downvote: '#2e70ff'
-};
+  downvote: '#2e70ff',
+}
 
 const dark = {
   ...constants,
@@ -16,8 +16,8 @@ const dark = {
   foreground: '#262626',
   activeBackground: '#333333',
   inputBackground: '#212121',
-  shadow: 'rgba(0, 0, 0, 0.4)'
-};
+  shadow: 'rgba(0, 0, 0, 0.4)',
+}
 
 const light = {
   ...constants,
@@ -30,9 +30,9 @@ const light = {
   foreground: '#ffffff',
   activeBackground: '#fafafa',
   inputBackground: '#fcfcfc',
-  shadow: 'rgba(0, 0, 0, 0.05)'
-};
+  shadow: 'rgba(0, 0, 0, 0.05)',
+}
 
-const theme = isDark => (isDark ? dark : light);
+const theme = (isDark) => (isDark ? dark : light)
 
-export default theme;
+export default theme
