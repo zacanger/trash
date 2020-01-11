@@ -28,7 +28,7 @@ cat $list_path/pip.list | xargs sudo pip3 install
 # remove them.
 sudo apt-get install -f -y nodejs npm
 npm i -g n
-n lts
+n latest
 n prune
 npm i -g npm npx
 sudo apt-get autoremove nodejs npm
