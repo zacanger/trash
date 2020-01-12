@@ -1,3 +1,3 @@
-import { createSafeLocalStorage } as S from 'safer-web-storage'
+import { createSafeLocalStorage } from 'safer-web-storage'
 
 export default createSafeLocalStorage()

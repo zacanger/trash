@@ -1,8 +1,10 @@
+const dbUri = process.env.MONGO_URI || 'mongodb://localhost/thingy'
+
 module.exports = {
-  port: 9090,
+  port: process.env.PORT || 9090,
   db: {
-    prod: process.env.DATABASE_URL || 'mongodb://localhost/reddit',
-    test: 'mongodb://localhost/reddit_test',
+    prod: dbUri,
+    test: dbUri,
     options: {
       useNewUrlParser: true,
       useCreateIndex: true,

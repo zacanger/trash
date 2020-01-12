@@ -33,3 +33,4 @@ server/src/route-data-cache.json
 /.cache
 server/webpack-assets.json.bak
 server/icons/static
+/db

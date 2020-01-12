@@ -1,0 +1,22 @@
+{
+  "name": "thingy",
+  "version": "0.0.1",
+  "description": "Initial code based on [Asperitas](https://github.com/d11z/asperitas).",
+  "main": "index.js",
+  "scripts": {
+    "install-all": "cd server && npm ci && cd ../client && npm ci",
+    "start": "./start.sh",
+    "test": "cd server && npm t && cd ../client && npm t"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zacanger/thingy.git"
+  },
+  "keywords": [],
+  "author": "Zac Anger <zac@zacanger.com> (https://zacanger.com)",
+  "license": "LGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/zacanger/thingy/issues"
+  },
+  "homepage": "https://github.com/zacanger/thingy#readme"
+}
