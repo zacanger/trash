@@ -11,7 +11,7 @@ const mapComments = (comments) =>
   comments.map((comment, index) => <CommentListItem key={index} {...comment} />)
 
 const sortComments = (comments) =>
-  comments.sort((a, b) => new Date(b.created) - new Date(a.created))
+  comments.sort((a, b) => +new Date(b.created) - +new Date(a.created))
 
 const CommentList = ({ comments }) =>
   comments && <List>{mapComments(sortComments(comments))}</List>

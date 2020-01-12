@@ -16,7 +16,14 @@ const StyledForm = styled.form`
     'filter: grayscale(0.5) blur(5px) opacity(0.6); pointer-events: none'};
 `
 
-const Form = ({ className, wide, ...props }) => (
+type Props = {
+  className?: string
+  wide?: boolean
+  loading?: boolean
+  onSubmit: any
+}
+
+const Form = ({ className, wide, ...props }: Props) => (
   <FormWrapper className={className} wide={wide}>
     <StyledForm {...props} />
     {props.loading && <LoadingIndicatorSpinner />}

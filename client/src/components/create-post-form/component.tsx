@@ -16,7 +16,23 @@ const postTypes = [
   },
 ]
 
-class CreatePostForm extends React.Component {
+type Post = {
+  category: string
+  id: number
+}
+
+type Props = {
+  token: string
+  history: {
+    push: (string) => void
+  }
+  post: Post
+  attemptCreatePost: (Post) => void
+  isFetching: boolean
+  handleSubmit: (any) => void
+}
+
+class CreatePostForm extends React.Component<Props> {
   componentDidUpdate(prevProps, prevState, snapshot) {
     const { token, post, history } = this.props
     if (!token) history.push('/')

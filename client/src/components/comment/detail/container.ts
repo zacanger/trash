@@ -8,6 +8,7 @@ const mapDispatchToProps = { attemptDeleteComment }
 
 const enhance = compose(withAuth, connect(null, mapDispatchToProps))
 
+// @ts-ignore
 const CommentDetailContainer = enhance(CommentDetail)
 
 export default CommentDetailContainer

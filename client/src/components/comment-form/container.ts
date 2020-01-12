@@ -11,6 +11,7 @@ const enhance = compose(
   connect(null, mapDispatchToProps)
 )
 
+// @ts-ignore
 const CommentFormContainer = enhance(CommentForm)
 
 export default CommentFormContainer

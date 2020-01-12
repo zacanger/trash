@@ -21,6 +21,7 @@ const CategoryMenu = (props) => (
       path="/a/:category"
       children={({ match, history }) => (
         <CategoryMenuDropdown
+          // @ts-ignore
           category={match ? match.params.category : 'all'}
           history={history}
         />

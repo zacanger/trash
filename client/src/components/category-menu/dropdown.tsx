@@ -14,7 +14,14 @@ const Dropdown = styled.select`
   appearance: none;
 `
 
-class CategoryMenuDropdown extends React.Component {
+type Props = {
+  category: string
+  history: {
+    push: (string) => void
+  }
+}
+
+class CategoryMenuDropdown extends React.Component<Props> {
   mapCategories = () =>
     ['all', ...categories].map((category, index) => (
       <option key={index} value={category}>

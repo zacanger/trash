@@ -18,7 +18,12 @@ const TextArea = styled(Input)`
   }
 `
 
-class CommentFormTextArea extends React.Component {
+type Props = {
+  name: string
+  onSubmit: () => void
+}
+
+class CommentFormTextArea extends React.Component<Props> {
   onKeyDown = (e) => {
     if (e.keyCode === 13) {
       e.preventDefault()

@@ -39,7 +39,12 @@ const StyledForm = styled(Form)`
   }
 `
 
-class CommentForm extends React.Component {
+type Props = {
+  attemptCreateComment: (string) => void
+  handleSubmit: (any) => void
+}
+
+class CommentForm extends React.Component<Props> {
   createComment = (comment) => this.props.attemptCreateComment(comment)
 
   onSubmit = () => this.props.handleSubmit(this.createComment)
@@ -47,7 +52,11 @@ class CommentForm extends React.Component {
   render() {
     return (
       <StyledForm onSubmit={this.onSubmit()}>
-        <CommentFormTextArea name="comment" onSubmit={this.onSubmit()} />
+        <CommentFormTextArea
+          name="comment"
+          // @ts-ignore
+          onSubmit={this.onSubmit()}
+        />
         <CommentFormSubmitButton />
       </StyledForm>
     )

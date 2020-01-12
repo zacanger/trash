@@ -11,7 +11,22 @@ const Wrapper = styled.div`
   font-size: 13px;
 `
 
-class CommentDetail extends React.Component {
+type Props = {
+  attemptDeleteComment: (number) => void
+  id: number
+  token: string
+  author: {
+    username: string
+    id: number
+  }
+  user: {
+    id: number
+    admin: boolean
+  }
+  created: Date
+}
+
+class CommentDetail extends React.Component<Props> {
   deleteComment = () => this.props.attemptDeleteComment(this.props.id)
 
   render() {
