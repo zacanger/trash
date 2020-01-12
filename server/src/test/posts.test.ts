@@ -1,7 +1,10 @@
-const request = require('supertest')
-const mongoose = require('mongoose')
-const app = require('../app')
-const { validUser, validPost } = require('./factories')
+/* eslint-env jest */
+
+import request from 'supertest'
+import mongoose from 'mongoose'
+import app from '../app'
+import { validUser, validPost } from './factories'
+
 const User = mongoose.model('User')
 const Post = mongoose.model('Post')
 

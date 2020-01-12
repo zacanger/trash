@@ -1,8 +1,8 @@
-const { body, validationResult } = require('express-validator/check')
-const Post = require('../models/post')
-const User = require('../models/user')
+import { body, validationResult } from 'express-validator/check'
+import Post from '../models/post'
+import User from '../models/user'
 
-exports.load = async (req, res, next, id) => {
+export const load = async (req, res, next, id) => {
   try {
     req.post = await Post.findById(id)
     if (!req.post) return res.status(404).json({ message: 'post not found' })
@@ -14,7 +14,7 @@ exports.load = async (req, res, next, id) => {
   next()
 }
 
-exports.show = async (req, res) => {
+export const show = async (req, res) => {
   const post = await Post.findByIdAndUpdate(
     req.post.id,
     { $inc: { views: 1 } },
@@ -23,25 +23,25 @@ exports.show = async (req, res) => {
   res.json(post)
 }
 
-exports.list = async (req, res) => {
+export const list = async (req, res) => {
   const posts = await Post.find().sort('-score')
   res.json(posts)
 }
 
-exports.listByCategory = async (req, res) => {
+export const listByCategory = async (req, res) => {
   const category = req.params.category
   const posts = await Post.find({ category }).sort('-score')
   res.json(posts)
 }
 
-exports.listByUser = async (req, res) => {
+export const listByUser = async (req, res) => {
   const username = req.params.user
   const author = await User.findOne({ username })
   const posts = await Post.find({ author: author.id }).sort('-created')
   res.json(posts)
 }
 
-exports.create = async (req, res, next) => {
+export const create = async (req, res, next) => {
   const result = validationResult(req)
   if (!result.isEmpty()) {
     const errors = result.array({ onlyFirstError: true })
@@ -114,29 +114,29 @@ const categoryIsValid = body('category')
   .isLength({ min: 1 })
   .withMessage('cannot be blank')
 
-exports.validate = [
+export const validate = [
   titleIsValid,
   urlOrTextIsValid,
   categoryIsValid,
   typeIsValid,
 ]
 
-exports.upvote = async (req, res) => {
+export const upvote = async (req, res) => {
   const post = await req.post.vote(req.user.id, 1)
   res.json(post)
 }
 
-exports.downvote = async (req, res) => {
+export const downvote = async (req, res) => {
   const post = await req.post.vote(req.user.id, -1)
   res.json(post)
 }
 
-exports.unvote = async (req, res) => {
+export const unvote = async (req, res) => {
   const post = await req.post.vote(req.user.id, 0)
   res.json(post)
 }
 
-exports.destroy = async (req, res) => {
+export const destroy = async (req, res) => {
   await req.post.remove()
   res.json({ message: 'success' })
 }

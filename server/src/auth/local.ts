@@ -1,5 +1,5 @@
-const { Strategy: LocalStrategy } = require('passport-local')
-const User = require('../models/user')
+import { Strategy as LocalStrategy } from 'passport-local'
+import User from '../models/user'
 
 const localStrategy = new LocalStrategy(async (username, password, done) => {
   try {
@@ -15,4 +15,4 @@ const localStrategy = new LocalStrategy(async (username, password, done) => {
   }
 })
 
-module.exports = localStrategy
+export default localStrategy

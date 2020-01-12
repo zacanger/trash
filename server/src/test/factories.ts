@@ -1,11 +1,13 @@
-const faker = require('faker')
+/* eslint-env jest */
 
-exports.validUser = () => ({
+import faker from 'faker'
+
+export const validUser = () => ({
   username: faker.name.firstName(),
   password: 'password',
 })
 
-exports.validPost = (author, category) => ({
+export const validPost = (author: number, category: string) => ({
   title: faker.lorem.sentence(),
   url: faker.internet.url(),
   category,

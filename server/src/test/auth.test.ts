@@ -1,9 +1,12 @@
-const request = require('supertest')
-const mongoose = require('mongoose')
-const jwt = require('jsonwebtoken')
-const app = require('../app')
-const config = require('../config')
-const { validUser } = require('./factories')
+/* eslint-env jest */
+
+import request from 'supertest'
+import mongoose from 'mongoose'
+import jwt from 'jsonwebtoken'
+import app from '../app'
+import config from '../config'
+import { validUser } from './factories'
+
 const User = mongoose.model('User')
 
 process.env.TEST_SUITE = 'auth'

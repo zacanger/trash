@@ -1,8 +1,10 @@
-const users = require('./controllers/users')
-const posts = require('./controllers/posts')
-const comments = require('./controllers/comments')
-const { jwtAuth, postAuth, commentAuth } = require('./auth')
-const router = require('express').Router()
+import users from './controllers/users'
+import posts from './controllers/posts'
+import comments from './controllers/comments'
+import { jwtAuth, postAuth, commentAuth } from './auth'
+import Router from 'express'
+
+const router = Router()
 
 router.post('/login', users.validate(), users.login)
 router.post('/register', users.validate('register'), users.register)
@@ -22,7 +24,7 @@ router.param('comment', comments.load)
 router.post('/post/:post', [jwtAuth, comments.validate], comments.create)
 router.delete('/post/:post/:comment', [jwtAuth, commentAuth], comments.destroy)
 
-module.exports = (app) => {
+export default (app) => {
   app.use('/api', router)
 
   app.get('*', (req, res) => {

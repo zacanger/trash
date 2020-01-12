@@ -1,6 +1,6 @@
-const { body, validationResult } = require('express-validator/check')
+import { body, validationResult } from 'express-validator/check'
 
-exports.load = async (req, res, next, id) => {
+export const load = async (req, res, next, id) => {
   try {
     req.comment = await req.post.comments.id(id)
     if (!req.comment) return next(new Error('comment not found'))
@@ -10,7 +10,7 @@ exports.load = async (req, res, next, id) => {
   next()
 }
 
-exports.create = async (req, res, next) => {
+export const create = async (req, res, next) => {
   const result = validationResult(req)
   if (!result.isEmpty()) {
     const errors = result.array({ onlyFirstError: true })
@@ -25,7 +25,7 @@ exports.create = async (req, res, next) => {
   }
 }
 
-exports.validate = [
+export const validate = [
   body('comment')
     .exists()
     .withMessage('is required')
@@ -37,7 +37,7 @@ exports.validate = [
     .withMessage('must be at most 2000 characters long'),
 ]
 
-exports.destroy = async (req, res, next) => {
+export const destroy = async (req, res, next) => {
   try {
     const post = await req.post.removeComment(req.params.comment)
     res.json(post)

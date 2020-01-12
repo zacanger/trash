@@ -1,5 +1,5 @@
-const { Strategy: JwtStrategy, ExtractJwt } = require('passport-jwt')
-const config = require('../config')
+import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt'
+import config from '../config'
 
 const jwtStrategy = new JwtStrategy(
   {
@@ -9,4 +9,4 @@ const jwtStrategy = new JwtStrategy(
   (token, done) => done(null, token.user)
 )
 
-module.exports = jwtStrategy
+export default jwtStrategy

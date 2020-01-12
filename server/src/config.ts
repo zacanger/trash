@@ -1,6 +1,6 @@
 const dbUri = process.env.MONGO_URI || 'mongodb://localhost/thingy'
 
-module.exports = {
+export default {
   port: process.env.PORT || 9090,
   db: {
     prod: dbUri,

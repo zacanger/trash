@@ -1,18 +1,18 @@
-const { body, validationResult } = require('express-validator/check')
-const { login, createAuthToken } = require('../auth')
-const User = require('../models/user')
+import { body, validationResult } from 'express-validator/check'
+import { login as authLogin, createAuthToken } from '../auth'
+import User from '../models/user'
 
-exports.login = (req, res, next) => {
+export const login = (req, res, next) => {
   const result = validationResult(req)
   if (!result.isEmpty()) {
     const errors = result.array({ onlyFirstError: true })
     return res.status(422).json({ errors })
   }
 
-  login(req, res, next)
+  authLogin(req, res, next)
 }
 
-exports.register = async (req, res, next) => {
+export const register = async (req, res, next) => {
   const result = validationResult(req)
   if (!result.isEmpty()) {
     const errors = result.array({ onlyFirstError: true })
@@ -29,7 +29,7 @@ exports.register = async (req, res, next) => {
   }
 }
 
-exports.validate = (method) => {
+export const validate = (method) => {
   const errors = [
     body('username')
       .exists()
