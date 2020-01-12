@@ -2,6 +2,15 @@
   "name": "thingy-client",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "build": "node scripts/build.js",
+    "now-build": "npm run build && mv build dist",
+    "start": "node scripts/start.js",
+    "test": "run-s -s test:ts test:lint test:jest",
+    "test:jest": "node scripts/test.js",
+    "test:lint": "eslint -c .eslintrc.json --report-unused-disable-directives --ext .js,.ts,.tsx config scripts src *.js",
+    "test:ts": "tsc --noEmit"
+  },
   "dependencies": {
     "@babel/core": "7.8.0",
     "@svgr/webpack": "4.1.0",
@@ -20,7 +29,6 @@
     "dotenv": "6.0.0",
     "dotenv-expand": "4.2.0",
     "eslint": "5.12.0",
-    "eslint-config-react-app": "3.0.7",
     "eslint-loader": "2.1.1",
     "eslint-plugin-import": "2.20.0",
     "eslint-plugin-jsx-a11y": "6.2.3",
@@ -60,25 +68,15 @@
     "webpack-manifest-plugin": "2.2.0",
     "workbox-webpack-plugin": "3.6.3"
   },
-  "scripts": {
-    "test:ts": "tsc --noEmit",
-    "test:lint": "eslint",
-    "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
-    "now-build": "npm run build && mv build dist",
-    "test:jest": "node scripts/test.js"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "prettier": {
-    "singleQuote": true,
-    "jsxSingleQuote": false,
-    "semi": false,
-    "trailingComma": "es5",
-    "tabWidth": 2,
-    "arrowParens": "always",
-    "printWidth": 80
+  "devDependencies": {
+    "enzyme": "3.11.0",
+    "enzyme-adapter-react-16": "1.15.2",
+    "eslint-plugin-jane": "7.0.1",
+    "eslint-plugin-prettier": "3.1.2",
+    "npm-run-all": "4.1.5",
+    "prettier": "1.19.1",
+    "redux-mock-store": "1.5.4",
+    "sortpack": "2.0.4"
   },
   "browserslist": [
     ">0.2%",
@@ -86,39 +84,11 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "devDependencies": {
-    "enzyme": "3.11.0",
-    "enzyme-adapter-react-16": "1.15.2",
-    "eslint-plugin-prettier": "3.1.2",
-    "prettier": "1.19.1",
-    "redux-mock-store": "1.5.4"
-  },
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
       "!src/**/*.d.ts"
     ],
-    "resolver": "jest-pnp-resolver",
-    "setupFiles": [
-      "react-app-polyfill/jsdom"
-    ],
-    "setupTestFrameworkScriptFile": "<rootDir>/src/setupTests.ts",
-    "testMatch": [
-      "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
-      "<rootDir>/src/**/?(*.)(spec|test).{js,jsx,ts,tsx}"
-    ],
-    "testEnvironment": "jsdom",
-    "testURL": "http://localhost",
-    "transform": {
-      "^.+\\.(js|jsx|ts|tsx)$": "<rootDir>/node_modules/babel-jest",
-      "^(?!.*\\.(js|jsx|ts|tsx|json)$)": "<rootDir>/config/jest/fileTransform.js"
-    },
-    "transformIgnorePatterns": [
-      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$"
-    ],
-    "moduleNameMapper": {
-      "^react-native$": "react-native-web"
-    },
     "moduleFileExtensions": [
       "web.js",
       "js",
@@ -130,6 +100,27 @@
       "web.jsx",
       "jsx",
       "node"
+    ],
+    "moduleNameMapper": {
+      "^react-native$": "react-native-web"
+    },
+    "resolver": "jest-pnp-resolver",
+    "setupFiles": [
+      "react-app-polyfill/jsdom"
+    ],
+    "setupTestFrameworkScriptFile": "<rootDir>/src/setupTests.ts",
+    "testEnvironment": "jsdom",
+    "testMatch": [
+      "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
+      "<rootDir>/src/**/?(*.)(spec|test).{js,jsx,ts,tsx}"
+    ],
+    "testURL": "http://localhost",
+    "transform": {
+      "^.+\\.(js|jsx|ts|tsx)$": "<rootDir>/node_modules/babel-jest",
+      "^(?!.*\\.(js|jsx|ts|tsx|json)$)": "<rootDir>/config/jest/fileTransform.js"
+    },
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$"
     ],
     "watchPlugins": [
       "/home/z/Downloads/thingy/client/node_modules/jest-watch-typeahead/filename.js",

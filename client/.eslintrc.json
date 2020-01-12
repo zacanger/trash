@@ -1,0 +1,62 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json",
+    "warnOnUnsupportedTypeScriptVersion": false
+  },
+  "extends": [
+    "plugin:jane/recommended",
+    "plugin:jane/typescript",
+    "plugin:jane/prettier-ts",
+    "plugin:jane/react",
+    "plugin:jane/jest"
+  ],
+  "plugins": [
+    "jane"
+  ],
+  "globals": {
+    "process": false,
+    "console": false,
+    "setImmediate": false
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    },
+    "node": {
+      "tryExtensions": [
+        ".js",
+        ".ts",
+        ".tsx",
+        ".json"
+      ]
+    }
+  },
+  "rules": {
+    "@typescript-eslint/no-use-before-define": "off",
+    "@typescript-eslint/no-var-requires": "off",
+    "@typescript-eslint/restrict-plus-operands": "off",
+    "node/no-unpublished-import": "off",
+    "node/no-unpublished-require": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "ignoreRestSiblings": true,
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_"
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "*.tsx",
+        "*.ts"
+      ],
+      "rules": {
+        "react/prop-types": "off"
+      }
+    }
+  ]
+}
