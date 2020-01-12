@@ -1,6 +1,6 @@
-const app = require('./app')
-const mongoose = require('mongoose')
-const config = require('./config')
+import app from './app'
+import mongoose from 'mongoose'
+import config from './config'
 
 const connect = (url) => {
   return mongoose.connect(url, config.db.options)
@@ -12,4 +12,4 @@ if (require.main === module) {
   mongoose.connection.on('error', console.log)
 }
 
-module.exports = { connect }
+export default { connect }
