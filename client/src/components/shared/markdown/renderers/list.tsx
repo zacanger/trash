@@ -12,7 +12,9 @@ const List = styled.ul`
 `
 
 const listRenderer = (props) => {
-  if (props.ordered) return <List as="ol">{props.children}</List>
+  if (props.ordered) {
+    return <List as="ol">{props.children}</List>
+  }
   return <List>{props.children}</List>
 }
 

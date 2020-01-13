@@ -11,7 +11,7 @@ class PostDetail extends React.Component {
     this.props.fetchPost(this.props.id)
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
+  componentDidUpdate(prevProps) {
     if (this.props.post !== prevProps.post && this.props.post === null) {
       this.props.history.goBack()
     }
@@ -19,8 +19,12 @@ class PostDetail extends React.Component {
 
   render() {
     const { post } = this.props
-    if (this.props.isFetching) return <LoadingIndicatorBox />
-    if (!post) return <Empty />
+    if (this.props.isFetching) {
+      return <LoadingIndicatorBox />
+    }
+    if (!post) {
+      return <Empty />
+    }
     return (
       <>
         <PostDetailPost {...post} />

@@ -12,13 +12,13 @@ const RadioGroupWrapper = styled.div`
   }
 `
 
-function handleClick(e, value, fn) {
+const handleClick = (e, value, fn) => {
   e.preventDefault()
   fn(value)
 }
 
-const renderOptions = (field) => {
-  return field.options.map((option, key) => (
+const renderOptions = (field) =>
+  field.options.map((option, key) => (
     <RadioGroupOption
       {...option}
       active={field.input.value === option.value}
@@ -26,7 +26,6 @@ const renderOptions = (field) => {
       key={key}
     />
   ))
-}
 
 const RadioGroup = ({ field }) => (
   <RadioGroupWrapper>{renderOptions(field)}</RadioGroupWrapper>

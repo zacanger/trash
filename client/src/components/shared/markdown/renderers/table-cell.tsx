@@ -19,7 +19,9 @@ const TableCell = styled.td`
 `
 
 const tableCellRenderer = (props) => {
-  if (props.isHeader) return <TableCell as="th">{props.children}</TableCell>
+  if (props.isHeader) {
+    return <TableCell as="th">{props.children}</TableCell>
+  }
   return <TableCell>{props.children}</TableCell>
 }
 

@@ -16,31 +16,23 @@
     "jane"
   ],
   "globals": {
-    "process": false,
     "console": false,
-    "setImmediate": false
+    "process": false
   },
   "settings": {
     "react": {
       "version": "detect"
-    },
-    "node": {
-      "tryExtensions": [
-        ".js",
-        ".ts",
-        ".tsx",
-        ".json"
-      ]
     }
   },
   "rules": {
-    "@typescript-eslint/no-use-before-define": "off",
-    "@typescript-eslint/no-var-requires": "off",
-    "@typescript-eslint/restrict-plus-operands": "off",
-    "node/no-unpublished-import": "off",
-    "node/no-unpublished-require": "off",
+    "@typescript-eslint/no-explicit-any": 0,
+    "@typescript-eslint/no-use-before-define": 0,
+    "@typescript-eslint/no-var-requires": 0,
+    "@typescript-eslint/restrict-plus-operands": 0,
+    "node/no-unpublished-import": 0,
+    "node/no-unpublished-require": 0,
     "@typescript-eslint/no-unused-vars": [
-      "error",
+      2,
       {
         "ignoreRestSiblings": true,
         "argsIgnorePattern": "^_",

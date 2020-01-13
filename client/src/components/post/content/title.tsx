@@ -29,7 +29,9 @@ const renderTitle = (props) => {
       return <a href={props.url}>{props.title}</a>
 
     case 'text':
-      if (props.full) return <span>{props.title}</span>
+      if (props.full) {
+        return <span>{props.title}</span>
+      }
       return <Link to={`/a/${props.category}/${props.id}`}>{props.title}</Link>
 
     default:

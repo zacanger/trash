@@ -4,7 +4,7 @@ const baseUrl =
     : `https://${window.location.hostname}/api`
 
 const methods = {
-  get: async function(endpoint, token = null) {
+  get: async (endpoint, token = null) => {
     const options = {
       method: 'GET',
       headers: {
@@ -15,12 +15,14 @@ const methods = {
     const response = await fetch(`${baseUrl}/${endpoint}`, options)
     const json = await response.json()
 
-    if (!response.ok) throw Error(json.message)
+    if (!response.ok) {
+      throw Error(json.message)
+    }
 
     return json
   },
 
-  post: async function(endpoint, body, token = null) {
+  post: async (endpoint, body, token = null) => {
     const options = {
       method: 'POST',
       headers: {
@@ -46,7 +48,7 @@ const methods = {
     return json
   },
 
-  delete: async function(endpoint, token = null) {
+  delete: async (endpoint, token = null) => {
     const options = {
       method: 'DELETE',
       headers: {
@@ -59,7 +61,9 @@ const methods = {
     const json = await response.json()
 
     if (!response.ok) {
-      if (response.status === 401) throw Error('unauthorized')
+      if (response.status === 401) {
+        throw Error('unauthorized')
+      }
       throw Error(json.message)
     }
 
@@ -67,45 +71,34 @@ const methods = {
   },
 }
 
-export async function login(username, password) {
+export const login = async (username, password) => {
   const json = await methods.post('login', { username, password })
   return json.token
 }
 
-export async function signup(username, password) {
+export const signup = async (username, password) => {
   const json = await methods.post('register', { username, password })
   return json.token
 }
 
-export async function getPosts(category) {
-  return await methods.get(`posts/${category}`)
-}
+export const getPosts = (category) => methods.get(`posts/${category}`)
 
-export async function getProfile(username) {
-  return await methods.get(`user/${username}`)
-}
+export const getProfile = (username) => methods.get(`user/${username}`)
 
-export async function getPost(id) {
-  return await methods.get(`post/${id}`)
-}
+export const getPost = (id) => methods.get(`post/${id}`))
 
-export async function createPost(body, token) {
-  return await methods.post('posts', body, token)
-}
+export const createPost = (body, token) =>
+  await methods.post('posts', body, token)
 
-export async function deletePost(id, token) {
-  return await methods.delete(`post/${id}`, token)
-}
+export const deletePost = (id, token) => methods.delete(`post/${id}`, token)
 
-export async function createComment(post, comment, token) {
-  return await methods.post(`post/${post}`, comment, token)
-}
+export const createComment = (post, comment, token) =>
+  methods.post(`post/${post}`, comment, token)
 
-export async function deleteComment(post, comment, token) {
-  return await methods.delete(`post/${post}/${comment}`, token)
-}
+export const deleteComment = (post, comment, token) =>
+  methods.delete(`post/${post}/${comment}`, token)
 
-export async function castVote(id, vote, token) {
+export const castVote = async (id, vote, token) => {
   const voteTypes = {
     '1': 'upvote',
     '0': 'unvote',

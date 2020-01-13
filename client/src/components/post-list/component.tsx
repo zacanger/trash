@@ -20,7 +20,9 @@ const List = styled.ul`
 class PostList extends React.Component {
   loadPosts = () => {
     const { username, category } = this.props
-    if (username) return this.props.fetchProfile(username)
+    if (username) {
+      return this.props.fetchProfile(username)
+    }
     return this.props.fetchPosts(category)
   }
 
@@ -32,8 +34,9 @@ class PostList extends React.Component {
     if (
       this.props.category !== prevProps.category ||
       this.props.username !== prevProps.username
-    )
+    ) {
       this.loadPosts()
+    }
   }
 
   mapPosts = () =>
@@ -42,8 +45,12 @@ class PostList extends React.Component {
     ))
 
   render() {
-    if (this.props.isFetching) return <LoadingIndicatorBox />
-    if (!this.props.posts || this.props.posts.length === 0) return <Empty />
+    if (this.props.isFetching) {
+      return <LoadingIndicatorBox />
+    }
+    if (!this.props.posts || this.props.posts.length === 0) {
+      return <Empty />
+    }
     return <List>{this.mapPosts()}</List>
   }
 }

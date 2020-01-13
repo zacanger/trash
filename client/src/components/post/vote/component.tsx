@@ -34,7 +34,7 @@ class PostVote extends React.Component {
     return existingVote ? existingVote.vote : 0
   }
 
-  componentWillUpdate(nextProps, nextState, nextContext) {
+  componentWillUpdate(nextProps) {
     if (this.props.score !== nextProps.score) {
       const didVote = PostVote.existingVote(nextProps)
       this.setState({

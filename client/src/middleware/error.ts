@@ -36,7 +36,9 @@ export default (store) => (next) => (action) => {
     case LOGIN_SUCCESS:
     case SIGNUP_SUCCESS:
     case LOGOUT:
-      if (store.getState().error) store.dispatch(hideErrorClearTimeout())
+      if (store.getState().error) {
+        store.dispatch(hideErrorClearTimeout())
+      }
       break
 
     case FETCH_POSTS_ERROR:

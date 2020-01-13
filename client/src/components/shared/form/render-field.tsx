@@ -66,8 +66,6 @@ const VariableField = (field) => {
   }
 }
 
-const renderField = (field) => {
-  return <VariableField {...field} />
-}
+const renderField = (field) => <VariableField {...field} />
 
 export default renderField

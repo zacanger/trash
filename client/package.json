@@ -8,7 +8,7 @@
     "start": "node scripts/start.js",
     "test": "run-s -s test:ts test:lint test:jest",
     "test:jest": "node scripts/test.js",
-    "test:lint": "eslint -c .eslintrc.json --report-unused-disable-directives --ext .js,.ts,.tsx config scripts src *.js",
+    "test:lint": "eslint -c .eslintrc.json --report-unused-disable-directives --ext .js,.ts,.tsx config scripts src",
     "test:ts": "tsc --noEmit"
   },
   "dependencies": {
@@ -108,7 +108,7 @@
     "setupFiles": [
       "react-app-polyfill/jsdom"
     ],
-    "setupTestFrameworkScriptFile": "<rootDir>/src/setupTests.ts",
+    "setupTestFrameworkScriptFile": "<rootDir>/src/setup-tests.ts",
     "testEnvironment": "jsdom",
     "testMatch": [
       "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
