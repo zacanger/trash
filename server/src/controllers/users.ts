@@ -29,7 +29,7 @@ export const register = async (req, res, next) => {
   }
 }
 
-export const validate = (method) => {
+export const validate = (method?: string) => {
   const errors = [
     body('username')
       .exists()
@@ -61,11 +61,13 @@ export const validate = (method) => {
       .withMessage('must be at most 72 characters long'),
   ]
 
-  if (method === 'register') {
+  if (method != null && method === 'register') {
     errors.push(
-      body('username').custom(async (username) => {
+      body('username').custom(async (username: string) => {
         const exists = await User.countDocuments({ username })
-        if (exists) throw new Error('already exists')
+        if (exists) {
+          throw new Error('already exists')
+        }
       })
     )
   }

@@ -15,4 +15,11 @@ cd server && npm test
 cd client && npm test
 ```
 
+## TODO
+
+* Switch to Next.js
+* Finish TypeScript
+* Switch to Koa
+* Switch to Postgres?
+
 [License (MIT)](./LICENSE.md)

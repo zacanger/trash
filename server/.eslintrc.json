@@ -15,6 +15,7 @@
     "warnOnUnsupportedTypeScriptVersion": false
   },
   "rules": {
-    "node/no-missing-import": 0
+    "node/no-missing-import": 0,
+    "max-nested-callbacks": [2, 10]
   }
 }

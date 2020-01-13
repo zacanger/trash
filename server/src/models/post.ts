@@ -9,6 +9,8 @@ const commentSchema = new Schema({
 })
 
 commentSchema.set('toJSON', { getters: true })
+
+// @ts-ignore
 commentSchema.options.toJSON.transform = (doc, ret) => {
   const obj = { ...ret }
   delete obj._id
@@ -30,6 +32,8 @@ const postSchema = new Schema({
 })
 
 postSchema.set('toJSON', { getters: true, virtuals: true })
+
+// @ts-ignore
 postSchema.options.toJSON.transform = (doc, ret) => {
   const obj = { ...ret }
   delete obj._id
@@ -38,11 +42,14 @@ postSchema.options.toJSON.transform = (doc, ret) => {
 }
 
 postSchema.virtual('upvotePercentage').get(function() {
+  // @ts-ignore
   if (this.votes.length === 0) {
     return 0
   }
 
+  // @ts-ignore
   const upvotes = this.votes.filter((vote) => vote.vote === 1)
+  // @ts-ignore
   return Math.floor((upvotes.length / this.votes.length) * 100)
 })
 
@@ -85,16 +92,20 @@ postSchema.methods.removeComment = function(id) {
 }
 
 postSchema.pre(/^find/, function() {
+  // @ts-ignore
   this.populate('author').populate('comments.author')
 })
 
 postSchema.pre('save', function(next) {
+  // @ts-ignore
   this.wasNew = this.isNew
   next()
 })
 
 postSchema.post('save', function(doc, next) {
+  // @ts-ignore
   if (this.wasNew) {
+    // @ts-ignore
     this.vote(this.author._id, 1)
   }
 

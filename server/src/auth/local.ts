@@ -9,6 +9,7 @@ const localStrategy = new LocalStrategy(
         return done(null, false, { message: 'user not found' })
       }
 
+      // @ts-ignore
       const valid = await user.isValidPassword(password)
       if (!valid) {
         return done(null, false, { message: 'invalid password' })

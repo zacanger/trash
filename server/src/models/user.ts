@@ -11,6 +11,8 @@ const userSchema = new mongoose.Schema(
 )
 
 userSchema.set('toJSON', { getters: true })
+
+// @ts-ignore
 userSchema.options.toJSON.transform = (doc, ret) => {
   const obj = { ...ret }
   delete obj._id
@@ -20,11 +22,13 @@ userSchema.options.toJSON.transform = (doc, ret) => {
 }
 
 userSchema.pre('save', async function(next) {
+  // @ts-ignore
   this.password = await bcrypt.hash(this.password, 10)
   next()
 })
 
 userSchema.methods.isValidPassword = async function(password) {
+  // @ts-ignore
   return await bcrypt.compare(password, this.password)
 }
 

@@ -17,6 +17,7 @@ export const login = (req, res, next) => {
       return res.status(401).json(info)
     }
 
+    // @ts-ignore
     const token = this.createAuthToken(user)
     res.json({ token })
   })(req, res)

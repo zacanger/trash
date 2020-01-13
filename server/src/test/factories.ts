@@ -1,5 +1,6 @@
 /* eslint-env jest */
 
+// eslint-disable-next-line node/no-unpublished-import
 import faker from 'faker'
 
 export const validUser = () => ({

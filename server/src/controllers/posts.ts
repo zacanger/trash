@@ -5,10 +5,13 @@ import User from '../models/user'
 export const load = async (req, res, next, id) => {
   try {
     req.post = await Post.findById(id)
-    if (!req.post) return res.status(404).json({ message: 'post not found' })
+    if (!req.post) {
+      return res.status(404).json({ message: 'post not found' })
+    }
   } catch (err) {
-    if (err.name === 'CastError')
+    if (err.name === 'CastError') {
       return res.status(400).json({ message: 'invalid post id' })
+    }
     return next(err)
   }
   next()
@@ -37,8 +40,10 @@ export const listByCategory = async (req, res) => {
 export const listByUser = async (req, res) => {
   const username = req.params.user
   const author = await User.findOne({ username })
-  const posts = await Post.find({ author: author.id }).sort('-created')
-  res.json(posts)
+  if (author != null) {
+    const posts = await Post.find({ author: author.id }).sort('-created')
+    res.json(posts)
+  }
 }
 
 export const create = async (req, res, next) => {

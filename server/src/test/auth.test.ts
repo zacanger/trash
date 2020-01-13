@@ -1,5 +1,6 @@
 /* eslint-env jest */
 
+// eslint-disable-next-line node/no-unpublished-import
 import request from 'supertest'
 import mongoose from 'mongoose'
 import jwt from 'jsonwebtoken'
@@ -10,6 +11,12 @@ import { validUser } from './factories'
 const User = mongoose.model('User')
 
 process.env.TEST_SUITE = 'auth'
+
+type UserPayload = {
+  user: {
+    username: string
+  }
+}
 
 describe('auth endpoints', () => {
   let user
@@ -70,7 +77,7 @@ describe('auth endpoints', () => {
         .expect('Content-Type', /json/)
         .expect((res) => {
           const { token } = res.body
-          const payload = jwt.verify(token, config.jwt.secret)
+          const payload = jwt.verify(token, config.jwt.secret) as UserPayload
           expect(payload.user.username).toEqual(user.username)
         })
         .expect(200, done)
@@ -185,7 +192,7 @@ describe('auth endpoints', () => {
         .expect('Content-Type', /json/)
         .expect((res) => {
           const { token } = res.body
-          const payload = jwt.verify(token, config.jwt.secret)
+          const payload = jwt.verify(token, config.jwt.secret) as UserPayload
           expect(payload.user.username).toEqual(username.nonExisting)
         })
         .expect(201, done)
