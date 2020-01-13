@@ -2,11 +2,11 @@
   "name": "thingy-server",
   "version": "0.1.0",
   "private": true,
-  "main": "lib/index.js",
+  "main": "index.js",
   "scripts": {
     "build": "tsc",
     "dev": "nodemon",
-    "start": "node lib",
+    "start": "node index.js",
     "test": "run-s -s test:ts test:lint test:jest",
     "test:jest": "jest",
     "test:lint": "eslint -c .eslintrc.json src/**/*.ts",
@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "bcryptjs": "2.4.3",
+    "boring-cluster": "6.0.3",
     "cors": "2.8.5",
     "express": "4.17.1",
     "express-validator": "5.3.0",

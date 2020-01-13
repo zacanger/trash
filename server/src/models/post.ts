@@ -38,7 +38,10 @@ postSchema.options.toJSON.transform = (doc, ret) => {
 }
 
 postSchema.virtual('upvotePercentage').get(function() {
-  if (this.votes.length === 0) return 0
+  if (this.votes.length === 0) {
+    return 0
+  }
+
   const upvotes = this.votes.filter((vote) => vote.vote === 1)
   return Math.floor((upvotes.length / this.votes.length) * 100)
 })
@@ -73,7 +76,10 @@ postSchema.methods.addComment = function(author, body) {
 
 postSchema.methods.removeComment = function(id) {
   const comment = this.comments.id(id)
-  if (!comment) throw new Error('Comment not found')
+  if (!comment) {
+    throw new Error('Comment not found')
+  }
+
   comment.remove()
   return this.save()
 }
@@ -91,6 +97,7 @@ postSchema.post('save', function(doc, next) {
   if (this.wasNew) {
     this.vote(this.author._id, 1)
   }
+
   doc
     .populate('author')
     .populate('comments.author')
