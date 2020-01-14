@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "build": "node scripts/build.js",
-    "now-build": "npm run build && mv build dist",
     "start": "node scripts/start.js",
     "test": "run-s -s test:ts test:lint test:jest",
     "test:jest": "node scripts/test.js",
