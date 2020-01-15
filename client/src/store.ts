@@ -9,6 +9,7 @@ import authMiddleware from './middleware/auth'
 import errorMiddleware from './middleware/error'
 import themeMiddleware from './middleware/theme'
 
+// @ts-ignore
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
 export default createStore(
