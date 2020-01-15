@@ -88,17 +88,19 @@ yellow() {
 }
 
 # debug "Trying to find config file"
-debug() { [ "$DEBUG" ] && echo ">>> $*"; }
+debug() {
+  [ "$DEBUG" ] && echo ">>> $*"
+}
 
 # if we need a password
-getpassword() {
+get_password() {
   until [ "$password" = "$rpassword" -a -n "$password" ]; do
     read -s -p "Enter a password for user '$1' : " password; echo >&2
     read -s -p "Reenter password for user '$1' : " rpassword; echo >&2
   done
   echo "$password"
 }
-pw=`getpassword "${1:-blah}"`
+# pw=`get_password "${1:-blah}"`
 # echo "password is '$pw'"
 
 help() {
@@ -114,22 +116,25 @@ Available Commands
 EOF
 }
 
-join() { local IFS="$1"; shift; echo "$*"; }
+join() {
+  local IFS="$1"
+  shift
+  echo "$*"
+}
 
 read_params() {
- while test $# -gt 0
-  do
-    case "$1" in
-        --opt1) echo "option 1"
-            ;;
-        --opt2) echo "option 2"
-            ;;
-        --*) echo "bad option $1"
-            ;;
-        *) echo "argument $1"
-            ;;
-    esac
-    shift
+ while test $# -gt 0; do
+  case "$1" in
+    --opt1) echo "option 1"
+      ;;
+    --opt2) echo "option 2"
+      ;;
+    --*) echo "bad option $1"
+      ;;
+    *) echo "argument $1"
+      ;;
+  esac
+  shift
  done
 }
 
@@ -143,32 +148,43 @@ read_params $@
 main
 
 # check os
-platform='unknown'
+get_platform() {
+  platform='unknown'
+  if [[ "$OSTYPE" == "linux-gnu" ]]; then
+    platform='linux'
+  elif [[ "$OSTYPE" == "darwin"* ]]; then
+    platform='mac'
+  elif [[ "$OSTYPE" == "cygwin" ]]; then
+    platform='cygwin'
+  elif [[ "$OSTYPE" == "msys" ]]; then
+    platform='mingw'
+  elif [[ "$OSTYPE" == "win32" ]]; then
+    platform='win32'
+  elif [[ "$OSTYPE" == "freebsd"* ]]; then
+    platform='bsd'
+  elif [[ "$OSTYPE" == "openbsd"* ]]; then
+    platform='bsd'
+  elif [[ "$OSTYPE" == "netbsd"* ]]; then
+    platform='bsd'
+  else
+    # Hopefully we didn't end up here...
+    if [ "$(uname)" == "Darwin" ]; then
+      platform='mac'
+    elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+      platform='linux'
+    elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW32_NT" ]; then
+      platform='windows'
+    elif [ "$(uname -s)" == "NetBSD" ]; then
+      platform='bsd'
+    elif [ "$(uname -s)" == "OpenBSD" ]; then
+      platform='bsd'
+    elif [ "$(uname -s)" == "FreeBSD" ]; then
+      platform='bsd'
+    fi
+  fi
 
-if [ "$(uname)" == "Darwin" ]; then
-  platform='mac'
-elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-  platform='linux'
-elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW32_NT" ]; then
-  platform='windows'
-fi
-
-# or
-if [[ "$OSTYPE" == "linux-gnu" ]]; then
-  echo 'linux'
-elif [[ "$OSTYPE" == "darwin"* ]]; then
-  echo 'mac'
-elif [[ "$OSTYPE" == "cygwin" ]]; then
-  echo 'cygwin'
-elif [[ "$OSTYPE" == "msys" ]]; then
-  echo 'mingw'
-elif [[ "$OSTYPE" == "win32" ]]; then
-  echo 'win32'
-elif [[ "$OSTYPE" == "freebsd"* ]]; then
-  echo 'bsd'
-else
-  echo 'wtf'
-fi
+  echo $platform
+}
 
 # Default to No if the user presses enter without giving an answer:
 # if ask "Do you want to do such-and-such?" N; then echo "Yes"; else echo "No"; fi
@@ -180,11 +196,9 @@ fi
 # ask "Do you want to do such-and-such?" && said_yes
 # ask "Do you want to do such-and-such?" || said_no
 ask() {
-  # https://djm.me/ask
   local prompt default reply
 
   while true; do
-
     if [ "${2:-}" = "Y" ]; then
       prompt="Y/n"
       default=Y
@@ -219,24 +233,24 @@ ask() {
 
 # 'types'
 
-isdir() {
+is_dir() {
   [[ -d $1 ]]
 }
 
-isempty() {
+is_empty() {
   [[ -z $1 ]]
 }
 
-isfile() {
+is_file() {
   [[ -f $1 ]]
 }
 
-isnotempty() {
+is_not_empty() {
   [[ -n $1 ]]
 }
 
-# if itexists foo ; then (do things)
-itexists() {
+# if it_exists foo ; then (do things)
+it_exists() {
   command -v "$1" &> /dev/null ;
 }
 
