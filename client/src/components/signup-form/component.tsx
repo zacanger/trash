@@ -10,7 +10,7 @@ class SignupForm extends React.Component {
     this.redirectIfLoggedIn()
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
+  componentDidUpdate() {
     this.redirectIfLoggedIn()
   }
 

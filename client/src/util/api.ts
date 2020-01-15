@@ -85,10 +85,9 @@ export const getPosts = (category) => methods.get(`posts/${category}`)
 
 export const getProfile = (username) => methods.get(`user/${username}`)
 
-export const getPost = (id) => methods.get(`post/${id}`))
+export const getPost = (id) => methods.get(`post/${id}`)
 
-export const createPost = (body, token) =>
-  await methods.post('posts', body, token)
+export const createPost = (body, token) => methods.post('posts', body, token)
 
 export const deletePost = (id, token) => methods.delete(`post/${id}`, token)
 

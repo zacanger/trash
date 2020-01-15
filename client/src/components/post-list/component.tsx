@@ -30,7 +30,7 @@ class PostList extends React.Component {
     this.loadPosts()
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
+  componentDidUpdate(prevProps) {
     if (
       this.props.category !== prevProps.category ||
       this.props.username !== prevProps.username

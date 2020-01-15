@@ -33,7 +33,7 @@ type Props = {
 }
 
 class CreatePostForm extends React.Component<Props> {
-  componentDidUpdate(prevProps, prevState, snapshot) {
+  componentDidUpdate() {
     const { token, post, history } = this.props
     if (!token) {
       history.push('/')

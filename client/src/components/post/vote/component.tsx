@@ -20,6 +20,7 @@ class PostVote extends React.Component {
   constructor(props) {
     super(props)
     const didVote = PostVote.existingVote(props)
+
     this.state = {
       score: props.score,
       didVote,
@@ -34,7 +35,7 @@ class PostVote extends React.Component {
     return existingVote ? existingVote.vote : 0
   }
 
-  componentWillUpdate(nextProps) {
+  UNSAFE_componentWillUpdate(nextProps) {
     if (this.props.score !== nextProps.score) {
       const didVote = PostVote.existingVote(nextProps)
       this.setState({
@@ -56,12 +57,12 @@ class PostVote extends React.Component {
     const { attemptVote, id, token } = this.props
     if (token) {
       attemptVote(id, vote)
-      this.setState({
-        score: this.state.score + vote - this.state.didVote,
+      this.setState((prevState) => ({
+        score: prevState.score + vote - prevState.didVote,
         didVote: vote,
         didUpvote: vote === 1,
         didDownvote: vote === -1,
-      })
+      }))
     }
   }
 
