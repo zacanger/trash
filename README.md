@@ -17,8 +17,7 @@ cd client && npm test
 
 ## TODO
 
-* Switch to Next.js
-* Finish TypeScript
+* Switch to SSR (Next.js?)
 * Switch to Koa
 * Switch to Postgres?
 
