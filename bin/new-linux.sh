@@ -9,6 +9,8 @@ echo 'It may be safter to run this block-by-block.'
 z_path=$HOME/Dropbox/z
 list_path=$z_path/misc
 
+$z_path/bin/dropbox-fix.sh
+
 # Take ownership of this directory
 # for packages and own executables.
 sudo chown -R $USER /usr/local
