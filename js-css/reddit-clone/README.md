@@ -15,10 +15,4 @@ cd server && npm test
 cd client && npm test
 ```
 
-## TODO
-
-* Switch to SSR (Next.js?)
-* Switch to Koa
-* Switch to Postgres?
-
 [License (MIT)](./LICENSE.md)
