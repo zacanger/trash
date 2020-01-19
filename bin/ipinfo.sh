@@ -1,3 +1,3 @@
 #!/bin/sh
 
-curl -sf ipinfo.io | jq .
+curl -sf https://ipinfo.io | jq .

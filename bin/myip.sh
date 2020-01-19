@@ -1,3 +1,3 @@
 #!/bin/sh
 
-curl -sf ipinfo.io/ip
+curl -sf https://ipinfo.io/ip
