@@ -3,7 +3,7 @@
   "description": "Misc scripts for Twitter things",
   "version": "0.0.1",
   "author": "Zac Anger",
-  "license": "MIT",
+  "license": "LGPL-3.0",
   "scripts": {
     "test": "sortpack && standard"
   },
