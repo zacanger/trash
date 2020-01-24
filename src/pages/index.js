@@ -5,5 +5,5 @@ const listPage = require('./list')
 module.exports = {
   errorPage,
   homePage,
-  listPage
+  listPage,
 }

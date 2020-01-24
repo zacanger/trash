@@ -1,1 +1,1 @@
-require('./src')
+require('boring-cluster')('src')

@@ -1,7 +1,5 @@
 # imghost
 
-super simple image hosting service, in node
+Super simple image hosting service, in Node
 
-loosly based on [shitty.download](https://github.com/Lemmmy/shittydl)
-
-running at <http://img.zacanger.com/>
+[License](./LICENSE.md)

@@ -18,16 +18,24 @@ app.use(express.static(pub))
 app.use(express.static(imagePath))
 bb.extend(app, { upload: true })
 
-app.get('/', (req, res) => { res.send(homePage()) })
+app.get('/', (req, res) => {
+  res.send(homePage())
+})
 
 app.post('/upload', (req, res) => {
-  if (!req.files || !req.files.file) return handleError(res, 'No file specified.')
+  if (!req.files || !req.files.file) {
+    return handleError(res, 'No file specified.')
+  }
 
   const file = req.files.file
-  const ext = req.query.ext ? sanitizeFilename(req.query.ext) : extname(file.filename)
+  const ext = req.query.ext
+    ? sanitizeFilename(req.query.ext)
+    : extname(file.filename)
   const getName = (n) => `${imagePath}/${n}${ext}`
 
-  if (ext.toLowerCase() === '.php') return handleError(res, 'lol go away')
+  if (ext.toLowerCase() === '.php') {
+    return handleError(res, 'lol go away')
+  }
 
   let name = getSlug(file.file)
   const fn = file.filename.replace(ext, '')
@@ -59,29 +67,45 @@ app.post('/upload', (req, res) => {
 
 app.get('/list/:page?', (req, res) => {
   glob('*.*', { cwd: imagePath }, (err, files) => {
-    if (err) throw err
-    let page = typeof req.params.page !== 'undefined' ? parseInt(req.params.page, 10) : 0
+    if (err) {
+      throw err
+    }
+    let page =
+      typeof req.params.page !== 'undefined' ? parseInt(req.params.page, 10) : 0
     page = Math.min(Math.max(0, page), files.length)
 
     const paginationInfo = paginator.build(files.length, page)
 
-    const fullFiles = _.reverse(_.sortBy(_.map(files, (f) => {
-      if (statCache[f]) return statCache[f]
-      const stat = statSync(`${imagePath}/${f}`)
-      const o = {
-        name: f,
-        size: stat.size,
-        mtime: stat.mtime
-      }
-      statCache[f] = o
-      return o
-    }), 'mtime'))
+    const fullFiles = _.reverse(
+      _.sortBy(
+        _.map(files, (f) => {
+          if (statCache[f]) {
+            return statCache[f]
+          }
+          const stat = statSync(`${imagePath}/${f}`)
+          const o = {
+            name: f,
+            size: stat.size,
+            mtime: stat.mtime,
+          }
+          statCache[f] = o
+          return o
+        }),
+        'mtime'
+      )
+    )
 
-    res.send(listPage({
-      paginationInfo,
-      pages: _.range(paginationInfo.first_page, paginationInfo.last_page),
-      files: _.slice(fullFiles, paginationInfo.first_result, paginationInfo.last_result + 1)
-    }))
+    res.send(
+      listPage({
+        paginationInfo,
+        pages: _.range(paginationInfo.first_page, paginationInfo.last_page),
+        files: _.slice(
+          fullFiles,
+          paginationInfo.first_result,
+          paginationInfo.last_result + 1
+        ),
+      })
+    )
   })
 })
 

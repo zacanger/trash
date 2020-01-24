@@ -16,17 +16,23 @@ module.exports = ({ paginationInfo, pages, files }) =>
             <th>size</th>
             <th>modified</th>
           </tr>
-          ${files.map((file) => `
+          ${files
+            .map(
+              (file) => `
             <tr>
               <td>
                 <a href="/${file.name}" target="_blank">
-                  <img style="max-height: 150px; max-width: 150px;" src="/${file.name}">
+                  <img style="max-height: 150px; max-width: 150px;" src="/${
+                    file.name
+                  }">
                 </a>
               </td>
               <td>${filesize(file.size)}</td>
               <td>${dateformat(file.mtime)}</td>
             </tr>
-          `).join('')}
+          `
+            )
+            .join('')}
           </table>
         </div>
       </div>
