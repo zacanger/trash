@@ -11,6 +11,7 @@
   "license": "LGPL-3.0",
   "main": "index.js",
   "scripts": {
+    "build-docker": "./scripts/build.sh",
     "dev": "nodemon index.js",
     "start": "forever start -a -l f.log -e e.log -o o.log index.js",
     "test": "npm run test:lint",

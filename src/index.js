@@ -6,6 +6,7 @@ const express = require('express')
 const bb = require('express-busboy')
 const sanitizeFilename = require('sanitize-filename')
 const Paginator = require('paginator')
+const pkg = require('../package.json')
 const { getSlug, handleError, listenLog, moveFile } = require('./util')
 const { homePage, listPage } = require('./pages')
 const { imagePath } = require('./config')
@@ -20,6 +21,10 @@ bb.extend(app, { upload: true })
 
 app.get('/', (req, res) => {
   res.send(homePage())
+})
+
+app.get('/diag', (req, res) => {
+  res.json({ name: pkg.name, version: pkg.version })
 })
 
 app.post('/upload', (req, res) => {

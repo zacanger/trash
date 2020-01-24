@@ -36,7 +36,7 @@ body {
   font-size: 1.5em;
   line-height: 1.6;
   font-weight: 400;
-  font-family: "Merriweather", "Cardo", serif;
+  font-family: sans-serif;
   color: #303330;
   background: #fff;
   padding: 1rem;
@@ -140,10 +140,9 @@ input[type="submit"][disabled], input[type="reset"][disabled], button[disabled],
   color: #b3b3b3;
   cursor: default;
 }
-input[type="text"], input[type="password"], input[type="email"], input[type="url"], input[type="phone"], input[type="tel"], input[type="number"], input[type="datetime"], input[type="date"], input[type="month"], input[type="color"], input[type="time"], input[type="search"], input[type="range"], input[type="file"], input[type="datetime-local"], select, textarea {
-  border: 1px solid #ccc;
-  margin-bottom: 1.2rem;
-  padding: 0.4rem 0.6rem;
+#submit-row {
+  display: block;
+  margin-top: 12px;
 }
 button, [type=submit], input[type="submit"], input[type="button"], input[type="reset"] {
   -moz-appearance: none;
@@ -216,5 +215,5 @@ footer {
   max-width: 464px;
 }
 small {
-  font-size: .8rem;
+  font-size: .9rem;
 }
