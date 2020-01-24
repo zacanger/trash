@@ -17,12 +17,12 @@
     "test": "npm run test:lint",
     "test:lint": "eslint -c .eslintrc.json src"
   },
-  "homepage": "http://img.zacanger.com",
+  "homepage": "https://github.com/zacanger/imghost",
   "repository": {
     "type": "git",
-    "url": "https://github.com/zacanger/dotcom"
+    "url": "https://github.com/zacanger/imghost"
   },
-  "bugs": "https://github.com/zacanger/dotcom/issues",
+  "bugs": "https://github.com/zacanger/imghost",
   "keywords": [
     "imghost"
   ],
