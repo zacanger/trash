@@ -9,6 +9,8 @@ cp $ND/.gitignore .gitignore
 cp $ND/.gitattributes .gitattributes
 cp $ND/LICENSE.md LICENSE.md
 cp $ND/.npmrc .npmrc
+cp $ND/.eslintrc.json .eslintrc.json
+cp $ND/.prettierrc.js .prettierrc.js
 cp -R $ND/.github .github
 
 WITHOUTG="{
@@ -25,7 +27,7 @@ WITHOUTG="{
   \"scripts\": {
     \"test\": \"npm run test:lint && npm run test:tape\",
     \"test:tape\": \"tape test.js\",
-    \"test:lint\": \"standard\",
+    \"test:lint\": \"eslint\",
     \"preversion\": \"sortpack && npm t\"
   },
   \"engines\": {
@@ -63,7 +65,7 @@ WITHG="{
   \"scripts\": {
     \"test\": \"npm run test:lint && npm run test:tape\",
     \"test:tape\": \"tape test.js\",
-    \"test:lint\": \"standard\",
+    \"test:lint\": \"eslint\",
     \"preversion\": \"sortpack && npm t\"
   },
   \"engines\": {
@@ -109,7 +111,7 @@ else
 fi
 
 git init
-npm i -D standard sortpack tape
+npm i -D eslint eslint-plugin-zacanger prettier sortpack tape
 npx sortpack
 git add -A
 git commit -m 'Init'
