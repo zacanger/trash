@@ -48,6 +48,19 @@ WITHOUTG="{
   \"funding\": {
     \"type\": \"ko-fi\",
     \"url\": \"https://ko-fi.com/zacanger\"
+  },
+  \"lint-staged\": {
+    \"*.js\": [
+      \"prettier --write\"
+    ],
+    \"package.json\": [
+      \"sortpack\"
+    ]
+  },
+  \"husky\": {
+    \"hooks\": {
+      \"pre-commit\": \"lint-staged\"
+    }
   }
 }"
 
@@ -87,6 +100,19 @@ WITHG="{
   \"funding\": {
     \"type\": \"ko-fi\",
     \"url\": \"https://ko-fi.com/zacanger\"
+  },
+  \"lint-staged\": {
+    \"*.js\": [
+      \"prettier --write\"
+    ],
+    \"package.json\": [
+      \"sortpack\"
+    ]
+  },
+  \"husky\": {
+    \"hooks\": {
+      \"pre-commit\": \"lint-staged\"
+    }
   }
 }"
 
@@ -111,7 +137,7 @@ else
 fi
 
 git init
-npm i -D eslint eslint-plugin-zacanger prettier sortpack tape
+npm i -D eslint eslint-plugin-zacanger prettier sortpack tape husky lint-staged
 npx sortpack
 git add -A
 git commit -m 'Init'
