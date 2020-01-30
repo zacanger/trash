@@ -204,6 +204,9 @@ cnoreabbrev Bd bd
 inoreabbr lmbd λ
 inoreabbr frll ∀
 inoreabbr midfing 🖕
+inoreabbr (tm) ™
+inoreabbr (c) ©
+inoreabbr (r) ®
 
 " wild
 set wildmenu
