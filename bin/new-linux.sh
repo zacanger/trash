@@ -67,7 +67,6 @@ home_links=(
   .inputrc
   .profile
   .tmux.conf
-  .vimrc
   .xinitrc
   bin
 )
