@@ -78,7 +78,7 @@ done
 
 # Docker: don't link, because auth.
 mkdir -p $HOME/.docker
-cp $z_path/.docker/config.json $HOME/docker/
+cp $z_path/.docker/config.json $HOME/.docker/
 
 # GPG, don't link because keys.
 mkdir -p $HOME/.gnupg
