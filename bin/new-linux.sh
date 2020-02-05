@@ -151,3 +151,4 @@ run_keybase
 apt autoremove
 apt purge
 apt clean
+update-alternatives --all
