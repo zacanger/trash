@@ -28,7 +28,7 @@ WITHOUTG="{
     \"test\": \"npm run test:lint && npm run test:tape\",
     \"test:tape\": \"tape test.js\",
     \"test:lint\": \"eslint\",
-    \"preversion\": \"sortpack && npm t\"
+    \"preversion\": \"npm t\"
   },
   \"engines\": {
     \"node\": \">=10.0.0\"
@@ -79,7 +79,7 @@ WITHG="{
     \"test\": \"npm run test:lint && npm run test:tape\",
     \"test:tape\": \"tape test.js\",
     \"test:lint\": \"eslint\",
-    \"preversion\": \"sortpack && npm t\"
+    \"preversion\": \"npm t\"
   },
   \"engines\": {
     \"node\": \">=10.0.0\"
