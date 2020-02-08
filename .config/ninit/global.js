@@ -4,4 +4,6 @@ const main = () => {
 
 }
 
-if (!module.parent) main()
+if (!module.parent) {
+  main()
+}
