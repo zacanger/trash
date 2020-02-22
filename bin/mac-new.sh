@@ -167,6 +167,7 @@ pkill -9 Dock
 
 # Install brew packages
 # Special cases
+brew install https://raw.githubusercontent.com/kadwanev/bigboybrew/master/Library/Formula/sshpass.rb
 brew install python3
 brew postinstall python3 # get pip
 brew install wdiff --with-gettext
