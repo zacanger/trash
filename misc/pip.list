@@ -3,6 +3,7 @@ Pillow
 PyYAML
 autopep8
 awscli
+black
 bpython
 legit
 lxml
