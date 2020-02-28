@@ -15,7 +15,6 @@ neovim
 node-gyp
 npm
 npm-check-updates
-npx
 shipe
 sloc
 sortpack
