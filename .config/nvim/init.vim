@@ -207,6 +207,7 @@ inoreabbr midfing 🖕
 inoreabbr (tm) ™
 inoreabbr (c) ©
 inoreabbr (r) ®
+inoremap hamsic ☭
 
 " wild
 set wildmenu
