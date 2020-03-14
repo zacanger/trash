@@ -1,5 +1,6 @@
 {
   "name": "twitter-scripts",
+  "private": true,
   "description": "Misc scripts for Twitter things",
   "version": "0.0.1",
   "author": "Zac Anger",
