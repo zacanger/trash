@@ -19,7 +19,7 @@ those paths scattered around.
 * Browser: Firefox
 * Shell: Bash, with lots of aliases and handy functions
 
-## Notes:
+## Notes
 
 * I also have a work Macbook, which uses Alacritty for a terminal and
   [Rectangle](https://github.com/rxhanson/Rectangle) for window placement.
