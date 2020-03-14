@@ -147,6 +147,7 @@ sudo apt-get install -f
 run_keybase
 
 # Cleanup
+apt remove '*gnome*'
 apt autoremove
 apt purge
 apt clean
