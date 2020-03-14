@@ -26,14 +26,11 @@ cat $list_path/pip.list | xargs sudo pip3 install
 # Node
 # The versions of npm and Node in the apt
 # repos are super old. Install them, use
-# them to install newer Node and npm,
-# remove them.
+# them to install newer Node and npm.
 sudo apt-get install -f -y nodejs npm
 npm i -g n
 n latest
-n prune
-npm i -g npm npx
-sudo apt-get autoremove nodejs npm
+npm i -g npm
 
 # Install Node packages.
 cat $list_path/npm.list | xargs npm i -g
@@ -92,7 +89,8 @@ ln -s $z_path/.cargo/config $HOME/.cargo/
 # Haskell
 curl -sSL https://get.haskellstack.org/ | sh
 mkdir -p $HOME/.ghc
-ln -s $z_path/.ghc/ghci.conf $HOME/.ghc/
+# Copy rather than link because of permissions
+cp $z_path/.ghc/ghci.conf $HOME/.ghc/
 # Finish installing GHC
 stack ghci
 
@@ -143,12 +141,14 @@ sudo usermod -aG microk8s $USER
 # Install Keybase
 curl --remote-name https://prerelease.keybase.io/keybase_amd64.deb
 sudo dpkg -i keybase_amd64.deb
-sudo apt-get install -f
+sudo apt-get install -f -y
 run_keybase
 
 # Cleanup
-apt remove '*gnome*'
-apt autoremove
+# There may be some extra packages to manually remove after this
+apt remove -y 'gnome-*'
+apt autoremove -y
 apt purge
 apt clean
 update-alternatives --all
+reboot
