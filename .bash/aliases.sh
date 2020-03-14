@@ -37,6 +37,8 @@ alias jv='jq .version < package.json'
 alias pipupd='pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U'
 alias venv='virtualenv -p /usr/bin/python3'
 alias nu='npm i -g n && n latest && n prune && npm i -g npm npm-check-updates'
+alias ghc='stack ghc'
+alias ghci='stack ghci'
 
 # navigation
 alias d='cd'

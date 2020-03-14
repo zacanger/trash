@@ -91,9 +91,11 @@ curl -sSL https://get.haskellstack.org/ | sh
 mkdir -p $HOME/.ghc
 # Copy rather than link because of permissions
 cp $z_path/.ghc/ghci.conf $HOME/.ghc/
-# Finish installing GHC
 stack ghci
+# stack install hdevtools
 
+# Ruby
+cat $list_path/gem.list | xargs sudo gem install
 # .config
 $conf_path=$HOME/.config
 $zconf_path=$z_path/.config
