@@ -92,7 +92,7 @@ mkdir -p $HOME/.ghc
 # Copy rather than link because of permissions
 cp $z_path/.ghc/ghci.conf $HOME/.ghc/
 stack ghci
-# stack install hdevtools
+stack install hdevtools
 
 # Ruby
 cat $list_path/gem.list | xargs sudo gem install
