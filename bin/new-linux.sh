@@ -27,6 +27,7 @@ cat $list_path/pip.list | xargs sudo pip3 install
 # The versions of npm and Node in the apt
 # repos are super old. Install them, use
 # them to install newer Node and npm.
+# TODO: maybe replace this with https://github.com/mklement0/n-install ?
 sudo apt-get install -f -y nodejs npm
 npm i -g n
 n latest
