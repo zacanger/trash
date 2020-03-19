@@ -12,5 +12,6 @@ indent_size = 2
 [*.{rs,py}]
 indent_size = 4
 
-[*.{md,go}]
+[*.swift]
+indent_size = 4
 trim_trailing_whitespace = false
