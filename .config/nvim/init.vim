@@ -7,7 +7,9 @@ if has('vim_starting')
   set nocompatible " Be iMproved
 endif
 
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' } " Go support
+" Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' } " Go support
+Plug 'fatih/vim-go'
+
 Plug 'vim-jp/vital.vim'                            " deps
 Plug 'vim-scripts/SyntaxRange'                     " deps
 Plug 'vim-scripts/ingo-library'                    " deps
