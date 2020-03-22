@@ -120,11 +120,14 @@ fi
 # pacman -S bash-completion or apt-get install bash-completion
 [[ $PS1 && -f /usr/share/bash-completion/bash_completion ]] && . /usr/share/bash-completion/bash_completion
 
+# little helper
+_sourceif() {
+  [ -f "$1" ] && . "$1"
+}
+
 # brew's bash completion
 if [[ `uname` == 'Darwin' ]] ; then
-  if [ -f $(brew --prefix)/etc/bash_completion ]; then
-    . $(brew --prefix)/etc/bash_completion
-  fi
+  _sourceif $(brew --prefix)/etc/bash_completion
 fi
 
 # aws completion
@@ -134,22 +137,16 @@ fi
 
 # aliases, functions, prompt, in their own files
 if [ -d $HOME/.bash ]; then
-  if [ -f $HOME/.bash/aliases.sh ]; then
-    . $HOME/.bash/aliases.sh
-  fi
+    _sourceif $HOME/.bash/aliases.sh
   if [ -d $HOME/.bash/functions ]; then
     for file in $HOME/.bash/functions/*; do
-      . "$file"
+      _sourceif "$file"
     done
   fi
   # git and alias completion helpers
-  if [ -f $HOME/.bash/completion.sh ]; then
-    . $HOME/.bash/completion.sh
-  fi
+  _sourceif $HOME/.bash/completion.sh
   # finally, load the fancy prompt
-  if [ -f $HOME/.bash/prompt.sh ]; then
-    . $HOME/.bash/prompt.sh
-  fi
+  _sourceif $HOME/.bash/prompt.sh
 fi
 
 if [[ `uname` == 'Darwin' ]]; then

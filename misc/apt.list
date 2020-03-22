@@ -48,6 +48,7 @@ firefox
 firefox-locale-en
 fontconfig
 fontconfig-config
+fslint
 gdb
 gettext-base
 ghostscript
