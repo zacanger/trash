@@ -43,7 +43,6 @@ user_pref("datareporting.healthreport.uploadEnabled", false);
 user_pref("devtools.editor.keymap", "vim");
 user_pref("devtools.theme", "dark");
 user_pref("dom.battery.enabled", false);
-user_pref("dom.event.clipboardevents.enabled", false);
 user_pref("dom.event.contextmenu.enabled", false);
 user_pref("extensions.getAddons.cache.enabled", false);
 user_pref("extensions.pocket.api", "");
