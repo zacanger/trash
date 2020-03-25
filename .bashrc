@@ -87,7 +87,7 @@ fi
 [[ $PS1 && -f /usr/share/bash-completion/bash_completion ]] && . /usr/share/bash-completion/bash_completion
 
 # brew's bash completion
-if [[ `uname` == 'Darwin' ]] ; then
+if [[ `uname` == 'Darwin' ]]; then
   _sourceif $(brew --prefix)/etc/bash_completion
 fi
 
@@ -97,20 +97,18 @@ if hash aws_completer 2>/dev/null ; then
 fi
 
 # aliases, functions, prompt, in their own files
-if [ -d $HOME/.bash ]; then
-    _sourceif $HOME/.bash/aliases.sh
+_sourceif $HOME/.bash/aliases.sh
 
-  if [ -d $HOME/.bash/functions ]; then
-    for file in $HOME/.bash/functions/*; do
-      _sourceif "$file"
-    done
+if [ -d $HOME/.bash/functions ]; then
+  for file in $HOME/.bash/functions/*; do
+    _sourceif "$file"
+  done
 
-    # git and alias completion helpers
-    _sourceif $HOME/.bash/completion.sh
+  # git and alias completion helpers
+  _sourceif $HOME/.bash/completion.sh
 
-    # finally, load the fancy prompt
-    _sourceif $HOME/.bash/prompt.sh
-  fi
+  # finally, load the fancy prompt
+  _sourceif $HOME/.bash/prompt.sh
 fi
 
 if [[ `uname` == 'Darwin' ]]; then
