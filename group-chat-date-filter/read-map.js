@@ -6,4 +6,4 @@ const betterMap = Object.assign(...fs.readFileSync('./usernames-map.txt').toStri
     return { [id]: username }
   }))
 
-fs.writeFileSync('./ids-by-username', JSON.stringify(betterMap, null, 2))
+fs.writeFileSync('./ids-by-username.json', JSON.stringify(betterMap, null, 2))

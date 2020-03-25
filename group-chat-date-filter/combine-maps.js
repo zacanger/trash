@@ -1,5 +1,5 @@
-const dates = require('./ids-by-date')
-const users = require('./ids-by-username')
+const dates = require('./ids-by-date.json')
+const users = require('./ids-by-username.json')
 
 const finalMap = Object.keys(dates)
   .reduce((prev, curr) => {
