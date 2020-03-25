@@ -1,4 +1,3 @@
-shopt -s histappend # append
 HISTCONTROL='erasedups:ignoreboth' # ignore lines with spaces, and duplicates
 HISTIGNORE="ls:l:la:lo:lS:lv:a:k:cd:h:history:q:exit:c:clear:erm:clc:cerm"
 HISTIGNORE="$HISTIGNORE:..:...:.:cs:co:ni:ns:vi:reload:gst:edrc:edal:fs:dbst:dbup:dbdn"
