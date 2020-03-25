@@ -17,7 +17,8 @@ those paths scattered around.
 * File manager: Ranger
 * Editor: Neovim, but my configs probably work fine for Vim too
 * Browser: Firefox
-* Shell: Bash, with lots of aliases and handy functions
+* Shell: Bash, with lots of aliases and handy functions. `~/.bashrc`
+  mostly just sources a bunch of stuff in `~/.bash/`
 
 ## Notes
 
