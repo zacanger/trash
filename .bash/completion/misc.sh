@@ -7,6 +7,3 @@ fi
 if hash aws_completer 2>/dev/null ; then
   complete -C aws_completer aws
 fi
-
-# pacman -S bash-completion or apt-get install bash-completion
-# [[ $PS1 && -f /usr/share/bash-completion/bash_completion ]] && . /usr/share/bash-completion/bash_completion
