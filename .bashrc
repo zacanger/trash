@@ -6,6 +6,11 @@ case $- in
       *) return;;
 esac
 
+# little helper
+_sourceif() {
+  [ -f "$1" ] && . "$1"
+}
+
 # don't kill bg jobs on exit
 shopt -u huponexit
 
@@ -26,30 +31,10 @@ elif hash lesspipe 2>/dev/null; then
   eval "$(lesspipe)"
 fi
 
-export LESSOPEN="| $(which highlight) %s --out-format xterm256 --line-numbers --quiet --force --style solarized-light"
-export LESS=" -R"
-
 # forward history search with ctrl-s
 stty stop ""
 
-# colored GCC warnings and errors
-export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-
-# history stuff
-shopt -s histappend # append
-HISTCONTROL='erasedups:ignoreboth' # ignore lines with spaces, and duplicates
-HISTIGNORE="ls:l:la:lo:lS:lv:a:k:cd:h:history:q:exit:c:clear:erm:clc:cerm"
-HISTIGNORE="$HISTIGNORE:..:...:.:cs:co:ni:ns:vi:reload:gst:edrc:edal:fs:dbst:dbup:dbdn"
-HISTIGNORE="$HISTIGNORE:ncu:gf:gd:g:v:nu:cla:shhh:todo:poweroff:tn:ncdu:startx"
-if [[ `uname` == 'Darwin' ]]; then
-  HISTSIZE=10000 # length
-  HISTFILESIZE=10000 # size
-else
-  HISTSIZE=1000 # length
-  HISTFILESIZE=1000 # size
-fi
-HISTTIMEFORMAT='%F %T  ' # timestamp
-PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ;} history -a"
+_sourceif $HOME/.bash/history.sh
 
 # completions
 bind 'set completion-query-items 100'                       # ask if over N possible completions
@@ -83,33 +68,14 @@ case $TERM in
     ;;
 esac
 
-export GOPATH=$HOME/.go
-if [[ `uname` == 'Darwin' ]]; then
-  export PATH="$HOME/bin:$HOME/.gem/global/bin:$HOME/.cabal/bin:$HOME/Library/Haskell/bin:/usr/local/opt/coreutils/libexec/gnubin:/opt/local/bin:/opt/local/sbin:$GOPATH/bin:/usr/local/sbin:$HOME/.local/bin:/usr/local/opt/gettext/bin::$HOME/.cargo/bin:$PATH"
-else
-  export PATH="$HOME/.local/bin:$HOME/bin:$HOME/bin/x:$HOME/.cargo/bin:$HOME/.gem/ruby/2.5.0/bin/:$GOPATH/bin:$PATH"
-fi
-export VISUAL=nvim
-export EDITOR=nvim
-export TERMINAL=st
-export PYTHONSTARTUP=$HOME/.config/startup.py
-export BROWSER=firefox
+_sourceif $HOME/.bash/path.sh
+_sourceif $HOME/.bash/vars.sh
 
-if [[ `uname` == 'Darwin' ]]; then
-  # i'm at work
-  export MANPATH=/usr/local/opt/coreutils/libexec/gnuman:$MANPATH
-  ulimit -n 10240
-fi
-
-export GPG_TTY=$(tty)
 
 # get core dumps
 ulimit -c unlimited
 
-export JOBS=max
-
-XDG_CONFIG_HOME=$HOME/.config
-
+# set tab width in terminal output
 tabs -2
 
 # color ls
@@ -119,11 +85,6 @@ fi
 
 # pacman -S bash-completion or apt-get install bash-completion
 [[ $PS1 && -f /usr/share/bash-completion/bash_completion ]] && . /usr/share/bash-completion/bash_completion
-
-# little helper
-_sourceif() {
-  [ -f "$1" ] && . "$1"
-}
 
 # brew's bash completion
 if [[ `uname` == 'Darwin' ]] ; then
@@ -138,15 +99,18 @@ fi
 # aliases, functions, prompt, in their own files
 if [ -d $HOME/.bash ]; then
     _sourceif $HOME/.bash/aliases.sh
+
   if [ -d $HOME/.bash/functions ]; then
     for file in $HOME/.bash/functions/*; do
       _sourceif "$file"
     done
+
+    # git and alias completion helpers
+    _sourceif $HOME/.bash/completion.sh
+
+    # finally, load the fancy prompt
+    _sourceif $HOME/.bash/prompt.sh
   fi
-  # git and alias completion helpers
-  _sourceif $HOME/.bash/completion.sh
-  # finally, load the fancy prompt
-  _sourceif $HOME/.bash/prompt.sh
 fi
 
 if [[ `uname` == 'Darwin' ]]; then
