@@ -18,17 +18,10 @@ _sourceif $HOME/.bash/vars.sh
 _sourceif $HOME/.bash/aliases.sh
 _sourceif $HOME/.bash/prompt.sh
 
-
 # completions
-
-# not sure why, but this needs to come before the other completions
-# to prevent an error when executing a file with an extension on some
-# other path that gets expanded, like:
-# cd foo/bar
-# ./foo.sh ~/baz <- immediately throws a syntax error
+# pacman -S bash-completion or apt-get install bash-completion
 [[ $PS1 && -f /usr/share/bash-completion/bash_completion ]] && . /usr/share/bash-completion/bash_completion
 
-# the rest
 if [ -d $HOME/.bash/completion ]; then
   for file in $HOME/.bash/completion/*; do
     _sourceif "$file"
