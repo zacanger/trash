@@ -22,13 +22,12 @@ those paths scattered around.
 
 ## Notes
 
-* I also have a work Macbook, which uses Alacritty for a terminal and
+* I also have a work Macbook, which uses
   [Rectangle](https://github.com/rxhanson/Rectangle) for window placement.
   `~/bin/mac-new.sh` is the setup script for this.
 * I mostly write a lot of config and little shell scripts, plus some Node and
   Python, so my tools are optimized for quick editing of text and quick
   navigation.
-
 * The files called `*.list` (under `/misc`) are to keep track of what I need on
   a fresh computer.
   * `apt.list`: generated with `apt-mark showmanual`
