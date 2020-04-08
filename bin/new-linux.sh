@@ -151,6 +151,7 @@ run_keybase
 # Cleanup
 # There may be some extra packages to manually remove after this
 apt remove -y 'gnome-*'
+apt remove -y pinentry-gnome-3
 sudo snap remove --purge gtk-common-themmes
 sudo snap remove --purge gnome-logs
 sudo snap remove --purge gnome-characters
