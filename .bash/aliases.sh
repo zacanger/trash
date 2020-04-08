@@ -39,6 +39,7 @@ alias venv='virtualenv -p /usr/bin/python3'
 alias nu='npm i -g n && n latest && n prune && npm i -g npm npm-check-updates'
 alias ghc='stack ghc'
 alias ghci='stack ghci'
+alias python='python3' # until they get around to updating...
 
 # navigation
 alias d='cd'
