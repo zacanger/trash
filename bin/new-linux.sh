@@ -151,6 +151,11 @@ run_keybase
 # Cleanup
 # There may be some extra packages to manually remove after this
 apt remove -y 'gnome-*'
+sudo snap remove --purge gtk-common-themmes
+sudo snap remove --purge gnome-logs
+sudo snap remove --purge gnome-characters
+sudo snap remove --purge gnome-calculator
+sudo snap remove --purge gnome-system-monitor
 apt autoremove -y
 apt purge
 apt clean
