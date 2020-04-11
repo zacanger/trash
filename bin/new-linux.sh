@@ -96,6 +96,7 @@ stack ghci
 
 # Ruby
 cat $list_path/gem.list | xargs sudo gem install
+
 # .config
 $conf_path=$HOME/.config
 $zconf_path=$z_path/.config
