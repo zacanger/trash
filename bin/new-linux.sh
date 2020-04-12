@@ -19,6 +19,13 @@ sudo chown -R $USER /usr/local
 sudo apt-get update && apt-get dist-upgrade -f -y
 cat $list_path/apt.list | xargs sudo apt-get install -y
 
+# Snaps
+sudo snap install --beta nvim --classic
+sudo snap set system refresh.retain=2
+sudo snap install slack --classic
+sudo snap install microk8s --classic
+sudo snap install go --classic
+
 # Python packages
 curl -s https://bootstrap.pypa.io/get-pip.py | sudo python3
 cat $list_path/pip.list | xargs sudo pip3 install
@@ -134,14 +141,10 @@ sudo add-apt-repository \
   $(lsb_release -cs) \
   stable"
 sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose
-sudo usermod -aG docker $USER
 
-# Snaps
-sudo snap set system refresh.retain=2
-sudo snap install slack --classic
-sudo snap install microk8s --classic
-sudo snap install go --classic
+# Add self to some groups
 sudo usermod -aG microk8s $USER
+sudo usermod -aG docker $USER
 
 # Install Keybase
 curl --remote-name https://prerelease.keybase.io/keybase_amd64.deb
