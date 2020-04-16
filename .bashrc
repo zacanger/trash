@@ -41,4 +41,8 @@ if [[ `uname` == 'Darwin' ]]; then
   # On Linux, I manage multiple terminal sessions with the window manager
   # On Mac, that's painful, so start tmux on a new shell.
   [ -z "$TMUX" ] && { tmux attach || exec tmux new-session; }
+else
+  # n-install: http://git.io/n-install-repo
+  export N_PREFIX="$HOME/n"
+  [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"
 fi

@@ -20,8 +20,8 @@ sudo apt-get update && apt-get dist-upgrade -f -y
 cat $list_path/apt.list | xargs sudo apt-get install -y
 
 # Snaps
-sudo snap install --beta nvim --classic
 sudo snap set system refresh.retain=2
+sudo snap install --beta nvim --classic
 sudo snap install slack --classic
 sudo snap install microk8s --classic
 sudo snap install go --classic
@@ -31,14 +31,7 @@ curl -s https://bootstrap.pypa.io/get-pip.py | sudo python3
 cat $list_path/pip.list | xargs sudo pip3 install
 
 # Node
-# The versions of npm and Node in the apt
-# repos are super old. Install them, use
-# them to install newer Node and npm.
-# TODO: maybe replace this with https://github.com/mklement0/n-install ?
-sudo apt-get install -f -y nodejs npm
-npm i -g n
-n latest
-npm i -g npm
+curl -sL https://git.io/n-install | bash -s -- -n
 
 # Install Node packages.
 cat $list_path/npm.list | xargs npm i -g
@@ -104,6 +97,13 @@ stack ghci
 # Ruby
 cat $list_path/gem.list | xargs sudo gem install
 
+# My st fork
+git clone https://github.com/zacanger/st && \
+  cd st && \
+  make install && \
+  cd .. && \
+  rm -rf st
+
 # .config
 $conf_path=$HOME/.config
 $zconf_path=$z_path/.config
@@ -154,15 +154,16 @@ run_keybase
 
 # Cleanup
 # There may be some extra packages to manually remove after this
-apt remove -y 'gnome-*'
-apt remove -y pinentry-gnome-3
+sudo apt remove whoopsie
+sudo apt remove -y 'gnome-*'
+sudo apt remove -y pinentry-gnome-3
 sudo snap remove --purge gtk-common-themmes
 sudo snap remove --purge gnome-logs
 sudo snap remove --purge gnome-characters
 sudo snap remove --purge gnome-calculator
 sudo snap remove --purge gnome-system-monitor
-apt autoremove -y
-apt purge
-apt clean
-update-alternatives --all
+sudo apt autoremove -y
+sudo apt purge
+sudo apt clean
+sudo update-alternatives --all
 reboot
