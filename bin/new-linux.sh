@@ -154,7 +154,7 @@ run_keybase
 
 # Cleanup
 # There may be some extra packages to manually remove after this
-sudo apt remove whoopsie
+sudo apt remove '*whoopsie*'
 sudo apt remove -y 'gnome-*'
 sudo apt remove -y pinentry-gnome-3
 sudo snap remove --purge gtk-common-themmes
