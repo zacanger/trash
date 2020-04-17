@@ -166,4 +166,6 @@ sudo apt autoremove -y
 sudo apt purge
 sudo apt clean
 sudo update-alternatives --all
+sudo service apache2 stop
+sudo service apache-htcacheclean stop
 reboot
