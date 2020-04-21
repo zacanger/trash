@@ -20,7 +20,6 @@
   remote = remote -v
   branch = branch -rv
   rebase = rebase -i
-  web = instaweb
   add = add -A
   p = push
   clear = checkout .
@@ -30,10 +29,6 @@
   gcpa = gc --prune --aggressive
 [help]
   autocorrect = 10
-[instaweb]
-  local = true
-  port = 7777
-  browser = firefox
 [commit]
   template = ~/.gitmessage
   gpgsign = true
