@@ -40,8 +40,7 @@ cat $list_path/npm.list | xargs npm i -g
 curl https://sh.rustup.rs -sSf | sh
 rustup toolchain install nightly
 
-# Copy rather than link because of keys and things.
-cp $z_path/.gitconfig $HOME/
+# Copy rather than link because of auth
 cp $z_path/.npmrc $HOME/
 
 # We don't want the defaults.
@@ -60,6 +59,7 @@ home_links=(
   .dircolors
   .editorconfig
   .g
+  .gitconfig
   .gitignore_global
   .gitmessage
   .inputrc
