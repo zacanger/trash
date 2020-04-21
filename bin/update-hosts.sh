@@ -10,7 +10,7 @@ curl \
 # https://github.com/StevenBlack/hosts
 curl \
   -sSL \
-  https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling-porn/hosts \
+  https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling/hosts \
   > hosts2
 
 # https://github.com/CHEF-KOCH/NSABlocklist
@@ -23,3 +23,4 @@ cat hosts1 hosts2 hosts3 | sed -e '/^[ \t]*#/d' | sort -u > hosts
 rm hosts1 hosts2 hosts3
 sudo mv /etc/hosts /etc/hosts.bak
 sudo mv hosts /etc/hosts
+clear-dns-cache.sh
