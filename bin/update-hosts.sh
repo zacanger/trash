@@ -19,7 +19,11 @@ curl \
   https://raw.githubusercontent.com/CHEF-KOCH/NSABlocklist/master/HOSTS/HOSTS \
   > hosts3
 
-cat hosts1 hosts2 hosts3 | sed -e '/^[ \t]*#/d' | sort -u > hosts
+cat hosts1 hosts2 hosts3 \
+  | sed -e '/^[ \t]*#/d' \
+  | sed -e '/mediafire/d' \
+  | sed -e '/twitter/d' \
+  | sort -u > hosts
 rm hosts1 hosts2 hosts3
 sudo mv /etc/hosts /etc/hosts.bak
 sudo mv hosts /etc/hosts
