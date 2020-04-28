@@ -285,7 +285,6 @@ brew_packages=(
   nettle
   nginx
   ninja
-  node
   ocaml
   ocamlbuild
   oniguruma
