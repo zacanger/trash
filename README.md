@@ -1,12 +1,10 @@
 # `$HOME`
 
-Please feel free to use anything you like!
-Unless otherwise noted, everything here is under the
-LGPL-3.0 license.
+Unless otherwise noted in the file, everything here is under the LGPL-3.0
+license, so feel free to to fork or copy out anything useful to you.
 
-I keep this repo at `/home/z/Dropbox/z` and symlink a lot of
-stuff to `/home/z`, so there may be a few references to
-those paths scattered around.
+I keep this repo at `/home/z/Dropbox/z`, and my setup scripts (see below for
+details) link everything to `$HOME/`.
 
 ## What I Use
 
@@ -25,6 +23,8 @@ those paths scattered around.
 * I also have a work Macbook, which uses
   [Rectangle](https://github.com/rxhanson/Rectangle) for window placement.
   `~/bin/mac-new.sh` is the setup script for this.
+* My Git aliases include `legit` aliases, but the only one I use is `branches`;
+  I need to write a shell script that does just that one thing, some day.
 * I mostly write a lot of config and little shell scripts, plus some Node and
   Python, so my tools are optimized for quick editing of text and quick
   navigation.
