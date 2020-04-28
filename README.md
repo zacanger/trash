@@ -4,7 +4,10 @@ Unless otherwise noted in the file, everything here is under the LGPL-3.0
 license, so feel free to to fork or copy out anything useful to you.
 
 I keep this repo at `/home/z/Dropbox/z`, and my setup scripts (see below for
-details) link everything to `$HOME/`.
+details) link everything to `$HOME/`. This repo is laid out exactly the same way
+as it is in my home directory on Linux machines, with the exception of this
+readme, the license file, the `misc` directory, and the `.github` directory,
+which don't get symlinked or copied over.
 
 ## What I Use
 
