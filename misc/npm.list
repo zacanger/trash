@@ -3,6 +3,7 @@ cloc
 count-bpm
 editorconfig
 empty-trash-cli
+git-all-branches
 hsimp-cli
 html2txt
 http-codes-cli
