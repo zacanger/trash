@@ -26,8 +26,6 @@ which don't get symlinked or copied over.
 * I also have a work Macbook, which uses
   [Rectangle](https://github.com/rxhanson/Rectangle) for window placement.
   `~/bin/mac-new.sh` is the setup script for this.
-* My Git aliases include `legit` aliases, but the only one I use is `branches`;
-  I need to write a shell script that does just that one thing, some day.
 * I mostly write a lot of config and little shell scripts, plus some Node and
   Python, so my tools are optimized for quick editing of text and quick
   navigation.
