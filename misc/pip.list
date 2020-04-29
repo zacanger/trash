@@ -5,7 +5,6 @@ autopep8
 awscli
 black
 bpython
-legit
 lxml
 mps
 mps-youtube

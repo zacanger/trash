@@ -11,7 +11,6 @@
 [color]
   ui = 1
 [alias]
-  branches = !legit branches
   b = log -p -M --follow --stat --
   ac = !git add -A && git commit
   g = log --color --graph --pretty=format:'%Cgreen[%Creset%h%Cgreen]%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
