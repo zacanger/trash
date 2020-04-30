@@ -148,7 +148,6 @@ alias findlonglines="grep '.\{120\}' -r"
 alias no='yes n'
 alias shhh='lock.sh'
 alias cla='clc ; cerm'
-alias lv='luvi'
 alias cpr='cp -R'
 alias tn='tmux new'
 alias twa='docker run --rm -t trailofbits/twa'
