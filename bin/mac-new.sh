@@ -198,7 +198,6 @@ brew_packages=(
   boost
   cairo
   camlp4
-  ccat
   clasp
   cmake
   cowsay
@@ -249,7 +248,6 @@ brew_packages=(
   kompose
   kubernetes-cli
   lame
-  leiningen
   less
   libass
   libav
@@ -276,7 +274,6 @@ brew_packages=(
   make
   meson
   mongodb
-  most
   mpfr
   mplayer
   ncdu
@@ -285,10 +282,7 @@ brew_packages=(
   nettle
   nginx
   ninja
-  ocaml
-  ocamlbuild
   oniguruma
-  opam
   openjpeg
   openssh
   openssl
@@ -304,11 +298,6 @@ brew_packages=(
   pv
   py2cairo
   pygobject
-  pyqt5
-  qt
-  qt5
-  qt55
-  r
   ranger
   readline
   redis
@@ -316,7 +305,6 @@ brew_packages=(
   rsync
   ruby
   s-lang
-  screen
   siege
   sip
   source-highlight
