@@ -21,6 +21,7 @@ cat $list_path/apt.list | xargs sudo apt-get install -y
 
 # Snaps
 sudo snap set system refresh.retain=2
+sudo snap refresh
 sudo snap install --beta nvim --classic
 sudo snap install slack --classic
 sudo snap install microk8s --classic
@@ -32,6 +33,9 @@ cat $list_path/pip.list | xargs sudo pip3 install
 
 # Node
 curl -sL https://git.io/n-install | bash -s -- -n
+n latest
+n prune
+npm i -g npm
 
 # Install Node packages.
 cat $list_path/npm.list | xargs npm i -g
@@ -156,8 +160,8 @@ run_keybase
 # There may be some extra packages to manually remove after this
 sudo apt remove '*whoopsie*'
 sudo apt remove -y 'gnome-*'
-sudo apt remove -y pinentry-gnome-3
-sudo snap remove --purge gtk-common-themmes
+sudo apt remove -y pinentry-gnome3
+sudo snap remove --purge gtk-common-themes
 sudo snap remove --purge gnome-logs
 sudo snap remove --purge gnome-characters
 sudo snap remove --purge gnome-calculator

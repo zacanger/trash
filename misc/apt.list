@@ -129,7 +129,6 @@ pkg-config
 procps
 psmisc
 python3-all
-python3-neovim
 ranger
 rar
 readline-common
