@@ -172,4 +172,8 @@ sudo apt clean
 sudo update-alternatives --all
 sudo service apache2 stop
 sudo service apache-htcacheclean stop
+
+update-hosts.sh
+# Copy user.js to firefox profile before setting up firefox
+
 reboot
