@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-# change the next line to whatever you want
-alarmpath=$HOME/Dropbox/z/.alarm.mp3
+alarmpath=$HOME/Dropbox/z/x/alarm.mp3
 
 if ! hash mplayer 2>/dev/null; then
   echo 'Please install mplayer!'

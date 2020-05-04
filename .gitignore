@@ -46,7 +46,6 @@
 .VolumeIcon.icns
 ._*
 ._.DS_Store
-.alarm.mp3
 .apdisk
 .bower-cache
 .bower-registry
