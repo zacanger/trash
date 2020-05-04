@@ -337,6 +337,9 @@ let g:netrw_gx="<cWORD>"
 " commit message thing
 autocmd Filetype gitcommit setlocal spell textwidth=80
 
+autocmd Filetype markdown set spell
+autocmd Filetype text set spell
+
 " clear screen between shell commands
 nnoremap :! :!clear;
 vnoremap :! :!clear;
