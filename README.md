@@ -12,7 +12,7 @@ which don't get symlinked or copied over.
 ## What I Use
 
 * Hardware: Thinkpads
-* OS: Ubuntu (I've tried every distro out there, this is fine for me)
+* OS: Ubuntu 20.04 (I've tried every distro out there, this is fine for me)
 * Window manager: plain i3, very light config, i3status
 * Terminal: [st fork](https://github.com/zacanger/st)
 * File manager: Ranger

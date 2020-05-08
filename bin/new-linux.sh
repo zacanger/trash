@@ -31,7 +31,7 @@ sudo snap install go --classic
 curl -s https://bootstrap.pypa.io/get-pip.py | sudo python3
 cat $list_path/pip.list | xargs sudo pip3 install
 
-# Node
+# Node - interactive
 curl -sL https://git.io/n-install | bash -s -- -n
 n latest
 n prune
@@ -96,6 +96,7 @@ curl -sSL https://get.haskellstack.org/ | sh
 mkdir -p $HOME/.ghc
 # Copy rather than link because of permissions
 cp $z_path/.ghc/ghci.conf $HOME/.ghc/
+chmod go-w $HOME/.ghc
 stack ghci
 
 # Ruby
@@ -138,14 +139,6 @@ nvim +PlugInstall +qa
 ln -s $z_path/x/fonts/ $HOME/.local/share/
 fc-cache
 
-# Install docker
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-sudo add-apt-repository \
-  "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-  $(lsb_release -cs) \
-  stable"
-sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose
-
 # Add self to some groups
 sudo usermod -aG microk8s $USER
 sudo usermod -aG docker $USER
@@ -158,14 +151,15 @@ run_keybase
 
 # Cleanup
 # There may be some extra packages to manually remove after this
-sudo apt remove '*whoopsie*'
-sudo apt remove -y 'gnome-*'
-sudo apt remove -y pinentry-gnome3
+sudo apt-get remove '*whoopsie*'
+sudo apt-get remove -y 'gnome-*'
+sudo apt-get remove -y pinentry-gnome3
 sudo snap remove --purge gtk-common-themes
 sudo snap remove --purge gnome-logs
 sudo snap remove --purge gnome-characters
 sudo snap remove --purge gnome-calculator
 sudo snap remove --purge gnome-system-monitor
+sudo snap remove --purge gnome-3-34-1804
 sudo apt autoremove -y
 sudo apt purge
 sudo apt clean
