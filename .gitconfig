@@ -29,7 +29,6 @@
 [help]
   autocorrect = 10
 [commit]
-  template = ~/.gitmessage
   gpgsign = true
 [http]
   postBuffer = 524288000

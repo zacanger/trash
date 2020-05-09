@@ -65,7 +65,6 @@ home_links=(
   .g
   .gitconfig
   .gitignore_global
-  .gitmessage
   .inputrc
   .profile
   .tmux.conf
