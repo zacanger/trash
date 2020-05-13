@@ -34,6 +34,7 @@ cron
 curl
 dash
 dc
+dialog
 diffutils
 dnsutils
 docker-compose
@@ -118,6 +119,7 @@ netcat-openbsd
 netplan.io
 openssh-client
 openssl
+openvpn
 os-prober
 p7zip-full
 parted

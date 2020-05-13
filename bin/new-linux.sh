@@ -169,4 +169,6 @@ sudo service apache-htcacheclean stop
 update-hosts.sh
 # Copy user.js to firefox profile before setting up firefox
 
+# remove splash from grub config
+
 reboot
