@@ -6,6 +6,8 @@ echo 'before running!'
 echo
 echo 'It may be safter to run this block-by-block.'
 
+# disable auto upgrades, period, unattended upgrades in apt.conf.d
+
 z_path=$HOME/Dropbox/z
 list_path=$z_path/misc
 
@@ -169,6 +171,6 @@ sudo service apache-htcacheclean stop
 update-hosts.sh
 # Copy user.js to firefox profile before setting up firefox
 
-# remove splash from grub config
+# remove splash from /etc/default/grub and sudo update-grub
 
 reboot
