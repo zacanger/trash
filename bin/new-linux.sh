@@ -111,8 +111,8 @@ git clone https://github.com/zacanger/st && \
   rm -rf st
 
 # .config
-$conf_path=$HOME/.config
-$zconf_path=$z_path/.config
+conf_path=$HOME/.config
+zconf_path=$z_path/.config
 mkdir -p $conf_path/i3
 mkdir -p $conf_path/i3status
 mkdir -p $conf_path/ranger
