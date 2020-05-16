@@ -118,7 +118,9 @@ mkdir -p $conf_path/i3status
 mkdir -p $conf_path/ranger
 mkdir -p $conf_path/pcmanfm/default
 mkdir -p $conf_path/neofetch
-ln -s $zconf_path/ranger/rc.conf $conf_path/ranger_path/
+mkdir -p $conf_path/libfm
+ln -s $zconf_path/libfm/libfm.conf $conf_path/libfm/
+ln -s $zconf_path/ranger/rc.conf $conf_path/ranger/
 ln -s $zconf_path/ranger/rifle.conf $conf_path/ranger/
 ln -s $zconf_path/ranger/scope.sh $conf_path/ranger/
 ln -s $zconf_path/i3/config $conf_path/i3/
