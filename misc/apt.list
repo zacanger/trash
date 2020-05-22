@@ -175,6 +175,7 @@ x11-xserver-utils
 xauth
 xbacklight
 xclip
+xdotool
 xinit
 xinput
 xkb-data

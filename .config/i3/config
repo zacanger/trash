@@ -47,16 +47,16 @@ bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
 # focus_follows_mouse no
 
 # change focus
-bindsym $mod+h focus left
-bindsym $mod+j focus down
-bindsym $mod+k focus up
-bindsym $mod+l focus right
+bindsym $mod+h exec "~/bin/i3-move-cursor-window-center.sh focus left"
+bindsym $mod+j exec "~/bin/i3-move-cursor-window-center.sh focus down"
+bindsym $mod+k exec "~/bin/i3-move-cursor-window-center.sh focus up"
+bindsym $mod+l exec "~/bin/i3-move-cursor-window-center.sh focus right"
 
 # move focused window
-bindsym $mod+Shift+h move left
-bindsym $mod+Shift+j move down
-bindsym $mod+Shift+k move up
-bindsym $mod+Shift+l move right
+bindsym $mod+Shift+h exec "~/bin/i3-move-cursor-window-center.sh move left"
+bindsym $mod+Shift+j exec "~/bin/i3-move-cursor-window-center.sh move down"
+bindsym $mod+Shift+k exec "~/bin/i3-move-cursor-window-center.sh move up"
+bindsym $mod+Shift+l exec "~/bin/i3-move-cursor-window-center.sh move right"
 
 # workspace back and forth (with/without active container)
 # workspace_auto_back_and_forth yes
