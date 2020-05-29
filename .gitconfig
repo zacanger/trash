@@ -6,6 +6,8 @@
   email = zac@zacanger.com
   name = zacanger
   signingkey = F758A5EBFC761412
+[includeIf "gitdir:/home/z/Dropbox/work/repos/prolesoft/"]
+  path = /home/z/Dropbox/work/repos/prolesoft/.gitconfig
 [push]
   default = matching
 [color]
