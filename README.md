@@ -25,7 +25,8 @@ which don't get symlinked or copied over.
 
 * I also have a work Macbook, which uses
   [Rectangle](https://github.com/rxhanson/Rectangle) for window placement.
-  `~/bin/mac-new.sh` is the setup script for this. It's incomplete.
+  `~/bin/mac-new.sh` is the setup script for this. It's incomplete, symlinks
+  are manual.
 * I mostly write a lot of config and little shell scripts, plus some Node and
   Python, so my tools are optimized for quick editing of text and quick
   navigation.
