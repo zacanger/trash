@@ -1,4 +1,10 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+if [ "$1" != "-y" ]; then
+  echo "Make sure you replace the values in this script first"
+  echo "and then run with the -y flag."
+  exit 1
+fi
 
 git filter-branch --env-filter '
 
