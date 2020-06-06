@@ -2,4 +2,4 @@
 
 import gtk
 
-gtk.ColorSelectionDialog('colors').run()
+gtk.ColorSelectionDialog("colors").run()
