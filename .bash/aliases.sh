@@ -106,6 +106,8 @@ fi
 # don't break cat if no bat
 if hash bat 2>/dev/null; then
   alias cat='bat'
+elif hash batcat 2>/dev/null; then
+  alias cat='batcat'
 fi
 
 # more mac stuff
