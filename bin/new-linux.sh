@@ -146,12 +146,6 @@ fc-cache
 sudo usermod -aG microk8s $USER
 sudo usermod -aG docker $USER
 
-# Install Keybase
-curl --remote-name https://prerelease.keybase.io/keybase_amd64.deb
-sudo dpkg -i keybase_amd64.deb
-sudo apt-get install -f -y
-run_keybase
-
 # Cleanup
 # There may be some extra packages to manually remove after this
 sudo apt-get remove -y '*whoopsie*'
