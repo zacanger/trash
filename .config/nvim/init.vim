@@ -493,6 +493,9 @@ au! cursormoved * call PoppyInit()
 " ignore vim-go warning on old nvim
 let g:go_version_warning = 0
 
+" fix imports + format on save
+let g:go_fmt_command = "goimports"
+
 " use {{{ }}}
 set foldmethod=marker
 
