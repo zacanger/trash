@@ -314,6 +314,9 @@ let g:ale_linters = {
       \ 'python': ['pycodestyle']
       \}
 let b:ale_javascript_eslint_options = "--rule 'prettier/prettier: 0'"
+let g:ale_fixers = {
+\   'python': ['black'],
+\}
 
 " vim-airline
 let g:airline#extensions#virtualenv#enabled = 1
