@@ -46,9 +46,9 @@ check_permissions() {
 _path=""
 _fmode="644"
 _dmode="755"
-_chmod=`which chmod`
-_find=`which find`
-_xargs=`which xargs`
+_chmod=$(which chmod)
+_find=$(which find)
+_xargs=$(which xargs)
 
 while getopts ":hvp:f:d:" options; do
   case $options in

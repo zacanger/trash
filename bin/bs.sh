@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [[ `uname` == 'Darwin' ]] ; then
+if [[ $(uname) == 'Darwin' ]] ; then
   pmset -g batt | sed -n 2p | cut -d' ' -f3-4
 else
   if test -e /sys/class/power_supply/BAT0/capacity; then

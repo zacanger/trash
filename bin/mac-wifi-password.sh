@@ -2,7 +2,7 @@
 
 verbose=
 
-[[ `uname` == 'Darwin' ]] || exit 0
+[[ $(uname) == 'Darwin' ]] || exit 0
 
 # locate airport(1)
 airport="/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport"

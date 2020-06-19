@@ -9,7 +9,7 @@
 # Take ownership of /usr/local. By default, all gems,
 # python packages, and npm packages go in here.
 # I know this is controversial. It _really_ doesn't matter.
-sudo chown -R $USER /usr/local
+sudo chown -R "$USER" /usr/local
 
 # CLI tools
 xcode-select --install
@@ -327,7 +327,7 @@ brew_packages=(
   xz
 )
 for brew_p in "${brew_packages[@]}"; do
-  brew install $brew_p
+  brew install "$brew_p"
 done
 
 ### Other Stuff
