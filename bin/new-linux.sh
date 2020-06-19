@@ -99,6 +99,7 @@ mkdir -p $HOME/.ghc
 cp $z_path/.ghc/ghci.conf $HOME/.ghc/
 chmod go-w $HOME/.ghc
 stack ghci
+stack install ShellCheck
 
 # Ruby
 cat $list_path/gem.list | xargs sudo gem install
