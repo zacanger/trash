@@ -15,14 +15,14 @@ else
   date="$@"
 fi
 
-echo okay! alarm happening at $(date --date="$date")
+echo okay! alarm happening at "$(date --date="$date")"
 
 sleep $(( $(date --date="$date" +%s) - $(date +%s) ))
 
 echo "wake up!"
 
 while true; do
-  `which mplayer` $alarmpath
+  $(which mplayer) "$alarmpath"
   sleep 1
 done
 
