@@ -93,7 +93,7 @@ alias vim='nvim'
 alias vv='nvim ~/.config/nvim/init.vim'
 
 # clipboard
-if [[ `uname` == 'Darwin' ]]; then
+if [[ $(uname) == 'Darwin' ]]; then
   alias co='pbcopy'
   alias pa='pbpaste'
   alias clc='echo -n | co'
@@ -111,7 +111,7 @@ elif hash batcat 2>/dev/null; then
 fi
 
 # more mac stuff
-if [[ `uname` == 'Darwin' ]]; then
+if [[ $(uname) == 'Darwin' ]]; then
   alias file='file -h'
 fi
 
@@ -154,3 +154,4 @@ alias cpr='cp -R'
 alias tn='tmux new'
 alias twa='docker run --rm -t trailofbits/twa'
 alias lv='luvi'
+alias shellcheck='shellcheck --shell=bash'

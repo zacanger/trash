@@ -8,7 +8,7 @@ shopt -s checkwinsize
 shopt -s cdspell
 
 # "**" in pathname matches all files & 0 or more dirs/subdirs; also, ".foo"
-if [[ `uname` == 'Linux' ]]; then
+if [[ $(uname) == 'Linux' ]]; then
   shopt -s globstar
   shopt -s dotglob
   shopt -s dirspell
@@ -53,7 +53,7 @@ tabs -2
 
 # color ls
 if hash dircolors 2>/dev/null; then
-  test -r $HOME/.dircolors && eval "$(dircolors -b $HOME/.dircolors)" || eval "$(dircolors -b)"
+  test -r "$HOME/.dircolors" && eval "$(dircolors -b "$HOME/.dircolors")" || eval "$(dircolors -b)"
 fi
 
 # dynamic title
