@@ -10,7 +10,7 @@ fi
 if [[ $# -eq 0 ]]; then
   echo "it's now $(date)"
   echo alarm date and time?
-  read date
+  read -r date
 else
   date="$@"
 fi

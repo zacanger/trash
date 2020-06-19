@@ -4,7 +4,7 @@
 
 METRIC=0 # 0 for F, 1 for C
 
-if [ -z $1 ] ; then
+if [ -z "$1" ] ; then
   echo
   echo "usage: weather.sh zip"
   echo

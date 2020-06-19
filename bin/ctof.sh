@@ -4,7 +4,7 @@ main_menu() {
   echo '1) Fahrenheit to Celsius'
   echo '2) Celsius to Fahrenheit'
   echo ""
-  read -p "Please choose one of the options above: " option
+  read -rp "Please choose one of the options above: " option
   case $option in
     1) F2C;
       ;;
@@ -17,7 +17,7 @@ main_menu() {
 
 F2C() {
   echo "Fahrenheit to Celsius Conversion"
-  read -p "Enter the temperature (in Fahrenheit): " FT
+  read -rp "Enter the temperature (in Fahrenheit): " FT
   tconv=$(echo "($FT - 32) * 5 / 9 " | bc)
   echo -en "The Temperature in Celsius is "
   echo "$tconv"
@@ -26,7 +26,7 @@ F2C() {
 
 C2F() {
   echo "Celsius to Fahrenheit Conversion"
-  read -p "Enter the temperature (in Celsius): " CT
+  read -rp "Enter the temperature (in Celsius): " CT
   tconv=$(echo "$CT * 9 / 5 + 32 " | bc)
   echo -en "The Temperature in Fahrenheit is "
   echo "$tconv"
