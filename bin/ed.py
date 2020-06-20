@@ -22,8 +22,6 @@ class MainWindow(QMainWindow):
         fixedfont.setPointSize(12)
         self.editor.setFont(fixedfont)
 
-        # self.path holds the path of the currently open file.
-        # If none, we haven't got a file open yet (or creating new).
         self.path = None
 
         layout.addWidget(self.editor)
@@ -103,11 +101,7 @@ class MainWindow(QMainWindow):
         dlg.show()
 
     def file_open(self):
-        path, _ = QFileDialog.getOpenFileName(
-            self,
-            "Open file",
-            "",
-            "Text documents (*.txt);All files (*.*)")
+        path, _ = QFileDialog.getOpenFileName(self, "Open file", "")
 
         if path:
             try:
@@ -124,17 +118,12 @@ class MainWindow(QMainWindow):
 
     def file_save(self):
         if self.path is None:
-            # If we do not have a path, we need to use Save As.
             return self.file_saveas()
 
         self._save_to_path(self.path)
 
     def file_saveas(self):
-        path, _ = QFileDialog.getSaveFileName(
-            self,
-            "Save file",
-            "",
-            "Text documents (*.txt);All files (*.*)")
+        path, _ = QFileDialog.getSaveFileName(self, "Save file", "",)
 
         if not path:
             # If dialog is cancelled, will return ''
@@ -165,8 +154,7 @@ class MainWindow(QMainWindow):
 
     def update_title(self):
         self.setWindowTitle(
-            "%s - No2Pads" % (
-                os.path.basename(self.path) if self.path else "Untitled"))
+            "%s" % (os.path.basename(self.path) if self.path else "untitled"))
 
     def edit_toggle_wrap(self):
         self.editor.setLineWrapMode(
@@ -176,7 +164,7 @@ class MainWindow(QMainWindow):
 if __name__ == '__main__':
 
     app = QApplication(sys.argv)
-    app.setApplicationName("No2Pads")
+    app.setApplicationName("untitled")
 
     window = MainWindow()
     app.exec_()
