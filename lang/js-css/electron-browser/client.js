@@ -175,7 +175,7 @@ const onload = () => {
   document.querySelector('#location-form').onsubmit = (e) =>{
     e.preventDefault()
     let val = document.querySelector('#location').value
-    if (!val.contains('://')) {
+    if (!val.includes('://')) {
       val = `http://${val}`
     }
 
