@@ -134,6 +134,7 @@ pkg-config
 procps
 psmisc
 python3-all
+python3-pyqt5
 ranger
 rar
 readline-common
