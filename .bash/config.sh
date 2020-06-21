@@ -1,3 +1,5 @@
+# shellcheck shell=bash
+
 # don't kill bg jobs on exit
 shopt -u huponexit
 # put multi-line commands into one history entry

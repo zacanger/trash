@@ -1,3 +1,5 @@
+# shellcheck shell=bash
+
 export VISUAL=nvim
 export EDITOR=nvim
 export TERMINAL=st

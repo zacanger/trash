@@ -1,3 +1,5 @@
+# shellcheck shell=bash
+
 # count files
 cf() {
   local dir

@@ -1,3 +1,5 @@
+# shellcheck shell=bash
+
 # complete git aliases as if they were expanded
 if command -v _git > /dev/null; then
   # wraps an alias to perform completion as if it was expanded

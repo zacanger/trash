@@ -1,3 +1,5 @@
+# shellcheck shell=bash
+
 # repeat command n times
 # example: r 20 echo y # same as yes | head -n 20
 

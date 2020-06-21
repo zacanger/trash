@@ -1,3 +1,5 @@
+# shellcheck shell=bash
+
 # because macs don't have pidof
 
 pidof() {

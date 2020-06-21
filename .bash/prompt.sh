@@ -1,3 +1,5 @@
+# shellcheck shell=bash
+
 prompt() {
   case $1 in
     on)

@@ -1,3 +1,5 @@
+# shellcheck shell=bash
+
 # change part of $PWD and cd to it. example:
 # /usr/local/lib/python2.7 $ s 2.7 3.5
 # /usr/local/lib/python3.5 $

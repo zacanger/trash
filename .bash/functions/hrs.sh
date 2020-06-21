@@ -1,3 +1,5 @@
+# shellcheck shell=bash
+
 COLS="$(tput cols)"
 if (( COLS <= 0 )); then
   COLS="${COLUMNS:-80}"

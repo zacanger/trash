@@ -1,3 +1,5 @@
+# shellcheck shell=bash
+
 # if given two args to cd, replace first with second in $PWD. preserves options.
 cd() {
   local arg

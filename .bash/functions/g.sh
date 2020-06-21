@@ -1,3 +1,5 @@
+# shellcheck shell=bash
+
 # kinda like cli bookmarks
 
 _g_init() {

@@ -1,3 +1,5 @@
+# shellcheck shell=bash
+
 # kill everything
 alias killx='sudo pkill -9 Xorg'
 alias ka='killall'

@@ -1,3 +1,5 @@
+# shellcheck shell=bash
+
 transfer() {
   if [ $# -eq 0 ]; then
     echo -e "No arguments specified. Usage:\necho transfer /tmp/test.md\ncat /tmp/test.md | transfer test.md"

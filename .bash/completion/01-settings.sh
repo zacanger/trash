@@ -1,3 +1,5 @@
+# shellcheck shell=bash
+
 bind 'set completion-query-items 100'                       # ask if over N possible completions
 complete -d cd rmdir                                        # on cd, just show dirs
 complete -A builtin builtin                                 # bash builtins

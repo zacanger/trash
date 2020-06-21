@@ -1,3 +1,5 @@
+# shellcheck shell=bash
+
 rbl() {
   c=$1
   [[ -z "$c" ]] && c=2

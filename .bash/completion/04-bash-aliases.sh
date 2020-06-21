@@ -1,3 +1,5 @@
+# shellcheck shell=bash
+
 # Automatically add completion for all aliases to commands having completion functions
 # http://superuser.com/a/437508
 alias_completion() {

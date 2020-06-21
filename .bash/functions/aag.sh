@@ -1,3 +1,5 @@
+# shellcheck shell=bash
+
 aag() {
   thing=$1
   place=$2

@@ -1,4 +1,4 @@
-# vim: ft=sh
+# shellcheck shell=bash
 
 # if not running interactively, don't do anything
 case $- in
