@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 docker kill $(docker ps -q)
 docker rm -f $(docker ps -aq)
