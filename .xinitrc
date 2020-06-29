@@ -11,7 +11,7 @@ xset s noblank
 xmodmap -e "clear lock"
 xmodmap -e "keysym Caps_Lock = Escape"
 unclutter -root &
-redshift -l 40.760780:-111.891045 -b 0.7 &
+redshift -l 40.760780:-111.891045 -b 0.6 &
 toggletouch.sh
 KEYBASE_AUTOSTART=1 run_keybase &
 exec i3
