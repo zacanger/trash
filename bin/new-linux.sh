@@ -32,6 +32,8 @@ sudo snap install go --classic
 # Python packages
 curl -s https://bootstrap.pypa.io/get-pip.py | sudo python3
 cat $list_path/pip.list | xargs sudo pip3 install
+# there's no `python` in ubuntu 20....
+sudo ln -s /usr/bin/python3 /usr/bin/python
 
 # Node - interactive
 curl -sL https://git.io/n-install | bash -s -- -n
