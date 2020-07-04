@@ -153,10 +153,6 @@ sudo apt-get remove -y '*whoopsie*'
 sudo apt-get remove -y 'gnome-*'
 sudo apt-get remove -y pinentry-gnome3
 sudo snap remove --purge gtk-common-themes
-sudo snap remove --purge gnome-logs
-sudo snap remove --purge gnome-characters
-sudo snap remove --purge gnome-calculator
-sudo snap remove --purge gnome-system-monitor
 sudo snap remove --purge gnome-3-34-1804
 sudo apt autoremove -y
 sudo apt purge
