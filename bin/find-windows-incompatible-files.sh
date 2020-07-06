@@ -20,8 +20,8 @@ find . \
   cut -c '9-'
 
 # > 260 chars
-find "$PWD" | while IFS= read -r path; do
+find . | while IFS= read -r path; do
   if [ "${#path}" -gt 260 ]; then
-      printf '%s\n' "$path"
+    printf '%s\n' "$path"
   fi
 done
