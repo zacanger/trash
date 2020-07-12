@@ -81,7 +81,6 @@ bundle.js
 cabal-dev
 cabal.sandbox.config
 coverage
-db
 dist
 lib-cov
 logs
