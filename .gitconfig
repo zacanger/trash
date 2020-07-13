@@ -23,6 +23,7 @@
   p = push
   clear = checkout .
   rpo = remote prune origin
+  alias = config --get-regexp 'alias.*'
   graph = log --color --graph --abbrev-commit --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s%n%Cgreen(%cr)%Creset by %C(bold blue)<%an>%Creset%Cred %GK%n'
   all = "!find . -type d -name .git -prune -execdir pwd ';' -execdir git $@ ';' #"
   gcpa = gc --prune --aggressive
