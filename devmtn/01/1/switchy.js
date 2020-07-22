@@ -6,7 +6,7 @@ switch (x) {
     console.log("I'm makin' pancakes!")
     break
   case 'Bryan':
-    console.log('Dicks dicks dicks nom nom nom dicks munchy munch')
+    console.log('Stuffs stuffs stuffs nom nom nom stuffs munchy munch')
     break
   case 'Ryan':
     console.log('Racism, while i masturbate in taking a dump. lol')

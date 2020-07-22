@@ -18,7 +18,7 @@ favouriteThings.car = 'the kind that runs and gets okay gas mileage. maybe a sub
 favouriteThings.brand = 'really? um, the cheap kind. store brand. brand x.'
 // Now change the food key in your favoriteThings object to be 'Lettuce' and change the book key in your favoriteThings object to be '50 Shades of Gray'.
 favouriteThings.food = 'Lettuce... goddammit.'
-favouriteThings.book = '50 Shades of Fuck You, asshole.'
+favouriteThings.book = '50 Shades of Ugh You, asshole.'
 /*Create an empty Object called backPack. Now, create a variable called 'item'
 and set it equal to the string 'firstPocket'. Using bracket notation,
 add a 'firstPocket' key (or property) to backPack, using 'item'.

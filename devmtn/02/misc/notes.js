@@ -166,7 +166,7 @@ console.log(msg, mssg);
 // happens to be a function.
 
 // okay, and so as was just cleared up, things that use the notation that 
-// makes me think they're just being confusing and shit? yeah. basically just 
+// makes me think they're just being confusing and crap? yeah. basically just 
 // properties of the string object, or the window object, or the browser 
 // object, or the global (in node) object.
 

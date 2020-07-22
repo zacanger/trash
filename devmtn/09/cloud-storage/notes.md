@@ -4,7 +4,7 @@ This lecture will be on the virtues and how-tos of AWS. Well, S3, anyway. Basica
 
 Amazon needs your regional server to be passed in during requests. Which is both sensible and silly, since really that should be a part of your keys.
 
-When Amazon wants a 'Key' in your paramss, that's not a key. That's the actual thing you're fuckin' with. so, req.body.img.
+When Amazon wants a 'Key' in your paramss, that's not a key. That's the actual thing you're ughin' with. so, req.body.img.
 
 Buffers in node are bytes in python are strings in PHP if they were mutable.
 

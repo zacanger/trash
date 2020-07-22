@@ -2,11 +2,11 @@ angular.module('directives').controller('h', function($scope, $http, $q, ws){
   $scope.users = [
  ,  { name: "ryan walsshh"
  ,  age: 42
- ,  email: "dicksrdelish@cock.li"
+ ,  email: "stuffsrdelish@junk.li"
  ,  city: "Dresden" }
  ,  { name: "reynaldo naldino"
  ,  age: 12
- ,  email: "mmmmmmmmmgood@cocks.in.me"
+ ,  email: "mmmmmmmmmgood@junks.in.me"
  ,  city: "Santiago de Cali" }
  ,  { name: "BILLY THE LOUD"
  ,  age: "like 4 or something i guess"

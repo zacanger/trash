@@ -26,7 +26,7 @@ A is attribute, so it'd be <div myDirective>
 can do BOTH so it'd work for either. (restrict: EA)
 C is for class, but let's not do that! That seems like a really not okay and very bad idea.
 This is basically for semantic enforcement. Element would be good for a custom block, eg
-<myDirective>a whole bunch of shit just about this one</myDirective>
+<myDirective>a whole bunch of crap just about this one</myDirective>
 <mySECONDdirective>another whole bunch</mySECONDdirective> etc
 A would be good for tacking things onto elements that would likely be there anyway, it seems.
 If you need to take in parameters, A would be better.

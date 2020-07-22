@@ -6,7 +6,7 @@ function chan4(x) {
   else if (x == 'Donkey')
     return "I'm makin' pancakes!"
   else if (x == 'Bryan')
-    return 'Dicks dicks dicks nom nom nom dicks munchy munch'
+    return 'Stuffs stuffs stuffs nom nom nom stuffs munchy munch'
   else if (x == 'Ryan')
     return ('Racism lol')
   else

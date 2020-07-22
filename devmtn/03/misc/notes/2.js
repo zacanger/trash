@@ -34,7 +34,7 @@ ng-repeat makes a miniature scope for the foo part of `ng-repeat="foo in bar"` -
 // so basically we're interactively filtering here, but also filtering by the type of whatchamacallits,
 // filtering the objects with a nesting (so, narrowing) way. we could that we need to pass an object,
 // and that object ought to have a certain .property, and that key's value should PROBABLY have a capital A
-// or else, y'know, hey angular, throw that shit out.
+// or else, y'know, hey angular, throw that crap out.
 // that, right there, could be a simple (though obviously not exactly performant...) way to work on that
 // little knowledge management problem we have.
 // <div ng-init="whatisUPYO = true">YO</div>
@@ -51,7 +51,7 @@ ng-repeat makes a miniature scope for the foo part of `ng-repeat="foo in bar"` -
 // they're only really working on css `display: none;`
 // ng-if will actually keep something off the dom if it fails, so
 // HOLY CRAP ANGULAR HAS A BUILT IN LINK FILTER. FILTER IS NOT JUST FILTER.
-// this means you can probably pipe to a whole fucking LOAD of things, and
+// this means you can probably pipe to a whole ughing LOAD of things, and
 // seeing as scripting languages basically mostly exist to abstract themselves
 // more and more every year until they grow actual intelligences...
 // THIS MEANS THIS IS BASICALLY LIKE POSIX PIPES. WHICH MEANS I CAN, WITH A BIT OF WORK

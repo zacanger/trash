@@ -59,9 +59,9 @@ alert('you're one old sonofabitch, " + ancient + " is a long freaking time.')
 
 do loop is similar to while, but do will always execute at least once; it doesn't test until after the first execution. example:  
 do {  
-  var dickFace = prompt("what do they call you?")  
-  } while (!dickFace)  
-console.log(dickFace)  
+  var stuffFace = prompt("what do they call you?")  
+  } while (!stuffFace)  
+console.log(stuffFace)  
 // this will keep prompting until the prompt recieves a string
 
 standard loop boilerplate pattern: counter variable to count (duh); while loop (check counter against limit?) then update counter.

@@ -5,7 +5,7 @@ describe('homeCtrl', function(){
   var $controller
   beforeEach(module('ngTests'))
   beforeEach(inject(function(_$controller_){
-    $controller = _$controller_ // wrapping this because ng means lots of the same named shit
+    $controller = _$controller_ // wrapping this because ng means lots of the same named crap
   }))
   describe('$scope.returnOne', function(){
     it('returns int 1', function(){ // this is ctrlr _constructor_ that we built up there
