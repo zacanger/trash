@@ -38,6 +38,7 @@ class App(QWidget):
     def on_click(self):
         openFontDialog(self)
 
+
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     ex = App()
