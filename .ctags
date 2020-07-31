@@ -97,7 +97,11 @@
 --exclude=\*.bak
 --exclude=\*.map
 --exclude=\*.min.\*
+--exclude=\*.chunk.\*
 --exclude=\*.swp
 --exclude=bundle.js
 --exclude=node_modules
 --exclude=tags
+--exclude=coverage
+--exclude=.nyc_output
+--exclude=__pycache__
