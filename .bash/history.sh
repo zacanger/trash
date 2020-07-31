@@ -9,8 +9,8 @@ HISTIGNORE="$HISTIGNORE:ds *:cat *::ac *:rbl *:git push *"
 HISTIGNORE="$HISTIGNORE:rbl:aca:dbup:dbdn:dbst:vv:sync:gdi:cf:f"
 
 if [[ $(uname) == 'Darwin' ]]; then
-  HISTSIZE=1000 # length
-  HISTFILESIZE=1000 # size
+  HISTSIZE=10000 # length
+  HISTFILESIZE=10000 # size
 else
   HISTSIZE=100 # length
   HISTFILESIZE=100 # size
