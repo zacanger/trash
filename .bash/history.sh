@@ -4,8 +4,7 @@ HISTCONTROL='erasedups:ignoreboth' # ignore lines with spaces, and duplicates
 HISTIGNORE="ls:l:la:lo:lS:lv:a:k:cd:h:history:q:exit:c:clear:erm:clc:cerm"
 HISTIGNORE="$HISTIGNORE:..:...:.:cs:co:ni:ns:vi:reload:gst:edrc:edal:fs:ncu"
 HISTIGNORE="$HISTIGNORE:gf:gd:g:v:nu:cla:shhh:todo:poweroff:tn:ncdu:startx"
-HISTIGNORE="$HISTIGNORE:ls *::g *:a *:f *:k *"
-HISTIGNORE="$HISTIGNORE:cat *:rbl *:git push *"
+HISTIGNORE="$HISTIGNORE:cat *:rbl *:git push *:g *"
 HISTIGNORE="$HISTIGNORE:rbl:aca:dbup:dbdn:dbst:vv:sync:gdi:cf:f"
 
 if [[ $(uname) == 'Darwin' ]]; then
