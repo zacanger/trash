@@ -1,22 +1,21 @@
 #!/usr/bin/env bash
 
-# TODO: bell playing without interrupting countdown,
-# at start, end, and 5 minute intervals
+# TODO: bug with bell playing twice at start?
 
-min="$1"
+minutes="$1"
 bell_path="$HOME/Dropbox/z/x/bell.mp3"
 cols=$(tput cols)
 rows=$(tput lines)
 middle_row=$((rows / 2))
 middle_col=$(((cols / 2) - 4))
 sec=00
+min="$minutes"
 
 play_bell() {
-  mplayer "$bell_path" > /dev/null 2>&1
+  mplayer "$bell_path" > /dev/null 2>&1 &
 }
 
 end() {
-  # play_bell
   tput cvvis
   tput sgr0
   tput cup "$(tput lines)" 0
@@ -41,11 +40,13 @@ main() {
   validate
 
   tput clear
-  # play_bell
+  play_bell
   tput bold
   tput civis
 
   while [ "$min" -ge 0 ]; do
+    remainder=$(( min % 5 ))
+    [ "$remainder" -eq 0 ] && [ "$min" -ne "$minutes" ] && play_bell
     while [ $sec -ge 0 ]; do
       tput cup $middle_row $middle_col
       echo -ne "$(printf %02d:%02d "$min" $sec)\e"
@@ -56,6 +57,7 @@ main() {
     ((min=min-1))
   done
   echo -e "${RESET}"
+  play_bell
 end
 }
 
