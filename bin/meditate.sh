@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-# TODO: bug with bell playing twice at start?
-
 minutes="$1"
 bell_path="$HOME/Dropbox/z/x/bell.mp3"
 cols=$(tput cols)
@@ -46,7 +44,8 @@ main() {
 
   while [ "$min" -ge 0 ]; do
     remainder=$(( min % 5 ))
-    [ "$remainder" -eq 0 ] && [ "$min" -ne "$minutes" ] && play_bell
+    # TODO: this is broken
+    # [ "$remainder" -eq 0 ] && [ "$min" -ne "$minutes" ] && play_bell
     while [ $sec -ge 0 ]; do
       tput cup $middle_row $middle_col
       echo -ne "$(printf %02d:%02d "$min" $sec)\e"
