@@ -43,10 +43,13 @@ main() {
   tput civis
 
   while [ "$min" -ge 0 ]; do
-    remainder=$(( min % 5 ))
-    # TODO: this is broken
-    # [ "$remainder" -eq 0 ] && [ "$min" -ne "$minutes" ] && play_bell
     while [ $sec -ge 0 ]; do
+      rem=$(( min % 5 ))
+      [ "$rem" -eq 0 ] && \
+        [ "$sec" -eq 0 ] && \
+        [ "$min" -ne "$minutes" ] && \
+        play_bell
+
       tput cup $middle_row $middle_col
       echo -ne "$(printf %02d:%02d "$min" $sec)\e"
       ((sec=sec-1))
