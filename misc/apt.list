@@ -32,6 +32,7 @@ cpio
 cpp
 cpp-7
 cron
+cryptsetup
 curl
 dash
 dc
@@ -59,6 +60,7 @@ ghostscript
 ghostscript-x
 gimp
 git-all
+gnome-disk-utility
 gnupg
 gnupg-agent
 gnupg-utils
