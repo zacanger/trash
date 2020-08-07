@@ -44,8 +44,15 @@ main() {
 
   while [ "$min" -ge 0 ]; do
     while [ $sec -ge 0 ]; do
+      # play bell at every five minute mark
       rem=$(( min % 5 ))
       [ "$rem" -eq 0 ] && \
+        [ "$sec" -eq 0 ] && \
+        [ "$min" -ne "$minutes" ] && \
+        play_bell
+
+      # also play at one minute mark
+      [ "$min" -eq 1 ] && \
         [ "$sec" -eq 0 ] && \
         [ "$min" -ne "$minutes" ] && \
         play_bell
