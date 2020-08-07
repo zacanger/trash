@@ -33,3 +33,5 @@
   gpgsign = true
 [http]
   postBuffer = 524288000
+[pull]
+  ff = only
