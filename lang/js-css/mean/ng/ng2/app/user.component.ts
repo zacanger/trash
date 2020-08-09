@@ -17,7 +17,7 @@ export class UserComponent {
   }
 
   changeUserName() {
-    this.lastName = 'unger...????'
+    this.lastName = 'whatever'
   }
 
   getUsers() {
