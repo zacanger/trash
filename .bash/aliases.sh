@@ -76,7 +76,7 @@ alias k='ls'
 alias l='ls -oshS'
 alias a='ls -A'
 alias f='k -1'
-alias lt='ls -lt'
+alias lt='ls -ltrh'
 
 # dropbox
 alias dbup="dropbox start"
