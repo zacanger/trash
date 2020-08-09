@@ -353,7 +353,7 @@ npm i -g npm && npm i -g npx
 # Install python packages
 if [ -f $HOME/Dropbox/z/misc/pip.list ]; then
   for p in `cat $HOME/Dropbox/z/misc/pip.list`; do
-    pip3 install $p
+    pip3 install $pA -U
   done
 fi
 

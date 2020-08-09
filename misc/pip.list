@@ -7,6 +7,7 @@ bpython
 neovim
 nltk
 numpy
+pip
 requests
 scipy
 virtualenv
