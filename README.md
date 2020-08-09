@@ -23,6 +23,8 @@ which don't get symlinked or copied over.
 
 ## Notes
 
+* I have WSL 2 on a spare laptop, but barely use it. Most of what's in here
+  works fine, except for graphical apps and Snapcraft.
 * I also have a work Macbook, which uses
   [Rectangle](https://github.com/rxhanson/Rectangle) for window placement.
   `~/bin/mac-new.sh` is the setup script for this. It's incomplete, symlinks
