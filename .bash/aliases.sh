@@ -27,7 +27,7 @@ alias gp='git push'
 # development
 alias np='npm publish'
 alias ni='npm i'
-alias nia='npm i && npm audit fix'
+alias niaf='npm i && npm audit fix'
 alias ns='npm start -s'
 alias ng='npm install -g'
 alias nid='npm install --save-dev'
