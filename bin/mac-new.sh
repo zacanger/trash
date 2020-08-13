@@ -189,6 +189,7 @@ brew_packages=(
   atool
   autoconf
   automake
+  aws-iam-authenticator
   awscli
   bash
   bash-completion
