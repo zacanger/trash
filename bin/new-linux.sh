@@ -18,7 +18,7 @@ $z_path/bin/dropbox-fix.sh
 sudo chown -R $USER /usr/local
 
 # Install global packages
-sudo apt-get update && apt-get dist-upgrade -f -y
+sudo apt-get update && sudo apt-get dist-upgrade -f -y
 cat $list_path/apt.list | xargs sudo apt-get install -y
 
 # Snaps
@@ -141,6 +141,7 @@ cp $zconf_path/pcmanfm/default/pcmanfm.conf $conf_path/pcmanfm/default/
 curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 nvim +PlugInstall +qa
+nvim +GoInstallBinaries +qa
 
 # Link fonts
 ln -s $z_path/x/fonts/ $HOME/.local/share/
