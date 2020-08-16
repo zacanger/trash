@@ -24,6 +24,7 @@ cat hosts1 hosts2 hosts3 \
   | sed -e '/mediafire/d' \
   | sed -e '/twitter/d' \
   | sort -u > hosts
+echo "127.0.0.1 $(hostname)" >> hosts
 rm hosts1 hosts2 hosts3
 sudo mv /etc/hosts /etc/hosts.bak
 sudo mv hosts /etc/hosts
