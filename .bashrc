@@ -35,11 +35,11 @@ if [ -d "$HOME/.bash/functions" ]; then
   done
 fi
 
-if [[ $(uname) == 'Darwin' ]]; then
+if [[ $(uname) == 'Darwin' ]] || [[ $(uname -a) == *'microsoft'* ]]; then
   # Macs yell at you if you don't use bash, because Macs are bad
   export BASH_SILENCE_DEPRECATION_WARNING=1
   # On Linux, I manage multiple terminal sessions with the window manager
-  # On Mac, that's painful, so start tmux on a new shell.
+  # On Mac and WSL, that's painful, so start tmux on a new shell.
   [ -z "$TMUX" ] && { tmux attach || exec tmux new-session; }
 fi
 
