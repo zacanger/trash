@@ -4,14 +4,14 @@ ND=$HOME/.config/ninit # ninit dir -- set this to whereever you keep these files
 DN="${PWD##*/}" # current directory (like basename `pwd`)
 
 # make these files in wherever you specified $ND
-cp $ND/.editorconfig .editorconfig
-cp $ND/.gitignore .gitignore
-cp $ND/.gitattributes .gitattributes
-cp $ND/LICENSE.md LICENSE.md
-cp $ND/.npmrc .npmrc
-cp $ND/.eslintrc.json .eslintrc.json
-cp $ND/.prettierrc.js .prettierrc.js
-cp -R $ND/.github .github
+cp "$ND/.editorconfig" .editorconfig
+cp "$ND/.gitignore" .gitignore
+cp "$ND/.gitattributes" .gitattributes
+cp "$ND/LICENSE.md" LICENSE.md
+cp "$ND/.npmrc" .npmrc
+cp "$ND/.eslintrc.json" .eslintrc.json
+cp "$ND/.prettierrc.js" .prettierrc.js
+cp -R "$ND/.github" .github
 
 WITHOUTG="{
   \"name\": \"$DN\",
@@ -129,11 +129,11 @@ echo "# $DN
 [LICENSE](./LICENSE.md)" > README.md
 
 if [ "$1" == "-g" ] ; then
-  echo $WITHG > package.json
-  cp $ND/global.js index.js
+  echo "$WITHG" > package.json
+  cp "$ND/global.js" index.js
 else
-  echo $WITHOUTG > package.json
-  cp $ND/module.js index.js
+  echo "$WITHOUTG" > package.json
+  cp "$ND/module.js" index.js
 fi
 
 git init

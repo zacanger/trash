@@ -341,10 +341,8 @@ curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-
 chmod a+rx /usr/local/bin/youtube-dl
 
 # Install npm packages
-if [ -f $HOME/Dropbox/z/misc/npm.list ]; then
-  for p in `cat $HOME/Dropbox/z/misc/npm.list`; do
-    npm i -g $p
-  done
+if [[ -f $HOME/Dropbox/z/misc/npm.list ]]; then
+  cat "$HOME/Dropbox/z/misc/npm.list" | xargs npm i -g
 fi
 
 # Update Node and npm the way I prefer
@@ -352,10 +350,8 @@ n lts && n prune
 npm i -g npm && npm i -g npx
 
 # Install python packages
-if [ -f $HOME/Dropbox/z/misc/pip.list ]; then
-  for p in `cat $HOME/Dropbox/z/misc/pip.list`; do
-    pip3 install $pA -U
-  done
+if [[ -f $HOME/Dropbox/z/misc/pip.list ]]; then
+  cat "$HOME/Dropbox/z/misc/npm.list" | xargs sudo pip3 install -U
 fi
 
 # Vim
