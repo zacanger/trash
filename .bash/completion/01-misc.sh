@@ -1,8 +1,8 @@
 # shellcheck shell=bash
 
 # brew's bash completion
-if [[ `uname` == 'Darwin' ]]; then
-  _sourceif $(brew --prefix)/etc/bash_completion
+if [[ $(uname) == 'Darwin' ]]; then
+  _sourceif "$(brew --prefix)/etc/bash_completion"
 fi
 
 # aws completion
