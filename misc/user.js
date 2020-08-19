@@ -1,6 +1,7 @@
 // also see:
 // https://github.com/pyllyukko/user.js/blob/master/user.js
 user_pref("beacon.enabled", false);
+user_pref("browser.aboutConfig.showWarning", false):
 user_pref("browser.cache.offline.enable", false);
 user_pref("browser.fixup.alternate.enabled", false);
 user_pref("browser.formfill.enable", false);
