@@ -23,6 +23,7 @@ alias gst='git st'
 alias gitodo='git grep -EiI "FIXME|TODO"'
 alias aca='ac a'
 alias gp='git push'
+alias gpft='git push origin master --follow-tags'
 
 # development
 alias np='npm publish'
