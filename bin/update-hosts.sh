@@ -22,6 +22,7 @@ curl \
 cat hosts1 hosts2 hosts3 \
   | sed -e '/^[ \t]*#/d' \
   | sed -e '/mediafire/d' \
+  | sed -e '/datadog/d' \
   | sed -e '/twitter/d' \
   | sort -u > hosts
 echo "127.0.0.1 $(hostname)" >> hosts
