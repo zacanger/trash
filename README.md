@@ -1,3 +1,7 @@
+personal fork of CATWM.
+
+* personal config
+
 CATWM
 =====
 
