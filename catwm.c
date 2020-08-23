@@ -32,6 +32,7 @@
 #include <X11/Xlib.h>
 #include <X11/keysym.h>
 #include <X11/XF86keysym.h>
+#include <X11/Xatom.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -124,6 +125,14 @@ static unsigned int win_unfocus;
 static Window root;
 static client *head;
 static client *current;
+
+enum {
+    NetSupported,
+    NetActiveWindow,
+    NetLast
+};
+
+static Atom netatom[NetLast];
 
 // Events array
 static void (*events[LASTEvent])(XEvent *e) = {
@@ -555,6 +564,12 @@ void setup() {
     
     // To catch maprequest and destroynotify (if other wm running)
     XSelectInput(dis,root,SubstructureNotifyMask|SubstructureRedirectMask);
+
+    // Init atoms
+    netatom[NetSupported] = XInternAtom(dis, "_NET_SUPPORTED", False);
+    netatom[NetActiveWindow] = XInternAtom(dis, "_NET_ACTIVE_WINDOW", False);
+    XChangeProperty(dis, root, netatom[NetSupported], XA_ATOM, 32, PropModeReplace,
+      (unsigned char *)netatom, NetLast);
 }
 
 void sigchld(int unused) {

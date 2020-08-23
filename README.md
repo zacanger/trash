@@ -1,6 +1,7 @@
 personal fork of CATWM.
 
 * personal config
+* implemented `_NET_SUPPORTED` and `_NET_ACTIVE_WINDOW` so xdotool can type stuff
 
 CATWM
 =====
