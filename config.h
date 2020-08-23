@@ -35,6 +35,7 @@
 // Windows key
 #define MOD             Mod4Mask
 #define MASTER_SIZE     0.6
+#define BORDER_WIDTH    2
 
 // Colors
 #define FOCUS           "rgb:bc/57/66"

@@ -586,27 +586,29 @@ void tile() {
     client *c;
     int n = 0;
     int y = 0;
+    int m = BORDER_WIDTH;
 
     // If only one window
     if(head != NULL && head->next == NULL) {
-        XMoveResizeWindow(dis,head->win,0,0,sw-2,sh-2);
+        XMoveResizeWindow(dis,head->win,-m,-m,sw+m,sh+m);
     }
     else if(head != NULL) {
         switch(mode) {
             case 0:
+                m *= 2;
                 // Master window
-                XMoveResizeWindow(dis,head->win,0,0,master_size-2,sh-2);
+                XMoveResizeWindow(dis,head->win,0,0,master_size-m,sh-m);
 
                 // Stack
                 for(c=head->next;c;c=c->next) ++n;
                 for(c=head->next;c;c=c->next) {
-                    XMoveResizeWindow(dis,c->win,master_size,y,sw-master_size-2,(sh/n)-2);
+                    XMoveResizeWindow(dis,c->win,master_size,y,sw-master_size-m,(sh/n)-m);
                     y += sh/n;
                 }
                 break;
             case 1:
                 for(c=head;c;c=c->next) {
-                    XMoveResizeWindow(dis,c->win,0,0,sw,sh);
+                    XMoveResizeWindow(dis,c->win,-m,-m,sw+m,sh+m);
                 }
                 break;
             default:
@@ -621,10 +623,12 @@ void update_current() {
     for(c=head;c;c=c->next)
         if(current == c) {
             // "Enable" current window
-            XSetWindowBorderWidth(dis,c->win,1);
+            XSetWindowBorderWidth(dis,c->win,BORDER_WIDTH);
             XSetWindowBorder(dis,c->win,win_focus);
             XSetInputFocus(dis,c->win,RevertToParent,CurrentTime);
             XRaiseWindow(dis,c->win);
+            XChangeProperty(dis, root, netatom[NetActiveWindow], XA_WINDOW, 32, PropModeReplace,
+                (unsigned char *)&(c->win), 1);
         }
         else
             XSetWindowBorder(dis,c->win,win_unfocus);
