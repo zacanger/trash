@@ -33,6 +33,7 @@
 #include <X11/keysym.h>
 #include <X11/XF86keysym.h>
 #include <X11/Xatom.h>
+#include <X11/Xproto.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -476,7 +477,22 @@ void send_kill_signal(Window w) {
     XSendEvent(dis, w, False, NoEventMask, &ke);
 }
 
+static int (*xerrorxlib)(Display *, XErrorEvent *);
+
+static int xerror(Display *dpy, XErrorEvent *ee) {
+    if (ee->error_code == BadWindow
+    || (ee->request_code == X_ConfigureWindow && ee->error_code == BadMatch)
+    || (ee->request_code == X_ConfigureWindow && ee->error_code == BadValue)
+    || (ee->request_code == X_SetInputFocus && ee->error_code == BadMatch))
+        return 0;
+    fprintf(stderr, "catwm: fatal error: request code=%d, error code=%d\n",
+        ee->request_code, ee->error_code);
+    return xerrorxlib(dpy, ee); // may call exit
+}
+
 void setup() {
+    xerrorxlib = XSetErrorHandler(xerror);
+  
     // Install a signal
     sigchld(0);
 

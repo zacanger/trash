@@ -4,6 +4,7 @@ personal fork of CATWM.
 * implemented `_NET_SUPPORTED` and `_NET_ACTIVE_WINDOW` so xdotool can type stuff
 * removed the quit function as I don't use it
 * adjustable window border width, single window/fullscreen has no border
+* fixed various crashes by ignoring some benign xlib errors with deleted windows
 
 CATWM
 =====
