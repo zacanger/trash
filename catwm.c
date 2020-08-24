@@ -286,6 +286,7 @@ static void mouse_sel(client *c, XMotionEvent *ev) {
 void motionnotify(XEvent *e) {
     XMotionEvent *ev = &e->xmotion;
     client *c;
+    if (ev->window != root) return;
     for(c=head;c;c=c->next) mouse_sel(c, ev);
     for(c=flt;c;c=c->next) mouse_sel(c, ev); // floating wnd has higher prio
     for(c=pin;c;c=c->next) mouse_sel(c, ev);
