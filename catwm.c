@@ -122,6 +122,7 @@ static void update_current();
 static void move_float(const Arg arg);
 static void resize_float(const Arg arg);
 static void change_param(const Arg arg);
+static client **find_window(Window w, desktop* desk, client** res);
 
 enum {
     GapParam,
@@ -177,6 +178,11 @@ static desktop desktops[10];
 
 void add_window(Window w) {
     client *c,*t;
+    int i;
+
+    // for situations like clicking a link and it opening in existing browser window
+    for (i = 0; i < TABLENGTH(desktops); ++i)
+        if (find_window(w, &desktops[i], &c)) return;
 
     if(!(c = (client *)calloc(1,sizeof(client))))
         die("Error calloc!");
@@ -469,18 +475,18 @@ static client **find_window_in(client** front, Window w, client** res) {
     return *res=NULL, NULL;
 }
 
-static client **find_window(Window w, client** res) {
+client **find_window(Window w, desktop* desk, client** res) {
     client *c;
     client **f;
-    if ((f=find_window_in(&head, w, res))) return f;
-    if ((f=find_window_in(&flt, w, res))) return f;
+    if ((f=find_window_in(desk ? &desk->head : &head, w, res))) return f;
+    if ((f=find_window_in(desk ? &desk->flt : &flt, w, res))) return f;
     if ((f=find_window_in(&pin, w, res))) return f;
     return NULL;
 }
 
 void remove_window(Window w) {
     client *c;
-    client **front = find_window(w, &c);
+    client **front = find_window(w, NULL, &c);
     if (c) {
         if (c == current) current = current->prev ? current->prev : current->next;
         pop(front, c);

@@ -10,6 +10,8 @@ personal fork of CATWM.
 * ability to pin floating windows so they persist on all workspaces
 * fixed various crashes by ignoring some benign xlib errors with deleted windows
 * fixed broken logic that didn't correctly remove windows in some cases
+* fixed bug where things that open in an existing window can cause it to get added multiple times.
+  (for example, clicking a url with firefox already open).
 
 CATWM
 =====
