@@ -34,6 +34,7 @@
 #include <X11/XF86keysym.h>
 #include <X11/Xatom.h>
 #include <X11/Xproto.h>
+#include <X11/Xatom.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -91,6 +92,7 @@ static void configurerequest(XEvent *e);
 static void decrease();
 static void destroynotify(XEvent *e);
 static void motionnotify(XEvent *e);
+static void propertynotify(XEvent *e);
 static void die(const char* e);
 static unsigned long getcolor(const char* color);
 static void grabkeys();
@@ -116,6 +118,7 @@ static void start();
 static void swap_master();
 static void switch_mode();
 static void switch_float();
+static void switch_float_client(client *c);
 static void switch_pin();
 static void tile();
 static void update_current();
@@ -158,6 +161,10 @@ static int gap_left = GAP_LEFT, gap_right = GAP_RIGHT, gap_top = GAP_TOP, gap_bo
 enum {
     NetSupported,
     NetActiveWindow,
+    NetWMState,
+    NetWMWindowType,
+    NetWMWindowTypeDialog,
+    NetWMWindowTypeUtility,
     NetLast
 };
 
@@ -171,6 +178,7 @@ static void (*events[LASTEvent])(XEvent *e) = {
     [ConfigureNotify] = configurenotify,
     [ConfigureRequest] = configurerequest,
     [MotionNotify] = motionnotify,
+    [PropertyNotify] = propertynotify,
 };
 
 // Desktop array
@@ -292,6 +300,42 @@ void motionnotify(XEvent *e) {
     for(c=pin;c;c=c->next) mouse_sel(c, ev);
 }
 
+static Atom atomprop(client *c, Atom prop) {
+    int di;
+    unsigned long dl;
+    unsigned char *p = NULL;
+    Atom da, atom = None;
+    if (XGetWindowProperty(dis, c->win, prop, 0L, sizeof atom, False, XA_ATOM,
+        &da, &di, &dl, &dl, &p) == Success && p) {
+        atom = *(Atom *)p;
+        XFree(p);
+    }
+    return atom;
+}
+
+static void handle_window_type_hint_client(client *c) {
+    // could also handle fullscreen hint but just using the wm's fullscreen mode is fine for me
+    Atom wtype = atomprop(c, netatom[NetWMWindowType]);
+    if (wtype == netatom[NetWMWindowTypeDialog] ||
+        wtype == netatom[NetWMWindowTypeUtility])
+        if (!(c->fl & FL_FLOAT))
+          switch_float_client(c);
+}
+
+static void handle_window_type_hint(Window w) {
+    client *c;
+    if (find_window(w, NULL, &c))
+        handle_window_type_hint_client(c);
+}
+
+void propertynotify(XEvent *e) {
+    XPropertyEvent *ev = &e->xproperty;
+    client *c;
+    if (ev->window == root || ev->state == PropertyDelete) return;
+    if (ev->atom == netatom[NetWMWindowType])
+        handle_window_type_hint(ev->window);
+}
+
 void decrease() {
     if(master_size > 50) {
         master_size -= 10;
@@ -382,6 +426,7 @@ void maprequest(XEvent *e) {
     XMapWindow(dis,ev->window);
     tile();
     update_current();
+    handle_window_type_hint(ev->window);
 }
 
 void move_down() {
@@ -585,11 +630,16 @@ void setup() {
     change_desktop(arg);
     
     // To catch maprequest and destroynotify (if other wm running)
-    XSelectInput(dis,root,SubstructureNotifyMask|SubstructureRedirectMask|PointerMotionMask);
+    XSelectInput(dis,root,SubstructureNotifyMask|SubstructureRedirectMask|PointerMotionMask|
+      PropertyChangeMask);
 
     // Init atoms
     netatom[NetSupported] = XInternAtom(dis, "_NET_SUPPORTED", False);
     netatom[NetActiveWindow] = XInternAtom(dis, "_NET_ACTIVE_WINDOW", False);
+    netatom[NetWMState] = XInternAtom(dis, "_NET_WM_STATE", False);
+    netatom[NetWMWindowType] = XInternAtom(dis, "_NET_WM_WINDOW_TYPE", False);
+    netatom[NetWMWindowTypeDialog] = XInternAtom(dis, "_NET_WM_WINDOW_TYPE_DIALOG", False);
+    netatom[NetWMWindowTypeUtility] = XInternAtom(dis, "_NET_WM_WINDOW_TYPE_UTILITY", False);
     XChangeProperty(dis, root, netatom[NetSupported], XA_ATOM, 32, PropModeReplace,
       (unsigned char *)netatom, NetLast);
 }
@@ -653,26 +703,28 @@ static void insert_front(client **front, client *x) {
     x->prev = NULL;
 }
 
-void switch_float() {
-    if (!current) return;
-    current->fl ^= FL_FLOAT;
-    if (current->fl & FL_FLOAT) {
-        if (!current->fw) {
-            current->fx = current->x;
-            current->fy = current->y;
-            current->fw = current->w;
-            current->fh = current->h;
+void switch_float_client(client *c) {
+    c->fl ^= FL_FLOAT;
+    if (c->fl & FL_FLOAT) {
+        if (!c->fw) {
+            c->fx = c->x;
+            c->fy = c->y;
+            c->fw = c->w;
+            c->fh = c->h;
         }
-        if (head == current) head = head->next;
-        pop(&head, current);
-        insert_front(&flt, current);
+        if (head == c) head = head->next;
+        pop(&head, c);
+        insert_front(&flt, c);
     } else {
-        pop(&flt, current);
-        insert_front(&head, current);
-        current->fl &= ~FL_PIN; // TODO: pinning non-floating wnds
+        pop(&flt, c);
+        insert_front(&head, c);
+        c->fl &= ~FL_PIN; // TODO: pinning non-floating wnds
     }
     tile();
-    update_current();
+}
+
+void switch_float() {
+    if (current) switch_float_client(current);
 }
 
 void switch_pin() {

@@ -8,6 +8,7 @@ personal fork of CATWM.
 * ability to float windows + keybinds to resize and move floating windows
 * moving the mouse selects the window it's hovering
 * ability to pin floating windows so they persist on all workspaces
+* handle window manager hints to float.
 * fixed various crashes by ignoring some benign xlib errors with deleted windows
 * fixed broken logic that didn't correctly remove windows in some cases
 * fixed bug where things that open in an existing window can cause it to get added multiple times.
