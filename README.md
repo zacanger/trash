@@ -6,6 +6,7 @@ personal fork of CATWM.
 * adjustable window border width, single window/fullscreen has no border
 * ability to float windows + keybinds to resize and move floating windows
 * moving the mouse selects the window it's hovering
+* ability to pin floating windows so they persist on all workspaces
 * fixed various crashes by ignoring some benign xlib errors with deleted windows
 * fixed broken logic that didn't correctly remove windows in some cases
 

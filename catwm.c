@@ -68,6 +68,7 @@ struct client{
 };
 
 #define FL_FLOAT (1<<0)
+#define FL_PIN (1<<1)
 
 typedef struct desktop desktop;
 struct desktop{
@@ -112,6 +113,7 @@ static void start();
 static void swap_master();
 static void switch_mode();
 static void switch_float();
+static void switch_pin();
 static void tile();
 static void update_current();
 static void move_float(const Arg arg);
@@ -134,6 +136,7 @@ static unsigned int win_unfocus;
 static Window root;
 static client *head;
 static client *flt;
+static client *pin;
 static client *current;
 
 enum {
@@ -264,6 +267,7 @@ void motionnotify(XEvent *e) {
     client *c;
     for(c=head;c;c=c->next) mouse_sel(c, ev);
     for(c=flt;c;c=c->next) mouse_sel(c, ev); // floating wnd has higher prio
+    for(c=pin;c;c=c->next) mouse_sel(c, ev);
 }
 
 void decrease() {
@@ -455,6 +459,7 @@ static client **find_window(Window w, client** res) {
     client **f;
     if ((f=find_window_in(&head, w, res))) return f;
     if ((f=find_window_in(&flt, w, res))) return f;
+    if ((f=find_window_in(&pin, w, res))) return f;
     return NULL;
 }
 
@@ -642,9 +647,23 @@ void switch_float() {
     } else {
         pop(&flt, current);
         insert_front(&head, current);
+        current->fl &= ~FL_PIN; // TODO: pinning non-floating wnds
     }
     tile();
     update_current();
+}
+
+void switch_pin() {
+    if (!current) return;
+    current->fl ^= FL_PIN;
+    if (current->fl & FL_PIN) {
+        if (!(current->fl & FL_FLOAT)) switch_float();
+        pop(&flt, current);
+        insert_front(&pin, current);
+    } else {
+        pop(&pin, current);
+        insert_front(&flt, current);
+    }
 }
 
 static void move(client *c, int x, int y, int w, int h) {
@@ -676,9 +695,8 @@ void tile() {
                     y += sh/n;
                 }
                 // Float
-                for(c=flt;c;c=c->next) {
-                    XMoveResizeWindow(dis,c->win,c->fx,c->fy,c->fw,c->fh);
-                }
+                for(c=flt;c;c=c->next) XMoveResizeWindow(dis,c->win,c->fx,c->fy,c->fw,c->fh);
+                for(c=pin;c;c=c->next) XMoveResizeWindow(dis,c->win,c->fx,c->fy,c->fw,c->fh);
                 break;
             case 1:
                 for(c=head;c;c=c->next) {
@@ -709,7 +727,9 @@ void update_current() {
     client *c;
     for(c=head;c;c=c->next) enable_window(c);
     for(c=flt;c;c=c->next) XRaiseWindow(dis,c->win); // floating wnds always on top
+    for(c=pin;c;c=c->next) XRaiseWindow(dis,c->win);
     for(c=flt;c;c=c->next) enable_window(c);
+    for(c=pin;c;c=c->next) enable_window(c);
 }
 
 static void move_float(const Arg arg) {
