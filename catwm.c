@@ -399,14 +399,6 @@ void keypress(XEvent *e) {
 void kill_client() {
 	if(current != NULL) {
 		//send delete signal to window
-		XEvent ke;
-		ke.type = ClientMessage;
-		ke.xclient.window = current->win;
-		ke.xclient.message_type = XInternAtom(dis, "WM_PROTOCOLS", True);
-		ke.xclient.format = 32;
-		ke.xclient.data.l[0] = XInternAtom(dis, "WM_DELETE_WINDOW", True);
-		ke.xclient.data.l[1] = CurrentTime;
-		XSendEvent(dis, current->win, False, NoEventMask, &ke);
 		send_kill_signal(current->win);
 	}
 }
