@@ -34,7 +34,7 @@ shopt -u hostcomplete
 shopt -s progcomp
 # warn me if I try to shift nonexistent values off an array
 shopt -s shift_verbose
-# don't search $PATH to find files for the `source` builtin
+# don't search $PATH to find files for the source builtin
 shopt -u sourcepath
 
 # see lesspipe(1)

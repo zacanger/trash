@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 ND=$HOME/.config/ninit # ninit dir -- set this to whereever you keep these files
-DN="${PWD##*/}" # current directory (like basename `pwd`)
+DN="${PWD##*/}" # current directory (like basename $(pwd))
 
 # make these files in wherever you specified $ND
 cp "$ND/.editorconfig" .editorconfig

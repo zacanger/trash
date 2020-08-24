@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # First, disable SIP. Turn off and boot up while holding CMD+R,
-# then open Utilities > Terminal and run `csrutil disable`
+# then open Utilities > Terminal and run csrutil disable
 
 # Install Rectangle and configure to start on login:
 # https://github.com/rxhanson/Rectangle
@@ -107,7 +107,7 @@ chflags nohidden ~/Library
 defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
 defaults write com.apple.finder QuitMenuItem -bool true
 defaults write com.apple.finder DesktopViewOptions -dict IconSize -integer 72
-defaults write com.apple.finder AppleShowAllFiles true # should this be `YES`?
+defaults write com.apple.finder AppleShowAllFiles true # should this be YES?
 # Disable window animations and Get Info animations
 defaults write com.apple.finder DisableAllAnimations -bool true
 

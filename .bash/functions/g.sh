@@ -23,7 +23,7 @@ _g_completions() {
 # go to mark
 g() {
   if [ -f "$HOME/.g/${1-_back}" ]; then
-    cd `cat "$HOME/.g/${1-_back}" || echo .`
+    cd $(cat "$HOME/.g/${1-_back}" || echo .)
   else
     echo "Bookmark $1 not found!"
   fi
@@ -32,7 +32,7 @@ g() {
 # set mark
 gt() {
   pwd > "$HOME/.g/${1-_back}"
-  echo "g ${1} will return to `pwd`"
+  echo "g ${1} will return to $(pwd)"
 }
 
 # delete mark

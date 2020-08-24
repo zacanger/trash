@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# there's no `free` on macs
+# there's no free on macs
 
 import subprocess
 import re

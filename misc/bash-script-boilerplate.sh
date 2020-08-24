@@ -4,8 +4,8 @@ set -e
 
 # ${0##*/} -- this script's name
 # this sets up the script's full path
-pushd `dirname $0` > /dev/null
-SCRIPTPATH=`pwd`
+pushd $(dirname $0) > /dev/null
+SCRIPTPATH=$(pwd)
 popd > /dev/null
 
 # colors
@@ -100,7 +100,7 @@ get_password() {
   done
   echo "$password"
 }
-# pw=`get_password "${1:-blah}"`
+# pw=$(get_password "${1:-blah}")
 # echo "password is '$pw'"
 
 help() {
