@@ -472,7 +472,7 @@ static void pop(client **front, client *x) {
 
 static client **find_window_in(client** front, Window w, client** res) {
     client *c;
-    for (c=*front;c;c=c->next) if(c->win == w) return *res=c, front;
+    if (*front) for (c=*front;c;c=c->next) if(c->win == w) return *res=c, front;
     return *res=NULL, NULL;
 }
 
