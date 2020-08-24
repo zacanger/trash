@@ -45,6 +45,7 @@
 typedef union {
     const char** com;
     const int i;
+    const struct { int x, y; } xy;
 } Arg;
 
 // Structs
@@ -63,13 +64,17 @@ struct client{
 
     // The window
     Window win;
+    int x, y, w, h, fx, fy, fw, fh, fl;
 };
+
+#define FL_FLOAT (1<<0)
 
 typedef struct desktop desktop;
 struct desktop{
     int master_size;
     int mode;
     client *head;
+    client *flt;
     client *current;
 };
 
@@ -81,6 +86,7 @@ static void configurenotify(XEvent *e);
 static void configurerequest(XEvent *e);
 static void decrease();
 static void destroynotify(XEvent *e);
+static void motionnotify(XEvent *e);
 static void die(const char* e);
 static unsigned long getcolor(const char* color);
 static void grabkeys();
@@ -105,8 +111,11 @@ static void start();
 //static void swap();
 static void swap_master();
 static void switch_mode();
+static void switch_float();
 static void tile();
 static void update_current();
+static void move_float(const Arg arg);
+static void resize_float(const Arg arg);
 
 // Include configuration file (need struct key)
 #include "config.h"
@@ -124,6 +133,7 @@ static unsigned int win_focus;
 static unsigned int win_unfocus;
 static Window root;
 static client *head;
+static client *flt;
 static client *current;
 
 enum {
@@ -140,7 +150,8 @@ static void (*events[LASTEvent])(XEvent *e) = {
     [MapRequest] = maprequest,
     [DestroyNotify] = destroynotify,
     [ConfigureNotify] = configurenotify,
-    [ConfigureRequest] = configurerequest
+    [ConfigureRequest] = configurerequest,
+    [MotionNotify] = motionnotify,
 };
 
 // Desktop array
@@ -235,6 +246,26 @@ void configurerequest(XEvent *e) {
     XConfigureWindow(dis, ev->window, ev->value_mask, &wc);
 }
 
+static void mouse_sel(client *c, XMotionEvent *ev) {
+    int x = ev->x_root, y = ev->y_root;
+    if (current != c) {
+        int in_rect = c->fl & FL_FLOAT ?
+            x >= c->fx && y >= c->fy && x < c->fx + c->fw && y < c->fy + c->fh
+          : x >= c->x && y >= c->y && x < c->x + c->w && y < c->y + c->h;
+        if (in_rect) {
+            current = c;
+            update_current();
+        }
+    }
+}
+
+void motionnotify(XEvent *e) {
+    XMotionEvent *ev = &e->xmotion;
+    client *c;
+    for(c=head;c;c=c->next) mouse_sel(c, ev);
+    for(c=flt;c;c=c->next) mouse_sel(c, ev); // floating wnd has higher prio
+}
+
 void decrease() {
     if(master_size > 50) {
         master_size -= 10;
@@ -243,19 +274,7 @@ void decrease() {
 }
 
 void destroynotify(XEvent *e) {
-    int i=0;
-    client *c;
     XDestroyWindowEvent *ev = &e->xdestroywindow;
-
-    // Uber (and ugly) hack ;)
-    for(c=head;c;c=c->next)
-        if(ev->window == c->win)
-            i++;
-    
-    // End of the hack
-    if(i == 0)
-        return;
-
     remove_window(ev->window);
     tile();
     update_current();
@@ -344,6 +363,7 @@ void move_down() {
     if(current == NULL || current->next == NULL || current->win == head->win || current->prev == NULL) {
         return;
     }
+    if(current->next == NULL || (current->fl & FL_FLOAT)) return;
     tmp = current->win;
     current->win = current->next->win;
     current->next->win = tmp;
@@ -358,6 +378,7 @@ void move_up() {
     if(current == NULL || current->prev == head || current->win == head->win) {
         return;
     }
+    if(current->prev == NULL || (current->fl & FL_FLOAT)) return;
     tmp = current->win;
     current->win = current->prev->win;
     current->prev->win = tmp;
@@ -381,7 +402,7 @@ void next_win() {
     client *c;
 
     if(current != NULL && head != NULL) {
-		if(current->next == NULL)
+		if((current->fl & FL_FLOAT) || current->next == NULL)
             c = head;
         else
             c = current->next;
@@ -406,7 +427,7 @@ void prev_win() {
     client *c;
 
     if(current != NULL && head != NULL) {
-        if(current->prev == NULL)
+        if((current->fl & FL_FLOAT) || current->prev == NULL)
             for(c=head;c->next;c=c->next);
         else
             c = current->prev;
@@ -416,38 +437,34 @@ void prev_win() {
     }
 }
 
+static void pop(client **front, client *x) {
+    if (x == *front) *front = x->next;
+    if (x->prev) x->prev->next = x->next;
+    if (x->next) x->next->prev = x->prev;
+    x->prev = x->next = NULL;
+}
+
+static client **find_window_in(client** front, Window w, client** res) {
+    client *c;
+    for (c=*front;c;c=c->next) if(c->win == w) return *res=c, front;
+    return *res=NULL, NULL;
+}
+
+static client **find_window(Window w, client** res) {
+    client *c;
+    client **f;
+    if ((f=find_window_in(&head, w, res))) return f;
+    if ((f=find_window_in(&flt, w, res))) return f;
+    return NULL;
+}
+
 void remove_window(Window w) {
     client *c;
-
-    // CHANGE THIS UGLY CODE
-    for(c=head;c;c=c->next) {
-
-        if(c->win == w) {
-            if(c->prev == NULL && c->next == NULL) {
-                free(head);
-                head = NULL;
-                current = NULL;
-                return;
-            }
-
-            if(c->prev == NULL) {
-                head = c->next;
-                c->next->prev = NULL;
-                current = c->next;
-            }
-            else if(c->next == NULL) {
-                c->prev->next = NULL;
-                current = c->prev;
-            }
-            else {
-                c->prev->next = c->next;
-                c->next->prev = c->prev;
-                current = c->prev;
-            }
-
-            free(c);
-            return;
-        }
+    client **front = find_window(w, &c);
+    if (c) {
+        if (c == current) current = current->prev ? current->prev : current->next;
+        pop(front, c);
+        free(c);
     }
 }
 
@@ -455,11 +472,13 @@ void save_desktop(int i) {
     desktops[i].master_size = master_size;
     desktops[i].mode = mode;
     desktops[i].head = head;
+    desktops[i].flt = flt;
     desktops[i].current = current;
 }
 
 void select_desktop(int i) {
     head = desktops[i].head;
+    flt = desktops[i].flt;
     current = desktops[i].current;
     master_size = desktops[i].master_size;
     mode = desktops[i].mode;
@@ -539,7 +558,7 @@ void setup() {
     change_desktop(arg);
     
     // To catch maprequest and destroynotify (if other wm running)
-    XSelectInput(dis,root,SubstructureNotifyMask|SubstructureRedirectMask);
+    XSelectInput(dis,root,SubstructureNotifyMask|SubstructureRedirectMask|PointerMotionMask);
 
     // Init atoms
     netatom[NetSupported] = XInternAtom(dis, "_NET_SUPPORTED", False);
@@ -579,13 +598,15 @@ void start() {
 }
 
 void swap_master() {
-    Window tmp;
-
-    if(head != NULL && current != NULL && current != head && mode == 0) {
-        tmp = head->win;
-        head->win = current->win;
-        current->win = tmp;
-        current = head;
+    if(!(current->fl & FL_FLOAT) && head && current && current != head && mode == 0) {
+        client *headnext = head->next == current ? head : head->next;
+        if(current->next) current->next->prev = head;
+        if(current->prev) current->prev->next = head;
+        head->next = current->next == head ? current : current->next;
+        head->prev = current->prev == head ? current : current->prev;
+        current->prev = NULL;
+        current->next = headnext;
+        head = current;
 
         tile();
         update_current();
@@ -598,6 +619,39 @@ void switch_mode() {
     update_current();
 }
 
+static void insert_front(client **front, client *x) {
+    x->next = *front;
+    if (*front) (*front)->prev = x;
+    *front = x;
+    x->prev = NULL;
+}
+
+void switch_float() {
+    if (!current) return;
+    current->fl ^= FL_FLOAT;
+    if (current->fl & FL_FLOAT) {
+        if (!current->fw) {
+            current->fx = current->x;
+            current->fy = current->y;
+            current->fw = current->w;
+            current->fh = current->h;
+        }
+        if (head == current) head = head->next;
+        pop(&head, current);
+        insert_front(&flt, current);
+    } else {
+        pop(&flt, current);
+        insert_front(&head, current);
+    }
+    tile();
+    update_current();
+}
+
+static void move(client *c, int x, int y, int w, int h) {
+  c->x = x; c->y = y; c->w = w; c->h = h;
+  XMoveResizeWindow(dis, c->win, x, y, w, h);
+}
+
 void tile() {
     client *c;
     int n = 0;
@@ -606,7 +660,7 @@ void tile() {
 
     // If only one window
     if(head != NULL && head->next == NULL) {
-        XMoveResizeWindow(dis,head->win,-m,-m,sw+m,sh+m);
+        move(head,-m,-m,sw+m,sh+m);
     }
     else if(head != NULL) {
         switch(mode) {
@@ -618,13 +672,17 @@ void tile() {
                 // Stack
                 for(c=head->next;c;c=c->next) ++n;
                 for(c=head->next;c;c=c->next) {
-                    XMoveResizeWindow(dis,c->win,master_size,y,sw-master_size-m,(sh/n)-m);
+                    move(c,master_size,y,sw-master_size-m,(sh/n)-m);
                     y += sh/n;
+                }
+                // Float
+                for(c=flt;c;c=c->next) {
+                    XMoveResizeWindow(dis,c->win,c->fx,c->fy,c->fw,c->fh);
                 }
                 break;
             case 1:
                 for(c=head;c;c=c->next) {
-                    XMoveResizeWindow(dis,c->win,-m,-m,sw+m,sh+m);
+                    move(c,-m,-m,sw+m,sh+m);
                 }
                 break;
             default:
@@ -633,21 +691,45 @@ void tile() {
     }
 }
 
+static void enable_window(client *c) {
+    if(current == c) {
+        // "Enable" current window
+        XSetWindowBorderWidth(dis,c->win,BORDER_WIDTH);
+        XSetWindowBorder(dis,c->win,win_focus);
+        XSetInputFocus(dis,c->win,RevertToParent,CurrentTime);
+        XRaiseWindow(dis,c->win);
+        XChangeProperty(dis, root, netatom[NetActiveWindow], XA_WINDOW, 32, PropModeReplace,
+            (unsigned char *)&(c->win), 1);
+    }
+    else
+        XSetWindowBorder(dis,c->win,win_unfocus);
+}
+
 void update_current() {
     client *c;
+    for(c=head;c;c=c->next) enable_window(c);
+    for(c=flt;c;c=c->next) XRaiseWindow(dis,c->win); // floating wnds always on top
+    for(c=flt;c;c=c->next) enable_window(c);
+}
 
-    for(c=head;c;c=c->next)
-        if(current == c) {
-            // "Enable" current window
-            XSetWindowBorderWidth(dis,c->win,BORDER_WIDTH);
-            XSetWindowBorder(dis,c->win,win_focus);
-            XSetInputFocus(dis,c->win,RevertToParent,CurrentTime);
-            XRaiseWindow(dis,c->win);
-            XChangeProperty(dis, root, netatom[NetActiveWindow], XA_WINDOW, 32, PropModeReplace,
-                (unsigned char *)&(c->win), 1);
-        }
-        else
-            XSetWindowBorder(dis,c->win,win_unfocus);
+static void move_float(const Arg arg) {
+    if (current && current->fl) {
+        client *c = current;
+        c->fx += arg.xy.x;
+        c->fy += arg.xy.y;
+        XMoveResizeWindow(dis,c->win,c->fx,c->fy,c->fw,c->fh);
+    }
+}
+
+static void resize_float(const Arg arg) {
+    if (current && current->fl) {
+        client *c = current;
+        c->fw += arg.xy.x;
+        c->fh += arg.xy.y;
+        if (c->fw < 5) c->fw = 5;
+        if (c->fh < 5) c->fh = 5;
+        XMoveResizeWindow(dis,c->win,c->fx,c->fy,c->fw,c->fh);
+    }
 }
 
 int main(int argc, char **argv) {

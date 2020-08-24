@@ -64,7 +64,8 @@ static struct key keys[] = {
     {  MOD|ShiftMask,   XK_j,                       move_down,      {NULL}},
     {  MOD|ShiftMask,   XK_k,                       move_up,        {NULL}},
     {  MOD|ShiftMask,   XK_Return,                  swap_master,    {NULL}},
-    {  MOD,             XK_space,                   switch_mode,    {NULL}},
+    {  MOD,             XK_f,                       switch_mode,    {NULL}},
+    {  MOD,             XK_space,                   switch_float,   {NULL}},
     {  MOD,             XK_d,                       spawn,          {.com = dmenucmd}},
     {  MOD,             XK_Return,                  spawn,          {.com = termcmd}},
     {  MOD,             XK_Right,                   next_desktop,   {NULL}},
@@ -72,6 +73,14 @@ static struct key keys[] = {
     {  MOD|ShiftMask,   XK_p,                       spawn,          {.com = passcmd}},
     {  MOD|ShiftMask,   XK_u,                       spawn,          {.com = usercmd}},
     {  MOD|ShiftMask,   XK_4,                       spawn,          {.com = shrcmd}},
+    {  MOD|ShiftMask|ControlMask, XK_h,             resize_float,   {.xy = {-5, 0}}},
+    {  MOD|ShiftMask|ControlMask, XK_l,             resize_float,   {.xy = {5,  0}}},
+    {  MOD|ShiftMask|ControlMask, XK_k,             resize_float,   {.xy = {0, -5}}},
+    {  MOD|ShiftMask|ControlMask, XK_j,             resize_float,   {.xy = {0,  5}}},
+    {  MOD|ControlMask, XK_h,                       move_float,     {.xy = {-5, 0}}},
+    {  MOD|ControlMask, XK_l,                       move_float,     {.xy = {5,  0}}},
+    {  MOD|ControlMask, XK_k,                       move_float,     {.xy = {0, -5}}},
+    {  MOD|ControlMask, XK_j,                       move_float,     {.xy = {0,  5}}},
        DESKTOPCHANGE(   XK_0,                                       0)
        DESKTOPCHANGE(   XK_1,                                       1)
        DESKTOPCHANGE(   XK_2,                                       2)
