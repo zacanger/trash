@@ -41,6 +41,13 @@
 #define FOCUS           "rgb:bc/57/66"
 #define UNFOCUS         "rgb:88/88/88"
 
+// Gaps
+#define GAP_TOP 0
+#define GAP_LEFT 0
+#define GAP_RIGHT 0
+#define GAP_BOTTOM 0
+#define GAP 0
+
 const char* dmenucmd[] = {"dmenu_run",NULL};
 const char* termcmd[] = {"st",NULL};
 const char* passcmd[] = {"passdmenu","--pass","gopass","--type",NULL};
@@ -82,6 +89,16 @@ static struct key keys[] = {
     {  MOD|ControlMask, XK_l,                       move_float,     {.xy = {5,  0}}},
     {  MOD|ControlMask, XK_k,                       move_float,     {.xy = {0, -5}}},
     {  MOD|ControlMask, XK_j,                       move_float,     {.xy = {0,  5}}},
+    {  MOD|ControlMask, XK_9,                       change_param,   {.param = {GapParam, -5}}},
+    {  MOD|ControlMask, XK_0,                       change_param,   {.param = {GapParam, 5}}},
+    {  MOD|ControlMask, XK_5,                       change_param,   {.param = {GapLeftParam, 5}}},
+    {  MOD|ControlMask, XK_6,                       change_param,   {.param = {GapTopParam, 5}}},
+    {  MOD|ControlMask, XK_7,                       change_param,   {.param = {GapRightParam, 5}}},
+    {  MOD|ControlMask, XK_8,                       change_param,   {.param = {GapBottomParam, 5}}},
+    {  MOD|ShiftMask|ControlMask, XK_5,             change_param,   {.param = {GapLeftParam, -5}}},
+    {  MOD|ShiftMask|ControlMask, XK_6,             change_param,   {.param = {GapTopParam, -5}}},
+    {  MOD|ShiftMask|ControlMask, XK_7,             change_param,   {.param = {GapRightParam, -5}}},
+    {  MOD|ShiftMask|ControlMask, XK_8,             change_param,   {.param = {GapBottomParam, -5}}},
        DESKTOPCHANGE(   XK_0,                                       0)
        DESKTOPCHANGE(   XK_1,                                       1)
        DESKTOPCHANGE(   XK_2,                                       2)

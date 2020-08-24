@@ -41,11 +41,14 @@
 #include <sys/wait.h>
 
 #define TABLENGTH(X)    (sizeof(X)/sizeof(*X))
+#define MIN(x, y) ((x) < (y) ? (x) : (y))
+#define MAX(x, y) ((x) > (y) ? (x) : (y))
 
 typedef union {
     const char** com;
     const int i;
     const struct { int x, y; } xy;
+    const struct { int which; int value; } param;
 } Arg;
 
 // Structs
@@ -118,6 +121,16 @@ static void tile();
 static void update_current();
 static void move_float(const Arg arg);
 static void resize_float(const Arg arg);
+static void change_param(const Arg arg);
+
+enum {
+    GapParam,
+    GapTopParam,
+    GapBottomParam,
+    GapLeftParam,
+    GapRightParam,
+    LastParam
+};
 
 // Include configuration file (need struct key)
 #include "config.h"
@@ -138,6 +151,8 @@ static client *head;
 static client *flt;
 static client *pin;
 static client *current;
+static int gap = GAP;
+static int gap_left = GAP_LEFT, gap_right = GAP_RIGHT, gap_top = GAP_TOP, gap_bottom = GAP_BOTTOM;
 
 enum {
     NetSupported,
@@ -674,38 +689,40 @@ static void move(client *c, int x, int y, int w, int h) {
 void tile() {
     client *c;
     int n = 0;
-    int y = 0;
+    int y = 0; // relative to area inside gap
     int m = BORDER_WIDTH;
+    int m2 = m*2;
+    int x = gap_left;
+    int ah = sh-gap_top-gap_bottom;
+    int aw = sw-gap_left-gap_right-gap;
+    int stack_height;
 
-    // If only one window
-    if(head != NULL && head->next == NULL) {
-        move(head,-m,-m,sw+m,sh+m);
-    }
-    else if(head != NULL) {
-        switch(mode) {
-            case 0:
-                m *= 2;
-                // Master window
-                XMoveResizeWindow(dis,head->win,0,0,master_size-m,sh-m);
+    switch(mode) {
+        case 0:
+            if (head) {
+              // Master window
+              move(head,x,gap_top,head->next ? master_size-m2 : aw-m2,ah-m2);
 
-                // Stack
-                for(c=head->next;c;c=c->next) ++n;
-                for(c=head->next;c;c=c->next) {
-                    move(c,master_size,y,sw-master_size-m,(sh/n)-m);
-                    y += sh/n;
-                }
-                // Float
-                for(c=flt;c;c=c->next) XMoveResizeWindow(dis,c->win,c->fx,c->fy,c->fw,c->fh);
-                for(c=pin;c;c=c->next) XMoveResizeWindow(dis,c->win,c->fx,c->fy,c->fw,c->fh);
-                break;
-            case 1:
-                for(c=head;c;c=c->next) {
-                    move(c,-m,-m,sw+m,sh+m);
-                }
-                break;
-            default:
-                break;
-        }
+              // Stack
+              for(c=head->next;c;c=c->next) ++n;
+              stack_height = MAX(5, (ah-gap*(n > 0 ? n-1 : 0)) / MAX(n, 1));
+              for(c=head->next;c;c=c->next) {
+                  int h = c->next ? stack_height : MAX(5, ah-y); // last wnd should be pix perf
+                  move(c,x+master_size+gap,gap_top+y,aw-master_size-m2,h-m2);
+                  y += stack_height+gap;
+              }
+            }
+            // Float
+            for(c=flt;c;c=c->next) XMoveResizeWindow(dis,c->win,c->fx,c->fy,c->fw,c->fh);
+            for(c=pin;c;c=c->next) XMoveResizeWindow(dis,c->win,c->fx,c->fy,c->fw,c->fh);
+            break;
+        case 1:
+            for(c=head;c;c=c->next) {
+                move(c,-m,-m,sw+m2,sh+m2);
+            }
+            break;
+        default:
+            break;
     }
 }
 
@@ -741,15 +758,26 @@ static void move_float(const Arg arg) {
     }
 }
 
+static void add_clamp(int* dst, int delta, int min) { *dst = MAX(min, *dst + delta); }
+
 static void resize_float(const Arg arg) {
     if (current && current->fl) {
         client *c = current;
-        c->fw += arg.xy.x;
-        c->fh += arg.xy.y;
-        if (c->fw < 5) c->fw = 5;
-        if (c->fh < 5) c->fh = 5;
+        add_clamp(&c->fw, arg.xy.x, 5);
+        add_clamp(&c->fh, arg.xy.y, 5);
         XMoveResizeWindow(dis,c->win,c->fx,c->fy,c->fw,c->fh);
     }
+}
+
+static void change_param(const Arg arg) {
+    switch (arg.param.which) {
+        case GapParam: add_clamp(&gap, arg.param.value, 0); break;
+        case GapTopParam: add_clamp(&gap_top, arg.param.value, 0); break;
+        case GapBottomParam: add_clamp(&gap_bottom, arg.param.value, 0); break;
+        case GapLeftParam: add_clamp(&gap_left, arg.param.value, 0); break;
+        case GapRightParam: add_clamp(&gap_right, arg.param.value, 0); break;
+    }
+    tile();
 }
 
 int main(int argc, char **argv) {

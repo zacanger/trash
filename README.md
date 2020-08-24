@@ -3,7 +3,8 @@ personal fork of CATWM.
 * personal config
 * implemented `_NET_SUPPORTED` and `_NET_ACTIVE_WINDOW` so xdotool can type stuff
 * removed the quit function as I don't use it
-* adjustable window border width, single window/fullscreen has no border
+* adjustable window border width
+* adjustable gaps
 * ability to float windows + keybinds to resize and move floating windows
 * moving the mouse selects the window it's hovering
 * ability to pin floating windows so they persist on all workspaces
