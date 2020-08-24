@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [[ `uname` == 'Darwin' ]]; then
+if [[ $(uname) == 'Darwin' ]]; then
   /System/Library/CoreServices/"Menu Extras"/User.menu/Contents/Resources/CGSession -suspend
 else
   if hash i3lock 2>/dev/null; then

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [[ `uname` == 'Darwin' ]]; then
+if [[ $(uname) == 'Darwin' ]]; then
   ps -A -m -S -O comm,pmem,rss | awk '
     NR == 1 { print; next }
     { a[$2] += $3; b[$2] += $4; }
