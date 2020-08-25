@@ -344,10 +344,7 @@ static void handle_size_hints(client *c) {
     int minw, minh;
     long msize;
     if (!XGetWMNormalHints(dis, c->win, &s, &msize)) return;
-    if (s.flags & PBaseSize) {
-        c->fw = s.base_width;
-        c->fh = s.base_height;
-    } else if (s.flags & PMaxSize) {
+    if (s.flags & PMaxSize) {
         c->fw = s.max_width;
         c->fh = s.max_height;
     }
