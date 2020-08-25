@@ -1,3 +1,6 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-ffmpeg -i $1.flv -f mp3 -ar 44100 -ac 2 -ab 192k -y -acodec copy $1.mp3
+for a in ./*.flv; do
+  ffmpeg -i "$a" -f mp3 -ar 44100 -ac 2 -ab 192k -y -acodec copy "${a/.flv/.mp3}"
+  rm "$a"
+done

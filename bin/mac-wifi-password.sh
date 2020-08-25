@@ -61,7 +61,7 @@ else
 fi
 
 # warn user about keychain dialog
-if [ $verbose ]; then
+if [ "$verbose" ]; then
   echo ""
   echo "\033[90m … getting password for \"$ssid\". \033[39m"
   echo "\033[90m … keychain prompt incoming. \033[39m"
@@ -86,9 +86,9 @@ if [ "" == "$pwd" ]; then
 fi
 
 # print
-if [ $verbose ]; then
+if [ "$verbose" ]; then
   echo "\033[96m ✓ \"$pwd\" \033[39m"
   echo ""
 else
-  echo $pwd
+  echo "$pwd"
 fi
