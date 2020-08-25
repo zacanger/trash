@@ -348,9 +348,6 @@ static void handle_size_hints(client *c) {
     } else if (s.flags & PMaxSize) {
         c->fw = s.max_width;
         c->fh = s.max_height;
-    } else if (s.flags * PMinSize) {
-        c->fw = s.min_width;
-        c->fh = s.min_height;
     }
     if (s.flags & PMinSize) {
         minw = s.min_width;
