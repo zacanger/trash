@@ -168,6 +168,7 @@ enum {
     NetWMWindowType,
     NetWMWindowTypeDialog,
     NetWMWindowTypeUtility,
+    NetWMWindowTypeSplash,
     NetLast
 };
 
@@ -325,8 +326,9 @@ static Atom atomprop(client *c, Atom prop) {
 static void handle_window_type_hint_client(client *c) {
     // could also handle fullscreen hint but just using the wm's fullscreen mode is fine for me
     Atom wtype = atomprop(c, netatom[NetWMWindowType]);
-    if (wtype == netatom[NetWMWindowTypeDialog] ||
-        wtype == netatom[NetWMWindowTypeUtility])
+    if (wtype == netatom[NetWMWindowTypeDialog]
+     || wtype == netatom[NetWMWindowTypeUtility]
+     || wtype == netatom[NetWMWindowTypeSplash])
         if (!(c->fl & FL_FLOAT))
           switch_float_client(c);
 }
@@ -680,6 +682,7 @@ void setup() {
     netatom[NetWMWindowType] = XInternAtom(dis, "_NET_WM_WINDOW_TYPE", False);
     netatom[NetWMWindowTypeDialog] = XInternAtom(dis, "_NET_WM_WINDOW_TYPE_DIALOG", False);
     netatom[NetWMWindowTypeUtility] = XInternAtom(dis, "_NET_WM_WINDOW_TYPE_UTILITY", False);
+    netatom[NetWMWindowTypeSplash] = XInternAtom(dis, "_NET_WM_WINDOW_TYPE_SPLASH", False);
     XChangeProperty(dis, root, netatom[NetSupported], XA_ATOM, 32, PropModeReplace,
       (unsigned char *)netatom, NetLast);
 }
