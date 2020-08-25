@@ -193,7 +193,7 @@ void add_window(Window w) {
 
     // for situations like clicking a link and it opening in existing browser window
     for (i = 0; i < TABLENGTH(desktops); ++i)
-        if (find_window(w, &desktops[i], &c)) return;
+        if (find_window(w, i == current_desktop ? NULL : &desktops[i], &c)) return;
 
     if(!(c = (client *)calloc(1,sizeof(client))))
         die("Error calloc!");
