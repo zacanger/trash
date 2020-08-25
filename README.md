@@ -14,6 +14,7 @@ personal fork of CATWM.
 * fixed broken logic that didn't correctly remove windows in some cases
 * fixed bug where things that open in an existing window can cause it to get added multiple times.
   (for example, clicking a url with firefox already open).
+* fixed buggy window geometry for some programs that have slow startup like firefox
 
 CATWM
 =====

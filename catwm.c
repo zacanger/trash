@@ -270,15 +270,21 @@ void configurenotify(XEvent *e) {
 void configurerequest(XEvent *e) {
     // Paste from DWM, thx again \o/
     XConfigureRequestEvent *ev = &e->xconfigurerequest;
-    XWindowChanges wc;
-    wc.x = ev->x;
-    wc.y = ev->y;
-    wc.width = ev->width;
-    wc.height = ev->height;
-    wc.border_width = ev->border_width;
-    wc.sibling = ev->above;
-    wc.stack_mode = ev->detail;
-    XConfigureWindow(dis, ev->window, ev->value_mask, &wc);
+    client *c;
+    if (find_window(ev->window, NULL, &c)) {
+        // TODO
+    } else {
+        XWindowChanges wc;
+        wc.x = ev->x;
+        wc.y = ev->y;
+        wc.width = ev->width;
+        wc.height = ev->height;
+        wc.border_width = ev->border_width;
+        wc.sibling = ev->above;
+        wc.stack_mode = ev->detail;
+        XConfigureWindow(dis, ev->window, ev->value_mask, &wc);
+    }
+    XSync(dis, False);
 }
 
 static void mouse_sel(client *c, XMotionEvent *ev) {
