@@ -35,6 +35,7 @@
 #include <X11/Xatom.h>
 #include <X11/Xproto.h>
 #include <X11/Xatom.h>
+#include <X11/Xutil.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -69,10 +70,12 @@ struct client{
     // The window
     Window win;
     int x, y, w, h, fx, fy, fw, fh, fl;
+    float mina, maxa;
 };
 
 #define FL_FLOAT (1<<0)
 #define FL_PIN (1<<1)
+#define FL_HARDSIZE (1<<2)
 
 typedef struct desktop desktop;
 struct desktop{
@@ -328,12 +331,53 @@ static void handle_window_type_hint(Window w) {
         handle_window_type_hint_client(c);
 }
 
+static void handle_size_hints(client *c) {
+    XSizeHints s;
+    int minw, minh;
+    long msize;
+    if (!XGetWMNormalHints(dis, c->win, &s, &msize)) return;
+    if (s.flags & PBaseSize) {
+        c->fw = s.base_width;
+        c->fh = s.base_height;
+    } else if (s.flags & PMaxSize) {
+        c->fw = s.max_width;
+        c->fh = s.max_height;
+    } else if (s.flags * PMinSize) {
+        c->fw = s.min_width;
+        c->fh = s.min_height;
+    }
+    if (s.flags & PMinSize) {
+        minw = s.min_width;
+        minh = s.min_height;
+    } else if (s.flags & PBaseSize) {
+        minw = s.base_width;
+        minh = s.base_height;
+    }
+    if ((s.flags & PMaxSize) && minw == s.max_height && minh == s.max_width) {
+        c->fw = minw;
+        c->fh = minh;
+        c->fl |= FL_HARDSIZE;
+    }
+    if (s.flags & PAspect) {
+      c->mina = (float)s.min_aspect.y / s.min_aspect.x;
+      c->maxa = (float)s.min_aspect.x / s.min_aspect.y;
+    }
+}
+
 void propertynotify(XEvent *e) {
     XPropertyEvent *ev = &e->xproperty;
     client *c;
     if (ev->window == root || ev->state == PropertyDelete) return;
     if (ev->atom == netatom[NetWMWindowType])
         handle_window_type_hint(ev->window);
+    else switch (ev->atom) {
+        case XA_WM_NORMAL_HINTS:
+            if (find_window(ev->window, NULL, &c)) {
+                handle_size_hints(c);
+                tile();
+            }
+            break;
+    }
 }
 
 void decrease() {
@@ -416,6 +460,7 @@ void maprequest(XEvent *e) {
 
     add_window(ev->window);
     XMapWindow(dis,ev->window);
+    handle_size_hints(current);
     tile();
     update_current();
     handle_window_type_hint(ev->window);
@@ -732,9 +777,24 @@ void switch_pin() {
     }
 }
 
+static void scale2(int *a, int *b, float amt) {
+    *a = (int)(*a * amt);
+    *b = (int)(*b * amt);
+}
+
 static void move(client *c, int x, int y, int w, int h) {
-  c->x = x; c->y = y; c->w = w; c->h = h;
-  XMoveResizeWindow(dis, c->win, x, y, w, h);
+    c->x = x; c->y = y; c->w = w; c->h = h;
+    if (c->fl & FL_HARDSIZE) {
+        c->w = c->fw;
+        c->h = c->fw;
+        if (c->w > w) scale2(&c->w, &c->h, (float)w/c->w);
+        if (c->h > h) scale2(&c->w, &c->h, (float)h/c->h);
+    }
+    if (c->mina > 0 && c->maxa > 0) {
+        if (c->maxa < (float)c->w/c->h) c->w = c->h*c->maxa;
+        if (c->mina < (float)c->h/c->w) c->h = c->w*c->mina;
+    }
+    XMoveResizeWindow(dis, c->win, c->x, c->y, c->w, c->h);
 }
 
 void tile() {
@@ -812,7 +872,7 @@ static void move_float(const Arg arg) {
 static void add_clamp(int* dst, int delta, int min) { *dst = MAX(min, *dst + delta); }
 
 static void resize_float(const Arg arg) {
-    if (current && current->fl) {
+    if (current && (current->fl & FL_FLOAT) && !(current->fl & FL_HARDSIZE)) {
         client *c = current;
         add_clamp(&c->fw, arg.xy.x, 5);
         add_clamp(&c->fh, arg.xy.y, 5);
