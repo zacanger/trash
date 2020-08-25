@@ -14,11 +14,12 @@ s() {
     }
     '
   else
-    while [ $1 ]; do
-      cd="$(echo $cd | sed "s/$1/$2/")"
+    while [ "$1" ]; do
+      cd="$(echo "$cd" | sed "s/$1/$2/")"
       shift; shift
     done
-    cd $cd
+    cd "$cd" || return
   fi
 }
+
 complete -C 's --complete "$COMP_LINE"' s
