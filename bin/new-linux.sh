@@ -162,8 +162,10 @@ sudo apt autoremove -y
 sudo apt purge
 sudo apt clean
 sudo update-alternatives --all
-sudo service apache2 stop
-sudo service apache-htcacheclean stop
+sudo systemctl stop apache2
+sudo systemctl disable apache2
+sudo systemctl stop apache-htcacheclean
+sudo systemctl disable apache-htcacheclean
 sudo microk8s enable dashboard
 sudo microk8s enable dns
 sudo microk8s enable helm3
