@@ -239,8 +239,8 @@ void change_desktop(const Arg arg) {
 }
 
 void client_to_desktop(const Arg arg) {
-    client *tmp = current;
     int tmp2 = current_desktop;
+    Window w = current->win;
 
     if(arg.i == current_desktop || current == NULL)
         return;
@@ -248,7 +248,7 @@ void client_to_desktop(const Arg arg) {
     remove_window(current->win);
     save_desktop(current_desktop);
     select_desktop(arg.i);
-    add_window(tmp->win);
+    add_window(w);
     save_desktop(arg.i);
 
     select_desktop(tmp2);
