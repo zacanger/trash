@@ -87,7 +87,7 @@ struct desktop{
 };
 
 // Functions
-static void add_window(Window w);
+static int add_window(Window w);
 static void change_desktop(const Arg arg);
 static void client_to_desktop(const Arg arg);
 static void configurenotify(XEvent *e);
@@ -188,13 +188,13 @@ static void (*events[LASTEvent])(XEvent *e) = {
 // Desktop array
 static desktop desktops[10];
 
-void add_window(Window w) {
+int add_window(Window w) {
     client *c,*t;
     int i;
 
     // for situations like clicking a link and it opening in existing browser window
     for (i = 0; i < TABLENGTH(desktops); ++i)
-        if (find_window(w, i == current_desktop ? NULL : &desktops[i], &c)) return;
+        if (find_window(w, i == current_desktop ? NULL : &desktops[i], &c)) return 0;
 
     if(!(c = (client *)calloc(1,sizeof(client))))
         die("Error calloc!");
@@ -216,6 +216,7 @@ void add_window(Window w) {
     }
 
     current = c;
+    return 1;
 }
 
 typedef int window_callback(Display *dis, Window w);
@@ -443,8 +444,8 @@ void maprequest(XEvent *e) {
         }
 
     // remember to capture events from child windows!
+    if (!add_window(ev->window)) return;
     XSelectInput(dis, ev->window, EnterWindowMask|PropertyChangeMask|StructureNotifyMask);
-    add_window(ev->window);
     XMapWindow(dis,ev->window);
     handle_size_hints(current);
     tile();
