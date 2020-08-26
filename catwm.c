@@ -94,8 +94,8 @@ static void configurenotify(XEvent *e);
 static void configurerequest(XEvent *e);
 static void decrease();
 static void destroynotify(XEvent *e);
-static void motionnotify(XEvent *e);
 static void propertynotify(XEvent *e);
+static void enternotify(XEvent *e);
 static void die(const char* e);
 static unsigned long getcolor(const char* color);
 static void grabkeys();
@@ -181,8 +181,8 @@ static void (*events[LASTEvent])(XEvent *e) = {
     [DestroyNotify] = destroynotify,
     [ConfigureNotify] = configurenotify,
     [ConfigureRequest] = configurerequest,
-    [MotionNotify] = motionnotify,
     [PropertyNotify] = propertynotify,
+    [EnterNotify] = enternotify,
 };
 
 // Desktop array
@@ -287,28 +287,6 @@ void configurerequest(XEvent *e) {
     XSync(dis, False);
 }
 
-static void mouse_sel(client *c, XMotionEvent *ev) {
-    int x = ev->x_root, y = ev->y_root;
-    if (current != c) {
-        int in_rect = c->fl & FL_FLOAT ?
-            x >= c->fx && y >= c->fy && x < c->fx + c->fw && y < c->fy + c->fh
-          : x >= c->x && y >= c->y && x < c->x + c->w && y < c->y + c->h;
-        if (in_rect) {
-            current = c;
-            update_current();
-        }
-    }
-}
-
-void motionnotify(XEvent *e) {
-    XMotionEvent *ev = &e->xmotion;
-    client *c;
-    if (ev->window != root) return;
-    for(c=head;c;c=c->next) mouse_sel(c, ev);
-    for(c=flt;c;c=c->next) mouse_sel(c, ev); // floating wnd has higher prio
-    for(c=pin;c;c=c->next) mouse_sel(c, ev);
-}
-
 static Atom atomprop(client *c, Atom prop) {
     int di;
     unsigned long dl;
@@ -378,6 +356,17 @@ void propertynotify(XEvent *e) {
                 tile();
             }
             break;
+    }
+}
+
+void enternotify(XEvent *e) {
+    client *c;
+    XCrossingEvent *ev = &e->xcrossing;
+    if (ev->window == root) return;
+    if (ev->mode != NotifyNormal || ev->detail == NotifyInferior) return;
+    if (find_window(ev->window, NULL, &c)) {
+        current = c;
+        update_current();
     }
 }
 
@@ -459,6 +448,8 @@ void maprequest(XEvent *e) {
             return;
         }
 
+    // remember to capture events from child windows!
+    XSelectInput(dis, ev->window, EnterWindowMask|PropertyChangeMask|StructureNotifyMask);
     add_window(ev->window);
     XMapWindow(dis,ev->window);
     handle_size_hints(current);
@@ -669,7 +660,7 @@ void setup() {
     
     // To catch maprequest and destroynotify (if other wm running)
     XSelectInput(dis,root,SubstructureNotifyMask|SubstructureRedirectMask|PointerMotionMask|
-      PropertyChangeMask);
+      PropertyChangeMask|EnterWindowMask);
 
     // Init atoms
     netatom[NetSupported] = XInternAtom(dis, "_NET_SUPPORTED", False);
