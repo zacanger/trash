@@ -247,18 +247,17 @@ void change_desktop(const Arg arg) {
 void client_to_desktop(const Arg arg) {
     client *tmp = current;
     int tmp2 = current_desktop;
-    
+
     if(arg.i == current_desktop || current == NULL)
         return;
 
-    // Add client to desktop
+    remove_window(current->win);
+    save_desktop(current_desktop);
     select_desktop(arg.i);
     add_window(tmp->win);
     save_desktop(arg.i);
 
-    // Remove client from current desktop
     select_desktop(tmp2);
-    remove_window(current->win);
 
     tile();
     update_current();
@@ -561,7 +560,6 @@ static client **find_window_in(client** front, Window w, client** res) {
 }
 
 client **find_window(Window w, desktop* desk, client** res) {
-    client *c;
     client **f;
     if ((f=find_window_in(desk ? &desk->head : &head, w, res))) return f;
     if ((f=find_window_in(desk ? &desk->flt : &flt, w, res))) return f;
@@ -575,6 +573,7 @@ void remove_window(Window w) {
     if (c) {
         if (c == current) current = current->prev ? current->prev : current->next;
         pop(front, c);
+        XUnmapWindow(dis,c->win);
         free(c);
     }
 }
