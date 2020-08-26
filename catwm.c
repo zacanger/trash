@@ -96,6 +96,7 @@ static void decrease();
 static void destroynotify(XEvent *e);
 static void propertynotify(XEvent *e);
 static void enternotify(XEvent *e);
+static void unmapnotify(XEvent *e);
 static void die(const char* e);
 static unsigned long getcolor(const char* color);
 static void grabkeys();
@@ -168,7 +169,6 @@ enum {
     NetWMWindowType,
     NetWMWindowTypeDialog,
     NetWMWindowTypeUtility,
-    NetWMWindowTypeSplash,
     NetLast
 };
 
@@ -183,6 +183,7 @@ static void (*events[LASTEvent])(XEvent *e) = {
     [ConfigureRequest] = configurerequest,
     [PropertyNotify] = propertynotify,
     [EnterNotify] = enternotify,
+    [UnmapNotify] = unmapnotify,
 };
 
 // Desktop array
@@ -298,9 +299,8 @@ static Atom atomprop(client *c, Atom prop) {
 static void handle_window_type_hint_client(client *c) {
     // could also handle fullscreen hint but just using the wm's fullscreen mode is fine for me
     Atom wtype = atomprop(c, netatom[NetWMWindowType]);
-    if (wtype == netatom[NetWMWindowTypeDialog]
-     || wtype == netatom[NetWMWindowTypeUtility]
-     || wtype == netatom[NetWMWindowTypeSplash])
+    if (wtype == netatom[NetWMWindowTypeDialog]     // note: floating splashscreens freezes kdenlive
+     || wtype == netatom[NetWMWindowTypeUtility])   //       and I have no idea why
         if (!(c->fl & FL_FLOAT))
           switch_float_client(c);
 }
@@ -362,6 +362,16 @@ void enternotify(XEvent *e) {
     if (find_window(ev->window, NULL, &c)) {
         current = c;
         update_current();
+    }
+}
+
+void unmapnotify(XEvent *e) {
+    XUnmapEvent *ev = &e->xunmap;
+    // this happens when splashscreens want to be hidden. we unmanage the wnd and hide it
+    if (ev->send_event) {
+      remove_window(ev->window);
+      tile();
+      update_current();
     }
 }
 
@@ -448,9 +458,9 @@ void maprequest(XEvent *e) {
     XSelectInput(dis, ev->window, EnterWindowMask|PropertyChangeMask|StructureNotifyMask);
     XMapWindow(dis,ev->window);
     handle_size_hints(current);
+    handle_window_type_hint(ev->window);
     tile();
     update_current();
-    handle_window_type_hint(ev->window);
 }
 
 void move_down() {
@@ -665,7 +675,6 @@ void setup() {
     netatom[NetWMWindowType] = XInternAtom(dis, "_NET_WM_WINDOW_TYPE", False);
     netatom[NetWMWindowTypeDialog] = XInternAtom(dis, "_NET_WM_WINDOW_TYPE_DIALOG", False);
     netatom[NetWMWindowTypeUtility] = XInternAtom(dis, "_NET_WM_WINDOW_TYPE_UTILITY", False);
-    netatom[NetWMWindowTypeSplash] = XInternAtom(dis, "_NET_WM_WINDOW_TYPE_SPLASH", False);
     XChangeProperty(dis, root, netatom[NetSupported], XA_ATOM, 32, PropModeReplace,
       (unsigned char *)netatom, NetLast);
 }
