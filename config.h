@@ -48,10 +48,13 @@
 #define GAP_BOTTOM 0
 #define GAP 0
 
+#define SHELL(cmd) {"sh", "-c", cmd, NULL}
+#define SELPASS "gopass ls --flat | dmenu | xargs --no-run-if-empty gopass show -f"
+#define TYPE "xdotool type --clearmodifiers --file -"
 const char* dmenucmd[] = {"dmenu_run",NULL};
 const char* termcmd[] = {"st",NULL};
-const char* passcmd[] = {"passdmenu","--pass","gopass","--type",NULL};
-const char* usercmd[] = {"passdmenu","--pass","gopass","--type","--user","^username: (.*)",NULL};
+const char* passcmd[] = SHELL(SELPASS " | head -n 1 | " TYPE);
+const char* usercmd[] = SHELL(SELPASS " | grep -i '^username:' | awk '{print $2}' | " TYPE);
 const char* shrcmd[] = {"shr",NULL};
 
 // Avoid multiple paste
