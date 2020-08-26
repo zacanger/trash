@@ -742,7 +742,6 @@ void switch_float_client(client *c) {
             c->fw = c->w;
             c->fh = c->h;
         }
-        if (head == c) head = head->next;
         pop(&head, c);
         insert_front(&flt, c);
     } else {
@@ -751,6 +750,7 @@ void switch_float_client(client *c) {
         c->fl &= ~FL_PIN; // TODO: pinning non-floating wnds
     }
     tile();
+    update_current();
 }
 
 void switch_float() {
