@@ -164,7 +164,14 @@ sudo apt clean
 sudo update-alternatives --all
 sudo service apache2 stop
 sudo service apache-htcacheclean stop
-sudo microk8s.stop
+sudo microk8s enable dashboard
+sudo microk8s enable dns
+sudo microk8s enable helm3
+sudo microk8s enable ingress
+sudo microk8s enable metrics-server
+sudo microk8s enable prometheus
+sudo microk8s enable storage
+sudo microk8s stop
 
 update-hosts.sh
 # Copy user.js to firefox profile before setting up firefox
