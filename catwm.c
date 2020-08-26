@@ -218,28 +218,22 @@ void add_window(Window w) {
     current = c;
 }
 
-void change_desktop(const Arg arg) {
-    client *c;
+typedef int window_callback(Display *dis, Window w);
 
+static void foreach_window(window_callback* fn) {
+    client *c;
+    for(c=head;c;c=c->next) fn(dis,c->win);
+    for(c=flt;c;c=c->next) fn(dis,c->win);
+}
+
+void change_desktop(const Arg arg) {
     if(arg.i == current_desktop)
         return;
 
-    // Unmap all window
-    if(head != NULL)
-        for(c=head;c;c=c->next)
-            XUnmapWindow(dis,c->win);
-
-    // Save current "properties"
+    foreach_window(XUnmapWindow);
     save_desktop(current_desktop);
-
-    // Take "properties" from the new desktop
     select_desktop(arg.i);
-
-    // Map all windows
-    if(head != NULL)
-        for(c=head;c;c=c->next)
-            XMapWindow(dis,c->win);
-
+    foreach_window(XMapWindow);
     tile();
     update_current();
 }
