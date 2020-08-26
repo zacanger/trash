@@ -597,7 +597,8 @@ static int (*xerrorxlib)(Display *, XErrorEvent *);
 static int xerror(Display *dpy, XErrorEvent *ee) {
     if (ee->error_code == BadWindow
     || (ee->request_code == X_ConfigureWindow && ee->error_code == BadMatch)
-    || (ee->request_code == X_ConfigureWindow && ee->error_code == BadValue)
+    || (ee->request_code == X_ConfigureWindow && ee->error_code == BadValue) // TODO these shouldt
+    || (ee->request_code == X_ConfigureWindow && ee->error_code == BadAlloc) //      happen
     || (ee->request_code == X_SetInputFocus && ee->error_code == BadMatch))
         return 0;
     fprintf(stderr, "catwm: fatal error: request code=%d, error code=%d\n",
