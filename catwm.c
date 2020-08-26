@@ -710,7 +710,7 @@ void start() {
 }
 
 void swap_master() {
-    if(!(current->fl & FL_FLOAT) && head && current && current != head && mode == 0) {
+    if(current && !(current->fl & FL_FLOAT) && head && current != head && mode == 0) {
         client *headnext = head->next == current ? head : head->next;
         if(current->next) current->next->prev = head;
         if(current->prev) current->prev->next = head;
