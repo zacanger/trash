@@ -16,6 +16,9 @@ personal fork of CATWM.
   (for example, clicking a url with firefox already open).
 * fixed buggy window geometry for some programs that have slow startup like firefox
 
+![](pics/section-200827-0542-19.png)
+![](pics/section-200827-0546-29.png)
+
 CATWM
 =====
 
