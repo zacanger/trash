@@ -48,14 +48,25 @@
 #define GAP_BOTTOM 0
 #define GAP 0
 
-#define SHELL(cmd) {"sh", "-c", cmd, NULL}
+#define SHELL(cmd) {.com = (const char*[]){"sh", "-c", cmd, NULL}}
 #define SELPASS "gopass ls --flat | dmenu | xargs --no-run-if-empty gopass show -f"
 #define TYPE "xdotool type --clearmodifiers --file -"
 const char* dmenucmd[] = {"dmenu_run",NULL};
 const char* termcmd[] = {"st",NULL};
-const char* passcmd[] = SHELL(SELPASS " | head -n 1 | " TYPE);
-const char* usercmd[] = SHELL(SELPASS " | grep -i '^username:' | awk '{print $2}' | " TYPE);
-const char* shrcmd[] = {"shr",NULL};
+const Arg passcmd = SHELL(SELPASS " | head -n 1 | " TYPE);
+const Arg usercmd = SHELL(SELPASS " | grep -i '^username:' | awk '{print $2}' | " TYPE);
+
+#define UNIQNAME "$(date '+%y%m%d-%H%M-%S')"
+#define SSPATH1(pre) "fil=\"/memevault/pics/screenshots/" pre "-" UNIQNAME ".png\""
+#define SSPATH2(pre) "fil2=\"$HOME/pics/screenshots/" pre "-" UNIQNAME ".png\""
+#define SSPATH(pre) SSPATH1("section") "&& ( [ -d \"$fil\" ] || " SSPATH2("section") ")"
+#define SSUPLOAD(pre, cmd) SHELL(SSPATH(pre) " && " cmd " && " UPLOAD)
+#define UPLOAD \
+  "notify-send \"Uploading $(basename \"$fil\") ...\" &&" \
+  "(curl -F\"file=@$fil\" https://0x0.st | xclip -sel cli) &&" \
+  "notify-send \"Uploaded $(basename \"$fil\")\""
+const Arg uploadpiccmd = SSUPLOAD("section", "maim -s \"$fil\"");
+const Arg uploadclipcmd = SSUPLOAD("clip", "xclip -selection clipboard -t image/png -o > \"$fil\"");
 
 // Avoid multiple paste
 #define DESKTOPCHANGE(K,N) \
@@ -81,9 +92,10 @@ static struct key keys[] = {
     {  MOD,             XK_Return,                  spawn,          {.com = termcmd}},
     {  MOD,             XK_Right,                   next_desktop,   {NULL}},
     {  MOD,             XK_Left,                    prev_desktop,   {NULL}},
-    {  MOD|ShiftMask,   XK_p,                       spawn,          {.com = passcmd}},
-    {  MOD|ShiftMask,   XK_u,                       spawn,          {.com = usercmd}},
-    {  MOD|ShiftMask,   XK_4,                       spawn,          {.com = shrcmd}},
+    {  MOD|ShiftMask,   XK_p,                       spawn,          passcmd},
+    {  MOD|ShiftMask,   XK_u,                       spawn,          usercmd},
+    {  ControlMask|ShiftMask, XK_4,                 spawn,          uploadpiccmd},
+    {  ControlMask|ShiftMask, XK_5,                 spawn,          uploadclipcmd},
     {  MOD|ShiftMask|ControlMask, XK_h,             resize_float,   {.xy = {-5, 0}}},
     {  MOD|ShiftMask|ControlMask, XK_l,             resize_float,   {.xy = {5,  0}}},
     {  MOD|ShiftMask|ControlMask, XK_k,             resize_float,   {.xy = {0, -5}}},
