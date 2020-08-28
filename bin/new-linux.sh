@@ -48,6 +48,10 @@ cat "$list_path/npm.list" | xargs npm i -g
 curl https://sh.rustup.rs -sSf | sh
 rustup toolchain install nightly
 
+# Golang REPL
+go get -u github.com/motemen/gore/cmd/gore
+go get -u github.com/mdempsky/gocode
+
 # Copy rather than link because of auth
 cp "$z_path/.npmrc" "$HOME/"
 
