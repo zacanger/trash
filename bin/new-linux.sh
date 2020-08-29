@@ -61,12 +61,14 @@ cp "$z_path/.npmrc" "$HOME/"
 rm -f "$HOME/.profile"
 rm -f "$HOME/.bash_profile"
 rm -f "$HOME/.bashrc"
+rm -f "$HOME/.bash_logout"
 
 # $HOME symlinks
 home_links=(
   .Xresources
   .agignore
   .bash
+  .bash_logout
   .bash_profile
   .bashrc
   .ctags
