@@ -99,3 +99,6 @@ tags
 package-lock.json
 junit.xml
 *.js.snap
+*.chunk.js
+*.min.js
+*.js.map
