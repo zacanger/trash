@@ -116,6 +116,13 @@ elif hash batcat 2>/dev/null; then
   alias cat='batcat'
 fi
 
+# use ag if installed
+if hash ag 2>/dev/null; then
+  alias grep='ag'
+else
+  alias grep='grep --color=auto'
+fi
+
 # more mac stuff
 if [[ $(uname) == 'Darwin' ]]; then
   alias file='file -h'
@@ -123,7 +130,6 @@ fi
 
 # all the rest
 alias py='bpython'
-alias grep='grep --color=auto'
 alias q='exit'
 alias ag='ag --path-to-ignore ~/.agignore'
 alias c='clear'
