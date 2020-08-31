@@ -358,6 +358,7 @@ fi
 curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 nvim +PlugInstall +qa
+nvim +GoInstallBinaries +qa
 
 # Update the Mac
 sudo softwareupdate -i -a
@@ -367,3 +368,4 @@ sudo softwareupdate -i -a
 # install the rust toolchain - interactive
 curl https://sh.rustup.rs -sSf | sh
 rustup toolchain install nightly
+rustup default nightly

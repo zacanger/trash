@@ -48,6 +48,7 @@ cat "$list_path/npm.list" | xargs npm i -g
 # Install the rust toolchain - interactive.
 curl https://sh.rustup.rs -sSf | sh
 rustup toolchain install nightly
+rustup default nightly
 
 # Golang REPL
 go get -u github.com/motemen/gore/cmd/gore
