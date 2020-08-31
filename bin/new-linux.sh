@@ -5,6 +5,7 @@ echo '~/Dropbox/z. Make sure that directory exists'
 echo 'before running!'
 echo
 echo 'It may be safter to run this block-by-block.'
+exit 1
 
 # disable auto upgrades, period, unattended upgrades in apt.conf.d
 
