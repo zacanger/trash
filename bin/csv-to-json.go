@@ -6,7 +6,6 @@ import (
 	"bytes"
 	"encoding/csv"
 	"encoding/json"
-	"flag"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -17,19 +16,17 @@ import (
 )
 
 func main() {
-	path := flag.String("path", "./data.csv", "Path of the file")
-	flag.Parse()
-	fileBytes, fileNPath := ReadCSV(path)
-	SaveFile(fileBytes, fileNPath)
-	fmt.Println(strings.Repeat("=", 10), "Done", strings.Repeat("=", 10))
+	path := os.Args[1]
+	fileBytes, newFilePath := ReadCSV(path)
+	SaveFile(fileBytes, newFilePath)
+	fmt.Println("Saved to", newFilePath)
 }
 
-// ReadCSV to read the content of CSV File
-func ReadCSV(path *string) ([]byte, string) {
-	csvFile, err := os.Open(*path)
+func ReadCSV(path string) ([]byte, string) {
+	csvFile, err := os.Open(path)
 
 	if err != nil {
-		log.Fatal("The file is not found || wrong root")
+		log.Fatal("No file found")
 	}
 	defer csvFile.Close()
 
@@ -37,7 +34,7 @@ func ReadCSV(path *string) ([]byte, string) {
 	content, _ := reader.ReadAll()
 
 	if len(content) < 1 {
-		log.Fatal("Something wrong, the file maybe empty or length of the lines are not the same")
+		log.Fatal("Something went wrong!")
 	}
 
 	headersArr := make([]string, 0)
@@ -45,7 +42,7 @@ func ReadCSV(path *string) ([]byte, string) {
 		headersArr = append(headersArr, headE)
 	}
 
-	//Remove the header row
+	// Remove the header row
 	content = content[1:]
 
 	var buffer bytes.Buffer
@@ -63,13 +60,13 @@ func ReadCSV(path *string) ([]byte, string) {
 			} else {
 				buffer.WriteString((`"` + y + `"`))
 			}
-			//end of property
+			// end of property
 			if j < len(d)-1 {
 				buffer.WriteString(",")
 			}
 
 		}
-		//end of object of the array
+		// end of object of the array
 		buffer.WriteString("}")
 		if i < len(content)-1 {
 			buffer.WriteString(",")
@@ -79,13 +76,12 @@ func ReadCSV(path *string) ([]byte, string) {
 	buffer.WriteString(`]`)
 	rawMessage := json.RawMessage(buffer.String())
 	x, _ := json.MarshalIndent(rawMessage, "", "  ")
-	newFileName := filepath.Base(*path)
+	newFileName := filepath.Base(path)
 	newFileName = newFileName[0:len(newFileName)-len(filepath.Ext(newFileName))] + ".json"
-	r := filepath.Dir(*path)
+	r := filepath.Dir(path)
 	return x, filepath.Join(r, newFileName)
 }
 
-// SaveFile Will Save the file, magic right?
 func SaveFile(myFile []byte, path string) {
 	if err := ioutil.WriteFile(path, myFile, os.FileMode(0644)); err != nil {
 		panic(err)
