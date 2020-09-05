@@ -1,3 +1,5 @@
+Archived dotfiles repo due to large repo size
+
 # `$HOME`
 
 Unless otherwise noted in the file, everything here is under the LGPL-3.0
