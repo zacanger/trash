@@ -1,2 +1,2 @@
-repl:
-	cc -std=c99 -Wall repl.c -ledit -o repl
+lisp:
+	cc -std=c99 -Wall parsing.c mpc.c -ledit -lm -o parsing
