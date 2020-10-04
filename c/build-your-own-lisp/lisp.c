@@ -86,6 +86,9 @@ char* ltype_name(int t) {
   }
 }
 
+lval* lval_pop(lval* v, int i);
+lval* builtin_eval(lenv* e, lval* a);
+lval* builtin_list(lenv* e, lval* a);
 void lenv_del(lenv* e);
 lenv* lenv_new(void);
 lval* lval_lambda(lval* formals, lval* body) {
@@ -554,23 +557,80 @@ lval* builtin_def(lenv* e, lval* a) {
   return builtin_var(e, a, "def");
 }
 
+
 lval* lval_call(lenv* e, lval* f, lval* a) {
   if (f->builtin) {
     return f->builtin(e, a);
   }
 
-  for (int i = 0; i < a->count; i++) {
-    lenv_put(f->env, f->formals->cell[i], a->cell[i]);
+  int given = a->count;
+  int total = f->formals->count;
+
+  while (a->count) {
+    if (f->formals->count == 0) {
+      lval_del(a);
+      return lval_err(
+        "too many args"
+        "%i is not %i",
+        given,
+        total
+      );
+    }
+
+    lval* sym = lval_pop(f->formals, 0);
+
+    if (strcmp(sym->sym, "&") == 0) {
+      if (f->formals->count != 1) {
+        lval_del(a);
+        return lval_err(
+          "invalid format"
+          "& should be followed by one more symbol"
+        );
+      }
+
+      lval* nsym = lval_pop(f->formals, 0);
+      lenv_put(f->env, nsym, builtin_list(e, a));
+      lval_del(sym); lval_del(nsym);
+      break;
+    }
+
+    lval* val = lval_pop(a, 0);
+
+    lenv_put(f->env, sym, val);
+
+    lval_del(sym); lval_del(val);
   }
 
   lval_del(a);
 
-  f->env->par = e;
+  if (
+    f->formals->count > 0 &&
+    strcmp(f->formals->cell[0]->sym, "&") == 0
+  ) {
 
-  return builtin_eval(
-    f->env,
-    lval_add(lval_sexpr(), lval_copy(f->body)
-  );
+    if (f->formals->count != 2) {
+      return lval_err(
+        "invalid format"
+        "& should be followed by one more symbol"
+      );
+    }
+
+    lval_del(lval_pop(f->formals, 0));
+    lval* sym = lval_pop(f->formals, 0);
+    lval* val = lval_qexpr();
+    lenv_put(f->env, sym, val);
+    lval_del(sym); lval_del(val);
+  }
+
+  if (f->formals->count == 0) {
+    f->env->par = e;
+    return builtin_eval(
+      f->env,
+      lval_add(lval_sexpr(), lval_copy(f->body))
+    );
+  } else {
+    return lval_copy(f);
+  }
 }
 
 lval* builtin_op(lenv* e, lval* a, char* op) {
@@ -722,7 +782,7 @@ lval* lval_eval_sexpr(lenv* e, lval* v) {
     return err;
   }
 
-  lval* result = f->builtin(e, v);
+  lval* result = lval_call(e, f, v);
   lval_del(f);
   return result;
 }
