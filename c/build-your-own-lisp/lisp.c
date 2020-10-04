@@ -72,6 +72,21 @@ struct lenv {
   lval** vals;
 };
 
+// TODO:
+// reorder things to get rid of
+// as many of these forward
+// declarations as possible
+lval* lval_pop(lval* v, int i);
+void lval_print(lval* v);
+lval* builtin_eval(lenv* e, lval* a);
+lval* builtin_list(lenv* e, lval* a);
+void lenv_del(lenv* e);
+lenv* lenv_new(void);
+lval* lval_eval_sexpr(lenv* e, lval* v);
+lval* lenv_get(lenv* e, lval* k);
+lval* lval_eval(lenv* e, lval* v);
+lenv* lenv_copy(lenv* e);
+
 char* ltype_name(int t) {
   switch(t) {
     case LVAL_FUN:
@@ -99,12 +114,6 @@ char* ltype_name(int t) {
       return "Unknown";
   }
 }
-
-lval* lval_pop(lval* v, int i);
-lval* builtin_eval(lenv* e, lval* a);
-lval* builtin_list(lenv* e, lval* a);
-void lenv_del(lenv* e);
-lenv* lenv_new(void);
 
 lval* lval_lambda(lval* formals, lval* body) {
   lval* v = malloc(sizeof(lval));
@@ -319,7 +328,6 @@ void lval_del(lval* v) {
   free(v);
 }
 
-void lval_print(lval* v);
 void lval_expr_print(lval* v, char open, char close) {
   putchar(open);
 
@@ -382,7 +390,6 @@ void lval_print(lval* v) {
   }
 }
 
-lenv* lenv_copy(lenv* e);
 lval* lval_copy(lval* v) {
   lval* x = malloc(sizeof(lval));
   x->type = v->type;
@@ -544,7 +551,6 @@ lval* builtin_le(lenv* e, lval* a) {
   return builtin_ord(e, a, "<=");
 }
 
-lval* lval_eval(lenv* e, lval* v);
 lval* builtin_if(lenv* e, lval* a) {
   LASSERT_NUM("if", a, 3);
   LASSERT_TYPE("if", a, 0, LVAL_NUM);
@@ -608,9 +614,6 @@ lval* lval_take(lval* v, int i) {
   lval_del(v);
   return x;
 }
-
-lval* lval_eval_sexpr(lenv* e, lval* v);
-lval* lenv_get(lenv* e, lval* k);
 
 lval* lval_eval(lenv* e, lval* v) {
   if (v->type == LVAL_SYM) {
@@ -734,7 +737,6 @@ lval* builtin_put(lenv* e, lval* a) {
 lval* builtin_def(lenv* e, lval* a) {
   return builtin_var(e, a, "def");
 }
-
 
 lval* lval_call(lenv* e, lval* f, lval* a) {
   if (f->builtin) {
