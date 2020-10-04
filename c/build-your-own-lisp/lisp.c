@@ -237,6 +237,7 @@ lval* lval_sexpr(void) {
   return v;
 }
 
+/*
 lval* lval_read_num(mpc_ast_t* t) {
   errno = 0;
   long x = strtol(t->contents, NULL, 10);
@@ -247,6 +248,7 @@ lval* lval_read_num(mpc_ast_t* t) {
 
   return lval_err("invalid number");
 }
+*/
 
 lval* lval_add(lval* v, lval* x) {
   v->count++;
@@ -288,6 +290,7 @@ int lval_read_str(lval* v, char* s, int i) {
   return i + 1;
 }
 
+/*
 lval* lval_read(mpc_ast_t* t) {
   if (strstr(t->tag, "number")) {
     return lval_read_num(t);
@@ -330,6 +333,7 @@ lval* lval_read(mpc_ast_t* t) {
 
   return x;
 }
+*/
 
 #define LASSERT(args, cond, fmt, ...) \
   if (!(cond)) { \
@@ -1246,6 +1250,7 @@ void lenv_add_builtins(lenv* e) {
 }
 
 int main(int argc, char** argv) {
+  /*
   Comment = mpc_new("comment");
   Expr = mpc_new("expr");
   Lisp = mpc_new("lisp");
@@ -1261,13 +1266,15 @@ int main(int argc, char** argv) {
       symbol  : /[a-zA-Z0-9_+\\-*\\/\\\\=<>!&]+/ ; \
       string  : /\"(\\\\.|[^\"])*\"/ ;             \
       comment : /;[^\\r\\n]*/ ;                    \
-      sexpr   : '(' <expr>* ')' ;                  \
-      qexpr   : '{' <expr>* '}' ;                  \
-      expr    : <number>  | <symbol> | <string>    \
-              | <comment> | <sexpr>  | <qexpr>;    \
-      lisp    : /^/ <expr>* /$/ ;                  \
-    ",
-    Number, Symbol, String, Comment, Sexpr, Qexpr, Expr, Lisp);
+      // sexpr   : '(' <expr>* ')' ;                  \
+      // qexpr   : '{' <expr>* '}' ;                  \
+      // expr    : <number>  | <symbol> | <string>    \
+              // | <comment> | <sexpr>  | <qexpr>;    \
+      // lisp    : /^/ <expr>* /$/ ;                  \
+    // ",
+    // Number, Symbol, String, Comment, Sexpr, Qexpr, Expr, Lisp);
+    // */
+    // */
 
   lenv* e = lenv_new();
   lenv_add_builtins(e);
@@ -1308,6 +1315,7 @@ int main(int argc, char** argv) {
 
   lenv_del(e);
 
+  /*
   mpc_cleanup(
     8,
     Number,
@@ -1319,6 +1327,7 @@ int main(int argc, char** argv) {
     Expr,
     Lisp
   );
+  */
 
   return 0;
 }
