@@ -36,6 +36,7 @@ enum {
   LVAL_ERR,
   LVAL_SYM,
   LVAL_SEXPR,
+  LVAL_QEXPR,
 };
 
 enum {
@@ -43,6 +44,14 @@ enum {
   LERR_BAD_OP,
   LERR_BAD_NUM,
 };
+
+lval* lval_qexpr(void) {
+  lval* v = malloc(sizeof(lval));
+  v->type = LVAL_QEXPR;
+  v->count = 0;
+  v->cell = NULL;
+  return v;
+}
 
 lval* lval_num(long x) {
   lval* v = malloc(sizeof(lval));
@@ -110,10 +119,16 @@ lval* lval_read(mpc_ast_t* t) {
     x = lval_sexpr();
   }
 
+  if (strstr(t->tag, "qexpr")) {
+    x = lval_qexpr();
+  }
+
   for (int i = 0; i < t->children_num; i++) {
     if (
         (strcmp(t->children[i]->contents, "(") == 0) ||
         (strcmp(t->children[i]->contents, ")") == 0) ||
+        (strcmp(t->children[i]->contents, "{") == 0) ||
+        (strcmp(t->children[i]->contents, "}") == 0) ||
         (strcmp(t->children[i]->tag, "regex") == 0)
        ) {
       continue;
@@ -139,6 +154,7 @@ void lval_del(lval* v) {
       break;
 
     case LVAL_SEXPR:
+    case LVAL_QEXPR:
       for (int i = 0; i < v->count; i++) {
         lval_del(v->cell[i]);
       }
@@ -181,6 +197,10 @@ void lval_print(lval* v) {
     case LVAL_SEXPR:
       lval_expr_print(v, '(', ')');
       break;
+
+    case LVAL_QEXPR:
+        lval_expr_print(v, '{', '}');
+        break;
   }
 }
 
@@ -259,6 +279,56 @@ lval* builtin_op(lval* a, char* op) {
   return x;
 }
 
+#define LASSERT(args, cond, err) \
+  if (!(cond)) { \
+    lval_del(args); \
+    return lval_err(err); \
+  }
+
+lval* builtin_head(lval* a) {
+  // validation
+  if (a->count != 1) {
+    lval_del(a);
+    return lval_err("too many arguments to head");
+  }
+  if (a->cell[0]->type != LVAL_QEXPR) {
+    lval_del(a);
+    return lval_err("incorrect type passed to head");
+  }
+  if (a->cell[0]->count == 0) {
+    lval_del(a);
+    return lval_err("passed empty qexpr to head");
+  }
+
+  lval* v = lval_take(a, 0);
+  while (v->count > 1) {
+    lval_del(lval_pop(v, 1));
+  }
+
+  return v;
+}
+
+lval* builtin_tail(lval* a) {
+  // validation
+  if (a->count != 1) {
+    lval_del(a);
+    return lval_err("too many arguments passed to tail");
+  }
+  if (a->cell[0]->type != LVAL_QEXPR) {
+    lval_del(a);
+    return lval_err("invalid qexpr passed to tail");
+  }
+  if (a->cell[0]->count == 0) {
+    lval_del(a);
+    return lval_err("empty qexpr passed to tail");
+  }
+
+  lval *v = lval_take(a, 0);
+  lval_del(lval_pop(v, 0));
+
+  return v;
+}
+
 lval* lval_eval_sexpr(lval* v) {
   // children
   for (int i = 0; i < v->count; i++) {
@@ -298,17 +368,21 @@ int main(int argc, char** argv) {
   mpc_parser_t* Number = mpc_new("number");
   mpc_parser_t* Symbol = mpc_new("symbol");
   mpc_parser_t* Sexpr = mpc_new("sexpr");
+  mpc_parser_t* Qexpr = mpc_new("qexpr");
   mpc_parser_t* Expr = mpc_new("expr");
   mpc_parser_t* Lisp = mpc_new("lisp");
 
   mpca_lang(MPCA_LANG_DEFAULT,
-    "                                          \
-      number : /-?[0-9]+/ ;                    \
-      symbol : '+' | '-' | '*' | '/' ;         \
-      sexpr  : '(' <expr>* ')' ;               \
-      expr   : <number> | <symbol> | <sexpr> ; \
-      lispy  : /^/ <expr>* /$/ ;               \
-    ", Number, Symbol, Sexpr, Expr, Lisp);
+    "                                                        \
+      number : /-?[0-9]+/ ;                                  \
+      symbol : \"list\" | \"head\" | \"tail\"                \
+             | \"join\" | \"eval\" | '+' | '-' | '*' | '/' ; \
+      sexpr  : '(' <expr>* ')' ;                             \
+      qexpr  : '{' <expr>* '}' ;                             \
+      expr   : <number> | <symbol> | <sexpr> | <qexpr> ;     \
+      lisp   : /^/ <expr>* /$/ ;                             \
+    ",
+    Number, Symbol, Sexpr, Qexpr, Expr, Lisp);
 
   puts("ctrl+c to quit\n");
 
@@ -331,7 +405,7 @@ int main(int argc, char** argv) {
     free(input);
   }
 
-  mpc_cleanup(5, Number, Symbol, Sexpr, Expr, Lisp);
+  mpc_cleanup(6, Number, Symbol, Sexpr, Qexpr, Expr, Lisp);
 
   return 0;
 }
