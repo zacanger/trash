@@ -223,6 +223,7 @@ lval* lval_read(mpc_ast_t* t) {
         (strcmp(t->children[i]->contents, ")") == 0) ||
         (strcmp(t->children[i]->contents, "{") == 0) ||
         (strcmp(t->children[i]->contents, "}") == 0) ||
+        (strstr(t->children[i]->tag, "comment")) ||
         (strcmp(t->children[i]->tag, "regex") == 0)
        ) {
       continue;
@@ -993,19 +994,22 @@ int main(int argc, char** argv) {
   mpc_parser_t* Qexpr = mpc_new("qexpr");
   mpc_parser_t* Expr = mpc_new("expr");
   mpc_parser_t* String = mpc_new("string");
+  mpc_parser_t* Comment = mpc_new("comment");
   mpc_parser_t* Lisp = mpc_new("lisp");
 
   mpca_lang(MPCA_LANG_DEFAULT,
-    "                                                     \
-      number : /-?[0-9]+/ ;                               \
-      symbol : /[a-zA-Z0-9_+\\-*\\/\\\\=<>!&]+/ ;         \
-      sexpr  : '(' <expr>* ')' ;                          \
-      qexpr  : '{' <expr>* '}' ;                          \
-      expr   : <number> | <symbol> | <sexpr> | <qexpr> ;  \
-      string : /\"(\\\\.|[^\"])*\"/ ;                     \
-      lisp   : /^/ <expr>* /$/ ;                           \
+    "                                              \
+      number  : /-?[0-9]+/ ;                       \
+      symbol  : /[a-zA-Z0-9_+\\-*\\/\\\\=<>!&]+/ ; \
+      string  : /\"(\\\\.|[^\"])*\"/ ;             \
+      comment : /;[^\\r\\n]*/ ;                    \
+      sexpr   : '(' <expr>* ')' ;                  \
+      qexpr   : '{' <expr>* '}' ;                  \
+      expr    : <number>  | <symbol> | <string>    \
+              | <comment> | <sexpr>  | <qexpr>;    \
+      lisp   : /^/ <expr>* /$/ ;                   \
     ",
-    Number, Symbol, Sexpr, Qexpr, Expr, String, Lisp);
+    Number, Symbol, String, Comment, Sexpr, Qexpr, Expr, Lisp);
 
   puts("ctrl+c to quit\n");
 
@@ -1032,6 +1036,16 @@ int main(int argc, char** argv) {
   }
 
   lenv_del(e);
-  mpc_cleanup(6, Number, Symbol, Sexpr, Qexpr, Expr, Lisp);
+  mpc_cleanup(
+    8,
+    Number,
+    Symbol,
+    String,
+    Comment,
+    Sexpr,
+    Qexpr,
+    Expr,
+    Lisp
+  );
   return 0;
 }
