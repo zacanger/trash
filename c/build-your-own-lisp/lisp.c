@@ -105,6 +105,7 @@ lval* builtin_eval(lenv* e, lval* a);
 lval* builtin_list(lenv* e, lval* a);
 void lenv_del(lenv* e);
 lenv* lenv_new(void);
+
 lval* lval_lambda(lval* formals, lval* body) {
   lval* v = malloc(sizeof(lval));
   v->type = LVAL_FUN;
@@ -610,6 +611,7 @@ lval* lval_take(lval* v, int i) {
 
 lval* lval_eval_sexpr(lenv* e, lval* v);
 lval* lenv_get(lenv* e, lval* k);
+
 lval* lval_eval(lenv* e, lval* v) {
   if (v->type == LVAL_SYM) {
     lval* x = lenv_get(e, v);
@@ -971,7 +973,6 @@ void lenv_add_builtin(lenv* e, char* name, lbuiltin func) {
   lval_del(v);
 }
 
-
 lval* builtin_load(lenv* e, lval* a) {
   LASSERT_NUM("load", a, 1);
   LASSERT_TYPE("load", a, 0, LVAL_STR);
@@ -1051,14 +1052,14 @@ void lenv_add_builtins(lenv* e) {
 }
 
 int main(int argc, char** argv) {
-  mpc_parser_t* Number = mpc_new("number");
-  mpc_parser_t* Symbol = mpc_new("symbol");
-  mpc_parser_t* Sexpr = mpc_new("sexpr");
-  mpc_parser_t* Qexpr = mpc_new("qexpr");
-  mpc_parser_t* Expr = mpc_new("expr");
-  mpc_parser_t* String = mpc_new("string");
-  mpc_parser_t* Comment = mpc_new("comment");
-  mpc_parser_t* Lisp = mpc_new("lisp");
+  Comment = mpc_new("comment");
+  Expr = mpc_new("expr");
+  Lisp = mpc_new("lisp");
+  Number = mpc_new("number");
+  Qexpr = mpc_new("qexpr");
+  Sexpr = mpc_new("sexpr");
+  String = mpc_new("string");
+  Symbol = mpc_new("symbol");
 
   mpca_lang(MPCA_LANG_DEFAULT,
     "                                              \
@@ -1070,7 +1071,7 @@ int main(int argc, char** argv) {
       qexpr   : '{' <expr>* '}' ;                  \
       expr    : <number>  | <symbol> | <string>    \
               | <comment> | <sexpr>  | <qexpr>;    \
-      lisp   : /^/ <expr>* /$/ ;                   \
+      lisp    : /^/ <expr>* /$/ ;                  \
     ",
     Number, Symbol, String, Comment, Sexpr, Qexpr, Expr, Lisp);
 
@@ -1078,10 +1079,15 @@ int main(int argc, char** argv) {
   lenv_add_builtins(e);
 
   if (argc == 1) {
-    puts("ctrl+c to quit\n");
+    puts("ctrl+c or q to leave\n");
+
     while (1) {
       char* input = readline("> ");
       add_history(input);
+
+      if (strcmp(input, "q") == 0) {
+        break;
+      }
 
       mpc_result_t r;
       if (mpc_parse("<stdin>", input, Lisp, &r)) {
@@ -1089,7 +1095,6 @@ int main(int argc, char** argv) {
         lval_println(x);
         lval_del(x);
         mpc_ast_delete(r.output);
-
       } else {
         mpc_err_print(r.error);
         mpc_err_delete(r.error);
@@ -1111,6 +1116,7 @@ int main(int argc, char** argv) {
   }
 
   lenv_del(e);
+
   mpc_cleanup(
     8,
     Number,
@@ -1122,5 +1128,6 @@ int main(int argc, char** argv) {
     Expr,
     Lisp
   );
+
   return 0;
 }

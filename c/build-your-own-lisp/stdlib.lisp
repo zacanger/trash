@@ -48,10 +48,20 @@
    {nil}
    {join (head l) (take (- n 1) (tail l))}})
 
+(fn {take-while f l}
+  {if (not (unpack f (head l)))
+   {nil}
+   {join (head l) (take-while f (tail l))}})
+
 (fn {drop n l}
   {if (== n 0)
    {1}
    {drop (- n 1) (tail l)}})
+
+(fn {drop-while f l}
+  {if (not (unpack f (head l)))
+   {l}
+   {drop-while f (tail l)}})
 
 (fn {split n l}
   {list (take n 1) (drop n 1)})
@@ -68,6 +78,16 @@
    {nil}
    {last 1}})
 
+(fn {find x l}
+  {if (== l nil)
+   {error "nothing found"}
+   {do
+    (= {key} (fst (fst l)))
+    (= {val} (snd (fst l)))
+    (if (== key x)
+      {val}
+      {find x (tail l)})}})
+
 ; to keep variables in smaller scopes
 (fn {let b}
   {((\ {_} b) ())})
@@ -78,7 +98,7 @@
 (fn {and a b} {* a b})
 
 (fn {flip f a b} {f b a})
-; (fn {ghost & xs} {eval xs})
+(fn {nothing & xs} {eval xs})
 (fn {compose f g x} {f (g x)})
 
 (fn {map f l}
@@ -102,6 +122,11 @@
    {z}
    {foldl f (f z (fst l)) (tail l)}})
 
+(fn {foldr f z l}
+  {if (== l nil)
+   {z}
+   {f (fst l) (foldr f z (tail l))}})
+
 (fn {sum l} {foldl + 0 l})
 (fn {product l} {foldl * 1 l})
 
@@ -124,3 +149,32 @@
    {(== 0) 0}
    {(== n 1) 1}
    {otherwise (+ (fib (- n q)) (fib (- n 2)))}})
+
+(fn {init l}
+  {if (== (tail l) nil)
+   {nil}
+   {join (head l) (init (tail l))}})
+
+(fn {rev l}
+  {if (== l nil)
+   {nil}
+   {join (rev (tail l)) (head l)}})
+
+(fn {zip x y}
+  {if (or (==x nil) (== y nil))
+   {nil}
+   {join
+    (list (join (head x) (head y)))
+    (zip (tail x) (tail y))}})
+
+(fn {unzip l}
+  {if (== l nil)
+    {{nil nil}}
+    {do
+      (= {x} (fst l))
+      (= {xs} (unzip (tail l)))
+      (list
+        (join
+          (head x)
+          (fst xs))
+        (join (tail x) (snd xs)))}})
