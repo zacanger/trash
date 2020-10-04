@@ -1078,6 +1078,9 @@ int main(int argc, char** argv) {
   lenv* e = lenv_new();
   lenv_add_builtins(e);
 
+  lval* stdlib = lval_add(lval_sexpr(), lval_str("stdlib.lisp"));
+  builtin_load(e, stdlib);
+
   if (argc == 1) {
     puts("ctrl+c or q to leave\n");
 

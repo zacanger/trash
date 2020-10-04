@@ -4,4 +4,7 @@ lisp:
 clean:
 	rm -f lisp core
 
+test: lisp
+	./lisp test.lisp
+
 .PHONY: lisp clean
