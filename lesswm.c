@@ -240,7 +240,7 @@ void die(const char *e) {
   /* Sometimes, things go wrong...
    * when they do, we should let people know what happened.
    * all errors print to stdout, and then we exit the wm */
-  fprintf(stdout, "zwm: %s\n", e);
+  fprintf(stdout, "lesswm: %s\n", e);
   exit(1);
 }
 
@@ -426,7 +426,7 @@ void quit() {
   if (bool_quit == 1) {
     XUngrabKey(dis, AnyKey, AnyModifier, root);
     XDestroySubwindows(dis, root);
-    fprintf(stdout, "zwm shutdown initiated.\n");
+    fprintf(stdout, "lesswm shutdown initiated.\n");
     XCloseDisplay(dis);
     die("forced shutdown");
   }
@@ -446,7 +446,7 @@ void quit() {
   }
 
   XUngrabKey(dis, AnyKey, AnyModifier, root);
-  fprintf(stdout, "zwm shutdown initiated\n");
+  fprintf(stdout, "lesswm shutdown initiated\n");
 }
 
 void remove_window(Window w) {

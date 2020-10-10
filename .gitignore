@@ -183,5 +183,4 @@ wheels/
 x/
 !Cargo.lock
 core
-hcwm
-zwm
+lesswm

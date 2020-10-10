@@ -1,7 +1,7 @@
 CFLAGS+= -Wall
 LDADD+= -lX11
 LDFLAGS=
-EXEC=zwm
+EXEC=lesswm
 
 PREFIX?= /usr/local
 BINDIR?= $(PREFIX)/bin
@@ -10,20 +10,20 @@ CC=gcc
 
 all: $(EXEC)
 
-zwm: zwm.o
+lesswm: lesswm.o
 	$(CC) $(LDFLAGS) -Os -o $@ $+ $(LDADD)
-.PHONY: zwm
+.PHONY: lesswm
 
 install: all
-	install -Dm 755 zwm $(DESTDIR)$(BINDIR)/zwm
+	install -Dm 755 lesswm $(DESTDIR)$(BINDIR)/lesswm
 
 clean:
-	rm -f zwm *.o
+	rm -f lesswm *.o
 
 run: $(EXEC)
 	Xephyr :4 -ac -screen 800x600 &
 	sleep 2
-	DISPLAY=:4 ./zwm &
+	DISPLAY=:4 ./lesswm &
 
 stop:
-	killall Xephyr zwm
+	killall Xephyr lesswm
