@@ -641,10 +641,10 @@ void tile() {
     XMoveResizeWindow(
       dis,
       head->win,
-      gaps,
-      gaps,
-      sw - (3 * gaps),
-      sh - (gaps * 2)
+      win_gaps,
+      win_gaps,
+      sw - (3 * win_gaps),
+      sh - (win_gaps * 2)
     );
   }
   /* side stack */
@@ -655,10 +655,10 @@ void tile() {
       XMoveResizeWindow(
         dis,
         head->win,
-        gaps,
-        gaps,
-        master_size - (2 * gaps),
-        sh - (2 * gaps)
+        win_gaps,
+        win_gaps,
+        master_size - (2 * win_gaps),
+        sh - (2 * win_gaps)
       );
 
       /* Stack */
@@ -669,10 +669,10 @@ void tile() {
         XMoveResizeWindow(
           dis,
           c->win,
-          master_size + gaps,
-          y + gaps,
-          sw - master_size - (3 * gaps),
-          (sh / n) - (2 * gaps)
+          master_size + win_gaps,
+          y + win_gaps,
+          sw - master_size - (3 * win_gaps),
+          (sh / n) - (2 * win_gaps)
         );
         y += (sh / n);
       }
@@ -682,10 +682,10 @@ void tile() {
         XMoveResizeWindow(
           dis,
           c->win,
-          gaps,
-          gaps,
-          sw - (2 * gaps),
-          sh - (2 * gaps)
+          win_gaps,
+          win_gaps,
+          sw - (2 * win_gaps),
+          sh - (2 * win_gaps)
         );
       }
       break;
@@ -699,10 +699,10 @@ void tile() {
       XMoveResizeWindow(
         dis,
         head->win,
-        gaps,
-        gaps,
-        sw - (2 * gaps),
-        master_size - (2 * gaps)
+        win_gaps,
+        win_gaps,
+        sw - (2 * win_gaps),
+        master_size - (2 * win_gaps)
       );
 
       /* Stack */
@@ -713,10 +713,10 @@ void tile() {
         XMoveResizeWindow(
           dis,
           c->win,
-          y + gaps,
-          master_size + gaps,
-          (sw / n) - (2 * gaps),
-          sh - master_size - (3 * gaps)
+          y + win_gaps,
+          master_size + win_gaps,
+          (sw / n) - (2 * win_gaps),
+          sh - master_size - (3 * win_gaps)
         );
         y += (sw / n);
       }
@@ -726,10 +726,10 @@ void tile() {
         XMoveResizeWindow(
           dis,
           c->win,
-          gaps,
-          gaps,
-          sw - (2 * gaps),
-          sh - (2 * gaps)
+          win_gaps,
+          win_gaps,
+          sw - (2 * win_gaps),
+          sh - (2 * win_gaps)
         );
       }
       break;
@@ -746,7 +746,7 @@ void update_current() {
   for (c = head; c; c = c->next) {
     if (current == c) {
       /* "Enable" current window */
-      XSetWindowBorderWidth(dis, c->win, boarders);
+      XSetWindowBorderWidth(dis, c->win, win_borders);
       XSetWindowBorder(dis, c->win, win_focus);
       XSetInputFocus(dis, c->win, RevertToParent, CurrentTime);
       XRaiseWindow(dis, c->win);
