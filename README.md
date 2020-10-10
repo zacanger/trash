@@ -7,3 +7,10 @@ WIP Tiling window manager. Fork of <https://github.com/DebianJoe/hcwm>. See
 
 * To run, `make run`
 * To stop running, `make stop`
+
+## TODO
+
+* Accept a simple config file, either INI format or YAML
+* Port to Go if there's good X bindings, Python otherwise
+* Bar support
+* That's it
