@@ -16,7 +16,6 @@ static int boarders = 1; /* set width of window boarders */
 
 /* add custom programs here. */
 const char *menucmd[] = {"rofi-run.sh", NULL};
-const char *editorcmd[] = {"vim", NULL};
 
 /* Use the below to set your terminal of choice */
 const char *termcmd[] = {"st", NULL};
@@ -38,13 +37,12 @@ static struct key keys[] = {
     {MODKEY, XK_j, next_win, {NULL}},
     {MODKEY, XK_Tab, next_win, {NULL}},
     {MODKEY, XK_k, prev_win, {NULL}},
-    {MODKEY | ControlMask, XK_j, move_up, {NULL}},
-    {MODKEY | ControlMask, XK_k, move_down, {NULL}},
+    {MODKEY | ControlMask, XK_j, focus_prev, {NULL}},
+    {MODKEY | ControlMask, XK_k, focus_next, {NULL}},
     {MODKEY, XK_Return, swap_master, {NULL}},
     {MODKEY, XK_space, switch_mode, {NULL}},
     {MODKEY, XK_p, spawn, {.com = menucmd}},
     {MODKEY | ControlMask, XK_Return, spawn, {.com = termcmd}},
-    {MODKEY | ControlMask, XK_e, spawn, {.com = editorcmd}},
     {MODKEY | ControlMask, XK_s, stackmode, {NULL}},
     {MODKEY, XK_Right, next_desktop, {NULL}},
     {MODKEY, XK_Left, prev_desktop, {NULL}},

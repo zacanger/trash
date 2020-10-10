@@ -1,6 +1,6 @@
 # lesswm
 
-Less is not more
+Less is not more. Just enough of an X11 window manager.
 
 WIP Tiling window manager. Fork of <https://github.com/DebianJoe/hcwm>. See
 ./readme-original.md for details on that one's design decisions.
@@ -15,5 +15,4 @@ WIP Tiling window manager. Fork of <https://github.com/DebianJoe/hcwm>. See
 * Bar support
 * Stability
 * Focus follows mouse
-* Keybinds to focus
 * That's it
