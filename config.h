@@ -19,7 +19,7 @@ const char *editorcmd[] = {"vim", NULL};
 const char *termcmd[] = {"st", NULL};
 
 /* This should allow us to execvp our session into cwm */
-// const char *wmrestor[] = {"i3", NULL};
+const char *wmrestor[] = {"i3", NULL};
 /* Avoid multiple paste */
 #define DESKTOPCHANGE(K, N)                                                    \
   {MODKEY, K, change_desktop, {.i = N}},                                       \
@@ -42,7 +42,7 @@ static struct key keys[] = {
     {MODKEY, XK_p, spawn, {.com = menucmd}},
     {MODKEY | ControlMask, XK_Return, spawn, {.com = termcmd}},
     {MODKEY | ControlMask, XK_e, spawn, {.com = editorcmd}},
-    // {MODKEY | ControlMask, XK_w, wmrestore, {NULL}},
+    {MODKEY | ControlMask, XK_w, wmrestore, {NULL}},
     {MODKEY | ControlMask, XK_s, stackmode, {NULL}},
     {MODKEY, XK_Right, next_desktop, {NULL}},
     {MODKEY, XK_Left, prev_desktop, {NULL}},
