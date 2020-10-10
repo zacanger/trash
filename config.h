@@ -10,9 +10,9 @@
 #define FOCUS "rgb:2C/1B/12"
 #define UNFOCUS "rgb:00/00/00"
 
-/* Borders */
+/* boarders */
 static int gaps = 4;    /* set gaps between windows */
-static int borders = 1; /* set width of window boarders */
+static int boarders = 1; /* set width of window boarders */
 
 /* add custom programs here. */
 const char *menucmd[] = {"rofi-run.sh", NULL};
