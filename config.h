@@ -1,20 +1,23 @@
-/* change settings in this file before building */
+/* Change settings in this file before building */
 #ifndef CONFIG_H
 #define CONFIG_H
 
 /* MODKEY (Mod1 == alt) and master size */
 #define MODKEY Mod1Mask
-#define MASTER_SIZE 0.5 /*master, where 1 is all the screen.*/
+#define MASTER_SIZE 0.5 /* Master, where 1 is all the screen. */
+
 /* Colors */
 #define FOCUS "rgb:2C/1B/12"
 #define UNFOCUS "rgb:00/00/00"
-/* Border Control */
-static int gaps = 11;    /* set gaps between windows */
-static int boarders = 4; /* set width of window boarders */
+
+/* Borders */
+static int gaps = 4;    /* set gaps between windows */
+static int borders = 1; /* set width of window boarders */
 
 /* add custom programs here. */
 const char *menucmd[] = {"rofi-run.sh", NULL};
 const char *editorcmd[] = {"vim", NULL};
+
 /* Use the below to set your terminal of choice */
 const char *termcmd[] = {"st", NULL};
 
@@ -22,11 +25,13 @@ const char *termcmd[] = {"st", NULL};
 #define DESKTOPCHANGE(K, N)                                                    \
   {MODKEY, K, change_desktop, {.i = N}},                                       \
       {MODKEY | ShiftMask, K, client_to_desktop, {.i = N}},
+
 /* declare stacking mode */
 extern int swmode;
+
 /* Define Keybinds for Programs Here */
 static struct key keys[] = {
-    /* MODKEY              KEY                         FUNCTION        ARGS*/
+    /* modifier, key, function, args */
     {MODKEY, XK_h, decrease, {NULL}},
     {MODKEY, XK_l, increase, {NULL}},
     {MODKEY | ControlMask, XK_x, kill_client, {NULL}},

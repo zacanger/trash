@@ -114,8 +114,9 @@ static desktop desktops[4];
 void add_window(Window w) {
   client *c, *t;
 
-  if (!(c = (client *)calloc(1, sizeof(client))))
+  if (!(c = (client *)calloc(1, sizeof(client)))) {
     die("Error calloc!");
+  }
 
   if (head == NULL) {
     c->next = NULL;
@@ -123,8 +124,9 @@ void add_window(Window w) {
     c->win = w;
     head = c;
   } else {
-    for (t = head; t->next; t = t->next)
+    for (t = head; t->next; t = t->next) {
       ;
+    }
 
     c->next = NULL;
     c->prev = t;
@@ -139,13 +141,16 @@ void add_window(Window w) {
 void change_desktop(const Arg arg) {
   client *c;
 
-  if (arg.i == current_desktop)
+  if (arg.i == current_desktop) {
     return;
+  }
 
   /* Unmap all window */
-  if (head != NULL)
-    for (c = head; c; c = c->next)
+  if (head != NULL) {
+    for (c = head; c; c = c->next) {
       XUnmapWindow(dis, c->win);
+    }
+  }
 
   /* Save current "properties" */
   save_desktop(current_desktop);
@@ -154,9 +159,11 @@ void change_desktop(const Arg arg) {
   select_desktop(arg.i);
 
   /* Map all windows */
-  if (head != NULL)
-    for (c = head; c; c = c->next)
+  if (head != NULL) {
+    for (c = head; c; c = c->next) {
       XMapWindow(dis, c->win);
+    }
+  }
 
   tile();
   update_current();
@@ -166,8 +173,9 @@ void client_to_desktop(const Arg arg) {
   client *tmp = current;
   int tmp2 = current_desktop;
 
-  if (arg.i == current_desktop || current == NULL)
+  if (arg.i == current_desktop || current == NULL) {
     return;
+  }
 
   /* Add client to desktop */
   select_desktop(arg.i);
@@ -182,7 +190,8 @@ void client_to_desktop(const Arg arg) {
   update_current();
 }
 
-void configurenotify(XEvent *e) { /* Do nothing for the moment */ }
+void configurenotify(XEvent *e) { /* Do nothing for the moment */
+}
 
 void configurerequest(XEvent *e) {
   /* "Borrowed" from DWM */
@@ -211,13 +220,16 @@ void dnotify(XEvent *e) {
   XDestroyWindowEvent *ev = &e->xdestroywindow;
 
   /* Stole this all from catwm */
-  for (c = head; c; c = c->next)
-    if (ev->window == c->win)
+  for (c = head; c; c = c->next) {
+    if (ev->window == c->win) {
       i++;
+    }
+  }
 
   /* End of the outright theft */
-  if (i == 0)
+  if (i == 0) {
     return;
+  }
 
   remove_window(ev->window);
   tile();
@@ -236,8 +248,9 @@ unsigned long getcolor(const char *color) {
   XColor c;
   Colormap map = DefaultColormap(dis, screen);
 
-  if (!XAllocNamedColor(dis, map, color, &c, &c))
+  if (!XAllocNamedColor(dis, map, color, &c, &c)) {
     die("Error parsing color!");
+  }
 
   return c.pixel;
 }
@@ -293,11 +306,12 @@ void maprequest(XEvent *e) {
   XMapRequestEvent *ev = &e->xmaprequest;
 
   client *c;
-  for (c = head; c; c = c->next)
+  for (c = head; c; c = c->next) {
     if (ev->window == c->win) {
       XMapWindow(dis, ev->window);
       return;
     }
+  }
 
   add_window(ev->window);
   XMapWindow(dis, ev->window);
@@ -337,10 +351,11 @@ void next_desktop() {
   int tmp = current_desktop;
   /* Need to set this to max desktop number */
   /* +1 because we're indexing from 1 */
-  if (tmp == 5)
+  if (tmp == 5) {
     tmp = 0;
-  else
+  } else {
     tmp++;
+  }
 
   Arg a = {.i = tmp};
   change_desktop(a);
@@ -350,10 +365,11 @@ void next_win() {
   client *c;
 
   if (current != NULL && head != NULL) {
-    if (current->next == NULL)
+    if (current->next == NULL) {
       c = head;
-    else
+    } else {
       c = current->next;
+    }
 
     current = c;
     update_current();
@@ -365,10 +381,11 @@ void prev_desktop() {
    * notice, that we go to 3 if we're at 0, *
    * so if you change # of V-desktops, this should also change */
   int tmp = current_desktop;
-  if (tmp == 0)
+  if (tmp == 0) {
     tmp = 3;
-  else
+  } else {
     tmp--;
+  }
 
   Arg a = {.i = tmp};
   change_desktop(a);
@@ -378,11 +395,13 @@ void prev_win() {
   client *c;
 
   if (current != NULL && head != NULL) {
-    if (current->prev == NULL)
-      for (c = head; c->next; c = c->next)
+    if (current->prev == NULL) {
+      for (c = head; c->next; c = c->next) {
         ;
-    else
+      }
+    } else {
       c = current->prev;
+    }
 
     current = c;
     update_current();
@@ -421,8 +440,9 @@ void quit() {
   while (nchildren > 0) {
     XQueryTree(dis, root, &root_return, &parent, &children, &nchildren);
     XNextEvent(dis, &ev);
-    if (events[ev.type])
+    if (events[ev.type]) {
       events[ev.type](&ev);
+    }
   }
 
   XUngrabKey(dis, AnyKey, AnyModifier, root);
@@ -530,17 +550,20 @@ void setup() {
 
 void sigchld(int unused) {
   /* Again, thx to dwm and catwm */
-  if (signal(SIGCHLD, sigchld) == SIG_ERR)
+  if (signal(SIGCHLD, sigchld) == SIG_ERR) {
     die("Can't install SIGCHLD handler");
-  while (0 < waitpid(-1, NULL, WNOHANG))
+  }
+  while (0 < waitpid(-1, NULL, WNOHANG)) {
     ;
+  }
 }
 
 void spawn(const Arg arg) {
   if (fork() == 0) {
     if (fork() == 0) {
-      if (dis)
+      if (dis) {
         close(ConnectionNumber(dis));
+      }
       setsid();
       execvp((char *)arg.com[0], (char **)arg.com);
     }
@@ -553,8 +576,9 @@ void start() {
 
   /* Main loop, just dispatch events */
   while (!bool_quit && !XNextEvent(dis, &ev)) {
-    if (events[ev.type])
+    if (events[ev.type]) {
       events[ev.type](&ev);
+    }
   }
 }
 
@@ -610,8 +634,9 @@ void tile() {
                         sh - (2 * gaps));
 
       /* Stack */
-      for (c = head->next; c; c = c->next)
+      for (c = head->next; c; c = c->next) {
         ++n;
+      }
       for (c = head->next; c; c = c->next) {
         XMoveResizeWindow(dis, c->win, master_size + gaps, y + gaps,
                           sw - master_size - (3 * gaps), (sh / n) - (2 * gaps));
@@ -635,8 +660,9 @@ void tile() {
                         master_size - (2 * gaps));
 
       /* Stack */
-      for (c = head->next; c; c = c->next)
+      for (c = head->next; c; c = c->next) {
         ++n;
+      }
       for (c = head->next; c; c = c->next) {
         XMoveResizeWindow(dis, c->win, y + gaps, master_size + gaps,
                           (sw / n) - (2 * gaps), sh - master_size - (3 * gaps));
@@ -659,21 +685,24 @@ void tile() {
 void update_current() {
   client *c;
 
-  for (c = head; c; c = c->next)
+  for (c = head; c; c = c->next) {
     if (current == c) {
       /* "Enable" current window */
-      XSetWindowBorderWidth(dis, c->win, boarders);
+      XSetWindowBorderWidth(dis, c->win, borders);
       XSetWindowBorder(dis, c->win, win_focus);
       XSetInputFocus(dis, c->win, RevertToParent, CurrentTime);
       XRaiseWindow(dis, c->win);
-    } else
+    } else {
       XSetWindowBorder(dis, c->win, win_unfocus);
+    }
+  }
 }
 
 int main(int argc, char **argv) {
   /* Open display */
-  if (!(dis = XOpenDisplay(NULL)))
+  if (!(dis = XOpenDisplay(NULL))) {
     die("Cannot open display!");
+  }
 
   /* Setup env */
   setup();
