@@ -1,20 +1,29 @@
 CFLAGS+= -Wall
-LDADD+= -lX11 
+LDADD+= -lX11
 LDFLAGS=
-EXEC=hcwm
+EXEC=zwm
 
-PREFIX?= /usr
+PREFIX?= /usr/local
 BINDIR?= $(PREFIX)/bin
 
 CC=gcc
 
 all: $(EXEC)
 
-hcwm: hcwm.o
+zwm: zwm.o
 	$(CC) $(LDFLAGS) -Os -o $@ $+ $(LDADD)
+.PHONY: zwm
 
 install: all
-	install -Dm 755 hcwm $(DESTDIR)$(BINDIR)/hcwm
+	install -Dm 755 zwm $(DESTDIR)$(BINDIR)/zwm
 
 clean:
-	rm -f hcwm *.o
+	rm -f zwm *.o
+
+run: $(EXEC)
+	Xephyr :4 -ac -screen 800x600 &
+	sleep 2
+	DISPLAY=:4 ./zwm &
+
+stop:
+	killall Xephyr zwm

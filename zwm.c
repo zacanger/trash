@@ -72,7 +72,6 @@ static void send_kill_signal(Window w);
 static void setup();
 static void sigchld(int unused);
 static void spawn(const Arg arg);
-static void wmrestore();
 static void stackmode();
 static void start();
 static void swap_master();
@@ -229,7 +228,7 @@ void die(const char *e) {
   /* Sometimes, things go wrong...
    * when they do, we should let people know what happened.
    * all errors print to stdout, and then we exit the wm */
-  fprintf(stdout, "hcwm: %s\n", e);
+  fprintf(stdout, "zwm: %s\n", e);
   exit(1);
 }
 
@@ -408,7 +407,7 @@ void quit() {
   if (bool_quit == 1) {
     XUngrabKey(dis, AnyKey, AnyModifier, root);
     XDestroySubwindows(dis, root);
-    fprintf(stdout, "hcwm shutdown initiated.\n");
+    fprintf(stdout, "zwm shutdown initiated.\n");
     XCloseDisplay(dis);
     die("forced shutdown");
   }
@@ -427,7 +426,7 @@ void quit() {
   }
 
   XUngrabKey(dis, AnyKey, AnyModifier, root);
-  fprintf(stdout, "hcwm shutdown initiated\n");
+  fprintf(stdout, "zwm shutdown initiated\n");
 }
 
 void remove_window(Window w) {
@@ -547,15 +546,6 @@ void spawn(const Arg arg) {
     }
     exit(0);
   }
-}
-
-void wmrestore(void) {
-  /* if you don't want the bash startup script *
-   * remove the 'system' line from the program here *
-   * and also in the MAIN function...profit */
-  system("~/.hcwmrc off");
-  setsid();
-  execvp((char *)wmrestor[0], (char **)wmrestor);
 }
 
 void start() {
@@ -687,11 +677,6 @@ int main(int argc, char **argv) {
 
   /* Setup env */
   setup();
-
-  /* run starting bash script */
-  /* also remove this line if you don't *
-   * want the bash script to run at startup */
-  system("~/.hcwmrc on");
 
   /* Start wm */
   start();

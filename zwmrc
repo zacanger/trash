@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# This script is a way to get some of that .xinitrc function
+# on wm swaps.  On install, it is copied into ~/.zwmrc.
+
+# It runs the "on" section whenever you start zwm, and then
+# the "off" section when you fall back to the standard window manager
+
+
+case "$1" in
+    "on") #we're running zwm as our primary wm
+	# Put stuff here you want to run when you start zwm
+	# hsetroot -fill ~/Xwalls/stockings.jpg
+	;;
+    "off") #we're leaving zwm, returning to default wm
+	# Put stuff here you want to stop on exiting zwm
+	# hsetroot -fill ~/Xwalls/abstract.jpg
+	;;
+    *) # We broke something. OH NO!!!
+esac
