@@ -60,9 +60,7 @@ static void kill_client();
 static void maprequest(XEvent *e);
 static void focus_next();
 static void focus_prev();
-static void next_desktop();
 static void next_win();
-static void prev_desktop();
 static void prev_win();
 static void quit();
 static void remove_window(Window w);
@@ -363,20 +361,6 @@ void focus_prev() {
   update_current();
 }
 
-void next_desktop() {
-  int tmp = current_desktop;
-  /* Need to set this to max desktop number */
-  /* +1 because we're indexing from 1 */
-  if (tmp == 5) {
-    tmp = 0;
-  } else {
-    tmp++;
-  }
-
-  Arg a = {.i = tmp};
-  change_desktop(a);
-}
-
 void next_win() {
   client *c;
 
@@ -390,21 +374,6 @@ void next_win() {
     current = c;
     update_current();
   }
-}
-
-void prev_desktop() {
-  /* This rolls through the virtual desktops *
-   * notice, that we go to 3 if we're at 0, *
-   * so if you change # of V-desktops, this should also change */
-  int tmp = current_desktop;
-  if (tmp == 0) {
-    tmp = 3;
-  } else {
-    tmp--;
-  }
-
-  Arg a = {.i = tmp};
-  change_desktop(a);
 }
 
 void prev_win() {

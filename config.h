@@ -44,8 +44,6 @@ static struct key keys[] = {
     {MODKEY, XK_p, spawn, {.com = menucmd}},
     {MODKEY | ControlMask, XK_Return, spawn, {.com = termcmd}},
     {MODKEY | ControlMask, XK_s, stackmode, {NULL}},
-    {MODKEY, XK_Right, next_desktop, {NULL}},
-    {MODKEY, XK_Left, prev_desktop, {NULL}},
     DESKTOPCHANGE(XK_1, 0),
     DESKTOPCHANGE(XK_2, 1),
     DESKTOPCHANGE(XK_3, 2),
