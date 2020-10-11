@@ -33,6 +33,7 @@ It works fine, I'm using it right now.
   * Indicate which desktop you're on
   * Move mouse cursor when focus changes by keyboard (see
     https://github.com/zacanger/dotfiles/blob/master/bin/i3-move-cursor-window-center.sh)
+  * Move window to different virtual workspace
 * V2?:
   * Test performance and safety in a higher-level language like Python
 
