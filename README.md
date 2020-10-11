@@ -40,9 +40,12 @@ It works fine, I'm using it right now.
 
 ## Credits
 
-Code and inspiration:
+Initially forked from [hcwm](https://github.com/DebianJoe/hcwm),
+which itself used code from [catwm](https://github.com/pyknite/catwm) and
+[dwm](https://dwm.suckless.org/). These projects are all under the MIT
+license.
 
-* <https://github.com/DebianJoe/hcwm>
-* <https://github.com/mackstann/tinywm>
-* <https://github.com/pyknite/catwm>
-* <https://dwm.suckless.org/>
+## See Also
+
+[wmjs](https://github.com/zacanger/wmjs), an earlier tiling window manager
+experiment in Node which I abandoned.
