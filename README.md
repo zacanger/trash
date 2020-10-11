@@ -36,6 +36,7 @@ It works fine, I'm using it right now.
 
 ### Projects to check out when I get stuck
 
+* <https://github.com/pyknite/catwm/commit/c68a7dd6b22b88fe3c666aa2200d836df13f9d30>
 * https://github.com/Francesco149/catwm
 * https://github.com/kathamer/ZeroWM
 * http://pywm.sourceforge.net/
