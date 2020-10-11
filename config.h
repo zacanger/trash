@@ -21,9 +21,9 @@ const char *menucmd[] = {"st", "-e", "run.sh", NULL};
 const char *termcmd[] = {"st", NULL};
 
 /* Avoid multiple paste */
-#define DESKTOPCHANGE(K, N)                                                    \
-  {MODKEY, K, change_desktop, {.i = N}},                                       \
-      {MODKEY | ShiftMask, K, client_to_desktop, {.i = N}},
+#define DESKTOPCHANGE(K, N) \
+  {MODKEY, K, change_desktop, {.i = N}}, \
+  {MODKEY | ShiftMask, K, client_to_desktop, {.i = N}}
 
 /* declare stacking mode */
 extern int swmode;
@@ -46,7 +46,10 @@ static struct key keys[] = {
     {MODKEY | ControlMask, XK_s, stackmode, {NULL}},
     {MODKEY, XK_Right, next_desktop, {NULL}},
     {MODKEY, XK_Left, prev_desktop, {NULL}},
-    DESKTOPCHANGE(XK_1, 0) DESKTOPCHANGE(XK_2, 1) DESKTOPCHANGE(XK_3, 2)
-        DESKTOPCHANGE(XK_4, 3){MODKEY | ControlMask, XK_q, quit, {NULL}}};
+    DESKTOPCHANGE(XK_1, 0),
+    DESKTOPCHANGE(XK_2, 1),
+    DESKTOPCHANGE(XK_3, 2),
+    DESKTOPCHANGE(XK_4, 3),
+    {MODKEY | ControlMask, XK_q, quit, {NULL}}};
 
 #endif
