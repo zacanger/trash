@@ -13,7 +13,7 @@ Less is not more. Just enough window management for X11.
 * `vi config.h` to configure how you like it
 * `make install` to install
 * `make run` to run in Xephyr
-* `make stop` to stop running in Xephyr (note: don't run this if you're running
+* `make stop` to stop running in Xephyr
   lesswm in Xephyr in lesswm...)
 * `echo exec lesswm >> ~/.xinitrc` and `startx` to use as a primary WM
 

@@ -26,4 +26,4 @@ run: $(EXEC)
 	DISPLAY=:4 ./lesswm &
 
 stop:
-	killall Xephyr lesswm
+	pkill -9 Xephyr
