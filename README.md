@@ -14,8 +14,13 @@ Less is not more. Just enough window management for X11.
 * `make install` to install
 * `make run` to run in Xephyr
 * `make stop` to stop running in Xephyr
+* `echo exec lesswm >> ~/.xinitrc` and `startx` to use as a primary WM
 
-## TODO
+## Status
+
+It works fine, I'm using it right now.
+
+### TODO
 
 * Accept a config file (INI or TOML)
 * Bar support
