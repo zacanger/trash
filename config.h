@@ -8,8 +8,8 @@
 #define MASTER_SIZE 0.5
 
 /* Colors (plain old CSS hex codes work here) */
-#define FOCUS "rgb:86/b5/4a"
-#define UNFOCUS "rgb:0d/0d/0d"
+#define FOCUS "rgb:00/FF/FA"
+#define UNFOCUS "rgb:0D/0D/0D"
 
 /* Borders */
 /* Gaps between windows in pixels */
