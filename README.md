@@ -17,6 +17,9 @@ Less is not more. Just enough window management for X11.
   lesswm in Xephyr in lesswm...)
 * `echo exec lesswm >> ~/.xinitrc` and `startx` to use as a primary WM
 
+Don't skip editing the config, otherwise nothing will work
+in ways you'd expect, most likely.
+
 ## Status
 
 It works fine, I'm using it right now.
