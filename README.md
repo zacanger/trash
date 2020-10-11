@@ -22,11 +22,12 @@ It works fine, I'm using it right now.
 
 ### TODO
 
-* Accept a config file (INI or TOML)
-* Bar support
-* Focus follows mouse
-* Test performance and safety in a higher-level language like Python
-* That's it
+* V1:
+  * Accept a config file (INI or TOML)
+  * Focus follows mouse
+  * Bar support
+* V2?:
+  * Test performance and safety in a higher-level language like Python
 
 ### Projects to check out when I get stuck
 
