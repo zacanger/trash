@@ -237,7 +237,7 @@ void die(const char *e) {
   /* Sometimes, things go wrong...
    * when they do, we should let people know what happened.
    * all errors print to stdout, and then we exit the wm */
-  fprintf(stdout, "hcwm: %s\n", e);
+  fprintf(stdout, "lesswm: %s\n", e);
   exit(1);
 }
 
@@ -411,7 +411,7 @@ Hardcore death-kill which I borrowed from catwm
   if (bool_quit == 1) {
     XUngrabKey(dis, AnyKey, AnyModifier, root);
     XDestroySubwindows(dis, root);
-    fprintf(stdout, "hcwm shutdown initiated.\n");
+    fprintf(stdout, "lesswm shutdown initiated.\n");
     XCloseDisplay(dis);
     die("forced shutdown");
   }
@@ -432,7 +432,7 @@ Hardcore death-kill which I borrowed from catwm
   }
 
   XUngrabKey(dis, AnyKey, AnyModifier, root);
-  fprintf(stdout, "hcwm shutdown initiated\n");
+  fprintf(stdout, "lesswm shutdown initiated\n");
 }
 
 void remove_window(Window w) {

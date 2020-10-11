@@ -2,13 +2,14 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-/* MODKEY (Mod1 == alt) and master size */
-#define MODKEY Mod1Mask
-#define MASTER_SIZE 0.5 /* Master, where 1 is all the screen. */
+/* Mod1: alt, Mod4: super */
+#define MODKEY Mod4Mask
+/* Master, where 1 is 100% */
+#define MASTER_SIZE 0.5
 
 /* Colors */
-#define FOCUS "rgb:2C/1B/12"
-#define UNFOCUS "rgb:00/00/00"
+#define FOCUS "rgb:12/2C/1B"
+#define UNFOCUS "rgb:0d/0d/0d"
 
 /* borders */
 static int win_gaps = 4;    /* set gaps between windows */
@@ -30,24 +31,37 @@ extern int swmode;
 
 /* Define Keybinds for Programs Here */
 static struct key keys[] = {
-    /* modifier, key, function, args */
+    /* modifier(s), key, function, args */
+
+    /* grow and shrink split */
     {MODKEY, XK_h, decrease, {NULL}},
     {MODKEY, XK_l, increase, {NULL}},
-    {MODKEY | ControlMask, XK_x, kill_client, {NULL}},
+
+    /* change focus */
     {MODKEY, XK_j, next_win, {NULL}},
     {MODKEY, XK_Tab, next_win, {NULL}},
     {MODKEY, XK_k, prev_win, {NULL}},
     {MODKEY | ControlMask, XK_j, focus_prev, {NULL}},
     {MODKEY | ControlMask, XK_k, focus_next, {NULL}},
-    {MODKEY, XK_Return, swap_master, {NULL}},
-    {MODKEY, XK_space, switch_mode, {NULL}},
-    {MODKEY, XK_p, spawn, {.com = menucmd}},
-    {MODKEY | ControlMask, XK_Return, spawn, {.com = termcmd}},
+
+    /* run things */
+    {MODKEY, XK_space, spawn, {.com = menucmd}},
+    {MODKEY, XK_Return, spawn, {.com = termcmd}},
+
+    /* change layouts */
+    {MODKEY | ControlMask, XK_space, switch_mode, {NULL}},
+    {MODKEY | ControlMask, XK_Return, swap_master, {NULL}},
     {MODKEY | ControlMask, XK_s, stackmode, {NULL}},
+
+    /* kill app, hard kill everything */
+    {MODKEY | ControlMask, XK_x, kill_client, {NULL}},
+    {MODKEY | ControlMask, XK_q, quit, {NULL}},
+
+    /* change desktop */
     DESKTOPCHANGE(XK_1, 0),
     DESKTOPCHANGE(XK_2, 1),
     DESKTOPCHANGE(XK_3, 2),
-    DESKTOPCHANGE(XK_4, 3),
-    {MODKEY | ControlMask, XK_q, quit, {NULL}}};
+    DESKTOPCHANGE(XK_4, 3)
+};
 
 #endif
