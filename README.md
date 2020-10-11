@@ -24,6 +24,14 @@ in ways you'd expect, most likely.
 
 It works fine, I'm using it right now.
 
+## What does it look like?
+
+Like a rectangle with more 0 or more other rectangles in it.
+Here's a screenshot showing st with tmux, neofetch, ranger,
+a little monitor script, and a movie in mpv.
+
+![screenshot](/screenshot.png?raw=true)
+
 ### TODO
 
 * V1:
@@ -31,8 +39,7 @@ It works fine, I'm using it right now.
   * Focus follows mouse
   * Bar support
   * Indicate which desktop you're on
-  * Move mouse cursor when focus changes by keyboard (see
-    https://github.com/zacanger/dotfiles/blob/master/bin/i3-move-cursor-window-center.sh)
+  * Move mouse cursor when focus changes by keyboard
   * Move window to different virtual workspace
 * V2?:
   * Test performance and safety in a higher-level language like Python
