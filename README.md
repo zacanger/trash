@@ -30,6 +30,7 @@ It works fine, I'm using it right now.
   * Accept a config file (INI or TOML)
   * Focus follows mouse
   * Bar support
+  * Indicate which desktop you're on
 * V2?:
   * Test performance and safety in a higher-level language like Python
 

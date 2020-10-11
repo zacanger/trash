@@ -7,13 +7,15 @@
 /* Master, where 1 is 100% */
 #define MASTER_SIZE 0.5
 
-/* Colors */
-#define FOCUS "rgb:12/2C/1B"
+/* Colors (plain old CSS hex codes work here) */
+#define FOCUS "rgb:86/b5/4a"
 #define UNFOCUS "rgb:0d/0d/0d"
 
-/* borders */
-static int win_gaps = 4;    /* set gaps between windows */
-static int win_borders = 1; /* set width of window borders */
+/* Borders */
+/* Gaps between windows in pixels */
+static int win_gaps = 2;
+/* Width of window borders in pixels */
+static int win_borders = 2;
 
 /* add custom programs here. */
 const char *menucmd[] = {"st", "-e", "run.sh", NULL};
