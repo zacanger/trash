@@ -1,6 +1,7 @@
 #include <X11/XF86keysym.h>
 #include <X11/Xlib.h>   /*the X-11 headers, because you need them*/
 #include <X11/keysym.h> /*keysym for keysym to keycode*/
+#include <X11/XKBlib.h>
 #include <signal.h>
 #include <stdio.h> /*the standard C input/output libs*/
 #include <stdlib.h>
@@ -282,7 +283,10 @@ void increase() {
 void keypress(XEvent *e) {
   int i;
   XKeyEvent ke = e->xkey;
-  KeySym keysym = XKeycodeToKeysym(dis, ke.keycode, 0);
+  // KeySym keysym = XKeycodeToKeysym(dis, ke.keycode, 0);
+
+  // TODO: is shift level correct here?
+  KeySym keysym = XkbKeycodeToKeysym(dis, ke.keycode, 0, 0);
 
   for (i = 0; i < TABLENGTH(keys); ++i) {
     if (keys[i].keysym == keysym && keys[i].mod == ke.state) {
