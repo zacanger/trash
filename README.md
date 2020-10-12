@@ -26,11 +26,9 @@ It works fine, I'm using it right now.
 
 ## What does it look like?
 
-Like a rectangle with more 0 or more other rectangles in it.
-Here's a screenshot showing st with tmux, neofetch, ranger,
-a little monitor script, and a movie in mpv.
-
-![screenshot](/screenshot.png?raw=true)
+Like a rectangle with more 0 or more other rectangles in it,
+optionally with gaps between them, and with borders colored
+as defined in the config.
 
 ### TODO
 
