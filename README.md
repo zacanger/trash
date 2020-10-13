@@ -28,7 +28,9 @@ It works fine, I'm using it right now.
 
 Like a rectangle with more 0 or more other rectangles in it,
 optionally with gaps between them, and with borders colored
-as defined in the config.
+as defined in the config. My use case is usually consistent:
+one primary window on the left taking up half the screen, and
+one to four secondary screens on the right, stacked.
 
 ### TODO
 
