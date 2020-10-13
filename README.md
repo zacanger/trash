@@ -23,7 +23,7 @@ in ways you'd expect, most likely.
 
 ## Status
 
-It works fine, I'm using it right now.
+It works fine, I'm using it right now. See the TODO section.
 
 ## What does it look like?
 
@@ -36,9 +36,10 @@ one to four secondary screens on the right, stacked.
 ### TODO
 
 * V1:
-  * Accept a config file (INI or TOML)
+  * Find the null pointer bugs that cause crashes sometimes
+  * Accept a config file (INI or TOML)?
   * Focus follows mouse
-  * Bar support
+  * Respect windows that specifically want to float
   * Indicate which desktop you're on
   * Move mouse cursor when focus changes by keyboard
   * Move window to different virtual workspace
