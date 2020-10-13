@@ -1,12 +1,16 @@
 #include <X11/XF86keysym.h>
+#include <X11/XKBlib.h>
+#include <X11/Xcursor/Xcursor.h>
 #include <X11/Xlib.h>
 #include <X11/keysym.h>
-#include <X11/XKBlib.h>
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#include <string.h>
+#include <time.h>
+#include <assert.h>
 
 #define TABLENGTH(X) (sizeof(X) / sizeof(*X))
 
@@ -273,8 +277,6 @@ void keypress(XEvent *e) {
   int i;
   XKeyEvent ke = e->xkey;
 
-  // KeySym keysym = XKeycodeToKeysym(dis, ke.keycode, 0);
-  // TODO: is shift level correct here?
   KeySym keysym = XkbKeycodeToKeysym(dis, ke.keycode, 0, 0);
 
   for (i = 0; i < TABLENGTH(keys); ++i) {
@@ -489,6 +491,9 @@ void spawn(const Arg arg) {
 }
 
 void start() {
+  // Show cursor even when no active windows
+  Cursor cursor = XCreateFontCursor(dis, 68);
+  XDefineCursor(dis, root, cursor);
   XEvent ev;
 
   // The real main loop, just handling events

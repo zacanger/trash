@@ -10,15 +10,15 @@ CC=gcc
 
 all: $(EXEC)
 
-lesswm: lesswm.o
+lesswm: $(EXEC).o
 	$(CC) $(LDFLAGS) -Os -o $@ $+ $(LDADD)
 .PHONY: lesswm
 
 install: all
-	install -Dm 755 lesswm $(DESTDIR)$(BINDIR)/lesswm
+	install -Dm 755 $(EXEC) $(DESTDIR)$(BINDIR)/$(EXEC)
 
 clean:
-	rm -f lesswm *.o
+	rm -f $(EXEC) $(EXEC).o
 
 run: $(EXEC)
 	Xephyr :4 -ac -screen 800x600 &
