@@ -27,3 +27,7 @@ run: $(EXEC)
 
 stop:
 	pkill -9 Xephyr
+
+test:
+	scan-build make
+	cppcheck .

@@ -11,9 +11,10 @@ Less is not more. Just enough window management for X11.
 * `git clone git@github.com:zacanger/lesswm.git`
 * `cd lesswm`
 * `vi config.h` to configure how you like it
-* `make install` to install
 * `make run` to run in Xephyr
 * `make stop` to stop running in Xephyr
+* `make test` to run some basic scans (requires `clang-tools` and `cppcheck`)
+* `make install` to install
   lesswm in Xephyr in lesswm...)
 * `echo exec lesswm >> ~/.xinitrc` and `startx` to use as a primary WM
 
