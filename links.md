@@ -13,3 +13,6 @@ Inspiration:
 * https://github.com/h-ohsaki/xpywm
 * https://pypi.org/project/xpywm/#files
 * https://github.com/mackstann/tinywm/blob/master/tinywm.py
+* http://plwm.sourceforge.net/
+* https://github.com/akihironitta/plwm
+* https://github.com/stew/tritium
