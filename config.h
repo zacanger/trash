@@ -65,10 +65,6 @@ static struct key keys[] = {
     {MODKEY | ControlMask, XK_Return, swap_master, {NULL}},
     {MODKEY | ControlMask, XK_s, stackmode, {NULL}},
 
-    /* Kill app, hard kill everything */
-    {MODKEY | ControlMask, XK_x, kill_client, {NULL}},
-    {MODKEY | ControlMask, XK_q, quit, {NULL}},
-
     /* Change desktop */
     DESKTOPCHANGE(XK_1, 0),
     DESKTOPCHANGE(XK_2, 1),
