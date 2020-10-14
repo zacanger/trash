@@ -43,7 +43,6 @@ struct client {
 };
 
 #define FL_FLOAT (1 << 0)
-#define FL_PIN (1 << 1)
 #define FL_HARDSIZE (1 << 2)
 
 typedef struct desktop desktop;
@@ -88,7 +87,6 @@ static void swap_primary();
 static void switch_mode();
 static void switch_float();
 static void switch_float_client(client *c);
-static void switch_pin();
 static void tile();
 static void update_current();
 static void move_float(const Arg arg);
@@ -119,7 +117,6 @@ static unsigned int win_unfocus;
 static Window root;
 static client *head;
 static client *flt;
-static client *pin;
 static client *current;
 static int gap = GAP;
 static int gap_left = GAP_LEFT, gap_right = GAP_RIGHT, gap_top = GAP_TOP,
@@ -602,9 +599,6 @@ client **find_window(Window w, desktop *desk, client **res) {
   if ((f = find_window_in(desk ? &desk->flt : &flt, w, res))) {
     return f;
   }
-  if ((f = find_window_in(&pin, w, res))) {
-    return f;
-  }
 
   return NULL;
 }
@@ -825,8 +819,6 @@ void switch_float_client(client *c) {
   } else {
     pop(&flt, c);
     insert_front(&head, c);
-    // TODO: pinning non-floating wnds
-    c->fl &= ~FL_PIN;
   }
 
   tile();
@@ -836,23 +828,6 @@ void switch_float_client(client *c) {
 void switch_float() {
   if (current) {
     switch_float_client(current);
-  }
-}
-
-void switch_pin() {
-  if (!current) {
-    return;
-  }
-  current->fl ^= FL_PIN;
-  if (current->fl & FL_PIN) {
-    if (!(current->fl & FL_FLOAT)) {
-      switch_float();
-    }
-    pop(&flt, current);
-    insert_front(&pin, current);
-  } else {
-    pop(&pin, current);
-    insert_front(&flt, current);
   }
 }
 
@@ -936,9 +911,6 @@ void tile() {
     for (c = flt; c; c = c->next) {
       XMoveResizeWindow(dis, c->win, c->fx, c->fy, c->fw, c->fh);
     }
-    for (c = pin; c; c = c->next) {
-      XMoveResizeWindow(dis, c->win, c->fx, c->fy, c->fw, c->fh);
-    }
     break;
   case 1:
     for (c = head; c; c = c->next) {
@@ -981,14 +953,7 @@ void update_current() {
     // floating wnds always on top
     XRaiseWindow(dis, c->win);
   }
-  for (c = pin; c; c = c->next) {
-    XRaiseWindow(dis, c->win);
-  }
   for (c = flt; c; c = c->next) {
-    enable_window(c);
-  }
-  for (c = pin; c; c = c->next) {
-
     enable_window(c);
   }
 }
