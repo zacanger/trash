@@ -35,9 +35,7 @@ one to four secondary screens on the right, stacked.
 
 ### TODO
 
-* Find the null pointer bugs that cause crashes sometimes
 * Accept a config file (INI or TOML)?
-* Focus follows mouse
 * Respect windows that specifically want to float
 * Indicate which desktop you're on
 * Move mouse cursor when focus changes by keyboard

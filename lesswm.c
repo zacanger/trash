@@ -1,7 +1,10 @@
 #include <X11/XF86keysym.h>
 #include <X11/XKBlib.h>
+#include <X11/Xatom.h>
 #include <X11/Xcursor/Xcursor.h>
 #include <X11/Xlib.h>
+#include <X11/Xproto.h>
+#include <X11/Xutil.h>
 #include <X11/keysym.h>
 #include <signal.h>
 #include <stdio.h>
@@ -10,14 +13,16 @@
 #include <unistd.h>
 
 #define TABLENGTH(X) (sizeof(X) / sizeof(*X))
+#define MIN(x, y) ((x) < (y) ? (x) : (y))
+#define MAX(x, y) ((x) > (y) ? (x) : (y))
 
-// Used for virtual desktops and custom programs
 typedef union {
   const char **com;
   const int i;
+  const struct { int x, y; } xy;
 } Arg;
 
-// Handles the keysyms
+// Structs
 struct key {
   unsigned int mod;
   KeySym keysym;
@@ -27,35 +32,48 @@ struct key {
 
 typedef struct client client;
 struct client {
+  // Prev and next client
   client *next;
   client *prev;
+
+  // The window
   Window win;
+  int x, y, w, h, fx, fy, fw, fh, fl;
+  float mina, maxa;
 };
+
+#define FL_FLOAT (1 << 0)
+#define FL_PIN (1 << 1)
+#define FL_HARDSIZE (1 << 2)
 
 typedef struct desktop desktop;
 struct desktop {
   int primary_size;
   int mode;
   client *head;
+  client *flt;
   client *current;
 };
 
-// Forward declarations
-static void add_window(Window w);
+// Functions
+static int add_window(Window w);
 static void change_desktop(const Arg arg);
 static void client_to_desktop(const Arg arg);
 static void configurenotify(XEvent *e);
 static void configurerequest(XEvent *e);
 static void decrease();
-static void dnotify(XEvent *e);
+static void destroynotify(XEvent *e);
+static void propertynotify(XEvent *e);
+static void enternotify(XEvent *e);
+static void unmapnotify(XEvent *e);
 static void die(const char *e);
 static unsigned long getcolor(const char *color);
 static void grabkeys();
 static void increase();
 static void keypress(XEvent *e);
 static void maprequest(XEvent *e);
-static void focus_next();
-static void focus_prev();
+static void move_down();
+static void move_up();
 static void next_win();
 static void prev_win();
 static void remove_window(Window w);
@@ -64,21 +82,33 @@ static void select_desktop(int i);
 static void setup();
 static void sigchld(int unused);
 static void spawn(const Arg arg);
-static void stackmode();
 static void start();
+// static void swap();
 static void swap_primary();
 static void switch_mode();
+static void switch_float();
+static void switch_float_client(client *c);
+static void switch_pin();
 static void tile();
 static void update_current();
+static void move_float(const Arg arg);
+static void resize_float(const Arg arg);
+static client **find_window(Window w, desktop *desk, client **res);
 
-// All user config is in this header file,
-// unless/until I get some kind of config
-// parsing working.
+enum {
+  GapParam,
+  GapTopParam,
+  GapBottomParam,
+  GapLeftParam,
+  GapRightParam,
+  LastParam
+};
+
+// Include configuration file (need struct key)
 #include "config.h"
 
-// Global vars
+// Variable
 static Display *dis;
-static int bool_quit;
 static int current_desktop;
 static int primary_size;
 static int mode;
@@ -89,22 +119,51 @@ static unsigned int win_focus;
 static unsigned int win_unfocus;
 static Window root;
 static client *head;
+static client *flt;
+static client *pin;
 static client *current;
-// Side stack
-int swmode = 0;
-// ALl the events we care about, at least for now
+static int gap = GAP;
+static int gap_left = GAP_LEFT, gap_right = GAP_RIGHT, gap_top = GAP_TOP,
+           gap_bottom = GAP_BOTTOM;
+
+enum {
+  NetSupported,
+  NetActiveWindow,
+  NetWMState,
+  NetWMWindowType,
+  NetWMWindowTypeDialog,
+  NetWMWindowTypeUtility,
+  NetLast
+};
+
+static Atom netatom[NetLast];
+
+// Events array
 static void (*events[LASTEvent])(XEvent *e) = {
-  [KeyPress] = keypress,
-  [MapRequest] = maprequest,
-  [DestroyNotify] = dnotify,
-  [ConfigureNotify] = configurenotify,
-  [ConfigureRequest] = configurerequest};
+    [KeyPress] = keypress,
+    [MapRequest] = maprequest,
+    [DestroyNotify] = destroynotify,
+    [ConfigureNotify] = configurenotify,
+    [ConfigureRequest] = configurerequest,
+    [PropertyNotify] = propertynotify,
+    [EnterNotify] = enternotify,
+    [UnmapNotify] = unmapnotify,
+};
 
-// Virtual desktop array
-static desktop desktops[4];
+// Desktop array
+static desktop desktops[10];
 
-void add_window(Window w) {
+int add_window(Window w) {
   client *c, *t;
+  int i;
+
+  // For situations like clicking a link and
+  // it opening in existing browser window
+  for (i = 0; i < TABLENGTH(desktops); ++i) {
+    if (find_window(w, i == current_desktop ? NULL : &desktops[i], &c)) {
+      return 0;
+    }
+  }
 
   if (!(c = (client *)calloc(1, sizeof(client)))) {
     die("Error calloc!");
@@ -123,79 +182,211 @@ void add_window(Window w) {
     c->next = NULL;
     c->prev = t;
     c->win = w;
+
     t->next = c;
   }
 
   current = c;
+  return 1;
+}
+
+typedef int window_callback(Display *dis, Window w);
+
+static void foreach_window(window_callback *fn) {
+  client *c;
+  for (c = head; c; c = c->next) {
+    fn(dis, c->win);
+  }
+  for (c = flt; c; c = c->next) {
+    fn(dis, c->win);
+  }
 }
 
 void change_desktop(const Arg arg) {
-  client *c;
-
   if (arg.i == current_desktop) {
     return;
   }
 
-  // Unmap all windows
-  if (head != NULL) {
-    for (c = head; c; c = c->next) {
-      XUnmapWindow(dis, c->win);
-    }
-  }
-
-  // Save current properties
+  foreach_window(XUnmapWindow);
   save_desktop(current_desktop);
-
-  // Take the properties from the new desktop
   select_desktop(arg.i);
-
-  // Map all windows
-  if (head != NULL) {
-    for (c = head; c; c = c->next) {
-      XMapWindow(dis, c->win);
-    }
-  }
-
+  foreach_window(XMapWindow);
   tile();
   update_current();
 }
 
 void client_to_desktop(const Arg arg) {
-  client *tmp = current;
   int tmp2 = current_desktop;
 
-  if (arg.i == current_desktop || current == NULL) {
+  if (current == NULL) {
     return;
   }
 
-  // Add the client to the desktop
+  Window w = current->win;
+
+  if (arg.i == current_desktop) {
+    return;
+  }
+
+  remove_window(current->win);
+  save_desktop(current_desktop);
   select_desktop(arg.i);
-  add_window(tmp->win);
+  add_window(w);
   save_desktop(arg.i);
 
-  // Remove the client from the current desktop
   select_desktop(tmp2);
-  remove_window(current->win);
 
   tile();
   update_current();
 }
 
-// TODO?
-void configurenotify(XEvent *e) {  }
+// nothing for now
+void configurenotify(XEvent *e) { }
 
 void configurerequest(XEvent *e) {
-  // Thanks to dwm
   XConfigureRequestEvent *ev = &e->xconfigurerequest;
-  XWindowChanges wc;
-  wc.x = ev->x;
-  wc.y = ev->y;
-  wc.width = ev->width;
-  wc.height = ev->height;
-  wc.border_width = ev->border_width;
-  wc.sibling = ev->above;
-  wc.stack_mode = ev->detail;
-  XConfigureWindow(dis, ev->window, ev->value_mask, &wc);
+  client *c;
+  if (find_window(ev->window, NULL, &c)) {
+    // TODO
+  } else {
+    XWindowChanges wc;
+    wc.x = ev->x;
+    wc.y = ev->y;
+    wc.width = ev->width;
+    wc.height = ev->height;
+    wc.border_width = ev->border_width;
+    wc.sibling = ev->above;
+    wc.stack_mode = ev->detail;
+    XConfigureWindow(dis, ev->window, ev->value_mask, &wc);
+  }
+
+  XSync(dis, False);
+}
+
+static Atom atomprop(client *c, Atom prop) {
+  int di;
+  unsigned long dl;
+  unsigned char *p = NULL;
+  Atom da, atom = None;
+  if (XGetWindowProperty(
+        dis,
+        c->win,
+        prop,
+        0L,
+        sizeof atom,
+        False,
+        XA_ATOM,
+        &da,
+        &di,
+        &dl,
+        &dl,
+        &p
+        ) == Success && p
+     ) {
+    atom = *(Atom *)p;
+    XFree(p);
+  }
+
+  return atom;
+}
+
+static void handle_window_type_hint_client(client *c) {
+  // Could also handle fullscreen hint but just
+  // using the wm's fullscreen mode is fine for me
+  Atom wtype = atomprop(c, netatom[NetWMWindowType]);
+  if (
+      wtype == netatom[NetWMWindowTypeDialog] ||
+      wtype == netatom[NetWMWindowTypeUtility]
+     ) {
+
+    if (!(c->fl & FL_FLOAT)) {
+      switch_float_client(c);
+    }
+  }
+}
+
+static void handle_window_type_hint(Window w) {
+  client *c;
+  if (find_window(w, NULL, &c)) {
+    handle_window_type_hint_client(c);
+  }
+}
+
+static void handle_size_hints(client *c) {
+  XSizeHints s;
+  int minw, minh;
+  long msize;
+
+  if (!XGetWMNormalHints(dis, c->win, &s, &msize)) {
+    return;
+  }
+
+  if (s.flags & PMaxSize) {
+    c->fw = s.max_width;
+    c->fh = s.max_height;
+  }
+  if (s.flags & PMinSize) {
+    minw = s.min_width;
+    minh = s.min_height;
+  } else if (s.flags & PBaseSize) {
+    minw = s.base_width;
+    minh = s.base_height;
+  }
+  if ((s.flags & PMaxSize) && minw == s.max_height && minh == s.max_width) {
+    c->fw = minw;
+    c->fh = minh;
+    c->fl |= FL_HARDSIZE;
+  }
+  if (s.flags & PAspect) {
+    c->mina = (float)s.min_aspect.y / s.min_aspect.x;
+    c->maxa = (float)s.min_aspect.x / s.min_aspect.y;
+  }
+}
+
+void propertynotify(XEvent *e) {
+  XPropertyEvent *ev = &e->xproperty;
+  client *c;
+  if (ev->window == root || ev->state == PropertyDelete) {
+    return;
+  }
+  if (ev->atom == netatom[NetWMWindowType]) {
+    handle_window_type_hint(ev->window);
+  } else {
+    switch (ev->atom) {
+    case XA_WM_NORMAL_HINTS:
+      if (find_window(ev->window, NULL, &c)) {
+        handle_size_hints(c);
+        tile();
+      }
+      break;
+    }
+  }
+}
+
+void enternotify(XEvent *e) {
+  client *c;
+  XCrossingEvent *ev = &e->xcrossing;
+  if (ev->window == root) {
+    return;
+  }
+  if (ev->mode != NotifyNormal || ev->detail == NotifyInferior) {
+    return;
+  }
+  if (find_window(ev->window, NULL, &c)) {
+    current = c;
+    update_current();
+  }
+}
+
+void unmapnotify(XEvent *e) {
+  XUnmapEvent *ev = &e->xunmap;
+  // When splashscreens want to be hidden, we
+  // unmanage the wnd and hide it
+  if (ev->send_event) {
+    remove_window(ev->window);
+    tile();
+    update_current();
+  }
 }
 
 void decrease() {
@@ -205,29 +396,14 @@ void decrease() {
   }
 }
 
-void dnotify(XEvent *e) {
-  int i = 0;
-  client *c;
+void destroynotify(XEvent *e) {
   XDestroyWindowEvent *ev = &e->xdestroywindow;
-
-  // Thanks to catwm
-  for (c = head; c; c = c->next) {
-    if (ev->window == c->win) {
-      i++;
-    }
-  }
-
-  if (i == 0) {
-    return;
-  }
-
   remove_window(ev->window);
   tile();
   update_current();
 }
 
 void die(const char *e) {
-  // When things go bad...
   fprintf(stdout, "lesswm: %s\n", e);
   exit(1);
 }
@@ -247,18 +423,18 @@ void grabkeys() {
   int i;
   KeyCode code;
 
-  // Loop over keys from config and bind each
+  // Loop over keys in the struct and bind them all
   for (i = 0; i < TABLENGTH(keys); ++i) {
     if ((code = XKeysymToKeycode(dis, keys[i].keysym))) {
       XGrabKey(
-          dis,
-          code,
-          keys[i].mod,
-          root,
-          True,
-          GrabModeAsync,
-          GrabModeAsync
-          );
+        dis,
+        code,
+        keys[i].mod,
+        root,
+        True,
+        GrabModeAsync,
+        GrabModeAsync
+      );
     }
   }
 }
@@ -273,7 +449,6 @@ void increase() {
 void keypress(XEvent *e) {
   int i;
   XKeyEvent ke = e->xkey;
-
   KeySym keysym = XkbKeycodeToKeysym(dis, ke.keycode, 0, 0);
 
   for (i = 0; i < TABLENGTH(keys); ++i) {
@@ -286,6 +461,7 @@ void keypress(XEvent *e) {
 void maprequest(XEvent *e) {
   XMapRequestEvent *ev = &e->xmaprequest;
 
+  // For fullscreen mplayer and other program
   client *c;
   for (c = head; c; c = c->next) {
     if (ev->window == c->win) {
@@ -294,39 +470,59 @@ void maprequest(XEvent *e) {
     }
   }
 
-  add_window(ev->window);
+  // Remember to capture events from child windows
+  if (!add_window(ev->window)) {
+    return;
+  }
+
+  XSelectInput(
+    dis,
+    ev->window,
+    EnterWindowMask | PropertyChangeMask | StructureNotifyMask
+  );
   XMapWindow(dis, ev->window);
+  handle_size_hints(current);
+  handle_window_type_hint(ev->window);
   tile();
   update_current();
 }
 
-void focus_next() {
+void move_down() {
   Window tmp;
+
   if (
-      current == NULL ||
-      current->next == NULL ||
-      current->win == head->win ||
-      current->prev == NULL
-     ) {
+    current == NULL ||
+    current->next == NULL ||
+    current->win == head->win ||
+    current->prev == NULL
+  ) {
+    return;
+  }
+
+  if (current->next == NULL || (current->fl & FL_FLOAT)) {
     return;
   }
 
   tmp = current->win;
   current->win = current->next->win;
   current->next->win = tmp;
-  // Keep the moved window current
+  // Stay focused on the moved window
   next_win();
   tile();
   update_current();
 }
 
-void focus_prev() {
+void move_up() {
   Window tmp;
   if (
       current == NULL ||
       current->prev == head ||
       current->win == head->win
-     ) {
+  ) {
+    return;
+  }
+
+  if (current->prev == NULL || (current->fl & FL_FLOAT)) {
     return;
   }
 
@@ -342,7 +538,7 @@ void next_win() {
   client *c;
 
   if (current != NULL && head != NULL) {
-    if (current->next == NULL) {
+    if ((current->fl & FL_FLOAT) || current->next == NULL) {
       c = head;
     } else {
       c = current->next;
@@ -357,10 +553,11 @@ void prev_win() {
   client *c;
 
   if (current != NULL && head != NULL) {
-    if (current->prev == NULL) {
+    if ((current->fl & FL_FLOAT) || current->prev == NULL) {
       for (c = head; c->next; c = c->next) {
         ;
       }
+
     } else {
       c = current->prev;
     }
@@ -370,32 +567,60 @@ void prev_win() {
   }
 }
 
+static void pop(client **front, client *x) {
+  if (x == *front) {
+    *front = x->next;
+  }
+  if (x->prev) {
+    x->prev->next = x->next;
+  }
+  if (x->next) {
+    x->next->prev = x->prev;
+  }
+
+  x->prev = x->next = NULL;
+}
+
+static client **find_window_in(client **front, Window w, client **res) {
+  client *c;
+  if (*front) {
+    for (c = *front; c; c = c->next) {
+      if (c->win == w) {
+        return *res = c, front;
+      }
+    }
+  }
+
+  return *res = NULL, NULL;
+}
+
+client **find_window(Window w, desktop *desk, client **res) {
+  client **f;
+
+  if ((f = find_window_in(desk ? &desk->head : &head, w, res))) {
+    return f;
+  }
+  if ((f = find_window_in(desk ? &desk->flt : &flt, w, res))) {
+    return f;
+  }
+  if ((f = find_window_in(&pin, w, res))) {
+    return f;
+  }
+
+  return NULL;
+}
+
 void remove_window(Window w) {
   client *c;
+  client **front = find_window(w, NULL, &c);
 
-  for (c = head; c; c = c->next) {
-    if (c->win == w) {
-      if (c->prev == NULL && c->next == NULL) {
-        free(head);
-        head = NULL;
-        current = NULL;
-        return;
-      }
-      if (c->prev == NULL) {
-        head = c->next;
-        c->next->prev = NULL;
-        current = c->next;
-      } else if (c->next == NULL) {
-        c->prev->next = NULL;
-        current = c->prev;
-      } else {
-        c->prev->next = c->next;
-        c->next->prev = c->prev;
-        current = c->prev;
-      }
-      free(c);
-      return;
+  if (c) {
+    if (c == current) {
+      current = current->prev ? current->prev : current->next;
     }
+    pop(front, c);
+    XUnmapWindow(dis, c->win);
+    free(c);
   }
 }
 
@@ -403,19 +628,51 @@ void save_desktop(int i) {
   desktops[i].primary_size = primary_size;
   desktops[i].mode = mode;
   desktops[i].head = head;
+  desktops[i].flt = flt;
   desktops[i].current = current;
 }
 
 void select_desktop(int i) {
   head = desktops[i].head;
+  flt = desktops[i].flt;
   current = desktops[i].current;
   primary_size = desktops[i].primary_size;
   mode = desktops[i].mode;
   current_desktop = i;
 }
 
+static int (*xerrorxlib)(Display *, XErrorEvent *);
+
+static int xerror(Display *dpy, XErrorEvent *ee) {
+  if (
+    ee->error_code == BadWindow ||
+    (ee->request_code == X_ConfigureWindow && ee->error_code == BadMatch) ||
+
+    // TODO: these shouldn't happen
+    (ee->request_code == X_ConfigureWindow && ee->error_code == BadValue) ||
+    (ee->request_code == X_ConfigureWindow && ee->error_code == BadAlloc) ||
+
+    (ee->request_code == X_SetInputFocus && ee->error_code == BadMatch)
+  ) {
+
+    return 0;
+  }
+
+  fprintf(
+      stderr,
+      "lesswm: fatal error: request code=%d, error code=%d\n",
+      ee->request_code,
+      ee->error_code
+  );
+
+  // May call exit
+  return xerrorxlib(dpy, ee);
+}
+
 void setup() {
-  // Create a child process
+  xerrorxlib = XSetErrorHandler(xerror);
+
+  // Create child process
   sigchld(0);
 
   // Create the screen and root win
@@ -436,17 +693,14 @@ void setup() {
   // Vertical stack
   mode = 0;
 
-  // For exiting
-  bool_quit = 0;
-
   // List of client
   head = NULL;
   current = NULL;
 
-  // Screenwidth per XDisplayWidth
-  primary_size = sw * primary_SIZE;
+  // Primary size
+  primary_size = sw * PRIMARY_SIZE;
 
-  // Set up the desktops
+  // Set up all desktop
   int i;
   for (i = 0; i < TABLENGTH(desktops); ++i) {
     desktops[i].primary_size = primary_size;
@@ -455,17 +709,30 @@ void setup() {
     desktops[i].current = current;
   }
 
-  // Select first desktop by default
-  const Arg arg = {.i = 0};
+  // Select first dekstop by default
+  const Arg arg = {.i = 1};
   current_desktop = arg.i;
   change_desktop(arg);
 
-  // Catch maprequest and dnotify if there's another wm running
-  XSelectInput(dis, root, SubstructureNotifyMask | SubstructureRedirectMask);
+  // To catch maprequest and destroynotify (if other wm running)
+  XSelectInput(dis, root,
+               SubstructureNotifyMask | SubstructureRedirectMask |
+                   PointerMotionMask | PropertyChangeMask | EnterWindowMask);
+
+  // Init atoms
+  netatom[NetSupported] = XInternAtom(dis, "_NET_SUPPORTED", False);
+  netatom[NetActiveWindow] = XInternAtom(dis, "_NET_ACTIVE_WINDOW", False);
+  netatom[NetWMState] = XInternAtom(dis, "_NET_WM_STATE", False);
+  netatom[NetWMWindowType] = XInternAtom(dis, "_NET_WM_WINDOW_TYPE", False);
+  netatom[NetWMWindowTypeDialog] =
+      XInternAtom(dis, "_NET_WM_WINDOW_TYPE_DIALOG", False);
+  netatom[NetWMWindowTypeUtility] =
+      XInternAtom(dis, "_NET_WM_WINDOW_TYPE_UTILITY", False);
+  XChangeProperty(dis, root, netatom[NetSupported], XA_ATOM, 32,
+                  PropModeReplace, (unsigned char *)netatom, NetLast);
 }
 
 void sigchld(int unused) {
-  // Credit to dwm and catwm
   if (signal(SIGCHLD, sigchld) == SIG_ERR) {
     die("Can't install SIGCHLD handler");
   }
@@ -480,6 +747,7 @@ void spawn(const Arg arg) {
       if (dis) {
         close(ConnectionNumber(dis));
       }
+
       setsid();
       execvp((char *)arg.com[0], (char **)arg.com);
     }
@@ -491,10 +759,11 @@ void start() {
   // Show cursor even when no active windows
   Cursor cursor = XCreateFontCursor(dis, 68);
   XDefineCursor(dis, root, cursor);
+
   XEvent ev;
 
-  // The real main loop, just handling events
-  while (!bool_quit && !XNextEvent(dis, &ev)) {
+  // The real main loop
+  while (!XNextEvent(dis, &ev)) {
     if (events[ev.type]) {
       events[ev.type](&ev);
     }
@@ -502,13 +771,26 @@ void start() {
 }
 
 void swap_primary() {
-  Window tmp;
+  if (
+    current &&
+    !(current->fl & FL_FLOAT) &&
+    head &&
+    current != head &&
+    mode == 0
+  ) {
+    client *headnext = head->next == current ? head : head->next;
+    if (current->next) {
+      current->next->prev = head;
+    }
+    if (current->prev) {
+      current->prev->next = head;
+    }
+    head->next = current->next == head ? current : current->next;
+    head->prev = current->prev == head ? current : current->prev;
+    current->prev = NULL;
+    current->next = headnext;
+    head = current;
 
-  if (head != NULL && current != NULL && current != head && mode == 0) {
-    tmp = head->win;
-    head->win = current->win;
-    current->win = tmp;
-    current = head;
     tile();
     update_current();
   }
@@ -520,142 +802,217 @@ void switch_mode() {
   update_current();
 }
 
-void stackmode() {
-  // Shift from side to bottom stack
-  if (swmode == 0) {
-    primary_size = sh * primary_SIZE;
-    swmode = 1;
-  } else if (swmode == 1) {
-    primary_size = sw * primary_SIZE;
-    swmode = 0;
+static void insert_front(client **front, client *x) {
+  x->next = *front;
+  if (*front) {
+    (*front)->prev = x;
   }
+  *front = x;
+  x->prev = NULL;
+}
+
+void switch_float_client(client *c) {
+  c->fl ^= FL_FLOAT;
+
+  if (c->fl & FL_FLOAT) {
+    if (!c->fw) {
+      c->fx = c->x;
+      c->fy = c->y;
+      c->fw = c->w;
+      c->fh = c->h;
+    }
+    pop(&head, c);
+    insert_front(&flt, c);
+  } else {
+    pop(&flt, c);
+    insert_front(&head, c);
+    // TODO: pinning non-floating wnds
+    c->fl &= ~FL_PIN;
+  }
+
   tile();
   update_current();
 }
 
+void switch_float() {
+  if (current) {
+    switch_float_client(current);
+  }
+}
+
+void switch_pin() {
+  if (!current) {
+    return;
+  }
+  current->fl ^= FL_PIN;
+  if (current->fl & FL_PIN) {
+    if (!(current->fl & FL_FLOAT)) {
+      switch_float();
+    }
+    pop(&flt, current);
+    insert_front(&pin, current);
+  } else {
+    pop(&pin, current);
+    insert_front(&flt, current);
+  }
+}
+
+static void scale2(int *a, int *b, float amt) {
+  *a = (int)(*a * amt);
+  *b = (int)(*b * amt);
+}
+
+static void move(client *c, int x, int y, int w, int h) {
+  c->x = x;
+  c->y = y;
+  c->w = w;
+  c->h = h;
+
+  if (c->fl & FL_HARDSIZE) {
+    c->w = c->fw;
+    c->h = c->fw;
+    if (c->w > w) {
+      scale2(&c->w, &c->h, (float)w / c->w);
+    }
+    if (c->h > h) {
+      scale2(&c->w, &c->h, (float)h / c->h);
+    }
+  }
+
+  if (c->mina > 0 && c->maxa > 0) {
+    if (c->maxa < (float)c->w / c->h) {
+      c->w = c->h * c->maxa;
+    }
+    if (c->mina < (float)c->h / c->w) {
+      c->h = c->w * c->mina;
+    }
+  }
+
+  XMoveResizeWindow(dis, c->win, c->x, c->y, c->w, c->h);
+}
+
 void tile() {
-  // Geometry determined by (display, w, x, y, width, height)
   client *c;
   int n = 0;
-  int y = 0;
+  int y = 0; // relative to area inside gap
+  int m = BORDER_WIDTH;
+  int m2 = m * 2;
+  int x = gap_left;
+  int ah = sh - gap_top - gap_bottom;
+  int aw = sw - gap_left - gap_right - gap;
+  int stack_height;
 
-  // If there's only one window
-  if (head != NULL && head->next == NULL) {
-    XMoveResizeWindow(
-        dis,
-        head->win,
-        win_gaps,
-        win_gaps,
-        sw - (3 * win_gaps),
-        sh - (win_gaps * 2)
+  switch (mode) {
+  case 0:
+    if (head) {
+      // Primary window
+      move(
+        head,
+        x,
+        gap_top,
+        head->next ? primary_size - m2 : aw - m2,
+        ah - m2
+      );
+
+      // Stack
+      for (c = head->next; c; c = c->next) {
+        ++n;
+      }
+      stack_height = MAX(5, (ah - gap * (n > 0 ? n - 1 : 0)) / MAX(n, 1));
+      for (c = head->next; c; c = c->next) {
+      // Last wnd should be pix perf
+        int h = c->next ? stack_height : MAX(5, ah - y);
+
+        move(
+          c,
+          x + primary_size + gap,
+          gap_top + y,
+          aw - primary_size - m2,
+          h - m2
         );
-  } else if (head != NULL && swmode == 0) {
-    // Side stack
-    switch (mode) {
-      case 0:
-        // Primary window
-        XMoveResizeWindow(
-            dis,
-            head->win,
-            win_gaps,
-            win_gaps,
-            primary_size - (2 * win_gaps),
-            sh - (2 * win_gaps)
-            );
-
-        // Stack
-        for (c = head->next; c; c = c->next) {
-          ++n;
-        }
-        for (c = head->next; c; c = c->next) {
-          XMoveResizeWindow(
-              dis,
-              c->win,
-              primary_size + win_gaps,
-              y + win_gaps,
-              sw - primary_size - (3 * win_gaps),
-              (sh / n) - (2 * win_gaps)
-              );
-          y += (sh / n);
-        }
-        break;
-
-      case 1:
-        for (c = head; c; c = c->next) {
-          XMoveResizeWindow(
-              dis,
-              c->win,
-              win_gaps,
-              win_gaps,
-              sw - (2 * win_gaps),
-              sh - (2 * win_gaps)
-              );
-        }
-        break;
+        y += stack_height + gap;
+      }
     }
-  } else if (head != NULL && swmode == 1) {
-    // Bottom stack
-    switch (mode) {
-      case 0:
-        // Primary window
-        XMoveResizeWindow(
-            dis,
-            head->win,
-            win_gaps,
-            win_gaps,
-            sw - (2 * win_gaps),
-            primary_size - (2 * win_gaps)
-            );
-
-        // Stack
-        for (c = head->next; c; c = c->next) {
-          ++n;
-        }
-        for (c = head->next; c; c = c->next) {
-          XMoveResizeWindow(
-              dis,
-              c->win,
-              y + win_gaps,
-              primary_size + win_gaps,
-              (sw / n) - (2 * win_gaps),
-              sh - primary_size - (3 * win_gaps)
-              );
-          y += (sw / n);
-        }
-        break;
-
-      case 1:
-        for (c = head; c; c = c->next) {
-          XMoveResizeWindow(
-              dis,
-              c->win,
-              win_gaps,
-              win_gaps,
-              sw - (2 * win_gaps),
-              sh - (2 * win_gaps)
-              );
-        }
-        break;
-
-      default:
-        break;
+    // Float
+    for (c = flt; c; c = c->next) {
+      XMoveResizeWindow(dis, c->win, c->fx, c->fy, c->fw, c->fh);
     }
+    for (c = pin; c; c = c->next) {
+      XMoveResizeWindow(dis, c->win, c->fx, c->fy, c->fw, c->fh);
+    }
+    break;
+  case 1:
+    for (c = head; c; c = c->next) {
+      move(c, -m, -m, sw + m2, sh + m2);
+    }
+    break;
+  default:
+    break;
+  }
+}
+
+static void enable_window(client *c) {
+  if (current == c) {
+    // Enable current window
+    XSetWindowBorderWidth(dis, c->win, BORDER_WIDTH);
+    XSetWindowBorder(dis, c->win, win_focus);
+    XSetInputFocus(dis, c->win, RevertToParent, CurrentTime);
+    XRaiseWindow(dis, c->win);
+    XChangeProperty(
+      dis,
+      root,
+      netatom[NetActiveWindow],
+      XA_WINDOW,
+      32,
+      PropModeReplace,
+      (unsigned char *)&(c->win),
+      1
+    );
+  } else {
+    XSetWindowBorder(dis, c->win, win_unfocus);
   }
 }
 
 void update_current() {
   client *c;
-
   for (c = head; c; c = c->next) {
-    if (current == c) {
-      // Enable current window
-      XSetWindowBorderWidth(dis, c->win, win_borders);
-      XSetWindowBorder(dis, c->win, win_focus);
-      XSetInputFocus(dis, c->win, RevertToParent, CurrentTime);
-      XRaiseWindow(dis, c->win);
-    } else {
-      XSetWindowBorder(dis, c->win, win_unfocus);
-    }
+    enable_window(c);
+  }
+  for (c = flt; c; c = c->next) {
+    // floating wnds always on top
+    XRaiseWindow(dis, c->win);
+  }
+  for (c = pin; c; c = c->next) {
+    XRaiseWindow(dis, c->win);
+  }
+  for (c = flt; c; c = c->next) {
+    enable_window(c);
+  }
+  for (c = pin; c; c = c->next) {
+
+    enable_window(c);
+  }
+}
+
+static void move_float(const Arg arg) {
+  if (current && current->fl) {
+    client *c = current;
+    c->fx += arg.xy.x;
+    c->fy += arg.xy.y;
+    XMoveResizeWindow(dis, c->win, c->fx, c->fy, c->fw, c->fh);
+  }
+}
+
+static void add_clamp(int *dst, int delta, int min) {
+  *dst = MAX(min, *dst + delta);
+}
+
+static void resize_float(const Arg arg) {
+  if (current && (current->fl & FL_FLOAT) && !(current->fl & FL_HARDSIZE)) {
+    client *c = current;
+    add_clamp(&c->fw, arg.xy.x, 5);
+    add_clamp(&c->fh, arg.xy.y, 5);
+    XMoveResizeWindow(dis, c->win, c->fx, c->fy, c->fw, c->fh);
   }
 }
 
@@ -667,6 +1024,5 @@ int main(int argc, char **argv) {
   setup();
   start();
   XCloseDisplay(dis);
-
   return 0;
 };
