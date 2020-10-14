@@ -1,7 +1,5 @@
 Links to check out for inspiration if I decide to rewrite in Python
 
-https://github.com/Francesco149/catwm/blob/myfork/catwm.c#L271
-
 * https://github.com/kathamer/ZeroWM
 * http://pywm.sourceforge.net/
 * https://github.com/h-ohsaki/xpywm
