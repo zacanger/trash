@@ -34,10 +34,10 @@ optionally with colored borders. It's really up to you.
 
 ### TODO
 
-* Respect windows that specifically want to float
+* Remove gaps altogether?
 * Indicate which desktop you're on
 * Move mouse cursor when focus changes by keyboard
-* Move window to different virtual workspace
+* Rewrite in a higher level language?
 
 ## Credits
 

@@ -22,7 +22,7 @@ typedef union {
   const struct { int x, y; } xy;
 } Arg;
 
-// Structs
+// Keybinds
 struct key {
   unsigned int mod;
   KeySym keysym;
@@ -54,7 +54,7 @@ struct desktop {
   client *current;
 };
 
-// Functions
+// Forward declarations
 static int add_window(Window w);
 static void change_desktop(const Arg arg);
 static void client_to_desktop(const Arg arg);
