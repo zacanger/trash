@@ -30,6 +30,8 @@ It works fine, I'm using it right now. See the TODO section.
 Like a rectangle with 0 or more other rectangles in it,
 optionally with colored borders. It's really up to you.
 
+![screenshot](/screenshot.png?raw=true)
+
 ### TODO
 
 * Respect windows that specifically want to float
