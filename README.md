@@ -35,23 +35,24 @@ one to four secondary screens on the right, stacked.
 
 ### TODO
 
-* V1:
-  * Find the null pointer bugs that cause crashes sometimes
-  * Accept a config file (INI or TOML)?
-  * Focus follows mouse
-  * Respect windows that specifically want to float
-  * Indicate which desktop you're on
-  * Move mouse cursor when focus changes by keyboard
-  * Move window to different virtual workspace
-* V2?:
-  * Test performance and safety in a higher-level language like Python
+* Find the null pointer bugs that cause crashes sometimes
+* Accept a config file (INI or TOML)?
+* Focus follows mouse
+* Respect windows that specifically want to float
+* Indicate which desktop you're on
+* Move mouse cursor when focus changes by keyboard
+* Move window to different virtual workspace
 
 ## Credits
 
-Initially forked from [hcwm](https://github.com/DebianJoe/hcwm),
-which itself used code from [catwm](https://github.com/pyknite/catwm) and
-[dwm](https://dwm.suckless.org/). These projects are all under the MIT
-license.
+lesswm includes code, ideas, and commits from some other projects, namely:
+
+* <https://github.com/DebianJoe/hcwm>
+* <https://github.com/pyknite/catwm>
+* <https://github.com/Francesco149/catwm>
+* <https://dwm.suckless.org/>
+
+These are all under the MIT/X license (see [LICENSE](./LICENSE))
 
 ## See Also
 

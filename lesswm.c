@@ -660,7 +660,6 @@ void update_current() {
 }
 
 int main(int argc, char **argv) {
-  /* Open display */
   if (!(dis = XOpenDisplay(NULL))) {
     die("Cannot open display!");
   }
@@ -670,4 +669,4 @@ int main(int argc, char **argv) {
   XCloseDisplay(dis);
 
   return 0;
-}
+};
