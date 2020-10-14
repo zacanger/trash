@@ -1,56 +1,26 @@
- /*
- *   /\___/\
- *  ( o   o )  Made by cat...
- *  (  =^=  )
- *  (        )            ... for cat!
- *  (         )
- *  (          ))))))________________ Cute And Tiny Window Manager
- *  ______________________________________________________________________________
- *
- *  Copyright (c) 2010, Rinaldini Julien, julien.rinaldini@heig-vd.ch
- *
- *  Permission is hereby granted, free of charge, to any person obtaining a
- *  copy of this software and associated documentation files (the "Software"),
- *  to deal in the Software without restriction, including without limitation
- *  the rights to use, copy, modify, merge, publish, distribute, sublicense,
- *  and/or sell copies of the Software, and to permit persons to whom the
- *  Software is furnished to do so, subject to the following conditions:
- *
- *  The above copyright notice and this permission notice shall be included in
- *  all copies or substantial portions of the Software.
- *
- *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
- *  THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
- *  DEALINGS IN THE SOFTWARE.
- *
- */
-
-#include <X11/Xlib.h>
-#include <X11/keysym.h>
 #include <X11/XF86keysym.h>
+#include <X11/XKBlib.h>
 #include <X11/Xatom.h>
+#include <X11/Xcursor/Xcursor.h>
+#include <X11/Xlib.h>
 #include <X11/Xproto.h>
-#include <X11/Xatom.h>
 #include <X11/Xutil.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
+#include <X11/keysym.h>
 #include <signal.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <sys/wait.h>
+#include <unistd.h>
 
 #define TABLENGTH(X)    (sizeof(X)/sizeof(*X))
 #define MIN(x, y) ((x) < (y) ? (x) : (y))
 #define MAX(x, y) ((x) > (y) ? (x) : (y))
 
 typedef union {
-    const char** com;
-    const int i;
-    const struct { int x, y; } xy;
-    const struct { int which; int value; } param;
+  const char** com;
+  const int i;
+  const struct { int x, y; } xy;
+  const struct { int which; int value; } param;
 } Arg;
 
 // Structs
@@ -62,7 +32,7 @@ struct key {
 };
 
 typedef struct client client;
-struct client{
+struct client {
     // Prev and next client
     client *next;
     client *prev;
@@ -78,7 +48,7 @@ struct client{
 #define FL_HARDSIZE (1<<2)
 
 typedef struct desktop desktop;
-struct desktop{
+struct desktop {
     int master_size;
     int mode;
     client *head;
@@ -106,9 +76,7 @@ static void kill_client();
 static void maprequest(XEvent *e);
 static void move_down();
 static void move_up();
-static void next_desktop();
 static void next_win();
-static void prev_desktop();
 static void prev_win();
 static void remove_window(Window w);
 static void save_desktop(int i);
@@ -426,7 +394,7 @@ void increase() {
 void keypress(XEvent *e) {
     int i;
     XKeyEvent ke = e->xkey;
-    KeySym keysym = XKeycodeToKeysym(dis,ke.keycode,0);
+    KeySym keysym = XkbKeycodeToKeysym(dis, ke.keycode, 0, 0);
 
     for(i=0;i<TABLENGTH(keys);++i) {
         if(keys[i].keysym == keysym && keys[i].mod == ke.state) {
@@ -441,7 +409,7 @@ void kill_client() {
 		send_kill_signal(current->win);
 	}
 }
- 
+
 void maprequest(XEvent *e) {
     XMapRequestEvent *ev = &e->xmaprequest;
 
@@ -492,17 +460,6 @@ void move_up() {
     update_current();
 }
 
-void next_desktop() {
-    int tmp = current_desktop;
-    if(tmp== 9)
-        tmp = 0;
-    else
-        tmp++;
-
-    Arg a = {.i = tmp};
-    change_desktop(a);
-}
-
 void next_win() {
     client *c;
 
@@ -515,17 +472,6 @@ void next_win() {
         current = c;
         update_current();
     }
-}
-
-void prev_desktop() {
-    int tmp = current_desktop;
-    if(tmp == 0)
-        tmp = 9;
-    else
-        tmp--;
-
-    Arg a = {.i = tmp};
-    change_desktop(a);
 }
 
 void prev_win() {
@@ -591,7 +537,7 @@ void select_desktop(int i) {
     current_desktop = i;
 }
 
-void send_kill_signal(Window w) { 
+void send_kill_signal(Window w) {
     XEvent ke;
     ke.type = ClientMessage;
     ke.xclient.window = w;
@@ -618,7 +564,7 @@ static int xerror(Display *dpy, XErrorEvent *ee) {
 
 void setup() {
     xerrorxlib = XSetErrorHandler(xerror);
-  
+
     // Install a signal
     sigchld(0);
 
@@ -663,7 +609,7 @@ void setup() {
     const Arg arg = {.i = 1};
     current_desktop = arg.i;
     change_desktop(arg);
-    
+
     // To catch maprequest and destroynotify (if other wm running)
     XSelectInput(dis,root,SubstructureNotifyMask|SubstructureRedirectMask|PointerMotionMask|
       PropertyChangeMask|EnterWindowMask);
@@ -890,19 +836,12 @@ static void change_param(const Arg arg) {
 }
 
 int main(int argc, char **argv) {
-    // Open display   
-    if(!(dis = XOpenDisplay(NULL)))
-        die("Cannot open display!");
+  if(!(dis = XOpenDisplay(NULL))) {
+    die("Cannot open display!");
+  }
 
-    // Setup env
-    setup();
-
-    // Start wm
-    start();
-
-    // Close display
-    XCloseDisplay(dis);
-
-    return 0;
-}
-
+  setup();
+  start();
+  XCloseDisplay(dis);
+  return 0;
+};
