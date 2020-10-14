@@ -702,27 +702,32 @@ void setup() {
     desktops[i].current = current;
   }
 
-  // Select first dekstop by default
-  const Arg arg = {.i = 1};
+  // Select first desktop by default
+  const Arg arg = {.i = 0};
   current_desktop = arg.i;
   change_desktop(arg);
 
   // To catch maprequest and destroynotify (if other wm running)
-  XSelectInput(dis, root,
-               SubstructureNotifyMask | SubstructureRedirectMask |
-                   PointerMotionMask | PropertyChangeMask | EnterWindowMask);
+  XSelectInput(
+    dis,
+    root,
+    SubstructureNotifyMask |
+      SubstructureRedirectMask |
+      PointerMotionMask |
+      PropertyChangeMask |
+      EnterWindowMask
+  );
 
   // Init atoms
   netatom[NetSupported] = XInternAtom(dis, "_NET_SUPPORTED", False);
   netatom[NetActiveWindow] = XInternAtom(dis, "_NET_ACTIVE_WINDOW", False);
   netatom[NetWMState] = XInternAtom(dis, "_NET_WM_STATE", False);
   netatom[NetWMWindowType] = XInternAtom(dis, "_NET_WM_WINDOW_TYPE", False);
-  netatom[NetWMWindowTypeDialog] =
-      XInternAtom(dis, "_NET_WM_WINDOW_TYPE_DIALOG", False);
-  netatom[NetWMWindowTypeUtility] =
-      XInternAtom(dis, "_NET_WM_WINDOW_TYPE_UTILITY", False);
-  XChangeProperty(dis, root, netatom[NetSupported], XA_ATOM, 32,
-                  PropModeReplace, (unsigned char *)netatom, NetLast);
+  netatom[NetWMWindowTypeDialog] = XInternAtom(dis, "_NET_WM_WINDOW_TYPE_DIALOG", False);
+  netatom[NetWMWindowTypeUtility] = XInternAtom(dis, "_NET_WM_WINDOW_TYPE_UTILITY", False);
+
+  XChangeProperty(dis, root, netatom[NetSupported], XA_ATOM, 32, PropModeReplace, (unsigned char *)netatom, NetLast);
+
 }
 
 void sigchld(int unused) {

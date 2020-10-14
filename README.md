@@ -27,15 +27,11 @@ It works fine, I'm using it right now. See the TODO section.
 
 ## What does it look like?
 
-Like a rectangle with more 0 or more other rectangles in it,
-optionally with gaps between them, and with borders colored
-as defined in the config. My use case is usually consistent:
-one primary window on the left taking up half the screen, and
-one to four secondary screens on the right, stacked.
+Like a rectangle with 0 or more other rectangles in it,
+optionally with colored borders. It's really up to you.
 
 ### TODO
 
-* Accept a config file (INI or TOML)?
 * Respect windows that specifically want to float
 * Indicate which desktop you're on
 * Move mouse cursor when focus changes by keyboard
