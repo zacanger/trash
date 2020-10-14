@@ -100,8 +100,7 @@ enum {
   GapTopParam,
   GapBottomParam,
   GapLeftParam,
-  GapRightParam,
-  LastParam
+  GapRightParam
 };
 
 // Include configuration file (need struct key)

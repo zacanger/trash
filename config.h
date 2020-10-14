@@ -43,12 +43,12 @@ static struct key keys[] = {
 
   // To do with modes and things
   {MODKEY | ShiftMask, XK_Return, swap_primary, {NULL}},
-  {MODKEY, XK_f, switch_mode, {NULL}},
-  {MODKEY, XK_space, switch_float, {NULL}},
+  {MODKEY, XK_s, switch_mode, {NULL}},
+  {MODKEY, XK_f, switch_float, {NULL}},
   {MODKEY, XK_q, switch_pin, {NULL}},
 
   // Run commands
-  {MODKEY, XK_d, spawn, {.com = menucmd}},
+  {MODKEY, XK_space, spawn, {.com = menucmd}},
   {MODKEY, XK_Return, spawn, {.com = termcmd}},
 
   // Resize floats
