@@ -63,10 +63,10 @@ static struct key keys[] = {
   {MODKEY | ControlMask, XK_j, move_float, {.xy = {0, 5}}},
 
   // Change between desktops
-  DESKTOPCHANGE(XK_0, 0),
-  DESKTOPCHANGE(XK_1, 1),
-  DESKTOPCHANGE(XK_2, 2),
-  DESKTOPCHANGE(XK_3, 3),
+  DESKTOPCHANGE(XK_1, 0),
+  DESKTOPCHANGE(XK_2, 1),
+  DESKTOPCHANGE(XK_3, 2),
+  DESKTOPCHANGE(XK_4, 3),
 };
 
 #endif

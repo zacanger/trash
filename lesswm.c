@@ -147,7 +147,7 @@ static void (*events[LASTEvent])(XEvent *e) = {
 };
 
 // Desktop array
-static desktop desktops[10];
+static desktop desktops[4];
 
 int add_window(Window w) {
   client *c, *t;
