@@ -50,12 +50,6 @@ static struct key keys[] = {
   {MODKEY, XK_space, spawn, {.com = menucmd}},
   {MODKEY, XK_Return, spawn, {.com = termcmd}},
 
-  // Resize floats
-  {MODKEY | ShiftMask | ControlMask, XK_h, resize_float, {.xy = {-5, 0}}},
-  {MODKEY | ShiftMask | ControlMask, XK_l, resize_float, {.xy = {5, 0}}},
-  {MODKEY | ShiftMask | ControlMask, XK_k, resize_float, {.xy = {0, -5}}},
-  {MODKEY | ShiftMask | ControlMask, XK_j, resize_float, {.xy = {0, 5}}},
-
   // Move floats
   {MODKEY | ControlMask, XK_h, move_float, {.xy = {-5, 0}}},
   {MODKEY | ControlMask, XK_l, move_float, {.xy = {5, 0}}},

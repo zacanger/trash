@@ -90,7 +90,6 @@ static void switch_float_client(client *c);
 static void tile();
 static void update_current();
 static void move_float(const Arg arg);
-static void resize_float(const Arg arg);
 static client **find_window(Window w, desktop *desk, client **res);
 
 enum {
@@ -972,19 +971,6 @@ static void move_float(const Arg arg) {
     client *c = current;
     c->fx += arg.xy.x;
     c->fy += arg.xy.y;
-    XMoveResizeWindow(dis, c->win, c->fx, c->fy, c->fw, c->fh);
-  }
-}
-
-static void add_clamp(int *dst, int delta, int min) {
-  *dst = MAX(min, *dst + delta);
-}
-
-static void resize_float(const Arg arg) {
-  if (current && (current->fl & FL_FLOAT) && !(current->fl & FL_HARDSIZE)) {
-    client *c = current;
-    add_clamp(&c->fw, arg.xy.x, 5);
-    add_clamp(&c->fh, arg.xy.y, 5);
     XMoveResizeWindow(dis, c->win, c->fx, c->fy, c->fw, c->fh);
   }
 }
