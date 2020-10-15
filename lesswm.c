@@ -92,14 +92,6 @@ static void update_current();
 static void move_float(const Arg arg);
 static client **find_window(Window w, desktop *desk, client **res);
 
-enum {
-  GapParam,
-  GapTopParam,
-  GapBottomParam,
-  GapLeftParam,
-  GapRightParam
-};
-
 // Include configuration file (need struct key)
 #include "config.h"
 
@@ -117,9 +109,6 @@ static Window root;
 static client *head;
 static client *flt;
 static client *current;
-static int gap = GAP;
-static int gap_left = GAP_LEFT, gap_right = GAP_RIGHT, gap_top = GAP_TOP,
-           gap_bottom = GAP_BOTTOM;
 
 enum {
   NetSupported,
@@ -876,12 +865,10 @@ static void move(client *c, int x, int y, int w, int h) {
 void tile() {
   client *c;
   int n = 0;
-  int y = 0; // relative to area inside gap
+  int y = 0;
   int m = BORDER_WIDTH;
   int m2 = m * 2;
-  int x = gap_left;
-  int ah = sh - gap_top - gap_bottom;
-  int aw = sw - gap_left - gap_right - gap;
+  int x = 0;
   int stack_height;
 
   switch (mode) {
@@ -891,28 +878,28 @@ void tile() {
       move(
         head,
         x,
-        gap_top,
-        head->next ? primary_size - m2 : aw - m2,
-        ah - m2
+        0,
+        head->next ? primary_size - m2 : sw - m2,
+        sh - m2
       );
 
       // Stack
       for (c = head->next; c; c = c->next) {
         ++n;
       }
-      stack_height = MAX(5, (ah - gap * (n > 0 ? n - 1 : 0)) / MAX(n, 1));
+      stack_height = MAX(5, (sh - 0 * (n > 0 ? n - 1 : 0)) / MAX(n, 1));
       for (c = head->next; c; c = c->next) {
       // Last wnd should be pix perf
-        int h = c->next ? stack_height : MAX(5, ah - y);
+        int h = c->next ? stack_height : MAX(5, sh);
 
         move(
           c,
-          x + primary_size + gap,
-          gap_top + y,
-          aw - primary_size - m2,
+          x + primary_size,
+          y,
+          sw - primary_size - m2,
           h - m2
         );
-        y += stack_height + gap;
+        y += stack_height;
       }
     }
     // Float

@@ -34,7 +34,6 @@ optionally with colored borders. It's really up to you.
 
 ### TODO
 
-* Remove gaps altogether?
 * When two windows want to float on the same desktop, it's a bad situation
 * Indicate which desktop you're on
 * Move mouse cursor when focus changes by keyboard

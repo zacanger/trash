@@ -10,13 +10,6 @@
 #define FOCUS "rgb:00/FF/FA"
 #define UNFOCUS "rgb:0D/0D/0D"
 
-// Gaps
-#define GAP_TOP 0
-#define GAP_LEFT 0
-#define GAP_RIGHT 0
-#define GAP_BOTTOM 0
-#define GAP 0
-
 // Set terminal and app runner/menu here
 const char *menucmd[] = {"st", "-e", "run.sh", NULL};
 const char *termcmd[] = {"st", NULL};
