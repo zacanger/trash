@@ -755,6 +755,9 @@ void spawn(const Arg arg) {
 
 void start() {
   // Show cursor even when no active windows
+  // 68 is left_ptr (see cursorfont.h)
+  // Cursor can be overridden easily in .xinitrc with something like
+  // xsetroot -cursor_name heart &
   Cursor cursor = XCreateFontCursor(dis, 68);
   XDefineCursor(dis, root, cursor);
 
