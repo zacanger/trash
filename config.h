@@ -49,7 +49,7 @@ static struct key keys[] = {
   {MODKEY | ControlMask, XK_k, move_float, {.xy = {0, -5}}},
   {MODKEY | ControlMask, XK_j, move_float, {.xy = {0, 5}}},
 
-  // Change between desktops
+  // Change between desktops; add here if you need more
   DESKTOPCHANGE(XK_1, 0),
   DESKTOPCHANGE(XK_2, 1),
   DESKTOPCHANGE(XK_3, 2),

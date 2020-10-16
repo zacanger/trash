@@ -82,7 +82,6 @@ static void setup();
 static void sigchld(int unused);
 static void spawn(const Arg arg);
 static void start();
-// static void swap();
 static void swap_primary();
 static void switch_mode();
 static void switch_float();
@@ -92,10 +91,11 @@ static void update_current();
 static void move_float(const Arg arg);
 static client **find_window(Window w, desktop *desk, client **res);
 
-// Include configuration file (need struct key)
+// Not at the top because we need some of the structs
+// and declarations from above
 #include "config.h"
 
-// Variable
+// Misc vars
 static Display *dis;
 static int current_desktop;
 static int primary_size;
@@ -122,19 +122,19 @@ enum {
 
 static Atom netatom[NetLast];
 
-// Events array
+// Events mapped to functions
 static void (*events[LASTEvent])(XEvent *e) = {
-    [KeyPress] = keypress,
-    [MapRequest] = maprequest,
-    [DestroyNotify] = destroynotify,
-    [ConfigureNotify] = configurenotify,
-    [ConfigureRequest] = configurerequest,
-    [PropertyNotify] = propertynotify,
-    [EnterNotify] = enternotify,
-    [UnmapNotify] = unmapnotify,
+  [KeyPress] = keypress,
+  [MapRequest] = maprequest,
+  [DestroyNotify] = destroynotify,
+  [ConfigureNotify] = configurenotify,
+  [ConfigureRequest] = configurerequest,
+  [PropertyNotify] = propertynotify,
+  [EnterNotify] = enternotify,
+  [UnmapNotify] = unmapnotify,
 };
 
-// Desktop array
+// Desktops; change if you need more
 static desktop desktops[4];
 
 int add_window(Window w) {
@@ -253,20 +253,20 @@ static Atom atomprop(client *c, Atom prop) {
   unsigned char *p = NULL;
   Atom da, atom = None;
   if (XGetWindowProperty(
-        dis,
-        c->win,
-        prop,
-        0L,
-        sizeof atom,
-        False,
-        XA_ATOM,
-        &da,
-        &di,
-        &dl,
-        &dl,
-        &p
-        ) == Success && p
-     ) {
+    dis,
+    c->win,
+    prop,
+    0L,
+    sizeof atom,
+    False,
+    XA_ATOM,
+    &da,
+    &di,
+    &dl,
+    &dl,
+    &p
+    ) == Success && p
+   ) {
     atom = *(Atom *)p;
     XFree(p);
   }
@@ -275,14 +275,13 @@ static Atom atomprop(client *c, Atom prop) {
 }
 
 static void handle_window_type_hint_client(client *c) {
-  // Could also handle fullscreen hint but just
-  // using the wm's fullscreen mode is fine for me
+  // We could also handle the fullscreen hint,
+  // but the wm's fullscreen mode is good enough
   Atom wtype = atomprop(c, netatom[NetWMWindowType]);
   if (
-      wtype == netatom[NetWMWindowTypeDialog] ||
-      wtype == netatom[NetWMWindowTypeUtility]
-     ) {
-
+    wtype == netatom[NetWMWindowTypeDialog] ||
+    wtype == netatom[NetWMWindowTypeUtility]
+  ) {
     if (!(c->fl & FL_FLOAT)) {
       switch_float_client(c);
     }
@@ -365,7 +364,7 @@ void enternotify(XEvent *e) {
 void unmapnotify(XEvent *e) {
   XUnmapEvent *ev = &e->xunmap;
   // When splashscreens want to be hidden, we
-  // unmanage the wnd and hide it
+  // unmanage the window and hide it
   if (ev->send_event) {
     remove_window(ev->window);
     tile();
@@ -499,9 +498,9 @@ void move_down() {
 void move_up() {
   Window tmp;
   if (
-      current == NULL ||
-      current->prev == head ||
-      current->win == head->win
+    current == NULL ||
+    current->prev == head ||
+    current->win == head->win
   ) {
     return;
   }
@@ -570,12 +569,14 @@ static client **find_window_in(client **front, Window w, client **res) {
   if (*front) {
     for (c = *front; c; c = c->next) {
       if (c->win == w) {
-        return *res = c, front;
+        *res = c;
+        return front;
       }
     }
   }
 
-  return *res = NULL, NULL;
+  *res = NULL;
+  return NULL;
 }
 
 client **find_window(Window w, desktop *desk, client **res) {
@@ -640,10 +641,10 @@ static int xerror(Display *dpy, XErrorEvent *ee) {
   }
 
   fprintf(
-      stderr,
-      "lesswm: fatal error: request code=%d, error code=%d\n",
-      ee->request_code,
-      ee->error_code
+    stderr,
+    "lesswm: fatal error: request code=%d, error code=%d\n",
+    ee->request_code,
+    ee->error_code
   );
 
   // May call exit
