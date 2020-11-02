@@ -219,6 +219,21 @@ thing = fn (s) fn (ss) {
 # Recursion
 fib = fn (n) if n <= 1 then 1 else fib(n - 1) + fib(n - 2)
 
+# Void function. Note the !. This indicates
+# a function that doesn't return anything. Because there's no
+# real concept of undefined or void, assigning to a function call
+# from a fn! would be an error. Since this one doesn't do
+# anything at all, we just have empty braces (leaving out the
+# braces would be a syntax error).
+foo = fn! () {}
+f = foo() # Error
+foo = fn! () # Error
+foo = fn! () {
+  # do something effectful where a return value isn't important,
+  # like writing to stdout.
+  system.stdout.write('howdy\n')
+}
+
 join = fn (s, xs) reduce(append, xs, s)
 # TODO: not sure if this is right; should it be an operator?
 mod = fn (a, b) {
@@ -246,15 +261,17 @@ fizzbuzz = fn (n) {
 print(fizzbuzz(100))
 
 # Modules
-# All imports are qualified, no need to specify
-# a qualifier. No destructured imports, but you
-# can use assignment if you need to.
+# All imports are qualified, no need to specify a qualifier. No destructured
+# imports, but you can use assignment if you need to.
 # TODO: import aliasing to avoid potential conflicts (import system as sys)?
+# I think that will depend on how package management works. If it's git-based,
+# aliasing would be necessary. If there's a centralized repo, it wouldn't.
 import system
-out = system.stdout
 sys = system
-# Print implementation used above
-print = fn (x) system.stdout.write(x ++ '\n')
+out = sys.stdout
+# Print implementation used above.
+print = fn! (x) system.stdout.write(x ++ '\n')
+# TODO: I'm not so sure about this syntax.
 import ./foo # Import from local file foo
 import ./foo/bar # Import bar from the directory foo
 # Assume a file in the same directory called bar.lang:
