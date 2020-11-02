@@ -4,8 +4,8 @@ Goals:
 * Simple, human-readable, high level
 * Dynamic, strong
 * Functional ideas but Python/Go/Shell/Ruby-ish syntax
-* No classes or other OOP-specific constructs
-  (just functions and data)
+* No classes or other OOP-specific constructs (just functions and data)
+* Compiled, but with a dev-time interpreter (like `runhaskell` or `go run`)
 
 Basics:
 * Shell style comments
@@ -21,25 +21,37 @@ Basics:
 * camelCase is preferred but PascalCase or snake_case also work
 
 TODO:
-* Allow kebab-case?
-* system packages like stdin, stdout, fs, net
 * dictionary iteration/utils
-* range (start, end, step = 1)
+* variadic functions
+* range (start, end, step = 1) (depends on varargs?)
+* curry, memo, and other FP utils (probably depends on varargs)
 * length
-* Properly define && and || (and ?? ?)
-* Operator precedence and grouping
-* Includes or Contains function (dicts, arrays, strings)
+* properly define && and || (and ?? ?)
+* operator precedence and grouping
+* includes or contains function (dicts, arrays, strings)
 * regex
 * ++ vs append, do we need both?
 * docstrings, embedded markdown?
 * comment syntax, is this good or not?
-* testing
-* package management (git based)
 * errors/exceptions: values or not?
-* compiled, but with an interpreter (like runhaskell or go run)
-* Equivalent of ...args in JS
-* Curry, memo, and other FP utils
-* Can vim and other syn files be generated from a formal grammar?
+* simple built-in testing library
+  (more like tape/unittest than rspec/jest,
+   depends on exceptions/errors vs error values)
+* package management (git based?)
+* can vim and other syn files be generated from a formal grammar?
+
+TODO, Native/Builtin Packages:
+* cryptography, random
+* network (tcp, http, http2, dns, tls, anything else? more than one
+  namespace?)
+* process-related
+* argv, argument/flag parsing?
+* stdin, stdout, tty
+* filesystem, path
+* constants, os info
+* module/package-related
+* how much should be stdlib, how much should be in modules?
+  should stdlib be a module?
 ##
 
 # Assignment, types, and operators
@@ -110,7 +122,7 @@ bar = if a then b else if c then d else e
 # since there's no such thing in this language.
 # This would be invalid, since there's no
 # default case
-quux = if a then b else if c then d
+quux = if a then b else if c then d # Error
 # Multiline also works; then should be
 # on the same line as if, but works either way.
 baz = if a then
