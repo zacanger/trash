@@ -22,10 +22,7 @@ Basics:
 
 TODO:
 * dictionary iteration/utils
-* variadic functions
-* range (start, end, step = 1) (depends on varargs?)
 * curry, memo, and other FP utils (probably depends on varargs)
-* length
 * properly define && and || (and ?? ?)
 * operator precedence and grouping
 * includes or contains function (dicts, arrays, strings)
@@ -264,6 +261,31 @@ fizzbuzz = fn (n) {
 # See below for print implementation
 print(fizzbuzz(100))
 
+# Variadic functions use the ... operator. Convention is to use the name
+# `args`, but it's not enforced.
+example = fn (...args) {
+  # args is an array
+  for arg in args {
+    # do stuff
+  }
+}
+# If you want to use named paramaters as well,
+# varargs obviously need to come last.
+exampleWithOtherArgs = fn (foo, bar, ...args) {}
+# Length should work with strings, arrays, and dictionaries
+length = fn (iterable) {
+  ret! = 0
+  for i in interable {
+      ret! = ret! + 1
+  }
+  return ret!
+}
+# TODO:
+range = fn (...args) {
+  start! = args[0]
+  end! = args[1]
+  step! = if length(args) == 3 then args[2] else 1
+}
 # Modules
 # All imports are qualified, no need to specify a qualifier. No destructured
 # imports, but you can use assignment if you need to.
