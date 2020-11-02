@@ -1,3 +1,4 @@
+# vim: ft=ruby
 ##
 Basics:
 * Shell style comments
@@ -27,6 +28,7 @@ TODO:
 * testing
 * package management (git based)
 * errors/exceptions: values or not?
+* compiled, but with an interpreter (like runhaskell or go run)
 ##
 
 # Assignment, types, and operators
@@ -154,6 +156,22 @@ map = fn (f, xs) {
   }
   return ret!
 }
+flip = fn (f) {
+  return fn (a, b) f(b, a)
+}
+# TODO: does this satisfy this need?
+# Each could also be defined in terms of reduce,
+# and return the zero-value (0, "", {}, []), but that
+# means we'd have to get rid of mixed-type arrays.
+# No need for a separate each/foreach, because
+# there's no such thing as a function that only
+# performs side effects and doesn't return.
+each = flip(map)
+# Anonymous inline callbacks work
+each([1, 2, 3], fn (x) {
+  print x
+  return 0
+})
 
 # Closures, anonymous functions, partial application
 thing = fn (s) {
@@ -177,7 +195,6 @@ thing = fn (s) fn (ss) {
 fib = fn (n) {
   return if n <= 1 then 1 else fib(n - 1) + fib(n - 2)
 }
-
 
 join = fn (s, xs) reduce(append, xs, s)
 mod = fn (a, b) {
