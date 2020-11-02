@@ -1,5 +1,10 @@
 # vim: ft=ruby
 ##
+Goals:
+* Simple, human-readable, high level
+* Dynamic, strong
+* Functional ideas but Python/Go/Shell/Ruby-ish syntax
+
 Basics:
 * Shell style comments
 * Multi-line comments start and end with two hash marks
@@ -29,6 +34,9 @@ TODO:
 * package management (git based)
 * errors/exceptions: values or not?
 * compiled, but with an interpreter (like runhaskell or go run)
+* Equivalent of ...args in JS
+* Curry, memo, and other FP utils
+* Can vim and other syn files be generated from a formal grammar?
 ##
 
 # Assignment, types, and operators
@@ -139,9 +147,12 @@ append = fn (xs, x) {
   ret! = xs ++ x
   return ret!
 }
-appendIf = fn (f, xs, x) {
-  return if f(x) then append(xs, x) else xs
-}
+# TODO: no braces, no return statement,
+# the newline here doesn't break that,
+# but it might not be clear, so should it
+# be kept?
+appendIf = fn (f, xs, x)
+  if f(x) then append(xs, x) else xs
 filter = fn (f, xs) {
   ret! = []
   for x in xs {
@@ -156,9 +167,7 @@ map = fn (f, xs) {
   }
   return ret!
 }
-flip = fn (f) {
-  return fn (a, b) f(b, a)
-}
+flip = fn (f) fn (a, b) f(b, a)
 # TODO: does this satisfy this need?
 # Each could also be defined in terms of reduce,
 # and return the zero-value (0, "", {}, []), but that
@@ -192,11 +201,10 @@ thing = fn (s) fn (ss) {
 # But the first way is clearer
 
 # Recursion
-fib = fn (n) {
-  return if n <= 1 then 1 else fib(n - 1) + fib(n - 2)
-}
+fib = fn (n) if n <= 1 then 1 else fib(n - 1) + fib(n - 2)
 
 join = fn (s, xs) reduce(append, xs, s)
+# TODO: not sure if this is right; should it be an operator?
 mod = fn (a, b) {
   x = a / b
   return a - x * b
@@ -204,7 +212,9 @@ mod = fn (a, b) {
 fizzbuzz = fn (n) {
   ret! = []
   for i in range(0, n) {
-    s! =
+    # Block scope, so s is re-initialized on each iteration.
+    # If we defined it above the for, it would need to be s!.
+    s =
       if mod(n, 3) && mod(n, 5) then 'Fizzbuzz'
       else if mod(n, 3) then 'Fizz'
       else if mod(n, 5) then 'Buzz'
@@ -212,7 +222,7 @@ fizzbuzz = fn (n) {
       # Mixed type arrays are valid, but we're using a
       # string because we'd get a TypeError when
       # joining if we passed a number.
-      ret! = append(ret!, s!)
+      ret! = append(ret!, s)
   }
   return join('\n', ret!)
 }
