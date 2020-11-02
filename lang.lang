@@ -39,6 +39,7 @@ TODO:
    depends on exceptions/errors vs error values)
 * package management (git based?)
 * can vim and other syn files be generated from a formal grammar?
+* timers, async and concurrency models
 
 TODO, Native/Builtin Packages:
 * cryptography, random
