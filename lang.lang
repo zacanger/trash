@@ -4,6 +4,8 @@ Goals:
 * Simple, human-readable, high level
 * Dynamic, strong
 * Functional ideas but Python/Go/Shell/Ruby-ish syntax
+* No classes or other OOP-specific constructs
+  (just functions and data)
 
 Basics:
 * Shell style comments
@@ -11,14 +13,15 @@ Basics:
 * No null, no undefined
 * All functions must return a value
 * All variables must be initialized to something
-* All variables are immutable and block scoped,
-  so no need for const/let/var/mut (see below for exception)
-* Indentation has no semantic impact,
-  but two spaces is the recommendation.
-* Line lengths should not exceed 80 chars.
-* camelCase is preferred.
+* Block scope, file scope, and application scope (export)
+* All variables are immutable unless 1. in a function and 2. ending with !
+* Indentation has no semantic impact, but two
+  spaces is the recommendation
+* Line lengths should not exceed 80 chars
+* camelCase is preferred but PascalCase or snake_case also work
 
 TODO:
+* Allow kebab-case?
 * system packages like stdin, stdout, fs, net
 * dictionary iteration/utils
 * range (start, end, step = 1)
