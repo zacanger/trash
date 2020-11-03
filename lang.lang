@@ -9,7 +9,7 @@ Goals:
 * Dynamic, strong
 * Functional ideas but Python/Go/Shell/Ruby-ish syntax
 * No classes or other OOP-specific constructs (just functions and data)
-* Compiled, but with a dev-time interpreter (like `runhaskell` or `go run`)
+* Compiled, but with a dev-time interpreter (like `runhaskell` or `go run`) and a REPL (like `ghci` or `gore`)
 
 Basics:
 * Shell style comments
