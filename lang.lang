@@ -273,6 +273,8 @@ example = fn (...args) {
 # varargs obviously need to come last.
 exampleWithOtherArgs = fn (foo, bar, ...args) {}
 # Length should work with strings, arrays, and dictionaries
+# TODO:
+# This might make more sense to implement in the host language
 length = fn (iterable) {
   ret! = 0
   for i in interable {
@@ -281,10 +283,12 @@ length = fn (iterable) {
   return ret!
 }
 # TODO:
+# This might make more sense to implement in the host language
 range = fn (...args) {
   start! = args[0]
   end! = args[1]
   step! = if length(args) == 3 then args[2] else 1
+  # TODO: ...
 }
 # Modules
 # All imports are qualified, no need to specify a qualifier. No destructured
