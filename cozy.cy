@@ -1,8 +1,3 @@
-# vim: ft=ruby
-# Using ruby syntax highlighting since it kinda
-# works, but I don't plan on implementing this in Ruby.
-# I'm thinking Rust, Go, Haskell, or C would be good.
-# I should maybe get familiar with LLVM.
 ##
 Goals:
 * Simple, human-readable, high level
