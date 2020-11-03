@@ -1,57 +1,56 @@
-##
-Goals:
-* Simple, human-readable, high level
-* Dynamic, strong
-* Functional ideas but Python/Go/Shell/Ruby-ish syntax
-* No classes or other OOP-specific constructs (just functions and data)
-* Compiled, but with a dev-time interpreter (like `runhaskell` or `go run`) and a REPL (like `ghci` or `gore`)
+## Intro
+# Goals:
+# * Simple, human-readable, high level
+# * Dynamic, strong
+# * Functional ideas but Python/Go/Shell/Ruby-ish syntax
+# * No classes or other OOP-specific constructs (just functions and data)
+# * Compiled, but with a dev-time interpreter (like `runhaskell` or `go run`) and a REPL (like `ghci` or `gore`)
+#
+# Basics:
+# * Shell style comments, no multiline comment syntax
+# * No null, no undefined
+# * All functions must return a value
+# * All variables must be initialized to something
+# * Block scope, file scope, and application scope (export)
+# * All variables are immutable unless 1. in a function and 2. ending with !
+# * Indentation has no semantic impact, but two
+#   spaces is the recommendation
+# * Line lengths should not exceed 80 chars
+# * camelCase is preferred but PascalCase or snake_case also work
+#
+# TODO:
+# * naming: modules vs packages
+# * dictionary iteration/utils
+# * curry, memo, and other FP utils (probably depends on varargs)
+# * properly define && and || (and ?? ?)
+# * operator precedence and grouping
+# * includes or contains function (dicts, arrays, strings)
+# * regex
+# * ++ vs append, do we need both?
+# * docstrings, embedded markdown?
+# * comment syntax, is this good or not?
+# * errors/exceptions: values or not?
+# * simple built-in testing library
+#   (more like tape/unittest than rspec/jest,
+#    depends on exceptions/errors vs error values)
+# * package management (git based?)
+# * can vim and other syn files be generated from a formal grammar?
+# * timers, async and concurrency models
+#
+# TODO, Native/Builtin Packages:
+# * cryptography, random
+# * network (tcp, http, http2, dns, tls, anything else? more than one
+#   namespace?)
+# * process-related
+# * argv, argument/flag parsing?
+# * stdin, stdout, tty
+# * filesystem, path
+# * constants, os info
+# * package-related
+# * how much should be stdlib, how much should be in packages?
+#   should stdlib be a package?
 
-Basics:
-* Shell style comments
-* Multi-line comments start and end with two hash marks
-* No null, no undefined
-* All functions must return a value
-* All variables must be initialized to something
-* Block scope, file scope, and application scope (export)
-* All variables are immutable unless 1. in a function and 2. ending with !
-* Indentation has no semantic impact, but two
-  spaces is the recommendation
-* Line lengths should not exceed 80 chars
-* camelCase is preferred but PascalCase or snake_case also work
-
-TODO:
-* dictionary iteration/utils
-* curry, memo, and other FP utils (probably depends on varargs)
-* properly define && and || (and ?? ?)
-* operator precedence and grouping
-* includes or contains function (dicts, arrays, strings)
-* regex
-* ++ vs append, do we need both?
-* docstrings, embedded markdown?
-* comment syntax, is this good or not?
-* errors/exceptions: values or not?
-* simple built-in testing library
-  (more like tape/unittest than rspec/jest,
-   depends on exceptions/errors vs error values)
-* package management (git based?)
-* can vim and other syn files be generated from a formal grammar?
-* timers, async and concurrency models
-
-TODO, Native/Builtin Packages:
-* cryptography, random
-* network (tcp, http, http2, dns, tls, anything else? more than one
-  namespace?)
-* process-related
-* argv, argument/flag parsing?
-* stdin, stdout, tty
-* filesystem, path
-* constants, os info
-* module/package-related
-* how much should be stdlib, how much should be in modules?
-  should stdlib be a module?
-##
-
-# Assignment, types, and operators
+## Assignment, types, and operators
 1 + 1 == 2
 # One number type
 1 + 1.1 == 2.1
@@ -113,7 +112,7 @@ h = { a : 1, b : 2, 3 : 3 }
 # No dot notation
 h['a'] == 1
 
-# If/else expressions
+## If/else expressions
 # No switch or pattern matching
 return if a == b then c else d
 foo = if something(x) then y else z
@@ -136,7 +135,7 @@ else if c
 # This would probably be more clear written as a function
 # so it could use a mutable variable
 
-# Functions are defined as expressions, not declarations
+## Functions are defined as expressions, not declarations
 # No way to immediately invoke a function,
 # just define it and then call it instead.
 id = fn (x) x
@@ -272,8 +271,7 @@ example = fn (...args) {
 # varargs obviously need to come last.
 exampleWithOtherArgs = fn (foo, bar, ...args) {}
 # Length should work with strings, arrays, and dictionaries
-# TODO:
-# This might make more sense to implement in the host language
+# TODO: This might make more sense to implement in the host language
 length = fn (iterable) {
   ret! = 0
   for i in interable {
@@ -281,28 +279,29 @@ length = fn (iterable) {
   }
   return ret!
 }
-# TODO:
-# This might make more sense to implement in the host language
+# TODO: This might make more sense to implement in the host language
 range = fn (...args) {
   start! = args[0]
   end! = args[1]
   step! = if length(args) == 3 then args[2] else 1
   # TODO: ...
 }
-# Modules
-# All imports are qualified, no need to specify a qualifier. No destructured
+
+## Packages
+# TODO: import/export or something more concise like in/out or pub/require?
+# All imports are qualified, no need to specify a qualifier for local or
+# global packages, only for third-party. No destructured
 # imports, but you can use assignment if you need to.
-# TODO: import aliasing to avoid potential conflicts (import system as sys)?
-# I think that will depend on how package management works. If it's git-based,
-# aliasing would be necessary. If there's a centralized repo, it wouldn't.
 import system
 sys = system
 out = sys.stdout
 # Print implementation used above.
 print = fn! (x) system.stdout.write(x ++ '\n')
-# TODO: I'm not so sure about this syntax.
 import ./foo # Import from local file foo
 import ./foo/bar # Import bar from the directory foo
+import ../bar # Import from directory above
+import bar # Import global
+import github.com/zacanger/bar as zbar # Import from installed package
 # Assume a file in the same directory called bar.cozy:
 a = 1
 b = 2
@@ -317,3 +316,8 @@ bar.c # 3
 bar.f() # Error
 f = bar.g() # function
 f() # 1
+# Imports and exports must be top level. The following examples would fail.
+a = fn foo () {
+  import system # Error
+  export b = 1 # Error
+}
