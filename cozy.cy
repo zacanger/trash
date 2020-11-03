@@ -308,7 +308,7 @@ print = fn! (x) system.stdout.write(x ++ '\n')
 # TODO: I'm not so sure about this syntax.
 import ./foo # Import from local file foo
 import ./foo/bar # Import bar from the directory foo
-# Assume a file in the same directory called bar.lang:
+# Assume a file in the same directory called bar.cy:
 a = 1
 b = 2
 export c = a + 1
