@@ -1,4 +1,7 @@
 # vim: ft=ruby
+# Using ruby syntax highlighting since it kinda
+# works, but I don't plan on implementing this in Ruby.
+# I'm thinking Rust or C would be good.
 ##
 Goals:
 * Simple, human-readable, high level
