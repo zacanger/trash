@@ -1,5 +1,15 @@
+diff --git a/.gitignore b/.gitignore
+new file mode 100644
+index 0000000..4e447f4
+--- /dev/null
++++ b/.gitignore
+@@ -0,0 +1,4 @@
++st
++x
++*.o
++config.h
 diff --git a/config.def.h b/config.def.h
-index d852220..0394c27 100644
+index 6f05dce..d1b692c 100644
 --- a/config.def.h
 +++ b/config.def.h
 @@ -5,7 +5,7 @@
@@ -9,10 +19,10 @@ index d852220..0394c27 100644
 -static char *font = "Liberation Mono:pixelsize=12:antialias=true:autohint=true";
 +static char *font = "Hack:pixelsize=14:antialias=true:autohint=true";
  static int borderpx = 2;
-
+ 
  /*
-@@ -84,42 +84,40 @@ unsigned int tabspaces = 8;
-
+@@ -95,42 +95,40 @@ unsigned int tabspaces = 8;
+ 
  /* Terminal colors (16 first used in escape sequence) */
  static const char *colorname[] = {
 -	/* 8 normal colors */
@@ -64,7 +74,7 @@ index d852220..0394c27 100644
 +  [256] = "#131111", /* background */
 +  [257] = "#d9d7d2", /* foreground */
  };
-
+ 
 -
  /*
   * Default colors (colorname index)
@@ -77,6 +87,6 @@ index d852220..0394c27 100644
 -static unsigned int defaultrcs = 257;
 +unsigned int defaultcs = 257;
 +unsigned int defaultrcs = 257;
-
+ 
  /*
   * Default shape of cursor
