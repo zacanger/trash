@@ -24,6 +24,8 @@ TODO
 * No classes or other OOP-specific constructs (just functions and data)
 * Compiled, but with a dev-time interpreter (like `runhaskell` or `go run`)
   and a REPL (like `ghci` or `gore`)
+* Or maybe interpreted, intended to be used as an embedded scripting
+  language in Rust or something else?
 * Small implementation in host language, with as many features as possible
   implemented in the standard library
 
