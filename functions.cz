@@ -170,9 +170,10 @@ type_error = _error('TypeError')
 range_error = _error('RangeError')
 syntax_error = _error('SyntaxError')
 error = _error('Error')
+print_err = fn! (x) system.stderr.write(x ++ '\n')
 panic = fn! (err) {
   err = args[0]
-  print(err.error)
+  print_err(err.error)
   # print err.stack if debug level
   exit(err.code)
 }
