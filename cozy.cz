@@ -30,7 +30,7 @@ d > c == false
 1 % 1 == 0
 true && false == true
 false || true == true
-1 + 1 / 1 * 1 ** 1 - 1 == 1
+1 + 1 / 1 * 1 ** 1 - 1 % 1 # 2
 
 # Vectors, not lists
 f = [1, 2]
