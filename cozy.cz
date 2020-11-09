@@ -1,4 +1,101 @@
-## Functions are defined as expressions, not declarations
+##
+## Assignment, types, and operators
+##
+1 + 1 == 2
+# One number type
+1 + 1.1 == 2.1
+a = 1
+# Single quotes for characters and strings
+# No seperate types, a character is just a
+# little string.
+b = 'a'
+longString = 'a \
+b \
+c'
+multilineString = 'a \n\
+b \n\
+c \n\
+d'
+c = 1.1
+d = -1
+e = -1.1
+e != d
+a >= b # TypeError
+d <= c == true
+d >= c == false
+d != c == true
+d == c == false
+d < c == true
+d > c == false
+1 % 1 == 0
+true && false == true
+false || true == true
+1 + 1 / 1 * 1 ** 1 - 1 == 1
+
+# Vectors, not lists
+f = [1, 2]
+g = ['i', '9']
+h = [1, '2']
+g[0] == 'i'
+g[-1] == '9'
+# ++ operator works for strings and arrays
+concat = 'foo' ++ ' ' ++ 'bar'
+concat == 'foo bar'
+
+# Double quotes to allow interpolation
+templated = "concat {f[0]}"
+# String interpolation works with different types
+templated == 'concat 1'
+templatedMultiline = "foo
+bar
+{g[0]}
+"
+# Interpolation is the only way to use
+# a non-string inside a string
+x = 1 + 'asdf' # TypeError
+# Interpolation will fail on non-primitives
+x = [1]
+y = "{x[0]}" # '1'
+z = "{x}" # TypeError
+
+# Dictionaries
+# No need for quote marks around keys, they're
+# automatically strings. h['3'] == 3.
+# No dot notation, and no computed keys.
+h = { a : 1, b : 2, 3 : 3 }
+# No dot notation
+h['a'] == 1
+
+
+##
+## Conditionals
+##
+# No switch or pattern matching, just if/else
+return if a == b then c else d
+foo = if something(x) then y else z
+bar = if a then b else if c then d else e
+# An if expression that results in assignment
+# or a return can't ever evaluate to undefined,
+# since there's no such thing in this language.
+# This would be invalid, since there's no
+# default case
+quux = if a then b else if c then d # Error
+# Multiline also works; then should be
+# on the same line as if, but works either way.
+baz = if a then
+  b
+else if c
+  then
+    if foo bar
+    else x
+  else y
+# This would probably be more clear written as a function
+# so it could use a mutable variable
+
+##
+## Functions
+##
+# Functions are defined as expressions, not declarations
 # No way to immediately invoke a function,
 # just define it and then call it instead.
 id = fn (x) x
@@ -97,20 +194,16 @@ foo = fn! () {
 }
 
 join = fn (s, xs) reduce(append, xs, s)
-# TODO: not sure if this is right; should it be an operator?
-mod = fn (a, b) {
-  x = a / b
-  return a - x * b
-}
+dividesEvenly = fn (a, b) a % b == 0
 fizzbuzz = fn (n) {
   ret! = []
   for i in range(0, n) {
     # Block scope, so s is re-initialized on each iteration.
     # If we defined it above the for, it would need to be s!.
     s =
-      if mod(n, 3) && mod(n, 5) then 'Fizzbuzz'
-      else if mod(n, 3) then 'Fizz'
-      else if mod(n, 5) then 'Buzz'
+      if dividesEvenly(n, 3) && dividesEvenly(n, 5) then 'Fizzbuzz'
+      else if dividesEvenly(n, 3) then 'Fizz'
+      else if dividesEvenly(n, 5) then 'Buzz'
       else "{n}"
       # Mixed type arrays are valid, but we're using a
       # string because we'd get a TypeError when
@@ -176,4 +269,41 @@ panic = fn! (err) {
   print_err(err.error)
   # print err.stack if debug level
   exit(err.code)
+}
+
+
+##
+## Modules
+##
+# All imports are qualified, no need to specify a qualifier for local or
+# global module, only for third-party. No destructured
+# imports, but you can use assignment if you need to.
+import system
+sys = system
+out = sys.stdout
+# Print implementation used above.
+print = fn! (x) system.stdout.write(x ++ '\n')
+import ./foo # Import from local file foo
+import ./foo/bar # Import bar from the directory foo
+import ../bar # Import from directory above
+import bar # Import global
+import github.com/zacanger/bar as zbar # Import from installed module
+# Assume a file in the same directory called bar.cozy:
+a = 1
+b = 2
+export c = a + 1
+f = fn () a
+export g = fn () f
+# Back in the main file
+import ./bar
+bar.a # Error
+bar.b # error
+bar.c # 3
+bar.f() # Error
+f = bar.g() # function
+f() # 1
+# Imports and exports must be top level. The following examples would fail.
+a = fn foo () {
+  import system # Error
+  export b = 1 # Error
 }

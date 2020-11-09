@@ -2,8 +2,8 @@
 
 Language idea.
 No implementation attempted yet, just some thoughts.
-See the .cz files for examples.
-If using Vim, open a .cz file and also `:source cozy.vim` for highlighting.
+See cozy.cz files for examples.
+If using Vim, `:source cozy.vim` for highlighting.
 
 [![Support with PayPal](https://img.shields.io/badge/paypal-donate-yellow.png)](https://paypal.me/zacanger) [![Patreon](https://img.shields.io/badge/patreon-donate-yellow.svg)](https://www.patreon.com/zacanger) [![ko-fi](https://img.shields.io/badge/donate-KoFi-yellow.svg)](https://ko-fi.com/U7U2110VB)
 
@@ -52,7 +52,6 @@ Basically everything.
 
 * dictionary iteration/utils
 * curry, memo, and other FP utils
-* properly define && and || (and ?? ?)
 * operator precedence and grouping
 * includes or contains function (dicts, arrays, strings)
 * regex
