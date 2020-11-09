@@ -44,6 +44,7 @@ TODO
 * Modules (use the word module instead of library or package) based on Git, no
   centralized module repository. Modules are just one or more source files,
   compiled along with your app, not distributed as binaries.
+* Errors are values that work like dictionaries
 
 ## TODO
 
@@ -59,9 +60,7 @@ Basically everything.
   types
 * docstrings, embedded markdown?
 * comment syntax, is this good or not?
-* errors/exceptions: values or not?
-* simple built-in testing library (more like tape/unittest than rspec/jest,
-  depends on exceptions/errors vs error values)
+* simple built-in testing library (more like tape/unittest than rspec/jest)
 * module management (tooling, metadata)
 * can vim and other syn files be generated from PEG or EBNF?
 * timers, async and concurrency models

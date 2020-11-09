@@ -149,3 +149,30 @@ range = fn (...args) {
   step! = if length(args) == 3 then args[2] else 1
   # TODO: ...
 }
+
+# Errors
+_error = fn (type) {
+  return fn (...args) {
+    message = args[0]
+    stack = args[1]
+    code = if length(args) == 3 then args[2] else 1
+    formatted = "{type}: {message}"
+    return {
+      code: code,
+      error: formatted,
+      message: message,
+      stack: stack,
+      type: type,
+    }
+  }
+}
+type_error = _error('TypeError')
+range_error = _error('RangeError')
+syntax_error = _error('SyntaxError')
+error = _error('Error')
+panic = fn! (err) {
+  err = args[0]
+  print(err.error)
+  # print err.stack if debug level
+  exit(err.code)
+}
