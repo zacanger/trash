@@ -59,7 +59,6 @@ Basically everything.
   types
 * docstrings, embedded markdown?
 * comment syntax, is this good or not?
-* simple built-in testing library (more like tape/unittest than rspec/jest)
 * module management (tooling, metadata)
 * vim and other editor files
 * peg or ebnf grammar

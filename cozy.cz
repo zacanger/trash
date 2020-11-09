@@ -259,14 +259,14 @@ _error = fn (type) {
     }
   }
 }
-type_error = _error('TypeError')
-range_error = _error('RangeError')
-syntax_error = _error('SyntaxError')
+typeError = _error('TypeError')
+rangeError = _error('RangeError')
+syntaxError = _error('SyntaxError')
 error = _error('Error')
-print_err = fn! (x) system.stderr.write(x ++ '\n')
+printErr = fn! (x) system.stderr.write(x ++ '\n')
 panic = fn! (err) {
   err = args[0]
-  print_err(err.error)
+  printErr(err.error)
   # print err.stack if debug level
   exit(err.code)
 }
@@ -307,3 +307,21 @@ a = fn foo () {
   import system # Error
   export b = 1 # Error
 }
+
+##
+## Testing
+##
+# TODO: tap-compatible library
+assertionError = _error('AssertionError')
+assertion = fn (expr, message)
+  if message != true then assertionError(message, '', 0) else 'Ok'
+# TODO:
+testSuite = fn! (suiteName, f) {
+  print(suiteName)
+  f()
+}
+foo = fn (a, b) a + b
+testSuite('test stuff', fn! () {
+  assert(1 == 2, 'does one equal two?')
+  assert(foo(1, 2) == 3, 'foo works')
+})
