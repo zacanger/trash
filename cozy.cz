@@ -119,6 +119,7 @@ reduce = fn (f, xs, init) {
   return acc!
 }
 append = fn (xs, x) {
+  # Just an example, obviously we could use ++ below as well
   ret! = xs ++ x
   return ret!
 }
