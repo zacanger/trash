@@ -32,10 +32,11 @@ true && false == true
 false || true == true
 1 + 1 / 1 * 1 ** 1 - 1 % 1 # 2
 
-# Vectors, not lists
+# Arrays are homogeneous vectors (not lists)
 f = [1, 2]
 g = ['i', '9']
-h = [1, '2']
+# Again, just one number type
+h = [1, 2.2]
 g[0] == 'i'
 g[-1] == '9'
 # ++ operator works for strings and arrays
@@ -62,10 +63,9 @@ z = "{x}" # TypeError
 # No need for quote marks around keys, they're
 # automatically strings. h['3'] == 3.
 # No dot notation, and no computed keys.
-h = { a : 1, b : 2, 3 : 3 }
+h = { a: 1, b: 2, 3: 3 }
 # No dot notation
 h['a'] == 1
-
 
 ##
 ## Conditionals
@@ -144,18 +144,13 @@ map = fn (f, xs) {
   return ret!
 }
 flip = fn (f) fn (a, b) f(b, a)
-# TODO: does this satisfy this need?
-# Each could also be defined in terms of reduce,
-# and return the zero-value (0, "", {}, []), but that
-# means we'd have to get rid of mixed-type arrays.
-# No need for a separate each/foreach, because
-# there's no such thing as a function that only
-# performs side effects and doesn't return.
+# TODO: this probably doesn't make sense, unless
+# we know all the way through `map` that the callback
+# is a `fn!`
 each = flip(map)
 # Anonymous inline callbacks work
-each([1, 2, 3], fn (x) {
-  print x
-  return 0
+each([1, 2, 3], fn! (x) {
+  print(x)
 })
 
 # Closures, anonymous functions, partial application
@@ -206,9 +201,6 @@ fizzbuzz = fn (n) {
       else if dividesEvenly(n, 3) then 'Fizz'
       else if dividesEvenly(n, 5) then 'Buzz'
       else "{n}"
-      # Mixed type arrays are valid, but we're using a
-      # string because we'd get a TypeError when
-      # joining if we passed a number.
       ret! = append(ret!, s)
   }
   return join('\n', ret!)
