@@ -40,6 +40,8 @@ h = [1, 2.2]
 g[0] == 'i'
 g[-1] == '9'
 # ++ operator works for strings and arrays
+# TODO: is ++ good or should + be overloaded?
+# Or should there be a builtin `append`?
 concat = 'foo' ++ ' ' ++ 'bar'
 concat == 'foo bar'
 
