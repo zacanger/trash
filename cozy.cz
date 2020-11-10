@@ -3,6 +3,8 @@
 ##
 1 + 1 == 2
 # One number type
+# TODO: should this be two number types, and
+# ints are coerced to floats when necessary?
 1 + 1.1 == 2.1
 a = 1
 # Single quotes for characters and strings
