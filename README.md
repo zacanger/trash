@@ -50,6 +50,7 @@ TODO
 
 Basically everything.
 
+* gc: tracing or reference counting?
 * dictionary iteration/utils
 * curry, memo, and other FP utils
 * operator precedence and grouping
