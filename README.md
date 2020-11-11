@@ -2,7 +2,7 @@
 
 Language idea.
 No implementation attempted yet, just some thoughts.
-See cozy.cz files for examples.
+See cozy.cz for examples.
 If using Vim, `:source cozy.vim` for highlighting.
 
 [![Support with PayPal](https://img.shields.io/badge/paypal-donate-yellow.png)](https://paypal.me/zacanger) [![Patreon](https://img.shields.io/badge/patreon-donate-yellow.svg)](https://www.patreon.com/zacanger) [![ko-fi](https://img.shields.io/badge/donate-KoFi-yellow.svg)](https://ko-fi.com/U7U2110VB)
