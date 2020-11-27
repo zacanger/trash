@@ -233,13 +233,14 @@ length = fn (iterable) {
   return ret!
 }
 # TODO: This might make more sense to implement in the host language
-range = fn (...args) {
-  start! = args[0]
-  end! = args[1]
-  step! = if length(args) == 3 then args[2] else 1
-  # TODO: ...
-}
-
+# range = fn (...args) {
+#   start! = args[0]
+#   end! = args[1]
+#   step! = if length(args) == 3 then args[2] else 1
+#   # TODO: ...
+# }
+# TODO: Flatten impl or syntax?
+range = fn (a, b) if a > b then [] else flatten([a, range(a + 1, b)])
 # Errors
 _error = fn (type) {
   return fn (...args) {
