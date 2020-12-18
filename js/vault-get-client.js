@@ -19,7 +19,7 @@ import fetch from 'node-fetch'
  *   })
  */
 
-const vault = ({ token, user, pass, uri  }) => {
+const vault = ({ token, user, pass, uri }) => {
   const cache = {}
   let headers = {}
 
@@ -48,7 +48,7 @@ const vault = ({ token, user, pass, uri  }) => {
     console.error('No Vault authentication method available')
   }
 
-  return (secretPath: string) => {
+  return (secretPath) => {
     if (cache[secretPath]) {
       return cache[secretPath]
     }
