@@ -1,0 +1,324 @@
+##
+## Assignment, types, and operators
+##
+1 + 1 == 2
+# One number type
+# TODO: should this be two number types, and
+# ints are coerced to floats when necessary?
+1 + 1.1 == 2.1
+a = 1
+# Single quotes for characters and strings
+# No seperate types, a character is just a
+# little string.
+b = 'a'
+longString = 'a \
+b \
+c'
+multilineString = 'a \n\
+b \n\
+c \n\
+d'
+c = 1.1
+d = -1
+e = -1.1
+e != d
+a >= b # TypeError
+d <= c == true
+d >= c == false
+d != c == true
+d == c == false
+d < c == true
+d > c == false
+1 % 1 == 0
+true && false == true
+false || true == true
+1 + 1 / 1 * 1 ** 1 - 1 % 1 # 2
+
+# Arrays are homogeneous vectors (not lists)
+f = [1, 2]
+g = ['i', '9']
+# Again, just one number type
+h = [1, 2.2]
+g[0] == 'i'
+g[-1] == '9'
+# ++ operator works for strings and arrays
+# TODO: is ++ good or should + be overloaded?
+# Or should there be a builtin `append`?
+concat = 'foo' ++ ' ' ++ 'bar'
+concat == 'foo bar'
+
+# Double quotes to allow interpolation
+templated = "concat {f[0]}"
+# String interpolation works with different types
+templated == 'concat 1'
+templatedMultiline = "foo
+bar
+{g[0]}
+"
+# Interpolation is the only way to use
+# a non-string inside a string
+x = 1 + 'asdf' # TypeError
+# Interpolation will fail on non-primitives
+x = [1]
+y = "{x[0]}" # '1'
+z = "{x}" # TypeError
+
+# Dictionaries
+# No need for quote marks around keys, they're
+# automatically strings. h['3'] == 3.
+# No dot notation, and no computed keys.
+h = { a: 1, b: 2, 3: 3 }
+# No dot notation
+h['a'] == 1
+
+##
+## Conditionals
+##
+# No switch or pattern matching, just if/else
+return if a == b then c else d
+foo = if something(x) then y else z
+bar = if a then b else if c then d else e
+# An if expression that results in assignment
+# or a return can't ever evaluate to undefined,
+# since there's no such thing in this language.
+# This would be invalid, since there's no
+# default case
+quux = if a then b else if c then d # Error
+# Multiline also works; then should be
+# on the same line as if, but works either way.
+baz = if a then
+  b
+else if c
+  then
+    if foo bar
+    else x
+  else y
+# This would probably be more clear written as a function
+# so it could use a mutable variable
+
+##
+## Functions
+##
+# Functions are defined as expressions, not declarations
+# No way to immediately invoke a function,
+# just define it and then call it instead.
+id = fn (x) x
+# No need for return statement or braces
+add = fn (a, b) a + b
+# If using braces, need a return statement
+mul = fn (a, b) {
+  return a + b
+}
+
+# First class functions
+reduce = fn (f, xs, init) {
+  # If ident ends with !, it's mutable.
+  # Mutable variables can only be used in a local
+  # function scope, not globally
+  acc! = init
+  # No C-style loops
+  for x in xs {
+    acc! = f(x, acc!)
+  }
+  return acc!
+}
+append = fn (xs, x) {
+  # Just an example, obviously we could use ++ below as well
+  ret! = xs ++ x
+  return ret!
+}
+# TODO: no braces, no return statement,
+# the newline here doesn't break that,
+# but it might not be clear, so should it
+# be kept?
+appendIf = fn (f, xs, x)
+  if f(x) then append(xs, x) else xs
+filter = fn (f, xs) {
+  ret! = []
+  for x in xs {
+    ret! = appendIf(f, xs, x)
+  }
+  return ret
+}
+map = fn (f, xs) {
+  ret! = []
+  for x in xs {
+      ret! = append(ret!, f(x))
+  }
+  return ret!
+}
+flip = fn (f) fn (a, b) f(b, a)
+# TODO: this probably doesn't make sense, unless
+# we know all the way through `map` that the callback
+# is a `fn!`
+each = flip(map)
+# Anonymous inline callbacks work
+each([1, 2, 3], fn! (x) {
+  print(x)
+})
+
+# Closures, anonymous functions, partial application
+thing = fn (s) {
+  return fn (ss) {
+    return s + ss
+  }
+}
+# This could also be written as
+thing = fn (s) fn (ss) s + ss
+# Or
+thing = fn (s) {
+  return fn (ss) s + ss
+}
+# Or
+thing = fn (s) fn (ss) {
+  return s + ss
+}
+# But the first way is clearer
+
+# Recursion
+fib = fn (n) if n <= 1 then 1 else fib(n - 1) + fib(n - 2)
+
+# Void function. Note the !. This indicates
+# a function that doesn't return anything. Because there's no
+# real concept of undefined or void, assigning to a function call
+# from a fn! would be an error. Since this one doesn't do
+# anything at all, we just have empty braces (leaving out the
+# braces would be a syntax error).
+foo = fn! () {}
+f = foo() # Error
+foo = fn! () # Error
+foo = fn! () {
+  # do something effectful where a return value isn't important,
+  # like writing to stdout.
+  system.stdout.write('howdy\n')
+}
+
+join = fn (s, xs) reduce(append, xs, s)
+dividesEvenly = fn (a, b) a % b == 0
+fizzbuzz = fn (n) {
+  ret! = []
+  for i in range(0, n) {
+    # Block scope, so s is re-initialized on each iteration.
+    # If we defined it above the for, it would need to be s!.
+    s =
+      if dividesEvenly(n, 3) && dividesEvenly(n, 5) then 'Fizzbuzz'
+      else if dividesEvenly(n, 3) then 'Fizz'
+      else if dividesEvenly(n, 5) then 'Buzz'
+      else "{n}"
+      ret! = append(ret!, s)
+  }
+  return join('\n', ret!)
+}
+# See below for print implementation
+print(fizzbuzz(100))
+
+# Variadic functions use the ... operator. Convention is to use the name
+# `args`, but it's not enforced.
+example = fn (...args) {
+  # args is an array
+  for arg in args {
+    # do stuff
+  }
+}
+# If you want to use named paramaters as well,
+# varargs obviously need to come last.
+exampleWithOtherArgs = fn (foo, bar, ...args) {}
+# Length should work with strings, arrays, and dictionaries
+# TODO: This might make more sense to implement in the host language
+length = fn (iterable) {
+  ret! = 0
+  for i in interable {
+      ret! = ret! + 1
+  }
+  return ret!
+}
+# TODO: This might make more sense to implement in the host language
+# range = fn (...args) {
+#   start! = args[0]
+#   end! = args[1]
+#   step! = if length(args) == 3 then args[2] else 1
+#   # TODO: ...
+# }
+# TODO: Flatten impl or syntax?
+range = fn (a, b) if a > b then [] else flatten([a, range(a + 1, b)])
+# Errors
+_error = fn (type) {
+  return fn (...args) {
+    message = args[0]
+    stack = args[1]
+    code = if length(args) == 3 then args[2] else 1
+    formatted = "{type}: {message}"
+    return {
+      code: code,
+      error: formatted,
+      message: message,
+      stack: stack,
+      type: type,
+    }
+  }
+}
+typeError = _error('TypeError')
+rangeError = _error('RangeError')
+syntaxError = _error('SyntaxError')
+error = _error('Error')
+printErr = fn! (x) system.stderr.write(x ++ '\n')
+panic = fn! (err) {
+  err = args[0]
+  printErr(err.error)
+  # print err.stack if debug level
+  exit(err.code)
+}
+
+##
+## Modules
+##
+# All imports are qualified, no need to specify a qualifier for local or
+# global module, only for third-party. No destructured
+# imports, but you can use assignment if you need to.
+import system
+sys = system
+out = sys.stdout
+# Print implementation used above.
+print = fn! (x) system.stdout.write(x ++ '\n')
+import ./foo # Import from local file foo
+import ./foo/bar # Import bar from the directory foo
+import ../bar # Import from directory above
+import bar # Import global
+import github.com/zacanger/bar as zbar # Import from installed module
+# Assume a file in the same directory called bar.cozy:
+a = 1
+b = 2
+export c = a + 1
+f = fn () a
+export g = fn () f
+# Back in the main file
+import ./bar
+bar.a # Error
+bar.b # error
+bar.c # 3
+bar.f() # Error
+f = bar.g() # function
+f() # 1
+# Imports and exports must be top level. The following examples would fail.
+a = fn foo () {
+  import system # Error
+  export b = 1 # Error
+}
+
+##
+## Testing
+##
+# TODO: tap-compatible library
+assertionError = _error('AssertionError')
+assertion = fn (expr, message)
+  if message != true then assertionError(message, '', 0) else 'Ok'
+# TODO:
+testSuite = fn! (suiteName, f) {
+  print(suiteName)
+  f()
+}
+foo = fn (a, b) a + b
+testSuite('test stuff', fn! () {
+  assert(1 == 2, 'does one equal two?')
+  assert(foo(1, 2) == 3, 'foo works')
+})
