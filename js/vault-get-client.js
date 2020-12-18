@@ -1,20 +1,15 @@
 import fetch from 'node-fetch'
 
-const {
-  VAULT_TOKEN = '',
-  VAULT_USER = '',
-  VAULT_PASS = '',
-  VAULT_URI = '',
-} = process.env
-
-type Cache = {
-  [key: string]: any
-}
-
-/* Example usage:
+/*
+ * Dead simple Hashicorp Vault client for Node and Browser.
+ * It can only get secrets.
+ * Example usage:
  * First have the above environment variables set.
  *
- * import vaultClient from './this-file'
+ * import vault from './this-file'
+ * vaultClient = vault({ token, user, pass, uri })
+ * // uri is required
+ * // either user + pass or token is required
  *
  * const somePassword = await vaultClient('path/to/password')
  *
@@ -24,15 +19,15 @@ type Cache = {
  *   })
  */
 
-const initClient = () => {
-  const cache: Cache = {}
+const vault = ({ token, user, pass, uri  }) => {
+  const cache = {}
   let headers = {}
 
-  if (VAULT_TOKEN) {
-    headers = { 'x-vault-token': VAULT_TOKEN }
-  } else if (VAULT_USER && VAULT_PASS) {
-    const path = `${VAULT_URI}/v1/auth/userpass/login/${VAULT_USER}`
-    const body = JSON.stringify({ password: VAULT_PASS })
+  if (token) {
+    headers = { 'x-vault-token': token }
+  } else if (user && pass) {
+    const path = `${uri}/v1/auth/userpass/login/${user}`
+    const body = JSON.stringify({ password: pass })
     fetch(path, {
       method: 'POST',
       body,
@@ -58,7 +53,7 @@ const initClient = () => {
       return cache[secretPath]
     }
 
-    return fetch(`${VAULT_URI}/v1/secret/${secretPath}`, {
+    return fetch(`${uri}/v1/secret/${secretPath}`, {
       headers: {
         ...headers,
         accept: 'application/json',
@@ -72,4 +67,4 @@ const initClient = () => {
   }
 }
 
-export default initClient()
+export default vault
