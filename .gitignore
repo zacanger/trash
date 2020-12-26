@@ -77,3 +77,4 @@ src/.webpack.js
 .VolumeIcon.icns
 .vscode
 x/
+dist/
